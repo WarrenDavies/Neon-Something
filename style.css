@@ -1,0 +1,124 @@
+
+
+@font-face {
+    font-family: 'yellowtailregular';
+    src: url('yellowtail-regular-webfont.woff2') format('woff2'),
+         url('yellowtail-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body{
+margin:0;
+background:black;
+}
+
+canvas {
+border: solid 10px black;
+position:relative;
+}
+
+#holder {
+display:block;
+margin: 100px auto 0 auto;
+width:800px;
+height:600px;
+}
+
+#holder a {
+	text-decoration: none;
+	color: #fff;
+}
+
+#holder a:visited  {
+	text-decoration: none;
+	color: #fff;
+}
+
+#holder a:hover  {
+	text-decoration: none;
+	color: #fff;
+}
+
+#holder a:active  {
+	text-decoration: none;
+	color: #fff;
+}
+
+
+#neon {
+	text-align: center;
+	margin: 100px auto 0 auto;
+	font-family: Gadget, Arial;
+	font-size: 200px; text-transform: uppercase;
+	color: #fff;
+	text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+}
+
+h2.city {
+font-family: "yellowtailregular",  arial;
+color: #00ccff;
+text-align: right;
+font-size: 150px;
+margin: 0;
+padding: 0;
+-ms-transform: rotate(-20deg); /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Safari */
+    transform: rotate(-20deg);
+
+}
+
+#content {
+	text-align: left;
+	margin: 20px auto 20px auto;
+	font-family: Tahoma, Arial;
+	font-size: 20px; 
+	padding: 20px;
+	color: #3c3838;
+	background-color: #fff;
+	width: 760px;
+}
+
+#centre {
+text-align: center;
+}
+
+#content h1 {
+	font-size: 30px;
+	font-style: bold;
+}
+
+#footer {
+	color: #FF0080;
+	text-align: center;
+	font-family: Arial;
+	font-family: "Courier New";
+	font-size: 14pt;
+}
+
+.instructions {
+	color: #FF0080;
+	text-align: center;
+	font-family: Arial;
+	font-family: "Courier New";
+	font-size: 14pt;
+}
+
+#footer h1 {
+	font-size: 18pt;
+}
+
+.frozen {
+	color: cyan;
+}
+
+#footer a.frozen {
+	color: cyan;
+	text-decoration: underline;
+}
+
+
+a.frozen:visted {
+	color: "#00FFFF";
+}
