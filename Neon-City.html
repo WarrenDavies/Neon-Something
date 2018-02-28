@@ -818,8 +818,8 @@ if (Player1.gettingInVehicle > 0) {
 
 if (Player1.mot === 0) {
 
-	c.fillStyle = "red";
-c.fillRect (Player1.x - cameraX - (Player1.w / 2) , Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
+	//c.fillStyle = "red";
+//c.fillRect (Player1.x - cameraX - (Player1.w / 2) , Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 
 
 	if (Player1.speed > 0) {
@@ -850,7 +850,7 @@ c.fillRect (Player1.x - cameraX - (Player1.w / 2) , Player1.y - cameraY - (Playe
 	}	
 
 	
-	c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
+	//c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
 	
 	theCivilians.forEach( function(i, j) {
 		if (collidesSpecify (Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h, i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h) ) {
@@ -2885,10 +2885,8 @@ function drawSplats (){
 function checkPlayerCollision(xStep, yStep) {
 //c.fillRect (xStep * 2 + Player1.x - cameraX - (Player1.w / 2) , yStep * 2 + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 
-c.fillStyle = "blue";
-c.fillRect (Player1.x - cameraX - (Player1.w / 2) + xStep , 
-Player1.y - cameraY - (Player1.h / 2) + yStep , 
-Player1.w, Player1.h);
+//c.fillStyle = "blue";
+//c.fillRect (Player1.x - cameraX - (Player1.w / 2) + xStep , Player1.y - cameraY - (Player1.h / 2) + yStep , Player1.w, Player1.h);
 
 var wallCollision = {};
 wallCollision.top = false;
