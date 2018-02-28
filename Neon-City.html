@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src="tiles.js" type="text/javascript"></script>
-
+<link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
 body{
@@ -491,11 +491,13 @@ var brownWallSouth=c.createPattern(brownWall,"repeat");
  this.y = 600;
  this.w = 20;
  this.h = 20;
+ this.deltaX = 0;
+ this.deltaY = 0;
  this.xTarget = 0;
  this.yTarget = 0;
  this.tired = false;
  this.speed = 0;
- this.topSpeed = 2;
+ this.topSpeed = 4;
  this.energy = 150;
  this.health = 150;
  this.recovery = 0
@@ -809,31 +811,32 @@ if (Player1.gettingInVehicle > 0) {
 		var deltaX = vehiclesOnScreen[Player1.gettingInVehicle].x - Player1.x;
 		var deltaY = vehiclesOnScreen[Player1.gettingInVehicle].y - Player1.y;
 		Player1.angle = Math.atan2(deltaY,  deltaX);
+		Player1.xVector = Math.cos(Player1.angle);
+		Player1.yVector = Math.sin(Player1.angle);
 		
 } 
 
 if (Player1.mot === 0) {
-	
-	//console.log("Player1.speed = " + Player1.speed);
-	//console.log("Player1.mot = " + Player1.mot);
-	
-			Player1.xVector = Math.cos(Player1.angle);
-			Player1.yVector = Math.sin(Player1.angle);
-			
+
+	c.fillStyle = "red";
+c.fillRect (Player1.x - cameraX - (Player1.w / 2) , Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
+
+
 	if (Player1.speed > 0) {
+		//console.log(checkPlayerCollision(Player1.x + (Player1.xVector * Player1.speed), Player1.y + (Player1.yVector * Player1.speed)));
+		
+		checkPlayerCollision(Player1.xVector * Player1.speed, Player1.yVector * Player1.speed);
+		
+		console.log("xV: " + Player1.xVector + ", yV: " + Player1.yVector);
+		
+		Player1.x += Player1.xVector * Player1.speed;
+		Player1.y += Player1.yVector * Player1.speed;
+		
+		//c.fillRect (Player1.xVector * Player1.speed + Player1.x - cameraX - (Player1.w / 2) , Player1.yVector * Player1.speed
+		// + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 			
-			//console.log(checkPlayerCollision(Player1.x + (Player1.xVector * Player1.speed), Player1.y + (Player1.yVector * Player1.speed)));
-				
-			checkPlayerCollision(Player1.xVector * Player1.speed, Player1.yVector * Player1.speed);
-			
-			Player1.x += Player1.xVector * Player1.speed;
-			Player1.y += Player1.yVector * Player1.speed;				
-			
-			//c.fillRect (Player1.xVector * Player1.speed + Player1.x - cameraX - (Player1.w / 2) , Player1.yVector * Player1.speed
-			// + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
-			
-		}
-	} else {
+	}
+} else {
 			// we're in a vehicle, so let's update the player and camera to match the vehicles angle and position
 			Player1.x = vehiclesOnScreen[Player1.mot].x;
 			Player1.y = vehiclesOnScreen[Player1.mot].y;
@@ -861,8 +864,8 @@ if (Player1.mot === 0) {
 			//console.log("hit");
 			
 			} else {
-			i.x += Player1.xVector * (Player1.speed * 1.5);
-			i.y += Player1.yVector * (Player1.speed * 1.5);
+			i.x += Player1.xVector * (Player1.speed);
+			i.y += Player1.yVector * (Player1.speed);
 			}
 			
 			
@@ -918,54 +921,41 @@ function drawPlayer() {
  
  //////// ABOVE IS TO DEBUG PLAYER AND CIV COLLISION
  
- 
- 
- 
- 
-	//drawing begins
+ 	//drawing begins
 	c.beginPath();
 	c.save();
-	c.translate(Player1.x - cameraX, Player1.y - cameraY); 
 
-	
-	
-	
-	if (Player1.gettingInVehicle > 0 ) {
-		//Player1.angle = Player1.angle + (Math.PI);
-		c.rotate(Player1.angle);
-	} else {
-		c.rotate(Player1.angle);
-	}
 	
 	
 	
 	if (Player1.mot === 0) {
+		if (keys[70] && Player1.gettingInVehicle > 0) {
+			Player1.deltaX = vehiclesOnScreen[Player1.gettingInVehicle].x - cameraX - Player1.x + cameraX;
+			Player1.deltaY = vehiclesOnScreen[Player1.gettingInVehicle].y - cameraY - Player1.y + cameraY;
+		} else {
+			Player1.deltaX = mouseX - Player1.x + cameraX;
+			Player1.deltaY = mouseY - Player1.y + cameraY;
+		}
+		Player1.angle = Math.atan(Player1.deltaY / Player1.deltaX);
+		
+		c.translate(Player1.x - cameraX, Player1.y - cameraY); 
+		
+		if (Player1.deltaX < 0) {
+			c.rotate(Player1.angle);
+			c.scale(-1,1);
+		} else {
+			c.rotate(Player1.angle);
+		
+		}
+		c.translate(-Player1.x,-Player1.y);
 	
-	c.translate(-Player1.x , -Player1.y);
-	
-	
-	//c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
-	
-	//c.rect(Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
-	c.lineWidth = 1;
-	c.stroke();
-	if (keys[83] || keys[87] || keys[70] ) {
-	
-	Player1.walkTimer += 0.15;
-	
-	//console.log(Math.ceil(Player1.walkTimer));
-
-	if (Player1.walkTimer >= 3.8) {
-		Player1.walkTimer = 0.1;
-	}
-//	c.moveTo(Player1.x - 15, Player1.y);
-//	c.lineTo(Player1.x + 15, Player1.y + 10);
-//	c.lineTo(Player1.x + 15, Player1.y - 10);
-//	c.lineTo(Player1.x - 15, Player1.y);
-//	c.fillStyle = "black";
-//	c.fill();
-	
-	c.drawImage( Player1.walkAnimations[Math.ceil(Player1.walkTimer)], Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
+	if (keys[83] || keys[87] || keys[70] || keys[65] || keys[68] ) {
+		Player1.walkTimer += 0.15;
+		if (Player1.walkTimer >= 3.8) {
+			Player1.walkTimer = 0.1;
+		}
+			
+		c.drawImage( Player1.walkAnimations[Math.ceil(Player1.walkTimer)], Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
 	
 	} else {
 	
@@ -2893,11 +2883,12 @@ function drawSplats (){
 
 
 function checkPlayerCollision(xStep, yStep) {
-
 //c.fillRect (xStep * 2 + Player1.x - cameraX - (Player1.w / 2) , yStep * 2 + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 
-//c.fillStyle = "red";
-//c.fillRect (Player1.x - cameraX - (Player1.w / 2) , Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
+c.fillStyle = "blue";
+c.fillRect (Player1.x - cameraX - (Player1.w / 2) + xStep , 
+Player1.y - cameraY - (Player1.h / 2) + yStep , 
+Player1.w, Player1.h);
 
 var wallCollision = {};
 wallCollision.top = false;
@@ -2916,7 +2907,7 @@ var wallCollisionCounter = 0;
 				// test y vector
 				if (collidesSpecify(
 						Player1.x - cameraX - (Player1.w / 2),
-						Math.ceil(yStep * 3 + Player1.y - cameraY - (Player1.h / 2)), 
+						yStep * 2 + Player1.y - cameraY - (Player1.h / 2), 
 						Player1.w, 
 						Player1.h, 
 						theBuildings[i].walls[line].p1x, 
@@ -2986,13 +2977,13 @@ var wallCollisionCounter = 0;
 				
 				/// test x vector
 				if (collidesSpecify(
-						Math.ceil(xStep * 3 + Player1.x - cameraX - (Player1.w / 2)),
-						Player1.y - cameraY - (Player1.h / 2), 
-						Player1.w, 
-						Player1.h, 
-						theBuildings[i].walls[line].p1x, 
-						theBuildings[i].walls[line].p1y, 
-						theBuildings[i].walls[line].w, 
+						xStep * 2 + Player1.x - cameraX - (Player1.w / 2),
+						Player1.y - cameraY - (Player1.h / 2),
+						Player1.w,
+						Player1.h,
+						theBuildings[i].walls[line].p1x,
+						theBuildings[i].walls[line].p1y,
+						theBuildings[i].walls[line].w,
 						theBuildings[i].walls[line].h )) {
 						console.log("horizontal collision");
 						wallCollision[line] = true;
@@ -3071,8 +3062,11 @@ var wallCollisionCounter = 0;
 	//} 
 							
 						
-	
-	return wallCollision;	
+	if (wallCollisionCounter > 0) {
+		return true;	
+	} else {
+		return false;
+	}
 }
 
 
@@ -4293,255 +4287,212 @@ canvas.addEventListener('mousemove', mouseMove, true);
 
 // Detect key press for movement
 function detectKeys(){
-
-if (keys[72] && Player1.mot > 0 && headlightsTimer === 0  ) {
-	if (vehiclesOnScreen[Player1.mot].headlightsOn === true) {
-		vehiclesOnScreen[Player1.mot].headlightsOn = false;
-	} else {
-		vehiclesOnScreen[Player1.mot].headlightsOn = true;
+	if (keys) {
+		Player1.gettingInVehicle = 0;
 	}
-	headlightsTimer = 10;
-}
 
+	if (keys[79]) {
+		time -= 1;
+		if (time < 0) {time = 23;}
+	}
 
-if (keys) {
-Player1.gettingInVehicle = 0;
-}
+	if (keys[80]) {
+		time += 1;
+	}
 
+	// vehicle key presses
+	if (Player1.mot > 0) { 
+		 //accelerating
+		 if (keys[87] && !keys[65] && !keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed || keys[87] && keys[65] && keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed) {
+			vehiclesOnScreen[Player1.mot].accelerating = true;
+			vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].acceleration / vehiclesOnScreen[Player1.mot].weight;
+			if (vehiclesOnScreen[Player1.mot].speed > vehiclesOnScreen[Player1.mot].topForwardSpeed) {
+				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].topForwardSpeed;
+			}	
+		}
 
- //accelerate
- if (keys[87] && !keys[65] && !keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed || keys[87] && keys[65] && keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed || keys[70] && Player1.mot === 0 && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed ) {
-	//console.log("accelerating");
- if (Player1.mot === 0) {
- 	Player1.speed += vehiclesOnScreen[Player1.mot].acceleration;
+		// not accelerating
+		if (!keys[87]) {
+			vehiclesOnScreen[Player1.mot].accelerating = false;
+		}
+
+		//brake
+		 if (keys[83]) {
+			console.log(vehiclesOnScreen[Player1.mot].speed);
+			vehiclesOnScreen[Player1.mot].reversing === true;
+			if (vehiclesOnScreen[Player1.mot].speed > 0) {
+				vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].brakeRate;
+			}
+			if (vehiclesOnScreen[Player1.mot].speed <= 0) {
+				vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].reverseAcceleration;
+				console.log("Reversing");
+			}
+			if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
+				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
+			}
+		}
+
+		// not braking
+		if (!keys[83]) {
+			vehiclesOnScreen[Player1.mot].reversing === false;
+			if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
+				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
+				console.log (vehiclesOnScreen[Player1.mot].speed);
+				console.log("Should be clipping speed");
+			}
+		}
+		 
+		// backward turn left
+		if (keys[65] && Player1.speed < -0.3 && !keys[68] || keys[65] && vehiclesOnScreen[Player1.mot].speed < -0.3 && !keys[68]) {
+			vehiclesOnScreen[Player1.mot].angle += 3 * Math.PI / 180;
+			vehiclesOnScreen[Player1.mot].x = vehiclesOnScreen[Player1.mot].x + vehiclesOnScreen[Player1.mot].radius * Math.cos(vehiclesOnScreen[Player1.mot].angle);
+			vehiclesOnScreen[Player1.mot].y = vehiclesOnScreen[Player1.mot].y + vehiclesOnScreen[Player1.mot].radius * Math.sin(vehiclesOnScreen[Player1.mot].angle);
+		}
+
+		// backward turn right
+		 if (keys[68] && Player1.speed < -0.3 && !keys[65] || keys[68] && vehiclesOnScreen[Player1.mot].speed < -0.3 && !keys[65] ) {
+				vehiclesOnScreen[Player1.mot].angle -= 3 * Math.PI / 180;
+				vehiclesOnScreen[Player1.mot].x = vehiclesOnScreen[Player1.mot].x + vehiclesOnScreen[Player1.mot].radius * Math.cos(vehiclesOnScreen[Player1.mot].angle);
+				vehiclesOnScreen[Player1.mot].y = vehiclesOnScreen[Player1.mot].y + vehiclesOnScreen[Player1.mot].radius * Math.sin(vehiclesOnScreen[Player1.mot].angle);
+		}
+
+		// forward turn left
+		 if (keys[65] && vehiclesOnScreen[Player1.mot].speed > 0.3 && !keys[68]) {
+			vehiclesOnScreen[Player1.mot].forwardTurnLeft = true;
+		} else {
+			vehiclesOnScreen[Player1.mot].forwardTurnLeft = false;
+		}
+		 
+		// forward turn right
+		if (keys[68] && vehiclesOnScreen[Player1.mot].speed > 0.3 && !keys[65]) {
+				vehiclesOnScreen[Player1.mot].forwardTurnRight = true;
+		} else {
+				vehiclesOnScreen[Player1.mot].forwardTurnRight = false;
+		}
+
+		//no pedal pressed  -should make this speed * inertia... like weight
+		if (!keys[83] && !keys[87] && !keys[70]) {
+			if (Player1.mot > 0) {
+				if (Player1.speed > 0.1) {Player1.speed -= vehiclesOnScreen[Player1.mot].weight;}
+				if (Player1.speed < -0.1) {Player1.speed += vehiclesOnScreen[Player1.mot].weight;}
+				if (Player1.speed < 0.1 && Player1.speed > -0.1) {Player1.speed == 0;}
+			}
+		}
+		
+		if (keys[72] && headlightsTimer === 0  ) {
+			if (vehiclesOnScreen[Player1.mot].headlightsOn === true) {
+				vehiclesOnScreen[Player1.mot].headlightsOn = false;
+			} else {
+				vehiclesOnScreen[Player1.mot].headlightsOn = true;
+			}
+			headlightsTimer = 10;
+		}
+	} // end of vehicle key presses
+
 	
-	//console.log(Player1.speed);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// "flat" player movement (w is up, a is left, etc)
+	if (Player1.mot === 0) {
+		
+		if (keys[87] || keys[83] || keys[65] || keys[68]) {
+			Player1.speed += Player1.acceleration;
+			if (Player1.speed > Player1.topSpeed) {
+				Player1.speed = Player1.topSpeed;
+				console.log(Player1.speed);
+			}
+		} else {
+			Player1.speed = 0;
+		}
+		
+		Player1.xVector = 0;
+		Player1.yVector = 0;
+		if (keys[87]) {
+			Player1.yVector -= 1;
+		}
+		if (keys[83] ) {
+			Player1.yVector += 1;
+		}
+		if (keys[65] ) {
+			Player1.xVector -= 1;
+		}
+		if (keys[68] ) {
+			Player1.xVector += 1;
+		}
 	} 
 
- if (Player1.mot > 0) {
- 	
-	vehiclesOnScreen[Player1.mot].accelerating = true;
 	
-	vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].acceleration / vehiclesOnScreen[Player1.mot].weight;
-
-	if (vehiclesOnScreen[Player1.mot].speed > vehiclesOnScreen[Player1.mot].topForwardSpeed) {
-	vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].topForwardSpeed;
-	}	
-}
-
-} 
-
-if (!keys[87]) {
-vehiclesOnScreen[Player1.mot].accelerating = false;
-}
-
-if (keys[79]) {
-time -= 1;
-//console.log("uihnhj");
-if (time < 0) {time = 23;}
-}
-
-if (keys[80]) {
-time += 1;
-}
-
 	
-	//brake
- if (keys[83]) {
-
-	if (Player1.mot === 0) {
-		if (Player1.speed > 0) {
-			Player1.speed -= vehiclesOnScreen[Player1.mot].brakeRate;
-		} 
-	if (Player1.speed <= 0 && Player1.speed > vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
-		Player1.speed -= vehiclesOnScreen[Player1.mot].reverseAcceleration;
-		
+	
+	if (keys[70]) { // F for getting in the vehicle
+		if (Player1.closestVehicle > 0 && dismountTimer === 0) {
+			Player1.gettingInVehicle = Player1.closestVehicle;
 		}
-	}
 	
-	if (Player1.mot > 0) {
-	 console.log(vehiclesOnScreen[Player1.mot].speed);
-	vehiclesOnScreen[Player1.mot].reversing === true;
-	
-		if (vehiclesOnScreen[Player1.mot].speed > 0) {
-			vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].brakeRate;
+		if (Player1.gettingInVehicle > 0) {
+			Player1.speed = 3;
 		}
 		
-		if (vehiclesOnScreen[Player1.mot].speed <= 0) {
-			vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].reverseAcceleration;
-			console.log("Reversing");
-			}
-		if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
-			vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
-		//console.log (vehiclesOnScreen[Player1.mot].speed);
-			//console.log("RShould be clipping speed");
-			}
-		
-	}
- }
- if (!keys[83]) {
-vehiclesOnScreen[Player1.mot].reversing === false;
-
-if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
-			vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
-		console.log (vehiclesOnScreen[Player1.mot].speed);
-			console.log("RShould be clipping speed");
-			}
-
-}
- 
- //no pedal pressed  -should make this speed * inertia... like weight
- if (!keys[83] && !keys[87] && !keys[70]) {
- 
-	 if (Player1.mot === 0) {
-		if (Player1.speed > 0.1) {Player1.speed -= vehiclesOnScreen[Player1.mot].weight;}
-		if (Player1.speed < -0.1) {Player1.speed += vehiclesOnScreen[Player1.mot].weight;}
-		if (Player1.speed < 0.1 && Player1.speed > -0.1) {Player1.speed == 0;}
-	}
- 
-/*	if (Player1.mot > 0) {
-	console.log("double inertia");
-		if (vehiclesOnScreen[Player1.mot].speed > 0.1) {vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].weight;}
-		if (vehiclesOnScreen[Player1.mot].speed < -0.1) {vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].weight;}
-		if (vehiclesOnScreen[Player1.mot].speed < 0.1 && vehiclesOnScreen[Player1.mot].speed > -0.1) {vehiclesOnScreen[Player1.mot].speed == 0;}
-	} */
-}
-
-
- // backward turn left
- if (keys[65] && Player1.speed < -0.3 && !keys[68] || keys[65] && vehiclesOnScreen[Player1.mot].speed < -0.3 && !keys[68]) {
-	
-	if (Player1.mot === 0) {
-	Player1.angle += 3 * Math.PI / 180;
-	
-    Player1.x = Player1.x + Player1.radius * Math.cos(Player1.angle);
-    Player1.y = Player1.y + Player1.radius * Math.sin(Player1.angle);
-	}
- 
-	if (Player1.mot > 0) {
-	vehiclesOnScreen[Player1.mot].angle += 3 * Math.PI / 180;
-    vehiclesOnScreen[Player1.mot].x = vehiclesOnScreen[Player1.mot].x + vehiclesOnScreen[Player1.mot].radius * Math.cos(vehiclesOnScreen[Player1.mot].angle);
-    vehiclesOnScreen[Player1.mot].y = vehiclesOnScreen[Player1.mot].y + vehiclesOnScreen[Player1.mot].radius * Math.sin(vehiclesOnScreen[Player1.mot].angle);
-	}
- }
-
-  // backward turn right
- if (keys[68] && Player1.speed < -0.3 && !keys[65] || keys[68] && vehiclesOnScreen[Player1.mot].speed < -0.3 && !keys[65] ) {
- 
-	if (Player1.mot === 0) {
-		Player1.angle -= 3 * Math.PI / 180;
-		
-		Player1.x = Player1.x + Player1.radius * Math.cos(Player1.angle);
-		Player1.y = Player1.y + Player1.radius * Math.sin(Player1.angle);
-	}
- 
-	if (Player1.mot > 0) {
-		vehiclesOnScreen[Player1.mot].angle -= 3 * Math.PI / 180;
-		vehiclesOnScreen[Player1.mot].x = vehiclesOnScreen[Player1.mot].x + vehiclesOnScreen[Player1.mot].radius * Math.cos(vehiclesOnScreen[Player1.mot].angle);
-		vehiclesOnScreen[Player1.mot].y = vehiclesOnScreen[Player1.mot].y + vehiclesOnScreen[Player1.mot].radius * Math.sin(vehiclesOnScreen[Player1.mot].angle);
-	}
- 
- }
- 
- 
- // rotation is happening separately. Need to flag all movement in the vehicle object when the keypress is detected, then run an update vehicles function.
- 
- // forward turn left
- if (keys[65] && vehiclesOnScreen[Player1.mot].speed > 0.3 && !keys[68] || Player1.mot === 0 && keys[65] && Player1.speed >= 0  ) {
-   
-   if (Player1.mot === 0) {
-		Player1.angle -= 3 * Math.PI / 180;
-		Player1.x = Player1.x - Player1.radius * Math.cos(Player1.angle);
-		Player1.y = Player1.y - Player1.radius * Math.sin(Player1.angle);
-	}
-	if (Player1.mot > 0) {
-		vehiclesOnScreen[Player1.mot].forwardTurnLeft = true;
-	}
-	
-} else {
-	if (Player1.mot > 0) {
-		vehiclesOnScreen[Player1.mot].forwardTurnLeft = false;
-	}	
-}
- 
- // forward turn right
-if (keys[68] && vehiclesOnScreen[Player1.mot].speed > 0.3 && !keys[65] || Player1.mot === 0 && keys[68] && Player1.speed >= 0 ) {
-	
-	if (Player1.mot === 0) {
-		Player1.angle += 3 * Math.PI / 180;
-		Player1.x = Player1.x - Player1.radius * Math.cos(Player1.angle);
-		Player1.y = Player1.y - Player1.radius * Math.sin(Player1.angle);
-	}
-	if (Player1.mot > 0) {
-		vehiclesOnScreen[Player1.mot].forwardTurnRight = true;
-	}
-} else {
-	if (Player1.mot > 0) {
-		vehiclesOnScreen[Player1.mot].forwardTurnRight = false;
-	}
-}  
- 
-if (keys[70]) {
- 
-	if (Player1.closestVehicle > 0 && dismountTimer === 0) {
-		Player1.gettingInVehicle = Player1.closestVehicle;
-	}
-	
-	if (distanceKeeper < 5) {
+		if (distanceKeeper < 5) {
 			Player1.mot = Player1.gettingInVehicle;
-			
 			if (vehiclesOnScreen[Player1.gettingInVehicle].track) {
 				vehiclesOnScreen[Player1.gettingInVehicle].track.play();
 			}
 			Player1.gettingInVehicle = 0;
 			mountTimer = 30;
 		}
-	
-	if (Player1.mot > 0 && mountTimer === 0){
-		if (vehiclesOnScreen[Player1.mot].track) { 
-			vehiclesOnScreen[Player1.mot].track.pause();
+		if (Player1.mot > 0 && mountTimer === 0){
+			if (vehiclesOnScreen[Player1.mot].track) { 
+				vehiclesOnScreen[Player1.mot].track.pause();
+			}
+			Player1.speed = 0;
+			dismountTimer = 30;
+			Player1.mot = 0;
 		}
-		Player1.speed = 0;
-	dismountTimer = 30;
-		Player1.mot = 0;
-		
-		
-	}
+	} // keys 70
+	 
+	 if (Player1.speed != 0){
+	 moveEverything();
+	 }
 	
- }
- 
- if (Player1.speed != 0){
- moveEverything();
- }
- 
-if (keys[37]) {
-cameraX -=15;
-console.log("OIHJOIJOIJOIJO");
-}
+	// MOVE THE CAMERA
+	if (keys[37]) {
+		cameraX -=15;
+	}
 
-if (keys[39]) {
-cameraX += 15;
-}
+	if (keys[39]) {
+		cameraX += 15;
+	}
 
-if (keys[38]) {
-cameraY -= 15;
-}
+	if (keys[38]) {
+		cameraY -= 15;
+	}
 
-if (keys[40]) {
-cameraY += 15;
-} 
- 
- if (Player1.mot === 0 && !keys[87] && !keys[83] && !keys[70]) {
-	Player1.speed = 0;
-}
- 
- 
- // 70 = f
- // 65 = left  / a
- // 68	 = right / d
- // 87 = forward / w
- // 83 = backwards / s
- return false;
+	if (keys[40]) {
+		cameraY += 15;
+	} 
+		 
+
+	 // 70 = f
+	 // 65 = left  / a
+	 // 68	 = right / d
+	 // 87 = forward / w
+	 // 83 = backwards / s
+	 return false;
 } // detect keys
 
 canvas.addEventListener("keydown", function (e) {
@@ -4562,7 +4513,7 @@ function mouseMove(e) {
         mouseY = e.layerY;
     }
 }
-
+canvas.addEventListener('mousemove', mouseMove, true); 
 
 canvas.addEventListener("click", function() {
 	theCivilians.forEach( function(i, j) {
@@ -4691,7 +4642,48 @@ function debugHUD(){
 
 <body onload="init()">
 <div id = "holder">
+<div id = "neon"><a href="index.html">NEON</a></div>
+<h2 class="city">City</h2>
+
+
 <canvas id="canvas" width="800" height="600" tabindex='1'></canvas>
+
+<div class="instructions">
+WASD to move, F to get in and out of cars<br/>
+If embedded game not working, <a href="https://frozenlizard.itch.io/neon-city">click here</a>.
+</div><!--instructions-->
+
+<div id="content">
+
+<div id = "centre">
+Listen to this:<br/>
+
+</div>
+
+<h1></h1>
+
+<br/><br/>
+
+
+
+
+
+</div>
+
+<div id="footer">
+<h1>Previous updates</h1>
+26 September 2016: <a href="tweak-list.html">Tweak List</a><br/>
+Home page link: <a href="index.html">Click here if you lost the back button</a>
+<br/><br/><br/>
+<h1>This is a <a class="frozen" href="http://frozenlizardproductions.com">Frozen Lizard Production</a>.</h1> <br/><br/>
+
+Put your lizard in the <span class="frozen">freezer</span>.<br/><br/><br/>
+
+If you own a lizard, please do not put it in the <span class="frozen">freezer</span>.
+
+<br/><br/><br/><br/>
+</div><!-- footer -->
+
 </div>
 </body>
 
