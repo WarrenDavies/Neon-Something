@@ -10,20 +10,20 @@
 }
 
 body{
-margin:0;
-background:black;
+	margin:0;
+	background:black;
 }
 
 canvas {
-border: solid 10px black;
-position:relative;
+	border: solid 1px black;
+	position:relative;
 }
 
 #holder {
-display:block;
-margin: 100px auto 0 auto;
-width:800px;
-height:600px;
+	display:block;
+	margin: 10px auto 0 auto;
+	width:800px;
+	height:600px;
 }
 
 #holder a {
