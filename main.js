@@ -280,7 +280,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-
+var debug = true;
 
 function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, pLine2x2, pLine2y2, testing, buildingNo) {
 
@@ -451,8 +451,8 @@ var brownWallSouth=c.createPattern(brownWall,"repeat");
 
  // Player coords and initial location
  function Player () {
- this.x = 4900; 
- this.y = 1100;
+ this.x = 400; 
+ this.y = 400;
  this.w = 20;
  this.h = 20;
  this.deltaX = 0;
@@ -1835,7 +1835,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		}
 	} // if east door exists
 	
+	
+	
+	
 //// NORTH DOOR
+///////////////
+
+
+
 	if (theBuildings[buildingNo].northDoor.exists){
 		c.beginPath();
 		theBuildings[buildingNo].northDoor.distanceFromDoor = Math.sqrt( (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (upperRightY - Player1.y) * (upperRightY - Player1.y));
@@ -1935,7 +1942,13 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.stroke();
 	} // draw north wall
 	
+	
+	
 //// EAST DOOR
+//////////////
+
+
+
 		if (theBuildings[buildingNo].eastDoor.exists) {
 			c.beginPath();
 			
@@ -1947,10 +1960,8 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			(upperRightX - Player1.x) 
 			* 
 			(upperRightX - Player1.x));
-				
 		
 //TOP DOOR					
-
 			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].eastDoor.topDoorPosition -= 1;
 			}
@@ -3110,6 +3121,7 @@ theBuildings.forEach( function(i, j) {
 			closestVehicle: 0,
 			gettingInVehicle: 0,
 			inBuilding: 0,
+			collideDistance: 80,
 			walkTimer: 0,
 			walking: false,
 			standImage: civStand,
@@ -3136,158 +3148,103 @@ theCivilians[2].targetWP = 1;
 function updateCivilians() {
 	theCivilians.forEach(function(i, j) {
 	
-		if (i.targetWayPoint === 0) {
+	if (i.targetWayPoint === 0) {
 		i.walking = false;
 
-		var ijijij = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
+		var newTargetWayPoint = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
 		
-		i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[ijijij];
+		i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[newTargetWayPoint];
 
 		i.xTarget = theWayPoints[i.targetWayPoint].x;
-		
 		i.yTarget = theWayPoints[i.targetWayPoint].y;
 
+		i.targetAngle = Math.atan(deltaY / deltaX);
 
 
-//console.log (i.currentWayPoint);
-//console.log (theWayPoints[i.currentWayPoint].connections[0]);
-//console.log (i.targetWayPoint);
-
-//var deltaX = theWayPoints[i.targetWayPoint].x - i.x;
-//var deltaY = theWayPoints[i.targetWayPoint].y - i.y;
-i.targetAngle = Math.atan(deltaY / deltaX);
-
-
-var deltaX = i.xTarget - i.x;
-var deltaY = i.yTarget - i.y;
-i.targetAngle = Math.atan(deltaY / deltaX);
+		var deltaX = i.xTarget - i.x;
+		var deltaY = i.yTarget - i.y;
+		i.targetAngle = Math.atan(deltaY / deltaX);
 
 // Need to do this by line collision - rotate the civilian and extend his vector to check if that intersects with the waypoint
 
 // will then need to find a way to make sure they turn the quickest direction, clock or anti-clock
 		
 // Need to make a system where the connections are added automatically by drawing lines to other ones and seeing if there are any collisions with obstacles	
-		}
-
+	}
 	
 	i.xVector = Math.cos(i.angle);
 	i.yVector = Math.sin(i.angle);
-	
-
-	
-	
-	
-	
-	//method that checks the angle of the target - leads to facing backwards problem
-	//if ( i.angle > (i.targetAngle - 0.05) && i.angle < (i.targetAngle + 0.05) ) {
-	//i.angle = i.targetAngle;
-	//}
-	//	if ( i.angle > (i.targetAngle - 0.05) && i.angle < (i.targetAngle + 0.05) ) {
-	
-	//i.x += i.speed * i.xVector;
-	//i.y += i.speed * i.yVector;
-	
-	//if (i.x > theWayPoints[i.targetWayPoint].x) {i.x -= i.speed;}
-	//if (i.x < theWayPoints[i.targetWayPoint].x) {i.x += i.speed;}
-	//if (i.y > theWayPoints[i.targetWayPoint].y) {i.y -= i.speed;}
-	//if (i.y < theWayPoints[i.targetWayPoint].y) {i.y += i.speed;}
-	//i.walking = true;
-	
-	//}
-	
-	
 		
-	// method that extends vector
-	
-	//if (getLineIntersection(i.x, i.y, i.x + (i.xVector * 5000), i.y + (i.yVector * 5000), theWayPoints[i.targetWayPoint].x - 20, theWayPoints[i.targetWayPoint].y - 20, theWayPoints[i.targetWayPoint].x + 20, theWayPoints[i.targetWayPoint].x + 20   )  ||   getLineIntersection(i.x, i.y, i.x + (i.xVector * 5000), i.y + (i.yVector * 5000), theWayPoints[i.targetWayPoint].x + 20, theWayPoints[i.targetWayPoint].y + 20, theWayPoints[i.targetWayPoint].x - 20, theWayPoints[i.targetWayPoint].x - 20   )) {
-	
-	//i.x += i.speed * i.xVector;
-	//i.y += i.speed * i.yVector;
-	
-	//i.walking = true;
-	
-	//} else {
-	
-	//i.angle += .025;
-	//}
-	
-	
 	//draw collision areas
-	//			c.beginPath();
-	//			c.save();
-	//			c.translate(i.x - cameraX, i.y - cameraY); 
-	//			c.translate(-i.x , -i.y);
-	//			c.moveTo(i.x - 20, i.y - 20);
-	//			c.lineTo(i.x + 20, i.y + 20);
-	//			c.strokeStyle = "red";
-	//			c.lineWidth = 2;
-	//			c.stroke();
-	//			
-	//			c.beginPath();
-	//			c.moveTo(i.x + 20, i.y - 20);
-	//			c.lineTo(i.x - 20, i.y + 20);
-	//			c.stroke()
-	//			
-	//			c.fillText(j, i.x - 5, i.y - 20);
-	//			c.restore();
-	//
-	//		c.beginPath();
-	//	c.save();
-	//	c.translate(i.x - cameraX, i.y - cameraY );
-	//	c.translate(-i.x , -i.y);
-	//	c.strokeStyle = lineColor;
-	//	c.moveTo(i.x, i.y)
-	//	c.lineTo(i.x + (i.xVector * 80), i.y + (i.yVector * 80) );
-	//	c.lineWidth = 1;
-	//	c.stroke();
-	//	c.restore();
+		c.beginPath();
+		c.save();
+		c.translate(i.x - cameraX, i.y - cameraY); 
+		c.translate(-i.x , -i.y);
+		c.moveTo(i.x - 20, i.y - 20);
+		c.lineTo(i.x + 20, i.y + 20);
+		c.strokeStyle = "red";
+		c.lineWidth = 2;
+		c.stroke();
+				
+		c.beginPath();
+		c.moveTo(i.x + 20, i.y - 20);
+		c.lineTo(i.x - 20, i.y + 20);
+		c.stroke()
+		
+		c.fillText(j, i.x - 5, i.y - 20);
+		c.restore();
+	
+		c.beginPath();
+		c.save();
+		c.translate(i.x - cameraX, i.y - cameraY );
+		c.translate(-i.x , -i.y);
+		c.strokeStyle = lineColor;
+		c.moveTo(i.x, i.y)
+		c.lineTo(i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance) );
+		c.lineWidth = 1;
+		c.stroke();
+		c.restore();
 	
 	
 	
 	
 	if (i.wayPoints.length > 0) {
-	i.xTarget = i.wayPoints[i.wayPoints.length - 1].x;
-	i.yTarget = i.wayPoints[i.wayPoints.length - 1].y;
+		i.xTarget = i.wayPoints[i.wayPoints.length - 1].x;
+		i.yTarget = i.wayPoints[i.wayPoints.length - 1].y;
 	
-	
-	// draw interim waypoint
-	
-		//		c.beginPath();
-		//		c.save();
-		//		c.translate(i.x - cameraX, i.y - cameraY); 
-		//		c.translate(-i.x , -i.y);
-		//		c.moveTo(i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20);
-		//		c.lineTo(i.wayPoints[i.wayPoints.length - 1].x + 20, i.wayPoints[i.wayPoints.length - 1].y + 20);
-		//		c.strokeStyle = "blue";
-		//		c.lineWidth = 2;
-		//		c.stroke();
-		//		
-		//		c.beginPath();
-		//		c.moveTo(i.wayPoints[i.wayPoints.length - 1].x + 20, i.wayPoints[i.wayPoints.length - 1].y - 20);
-		//		c.lineTo(i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y + 20);
-		//		c.stroke()
-		//		c.fillStyle = "black";
-		//		c.fillText(j, i.x - 5, i.y - 20);
-		//		c.restore();
-	
-	
-	
-	
+//draw interim waypoint
+		i.wayPoints.forEach(function (k, l) {
+			c.beginPath();
+			c.save();
+			c.translate(i.x - cameraX, i.y - cameraY); 
+			c.translate(-i.x , -i.y);
+			c.moveTo(k.x - 20, k.y - 20);
+			c.lineTo(k.x + 20, k.y + 20);
+			c.strokeStyle = "blue";
+			c.lineWidth = 2;
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo(k.x + 20, k.y - 20);
+			c.lineTo(k.x - 20, k.y + 20);
+			c.stroke()
+			c.fillStyle = "black";
+			c.fillText(j, i.x - 5, i.y - 20);
+			c.restore();
+		});
 	} else {
-	
-	i.xTarget = theWayPoints[i.targetWayPoint].x;
-	i.yTarget = theWayPoints[i.targetWayPoint].y;
-	
-	
+		i.xTarget = theWayPoints[i.targetWayPoint].x;
+		i.yTarget = theWayPoints[i.targetWayPoint].y;
 	}
 	
-	// method that looks for the angle which shortens the distance by the most
+// method that looks for the angle which shortens the distance by the most
 	var xDifference = (i.xTarget - i.x) * (i.xTarget - i.x);
 	var	yDifference = (i.yTarget - i.y) * (i.yTarget - i.y);
 	var distanceHolder = Math.sqrt(xDifference + yDifference);
 	
 	var xStepDifference = (i.xTarget - (i.x + i.speed * i.xVector)) * (i.xTarget - (i.x + i.speed * i.xVector));
 	var	yStepDifference = (i.yTarget - (i.y + i.speed * i.yVector)) * (i.yTarget - (i.y + i.speed * i.yVector));
+	
 	var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
 	
 	i.distanceHolder = distanceHolder;
@@ -3295,61 +3252,65 @@ i.targetAngle = Math.atan(deltaY / deltaX);
 	
 	if ( distanceHolder - distanceStepHolder > 1.99  ) {
 		lineColor = "black";
+		i.collisionCourse = false;
 		
 		for (k = 0; k < theCivilians.length - 1; k++) {
 			if ( k != j ) {
-				
-				if (getLineIntersection(i.x, i.y, i.x + (i.xVector * 80), i.y + (i.yVector * 80), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
-				
-				||   getLineIntersection(i.x, i.y, i.x + (i.xVector * 80), i.y + (i.yVector * 80), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)   
-				
-				||   getLineIntersection(i.x, i.y, i.x + (i.xVector * 80), i.y + (i.yVector * 80), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)
-				
-				||   getLineIntersection(i.x, i.y, i.x + (i.xVector * 80), i.y + (i.yVector * 80), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20)
-				
-				) {
-						i.collisionCourse = true;
-						i.collidesWith = k;
-						// NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
-						
-						var holdAngle = i.angle - .7;
-						
-						var holdCos = Math.cos(holdAngle);
-						var holdSin = Math.sin(holdAngle);
-											
-						i.wayPoints.push({
-						
-						x: i.x + (holdCos * 50),
-						y: i.y + (holdSin * 50)
-						});
-						
-						c.font = 'bold 14pt Calibri';
-						c.fillStyle = 'black';
-						//c.fillText("about to collide:" + j + " "  + k, 100, 500);
-						lineColor = "red";
-						
-					
-				}
+				if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
+				||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
+					i.collisionCourse = true;
+					i.collidesWith = k;
+				}	
 			}
+		}	
+		
+		if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
+		||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
+			i.collisionCourse = true;
+			i.collidesWith = "Player";
+		}				
+
+		if (i.collisionCourse) {
+			
+			// NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
+			
+			var holdAngle = i.angle - 1.5;
+			
+			var holdCos = Math.cos(holdAngle);
+			var holdSin = Math.sin(holdAngle);
+								
+			i.wayPoints.push({
+			
+			x: i.x + (holdCos * 70),
+			y: i.y + (holdSin * 70)
+			});
+			
+			c.font = 'bold 14pt Calibri';
+			c.fillStyle = 'black';
+			//c.fillText("about to collide:" + j + " "  + k, 100, 500);
+			lineColor = "red";
+			
 		}
+	}
 	
 	
-		//if (i.collisionCourse === false){
+	
+		if (i.collisionCourse === false){
 		
-		for (k = theCivilians.length - 1; k >= 0; k--) {
-			if ( k != j ) {
+		//for (k = theCivilians.length - 1; k >= 0; k--) {
+			//if ( k != j ) {
 		
-			if (!collidesSpecify(i.x - (i.w / 2) + (i.speed * i.xVector), i.y - (i.h / 2) + (i.speed * i.yVector), i.w, i.h, theCivilians[k].x - (theCivilians[k].w / 2), theCivilians[k].y - (theCivilians[k].h / 2), theCivilians[k].w, theCivilians[k].h ) ) {
+			//if (!collidesSpecify(i.x - (i.w / 2) + (i.speed * i.xVector), i.y - (i.h / 2) + (i.speed * i.yVector), i.w, i.h, theCivilians[k].x - (theCivilians[k].w / 2), theCivilians[k].y - (theCivilians[k].h / 2), theCivilians[k].w, theCivilians[k].h ) ) {
 				//i.collidesWith = k;
-				}
+				//}
 		
-			}
-		}
+			//}
+		//}
 		
 		i.x += i.speed * i.xVector;
 		i.y += i.speed * i.yVector;
 		i.walking = true;
-		//}
+		
 	
 	
 	} else {
@@ -4951,9 +4912,10 @@ c.fill();
 // c.fillRect(0, 0, 800, 600);
 
 
+if (debug) {
+	debugHUD();
 
-debugHUD();
-
+}
 
 
 
@@ -5277,7 +5239,9 @@ canvas.addEventListener("click", function() {
 		
 	} else {
 		if (Player1.mot === 0) {
-		createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon);
+			if (!debug) {
+				createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon);
+			}
 		}
 	}
 
@@ -5302,8 +5266,10 @@ function moveEverything(){
 
 function debugHUD(){
 		// draw way points
-		
-		var showWayPoints = false;
+	c.font = '18pt Calibri';
+	c.fillStyle = 'black';
+	c.strokeStyle = "black";
+		var showWayPoints = true;
 		var showPlayer = false;
 		if (showWayPoints) {
 		
@@ -5332,7 +5298,7 @@ function debugHUD(){
 		
 		
 		if (showPlayer){
-						c.beginPath();
+			c.beginPath();
 			c.font = 'bold 14pt Calibri';
 			
 			c.fillText("PLAYER ", 100, 125);
@@ -5349,12 +5315,12 @@ function debugHUD(){
 			}
 			
 			if (debugTarget){
-
+			console.log("Target on");
 			c.font = 'bold 14pt Calibri';
-			c.fillText("ID: " + debugTarget.ID, 500, 125);
-			c.fillText("x: " + debugTarget.x, 500, 150);
-			c.fillText("y: " + debugTarget.y, 500, 175);
-			c.fillText("angel: " + debugTarget.angle, 500, 200);
+			c.fillText("ID: " + Math.floor(debugTarget.ID), 500, 125);
+			c.fillText("x: " + Math.floor(debugTarget.x), 500, 150);
+			c.fillText("y: " + Math.floor(debugTarget.y), 500, 175);
+			c.fillText("angle: " + debugTarget.angle, 500, 200);
 			c.fillText("target angle: " + debugTarget.targetAngle, 500, 225);
 			c.fillText("Target WP: " + debugTarget.targetWayPoint, 500, 250);
 			c.fillText("V x: " + Math.cos(debugTarget.angle),500, 275);
@@ -5363,9 +5329,9 @@ function debugHUD(){
 			c.fillText("Target WP x: " + theWayPoints[debugTarget.targetWayPoint].x,500, 350);
 			c.fillText("Target WP y: " + theWayPoints[debugTarget.targetWayPoint].y,500, 375);
 			
-			c.fillText("distanceHolder: " + debugTarget.distanceHolder,500, 400);
+			c.fillText("distanceHolder: " + Math.floor(debugTarget.distanceHolder),500, 400);
 			
-			c.fillText("distanceStepHolder: " + debugTarget.distanceStepHolder,500, 425);
+			c.fillText("distanceStepHolder: " + Math.floor(debugTarget.distanceStepHolder),500, 425);
 			
 			var difference = debugTarget.distanceHolder -debugTarget.distanceStepHolder
 			
@@ -5375,6 +5341,8 @@ function debugHUD(){
 			
 			c.fillText("collides with: " +
 			debugTarget.collidesWith,500, 525);
+			c.fillText("No. of waypoints: " +
+			debugTarget.wayPoints.length,500, 550);
 			
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
