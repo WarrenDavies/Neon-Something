@@ -30,6 +30,12 @@ console.log("start");
 
 // the fucntion that defintes the building line coordinates takes camera position into account. Therefore every function that uses these variables has to adjust for camera position even when not rendering. eg., when detecting bullet collisions. So need to change so that these variables are flat x and y coordinates, and then change all functions that use these variables to remove the - cameraX etc.
 
+// Need to make a system where the connections are added automatically by drawing lines to other ones and seeing if there are any collisions with obstacles. This needs to happen before the map loads, which will increase load time, OR have some kind of map editor that works this out and hard codes it.
+
+// Need to make a map editor
+
+
+
 
 // define variables
 var canvas, c;
@@ -3123,7 +3129,7 @@ theBuildings.forEach( function(i, j) {
 			inBuilding: 0,
 			collideDistance: 80,
 			walkTimer: 0,
-			walking: false,
+			walking: true,
 			standImage: civStand,
 			walkAnimations: ["", civWalk1, civWalk2, civWalk3, civWalk4],
 			targetWayPoint: 0,
@@ -3136,10 +3142,17 @@ theBuildings.forEach( function(i, j) {
 			collidesWith: 0
 			
 		 });
-	theCivilians[j].x = theWayPoints[j].x;
-	theCivilians[j].y = theWayPoints[j].y;
-	theCivilians[j].currentWayPoint = j;
-	 
+		theCivilians[j].x = theWayPoints[j].x;
+		theCivilians[j].y = theWayPoints[j].y;
+		theCivilians[j].currentWayPoint = j;
+		theCivilians[j].targetWayPoint = j;
+		theCivilians[j].wayPoints[0] = {
+			x: theWayPoints[j].x,
+			y: theWayPoints[j].y,
+			type: "mapWaypoint",
+			wayPointNo: j,
+		};
+		console.log(theCivilians[j].wayPoints[0]);
 	 } // for
 }
 loadCivilian();
@@ -3147,35 +3160,49 @@ theCivilians[2].targetWP = 1;
 
 function updateCivilians() {
 	theCivilians.forEach(function(i, j) {
+
+// if the civilian has reached the way point 
+		if (i.wayPoints.length > 0) {
+			if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40) ) {
+// if this is a map waypoint, log where we are so we can choose a new waypoint that connects to this one
+			if (i.wayPoints[i.wayPoints.length - 1].type = "mapWayPoint") {
+				i.currentWayPoint = i.wayPoints[i.wayPoints.length - 1].wayPointNo;
+			}
+				
+// if other waypoints exist, splice the one we just reached, and stop walking so that we can turn and face the next waypoint			
+				if (i.wayPoints.length > 0) {
+					i.wayPoints.splice (i.wayPoints.length - 1, 1);
+					i.walking = false;
+				}
+			}
+		}
+// if no waypoints exist, we have reached the final destination. For now, we will just stop walking and set a new random waypoint.
+		if (i.wayPoints.length === 0) {
+			i.walking = false;
+			var newTargetWayPoint = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
+			
+			i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[newTargetWayPoint];
+			i.wayPoints.push({
+				x: theWayPoints[i.targetWayPoint].x,
+				y: theWayPoints[i.targetWayPoint].y
+			});
+
+// set the new target angle. May not need this.
+				var deltaX = i.wayPoints[i.wayPoints.length - 1].x - i.x;
+				var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
+				i.targetAngle = Math.atan(deltaY / deltaX);
+			}
+		
+			
+				
+			
 	
-	if (i.targetWayPoint === 0) {
-		i.walking = false;
-
-		var newTargetWayPoint = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
-		
-		i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[newTargetWayPoint];
-
-		i.xTarget = theWayPoints[i.targetWayPoint].x;
-		i.yTarget = theWayPoints[i.targetWayPoint].y;
-
-		i.targetAngle = Math.atan(deltaY / deltaX);
-
-
-		var deltaX = i.xTarget - i.x;
-		var deltaY = i.yTarget - i.y;
-		i.targetAngle = Math.atan(deltaY / deltaX);
-
-// Need to do this by line collision - rotate the civilian and extend his vector to check if that intersects with the waypoint
-
-// will then need to find a way to make sure they turn the quickest direction, clock or anti-clock
-		
-// Need to make a system where the connections are added automatically by drawing lines to other ones and seeing if there are any collisions with obstacles	
-	}
 	
-	i.xVector = Math.cos(i.angle);
-	i.yVector = Math.sin(i.angle);
+		//i.xVector = Math.cos(i.angle);
+		//i.yVector = Math.sin(i.angle);
 		
-	//draw collision areas
+//draw collision areas
+		lineColor = "black";
 		c.beginPath();
 		c.save();
 		c.translate(i.x - cameraX, i.y - cameraY); 
@@ -3193,7 +3220,7 @@ function updateCivilians() {
 		
 		c.fillText(j, i.x - 5, i.y - 20);
 		c.restore();
-	
+
 		c.beginPath();
 		c.save();
 		c.translate(i.x - cameraX, i.y - cameraY );
@@ -3204,144 +3231,113 @@ function updateCivilians() {
 		c.lineWidth = 1;
 		c.stroke();
 		c.restore();
-	
-	
-	
-	
-	if (i.wayPoints.length > 0) {
-		i.xTarget = i.wayPoints[i.wayPoints.length - 1].x;
-		i.yTarget = i.wayPoints[i.wayPoints.length - 1].y;
-	
-//draw interim waypoint
-		i.wayPoints.forEach(function (k, l) {
-			c.beginPath();
-			c.save();
-			c.translate(i.x - cameraX, i.y - cameraY); 
-			c.translate(-i.x , -i.y);
-			c.moveTo(k.x - 20, k.y - 20);
-			c.lineTo(k.x + 20, k.y + 20);
-			c.strokeStyle = "blue";
-			c.lineWidth = 2;
-			c.stroke();
-			
-			c.beginPath();
-			c.moveTo(k.x + 20, k.y - 20);
-			c.lineTo(k.x - 20, k.y + 20);
-			c.stroke()
-			c.fillStyle = "black";
-			c.fillText(j, i.x - 5, i.y - 20);
-			c.restore();
-		});
-	} else {
-		i.xTarget = theWayPoints[i.targetWayPoint].x;
-		i.yTarget = theWayPoints[i.targetWayPoint].y;
-	}
-	
-// method that looks for the angle which shortens the distance by the most
-	var xDifference = (i.xTarget - i.x) * (i.xTarget - i.x);
-	var	yDifference = (i.yTarget - i.y) * (i.yTarget - i.y);
-	var distanceHolder = Math.sqrt(xDifference + yDifference);
-	
-	var xStepDifference = (i.xTarget - (i.x + i.speed * i.xVector)) * (i.xTarget - (i.x + i.speed * i.xVector));
-	var	yStepDifference = (i.yTarget - (i.y + i.speed * i.yVector)) * (i.yTarget - (i.y + i.speed * i.yVector));
-	
-	var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
-	
-	i.distanceHolder = distanceHolder;
-	i.distanceStepHolder = distanceStepHolder;
-	
-	if ( distanceHolder - distanceStepHolder > 1.99  ) {
-		lineColor = "black";
-		i.collisionCourse = false;
 		
-		for (k = 0; k < theCivilians.length - 1; k++) {
-			if ( k != j ) {
-				if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
-				||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
-					i.collisionCourse = true;
-					i.collidesWith = k;
-				}	
-			}
-		}	
-		
-		if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
-		||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
-			i.collisionCourse = true;
-			i.collidesWith = "Player";
-		}				
-
-		if (i.collisionCourse) {
-			
-			// NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
-			
-			var holdAngle = i.angle - 1.5;
-			
-			var holdCos = Math.cos(holdAngle);
-			var holdSin = Math.sin(holdAngle);
-								
-			i.wayPoints.push({
-			
-			x: i.x + (holdCos * 70),
-			y: i.y + (holdSin * 70)
-			});
-			
-			c.font = 'bold 14pt Calibri';
-			c.fillStyle = 'black';
-			//c.fillText("about to collide:" + j + " "  + k, 100, 500);
-			lineColor = "red";
-			
-		}
-	}
-	
-	
-	
-		if (i.collisionCourse === false){
-		
-		//for (k = theCivilians.length - 1; k >= 0; k--) {
-			//if ( k != j ) {
-		
-			//if (!collidesSpecify(i.x - (i.w / 2) + (i.speed * i.xVector), i.y - (i.h / 2) + (i.speed * i.yVector), i.w, i.h, theCivilians[k].x - (theCivilians[k].w / 2), theCivilians[k].y - (theCivilians[k].h / 2), theCivilians[k].w, theCivilians[k].h ) ) {
-				//i.collidesWith = k;
-				//}
-		
-			//}
-		//}
-		
-		i.x += i.speed * i.xVector;
-		i.y += i.speed * i.yVector;
-		i.walking = true;
-		
-	
-	
-	} else {
-		i.walking = false;
 		if (i.wayPoints.length > 0) {
-			i.angle -= .025;
-		} else {
-			i.angle += .025;
+// this should not need to be set every frame.
+			i.xTarget = i.wayPoints[i.wayPoints.length - 1].x;
+			i.yTarget = i.wayPoints[i.wayPoints.length - 1].y;
+		
+
+//draw interim waypoint
+			i.wayPoints.forEach(function (k, l) {
+				c.beginPath();
+				c.save();
+				c.translate(i.x - cameraX, i.y - cameraY); 
+				c.translate(-i.x , -i.y);
+				c.moveTo(k.x - 20, k.y - 20);
+				c.lineTo(k.x + 20, k.y + 20);
+				c.strokeStyle = "blue";
+				c.lineWidth = 2;
+				c.stroke();
+				
+				c.beginPath();
+				c.moveTo(k.x + 20, k.y - 20);
+				c.lineTo(k.x - 20, k.y + 20);
+				c.stroke()
+				c.fillStyle = "black";
+				c.fillText(j, i.x - 5, i.y - 20);
+				c.restore();
+			});
+		 
+	
+// Check if the civilian is walking and if so, detect collision	
+		if (i.walking) {
+			
+// check collisions with other civilians
+			for (k = 0; k < theCivilians.length - 1; k++) {
+				if ( k != j ) {
+					if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
+					||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
+						i.collisionCourse = true;
+						i.collidesWith = k;
+					}	
+				}
+			}
+			
+// check collisions with player
+			if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
+			||  getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
+				i.collisionCourse = true;
+				i.collidesWith = "Player";
+			}
+			
+// what we do if a collision was detected
+			if (i.collisionCourse) {
+				i.walking = false;
+				var holdAngle = i.angle - 1.5;
+				var holdCos = Math.cos(holdAngle);
+				var holdSin = Math.sin(holdAngle);
+				
+				i.wayPoints.push({
+					x: i.x + (holdCos * 70),
+					y: i.y + (holdSin * 70)
+				});
+				i.collisionCourse = false;
+				i.collidesWith = 0;
+			} else {
+				i.x += i.speed * i.xVector;
+				i.y += i.speed * i.yVector;
+				}
+			}
+		} 
+		
+		if (!i.walking) {
+// method that looks for the angle which shortens the distance by the most
+// NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
+
+			if (i.wayPoints.length > 0) {
+				var xDifference = (i.wayPoints[i.wayPoints.length - 1].x - i.x) * (i.wayPoints[i.wayPoints.length - 1].x - i.x);
+				var	yDifference = (i.wayPoints[i.wayPoints.length - 1].y - i.y) * (i.wayPoints[i.wayPoints.length - 1].y - i.y);
+				var distanceHolder = Math.sqrt(xDifference + yDifference);
+				
+				var xStepDifference = (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector)) * (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector));
+				var	yStepDifference = (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.wayPoints[i.wayPoints.length - 1].y)) * (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.wayPoints[i.wayPoints.length - 1].y));
+				
+				var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
+				
+				i.distanceHolder = distanceHolder;
+				i.distanceStepHolder = distanceStepHolder;
+				
+				
+				var targetAngle = Math.atan2(i.wayPoints[i.wayPoints.length - 1].y - i.y, i.wayPoints[i.wayPoints.length - 1].x - i.x );
+
+			targetAngle = targetAngle * (180/Math.PI);
+				
+			}
+// if the civilian is facing the target, do this
+			
+				
+			if (distanceHolder - distanceStepHolder > 1.99) {
+				i.walking = true;
+			}
+		
+			if (i.wayPoints.length > 0) {
+				i.angle -= .025;
+			} else {
+				i.angle += .025;
+			}
 		}
-	}
-	
-	
-	
-	if (i.wayPoints.length > 0 && collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40) ) {
-		//console.log("collides with interim way point");
-		i.wayPoints.splice (i.wayPoints.length - 1, 1);
-		i.collisionCourse = false;
-	}
-	
-	
-	
-	if (collidesSpecify(i.x, i.y, i.w, i.h, theWayPoints[i.targetWayPoint].x - 25, theWayPoints[i.targetWayPoint].y - 25, 50, 50)) {
-		//console.log("collides with way point");
-		i.currentWayPoint = i.targetWayPoint;
-		i.targetWayPoint = 0;	
-	}
-	
-	
 	});
-	
-	
 	if (theCivilians.length === 0) {
 		loadCivilian();
 	}	
@@ -5270,7 +5266,7 @@ function debugHUD(){
 	c.fillStyle = 'black';
 	c.strokeStyle = "black";
 		var showWayPoints = true;
-		var showPlayer = false;
+		var showPlayer = true;
 		if (showWayPoints) {
 		
 		theWayPoints.forEach( function(i,j) {
