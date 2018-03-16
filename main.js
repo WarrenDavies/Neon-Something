@@ -1846,14 +1846,11 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 //// NORTH DOOR
 ///////////////
-
-
-
 	if (theBuildings[buildingNo].northDoor.exists){
 		c.beginPath();
 		theBuildings[buildingNo].northDoor.distanceFromDoor = Math.sqrt( (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (upperRightY - Player1.y) * (upperRightY - Player1.y));
 				
-		//NORTH LEFT DOOR					
+//NORTH LEFT DOOR					
 
 		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
 		theBuildings[buildingNo].northDoor.leftDoorPosition -=1;
@@ -1863,19 +1860,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		theBuildings[buildingNo].northDoor.leftDoorPosition +=1;
 		}
 					
-		// define north left door top left
+// define north left door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft - cameraX - 400;
 		var dby = upperLeftY - cameraY - 300;				
 		theBuildings[buildingNo].northDoor.leftDoorTopLeftX = 400 + dbx * 1.1;
 		theBuildings[buildingNo].northDoor.leftDoorTopLeftY = 300 + dby * 1.1;
 		
-		// define north left door top right
+// define north left door top right
 		var dbx = lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorPosition - cameraX - 400;
 		var dby = upperLeftY - cameraY - 300;				
 		theBuildings[buildingNo].northDoor.doorTopRightX = 400 + dbx * 1.1;
 		theBuildings[buildingNo].northDoor.doorTopRightY = 300 + dby * 1.1;
 		
-		// draw north left door
+// draw north left door
 		c.moveTo(lowerLeftX + (theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft+theBuildings[buildingNo].northDoor.leftDoorPosition) - cameraX, upperRightY - cameraY);
 		c.lineTo(lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft - cameraX, upperRightY - cameraY);
 		c.lineTo(theBuildings[buildingNo].northDoor.leftDoorTopLeftX, theBuildings[buildingNo].northDoor.leftDoorTopLeftY);
@@ -1891,7 +1888,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.stroke();
 		c.closePath();
 		
-		// NORTH RIGHT DOOR
+// NORTH RIGHT DOOR
 		
 		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.rightDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize){
 			theBuildings[buildingNo].northDoor.rightDoorPosition +=1;
@@ -1901,19 +1898,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			theBuildings[buildingNo].northDoor.rightDoorPosition -=1;
 		}
 		
-		// right door top left
+// define north right door top left
 		var dbx = upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorSize + theBuildings[buildingNo].northDoor.rightDoorPosition - cameraX - 400;
 		var dby = upperLeftY - cameraY - 300;				
 		theBuildings[buildingNo].northDoor.rightDoorTopLeftX = 400 + dbx * 1.1;
 		theBuildings[buildingNo].northDoor.rightDoorTopLeftY = 300 + dby * 1.1;
 					
-		// right door top right
+// define north right door top right
 		var dbx = upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.leftDoorSize - cameraX - 400;
 		var dby = upperLeftY - cameraY - 300;				
 		theBuildings[buildingNo].northDoor.rightDoorTopRightX = 400 + dbx * 1.1;
 		theBuildings[buildingNo].northDoor.rightDoorTopRightY = 300 + dby * 1.1;
 		
-		// draw north right door
+// draw north right door
 		c.beginPath();
 		c.moveTo(lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.leftDoorSize - cameraX, upperRightY - cameraY);
 		c.lineTo(lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.rightDoorPosition - cameraX, upperRightY - cameraY);
@@ -1931,7 +1928,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	if (Player1.y - 2 < upperRightY || Player1.inBuilding === buildingNo) {
 		c.beginPath();
 		c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
-		// if door exists, draw around it
+// if door exists, draw around it
 		if (theBuildings[buildingNo].northDoor.exists) {
 			c.lineTo(upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.leftDoorSize - cameraX, upperRightY - cameraY);
 			c.lineTo(theBuildings[buildingNo].northDoor.rightDoorTopRightX, theBuildings[buildingNo].northDoor.rightDoorTopRightY);
@@ -1952,22 +1949,13 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 //// EAST DOOR
 //////////////
-
-
-
 		if (theBuildings[buildingNo].eastDoor.exists) {
 			c.beginPath();
-			
-			theBuildings[buildingNo].eastDoor.distanceFromDoor = Math.sqrt( 
-			(upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
-			* 
-			(upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
-			+ 
-			(upperRightX - Player1.x) 
-			* 
-			(upperRightX - Player1.x));
+			theBuildings[buildingNo].eastDoor.distanceFromDoor = Math.sqrt( (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
+			* (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) + (upperRightX - Player1.x) * (upperRightX - Player1.x));
 		
-//TOP DOOR					
+// EAST TOP DOOR	
+				
 			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].eastDoor.topDoorPosition -= 1;
 			}
@@ -1976,135 +1964,88 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 				theBuildings[buildingNo].eastDoor.topDoorPosition += 1;
 			}
 							
-			// door top right
+// define east top door top right
 			var dbx = upperRightX - cameraX - 400;	
 			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop - cameraY - 300;
-						
 			theBuildings[buildingNo].eastDoor.topDoorTopRightX = 400 + dbx * 1.1;
-			
-			//console.log(theBuildings[buildingNo].eastDoor.topDoorTopRightX);
-			
 			theBuildings[buildingNo].eastDoor.topDoorTopRightY = 300 + dby * 1.1;
 			
 			
-			// door top left
+// define east top door top left
 			var dbx = upperRightX - cameraX - 400;	
 			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop + theBuildings[buildingNo].eastDoor.topDoorPosition - cameraY - 300;
-						
 			theBuildings[buildingNo].eastDoor.topDoorTopLeftX = 400 + dbx * 1.1;
 			theBuildings[buildingNo].eastDoor.topDoorTopLeftY = 300 + dby * 1.1;
 					
-
-
-					
+// draw east top door		
 			c.moveTo(upperRightX - cameraX, upperRightY + (theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop + theBuildings[buildingNo].eastDoor.topDoorPosition) - cameraY);
-			
 			c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop - cameraY);
-				
 			c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopRightX, theBuildings[buildingNo].eastDoor.topDoorTopRightY);
-			
 			c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopLeftX, theBuildings[buildingNo].eastDoor.topDoorTopLeftY);
-				
-			//c.moveTo(lowerLeftX + (125-leftDoorPosition) - cameraX, lowerRightY - cameraY);
-		
-		//c.rect(lowerLeftX + leftDoorPosition - cameraX, lowerRightY - cameraY,(125-leftDoorPosition),-10);
-		
-			c.fillStyle = wallColor;
-			c.fill();
-			
-			c.strokeStyle = wallColor;
-			c.stroke();
-
-	
 			
 			c.fillStyle = "black";
 			c.fill();
-			
 			c.strokeStyle = "black";
 			c.stroke();
-			
 			c.closePath();
 
-		
-// BOTTOM DOOR
-	if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize){
-		theBuildings[buildingNo].eastDoor.bottomDoorPosition +=1;
-	}
+// EAST BOTTOM DOOR
 
-	if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
-		theBuildings[buildingNo].eastDoor.bottomDoorPosition -=1;
-	}
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize) {
+				theBuildings[buildingNo].eastDoor.bottomDoorPosition +=1;
+			}
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
+				theBuildings[buildingNo].eastDoor.bottomDoorPosition -=1;
+			}
 	
-	
-	// bottom door top left
-	var dbx = upperRightX - cameraX - 400;	
-	var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorSize - cameraY - 300;	
-	
-	theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY = 300 + dby * 1.1;
+// define east bottom door top left
+			var dbx = upperRightX - cameraX - 400;	
+			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorSize - cameraY - 300;	
+			theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX = 400 + dbx * 1.1;
+			theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY = 300 + dby * 1.1;
 				
-	// bottom door top right
-	var dbx = upperRightX - cameraX - 400;	
-	
-	var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition - cameraY - 300;
-			
-	theBuildings[buildingNo].eastDoor.bottomDoorTopRightX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].eastDoor.bottomDoorTopRightY = 300 + dby * 1.1;
-		
-		c.beginPath();
-		c.moveTo(upperRightX - cameraX, upperRightY + (theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition) - cameraY);
-			
-		c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorSize - cameraY);
-				
-		c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX, theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY);
-		
-		c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopRightX, theBuildings[buildingNo].eastDoor.bottomDoorTopRightY);
-		//c.lineTo(lowerLeftX + 200 - cameraX, lowerRightY - cameraY);
-		c.closePath();
-		
-		
-		
-		
-		
-		c.fillStyle = "blue";
-		c.fill();
-		
-		c.strokeStyle = "blue";
-		c.stroke();
-		
-		
-	} // east door
-	
-//draw east wall
-	if (Player1.x   > upperRightX || Player1.inBuilding === buildingNo) {
-		c.beginPath();
-		c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
-		
-		if (theBuildings[buildingNo].eastDoor.exists) {
-			c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop - cameraY);
-			
-			c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopRightX, theBuildings[buildingNo].eastDoor.topDoorTopRightY);
-			
-			//console.log(theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY);
-			
+// define east bottom door top right
+			var dbx = upperRightX - cameraX - 400;	
+			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition - cameraY - 300;
+			theBuildings[buildingNo].eastDoor.bottomDoorTopRightX = 400 + dbx * 1.1;
+			theBuildings[buildingNo].eastDoor.bottomDoorTopRightY = 300 + dby * 1.1;
+
+// draw east bottom door			
+			c.beginPath();
+			c.moveTo(upperRightX - cameraX, upperRightY + (theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition) - cameraY);
+			c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorSize - cameraY);
 			c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX, theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY);
-
-			c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.topDoorSize - cameraY);
-		} 
-
-		c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
-		c.lineTo(roofBottomRightX, roofBottomRightY);
-		c.lineTo(roofTopRightX, roofTopRightY);
-		c.lineTo(upperRightX - cameraX, upperRightY - cameraY);
-		c.closePath();
-		
-		c.fillStyle = wallColor;
-		c.fill();
-		
-		c.strokeStyle = wallColor;
-		c.stroke();
-		c.closePath();
-	}
+			c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopRightX, theBuildings[buildingNo].eastDoor.bottomDoorTopRightY);
+			
+			c.fillStyle = "blue";
+			c.fill();
+			c.strokeStyle = "blue";
+			c.stroke();
+			c.closePath();
+		} // east door
+	
+//DRAW EAST WALL
+		if (Player1.x   > upperRightX || Player1.inBuilding === buildingNo) {
+			c.beginPath();
+			c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
+// if door exists, draw around it		
+			if (theBuildings[buildingNo].eastDoor.exists) {
+				c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop - cameraY);
+				c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopRightX, theBuildings[buildingNo].eastDoor.topDoorTopRightY);
+				c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX, theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY);
+				c.lineTo(upperRightX - cameraX, upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.topDoorSize - cameraY);
+			} 
+			c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
+			c.lineTo(roofBottomRightX, roofBottomRightY);
+			c.lineTo(roofTopRightX, roofTopRightY);
+			c.lineTo(upperRightX - cameraX, upperRightY - cameraY);
+			
+			c.fillStyle = wallColor;
+			c.fill();
+			c.strokeStyle = wallColor;
+			c.stroke();
+			c.closePath();
+		}
 	
 		
 			
