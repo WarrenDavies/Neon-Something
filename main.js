@@ -2156,186 +2156,109 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		//// South door
-		if (theBuildings[buildingNo].southDoor.exists){
+// SOUTH DOOR
+
+
+
+	if (theBuildings[buildingNo].southDoor.exists){
 		c.beginPath();
-	theBuildings[buildingNo].southDoor.distanceFromDoor = Math.sqrt( (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (lowerRightY - Player1.y) * (lowerRightY - Player1.y));
+		theBuildings[buildingNo].southDoor.distanceFromDoor = Math.sqrt( (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (lowerRightY - Player1.y) * (lowerRightY - Player1.y));
 				
-		
-		
-		
-//LEFT DOOR					
+// SOUTH LEFT DOOR					
 
-	if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.leftDoorPosition > 0){
-		theBuildings[buildingNo].southDoor.leftDoorPosition -=1;
-	}
-
-	if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.leftDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize) {
-		theBuildings[buildingNo].southDoor.leftDoorPosition +=1;
-	}
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.leftDoorPosition > 0){
+			theBuildings[buildingNo].southDoor.leftDoorPosition -=1;
+		}
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.leftDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize) {
+			theBuildings[buildingNo].southDoor.leftDoorPosition +=1;
+		}
 					
-	// door top left
-	var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX - 400;
-	var dby = lowerLeftY - cameraY - 300;				
-	theBuildings[buildingNo].southDoor.leftDoorTopLeftX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].southDoor.leftDoorTopLeftY = 300 + dby * 1.1;
+// define south left door top left
+		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX - 400;
+		var dby = lowerLeftY - cameraY - 300;				
+		theBuildings[buildingNo].southDoor.leftDoorTopLeftX = 400 + dbx * 1.1;
+		theBuildings[buildingNo].southDoor.leftDoorTopLeftY = 300 + dby * 1.1;
 	
-	
-	// door top right
-	var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition - cameraX - 400;
-	var dby = lowerLeftY - cameraY - 300;				
-	theBuildings[buildingNo].southDoor.doorTopRightX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].southDoor.doorTopRightY = 300 + dby * 1.1;
+// define south left door top right
+		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition - cameraX - 400;
+		var dby = lowerLeftY - cameraY - 300;				
+		theBuildings[buildingNo].southDoor.doorTopRightX = 400 + dbx * 1.1;
+		theBuildings[buildingNo].southDoor.doorTopRightY = 300 + dby * 1.1;
 			
-
-
-			
-	c.moveTo(lowerLeftX + (theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft+theBuildings[buildingNo].southDoor.leftDoorPosition) - cameraX, lowerRightY - cameraY);
-	
-	c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX, lowerRightY - cameraY);
-		
-	c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
-	
-	c.lineTo(theBuildings[buildingNo].southDoor.doorTopRightX, theBuildings[buildingNo].southDoor.doorTopRightY);
-		
-		//c.moveTo(lowerLeftX + (125-leftDoorPosition) - cameraX, lowerRightY - cameraY);
-	
-	//c.rect(lowerLeftX + leftDoorPosition - cameraX, lowerRightY - cameraY,(125-leftDoorPosition),-10);
-	
-		c.fillStyle = wallColor;
-		c.fill();
-		
-		c.strokeStyle = wallColor;
-		c.stroke();
-
-
+// draw south left door		
+		c.moveTo(lowerLeftX + (theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft+theBuildings[buildingNo].southDoor.leftDoorPosition) - cameraX, lowerRightY - cameraY);
+		c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX, lowerRightY - cameraY);
+		c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
+		c.lineTo(theBuildings[buildingNo].southDoor.doorTopRightX, theBuildings[buildingNo].southDoor.doorTopRightY);
 		
 		c.fillStyle = "black";
 		c.fill();
-		
 		c.strokeStyle = "black";
 		c.stroke();
-		
 		c.closePath();
 
-		
 // RIGHT DOOR
-	if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.rightDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize){
-		theBuildings[buildingNo].southDoor.rightDoorPosition +=1;
-	}
 
-	if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.rightDoorPosition > 0) {
-		theBuildings[buildingNo].southDoor.rightDoorPosition -=1;
-	}
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.rightDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize){
+			theBuildings[buildingNo].southDoor.rightDoorPosition +=1;
+		}
+
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.rightDoorPosition > 0) {
+			theBuildings[buildingNo].southDoor.rightDoorPosition -=1;
+		}
 	
 	
-	// right door top left
-	var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorSize + theBuildings[buildingNo].southDoor.rightDoorPosition - cameraX - 400;
-	var dby = lowerLeftY - cameraY - 300;				
-	theBuildings[buildingNo].southDoor.rightDoorTopLeftX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].southDoor.rightDoorTopLeftY = 300 + dby * 1.1;
+// define south right door top left
+		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorSize + theBuildings[buildingNo].southDoor.rightDoorPosition - cameraX - 400;
+		var dby = lowerLeftY - cameraY - 300;				
+		theBuildings[buildingNo].southDoor.rightDoorTopLeftX = 400 + dbx * 1.1;
+		theBuildings[buildingNo].southDoor.rightDoorTopLeftY = 300 + dby * 1.1;
 				
-	// right door top right
-	var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX - 400;
-	var dby = lowerLeftY - cameraY - 300;				
-	theBuildings[buildingNo].southDoor.rightDoorTopRightX = 400 + dbx * 1.1;
-	theBuildings[buildingNo].southDoor.rightDoorTopRightY = 300 + dby * 1.1;
+// define south right door top right
+		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX - 400;
+		var dby = lowerLeftY - cameraY - 300;				
+		theBuildings[buildingNo].southDoor.rightDoorTopRightX = 400 + dbx * 1.1;
+		theBuildings[buildingNo].southDoor.rightDoorTopRightY = 300 + dby * 1.1;
 		
+// draw south right door
 		c.beginPath();
 		c.moveTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX, lowerRightY - cameraY);
 		
 		c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.rightDoorPosition - cameraX, lowerRightY - cameraY);
-		
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopLeftX, theBuildings[buildingNo].southDoor.rightDoorTopLeftY);
-		
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopRightX, theBuildings[buildingNo].southDoor.rightDoorTopRightY);
-		//c.lineTo(lowerLeftX + 200 - cameraX, lowerRightY - cameraY);
-		c.closePath();
-		
-		
-		
-		
 		
 		c.fillStyle = "blue";
 		c.fill();
-		
 		c.strokeStyle = "blue";
 		c.stroke();
-		
-		
+		c.closePath();
 	}
 
-	//draw south wall
+// DRAW SOUTH WALL
+
 	if (Player1.y + 2   > lowerRightY || Player1.inBuilding === buildingNo) {
 		c.beginPath();
-		
-			
 		c.moveTo(lowerRightX - cameraX, lowerRightY - cameraY);
-		
+// if door exists, draw around it	
 		if (theBuildings[buildingNo].southDoor) {
-		
-		c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX, lowerRightY - cameraY);
-		
-		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopRightX, theBuildings[buildingNo].southDoor.rightDoorTopRightY);
-		
-		c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
-		
-		c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX, lowerRightY - cameraY);
-		
+			c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX, lowerRightY - cameraY);
+			c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopRightX, theBuildings[buildingNo].southDoor.rightDoorTopRightY);
+			c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
+			c.lineTo(lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX, lowerRightY - cameraY);
 		} 
-		
 		c.lineTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
-		
-		
-		
 		c.lineTo(roofBottomLeftX, roofBottomLeftY);
-		
-		
-		
 		c.lineTo(roofBottomRightX, roofBottomRightY);
 		c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
-//					c.closePath();
-		
 		c.fillStyle = wallColor;
 		c.fill();
-		
 		c.strokeStyle = wallColor;
-		//c.strokeStyle = 'pink';
 		c.stroke();
-	
 	}
 	
-	
-	
-	/*
-	//draw west wall
-	if (Player1.x   < upperLeftX || Player1.inBuilding === buildingNo) {
-		c.beginPath();
-		c.moveTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
-		c.lineTo(upperLeftX - cameraX, upperLeftY - cameraY);
-		c.lineTo(roofTopLeftX, roofTopLeftY);
-		c.lineTo(roofBottomLeftX, roofBottomLeftY);
-		c.lineTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
-		c.closePath();
-		
-		c.fillStyle = wallColor;
-		c.fill();
-		
-		c.strokeStyle = wallColor;
-		c.stroke();
-	} */
-	
-	
-				// draw NEON
+// draw NEON
+
 if (theBuildings[buildingNo].neonCorners === true ) {				
 
 if (Player1.inBuilding === buildingNo) {
