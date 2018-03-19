@@ -458,7 +458,7 @@ var brownWallSouth=c.createPattern(brownWall,"repeat");
  // Player coords and initial location
  function Player () {
  this.x = 400; 
- this.y = 400;
+ this.y = 600;
  this.w = 20;
  this.h = 20;
  this.deltaX = 0;
@@ -2257,47 +2257,55 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.stroke();
 	}
 	
-// draw NEON
-
-if (theBuildings[buildingNo].neonCorners === true ) {				
-
-if (Player1.inBuilding === buildingNo) {
-	c.strokeStyle = "#0b0830";
-} else {
-	c.strokeStyle = 'pink';
-}
-
-c.beginPath();	
-c.lineTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
-c.lineTo(roofBottomLeftX, roofBottomLeftY);
-c.lineWidth = 4;
-c.stroke();
-c.closePath();
-	
-c.beginPath();	
-c.lineTo(upperLeftX - cameraX, upperLeftY - cameraY);
-c.lineTo(roofTopLeftX, roofTopLeftY);
-
-c.lineWidth = 4;
-c.stroke();
-c.closePath();
-
-c.beginPath();	
-c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
-c.lineTo(roofBottomRightX, roofBottomRightY);
-
-c.lineWidth = 4;
-c.stroke();
-c.closePath();
-
-c.beginPath();	
-c.lineTo(upperRightX - cameraX, upperRightY - cameraY);
-c.lineTo(roofTopRightX, roofTopRightY);
-
-c.lineWidth = 4;
-c.stroke();
-c.closePath();				
-}			
+// draw NEON corners
+// Credit to a pen by Giovanny for how to make this neon effect: https://codepen.io/agar3s/pen/pJpoya
+	if (theBuildings[buildingNo].neonCorners === true && Player1.inBuilding != buildingNo ) {	
+		c.strokeStyle = "rgb(255,105,180,0.2)";
+		c.shadowColor = "rgb(255,105,180)";
+		c.globalCompositeOperation = "lighter";
+		c.shadowBlur = 20;
+		c.lineCap = "round";
+		
+		for (i = 12; i > 0; i = i - 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.lineTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
+			c.lineTo(roofBottomLeftX, roofBottomLeftY);
+			c.stroke();
+			c.closePath();
+		}
+				
+		for (i = 12; i > 0; i = i - 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.lineTo(upperLeftX - cameraX, upperLeftY - cameraY);
+			c.lineTo(roofTopLeftX, roofTopLeftY);
+			c.stroke();
+			c.closePath();
+		}
+		
+		for (i = 12; i > 0; i = i - 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
+			c.lineTo(roofBottomRightX, roofBottomRightY);
+			c.stroke();
+			c.closePath();
+		}
+		
+		for (i = 12; i > 0; i = i - 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.lineTo(upperRightX - cameraX, upperRightY - cameraY);
+			c.lineTo(roofTopRightX, roofTopRightY);
+			c.stroke();
+			c.closePath();		
+		}
+		
+		c.lineCap = "butt";
+		c.shadowBlur = 0;
+		c.globalCompositeOperation = "source-over";		
+	}	// draw neon corners	
 				
 				
 				
@@ -2450,6 +2458,7 @@ theBuildings[2] = {
 	westDoor: {
 		exists: false,
 	},
+	neonCorners: true,
 };
 
 
@@ -2832,7 +2841,7 @@ theBuildings[10] = {
 		bottomDoorTopRightX: 0,
 		bottomDoorTopRightY: 0,
 	},
-	
+	neonCorners: true,
 };
 
 theBuildings[11] = {
