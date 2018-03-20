@@ -13,6 +13,8 @@ console.log("start");
 
 // could do windows by drawing a P shape in the polygon - or just make blue squares. But is there a point if I'll eventually get textures?
 
+// BUG ---- DOORS can be seen through walls -- see building 4
+
 // 
 // COLLISION
 // collission with left door not working on larger doors
@@ -2304,46 +2306,46 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		
 		c.lineCap = "butt";
 		c.shadowBlur = 0;
+		c.lineWidth = 1;
 		c.globalCompositeOperation = "source-over";		
 	}	// draw neon corners	
 				
-				
-				
-				
-				
-				// draw roof
-				
-				if (Player1.inBuilding != buildingNo) {
-				
-				c.beginPath();
+// DRAW ROOF
+	if (Player1.inBuilding != buildingNo) {
+		c.beginPath();
+		c.fillStyle = roofColor;
+		c.beginPath();	
+		c.moveTo(roofTopLeftX, roofTopLeftY);
+		c.lineTo(roofTopRightX, roofTopRightY);
+		c.lineTo(roofBottomRightX, roofBottomRightY);
+		c.lineTo(roofBottomLeftX, roofBottomLeftY);
+		c.lineTo(roofTopLeftX, roofTopLeftY);
+		c.fillStyle = roofColor;
+		c.fill();
+		c.closePath();
+		if (theBuildings[buildingNo].neonRoof === true) {
+			c.strokeStyle = "rgb(255,105,180,0.2)";
+			c.shadowColor = "rgb(255,105,180)";
+			c.globalCompositeOperation = "lighter";
+			c.shadowBlur = 20;
+			c.lineCap = "round";
+			for (i = 12; i > 0; i = i - 3) {
+				c.beginPath();	
+				c.lineWidth = i;
 				c.moveTo(roofTopLeftX, roofTopLeftY);
 				c.lineTo(roofTopRightX, roofTopRightY);
 				c.lineTo(roofBottomRightX, roofBottomRightY);
 				c.lineTo(roofBottomLeftX, roofBottomLeftY);
 				c.lineTo(roofTopLeftX, roofTopLeftY);
-				c.closePath();
-				
-				c.fillStyle = roofColor;
-				c.fill();
-				
-				if (theBuildings[buildingNo].neonCorners === true) {
-					//c.strokeStyle = 'pink';
-					c.strokeStyle = roofColor;
-				} else {
-					c.strokeStyle = roofColor;
-				}
-				
 				c.stroke();
-				}
-		c.closePath();
-	
-// cancel player move offset
-
-/*	if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].speed != 0) {
-				cameraX -= (vehiclesOnScreen[Player1.mot].xtarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].xTurnTarget;
-				cameraY -= (vehiclesOnScreen[Player1.mot].ytarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].yTurnTarget;
-				}
-	*/
+				c.closePath();
+			}
+		} // draw neon edges to roof	
+		c.lineCap = "butt";
+		c.shadowBlur = 0;
+		c.lineWidth = 1;
+		c.globalCompositeOperation = "source-over";
+	} // draw roof
 } // drawRectangularBuilding
 
 
@@ -2356,8 +2358,8 @@ theBuildings[1] = {
 	lowerRightY: 950 - 1,
 	building: 1,
 	height: 1.1,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
+	wallColor: "#000",
+	roofColor: "#000",
 	type: "rectangular",
 	upperLeftTile: 7,
 	lowerRightTile: 16,
@@ -2411,7 +2413,7 @@ theBuildings[1] = {
 	},
 	
 	neonCorners: true,
-	
+	neonRoof: true,
 	
 };
 
@@ -2459,6 +2461,7 @@ theBuildings[2] = {
 		exists: false,
 	},
 	neonCorners: true,
+	neonRoof: true,
 };
 
 
@@ -2472,14 +2475,14 @@ theBuildings[4] = {
 	height: 1.5,
 	wallColor: "#040311",
 	roofColor: "#0f0b44",
-	wallColor: "#990000",
-	roofColor: "brown",
+	wallColor: "#000",
+	roofColor: "#000",
 	type: "rectangular",
 	upperLeftTile: 7,
 	lowerRightTile: 16,
 	floor: indoorFloorImage,
-	//neonCorners: true,
-	
+	neonCorners: true,
+	neonRoof: true,
 	southDoor: {
 		exists: true,
 		distanceFromDoor: 0,
@@ -2842,6 +2845,7 @@ theBuildings[10] = {
 		bottomDoorTopRightY: 0,
 	},
 	neonCorners: true,
+	neonRoof: true,
 };
 
 theBuildings[11] = {
