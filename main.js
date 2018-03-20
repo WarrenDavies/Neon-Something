@@ -2266,7 +2266,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.strokeStyle = "rgb(255,105,180,0.2)";
 		c.shadowColor = "rgb(255,105,180)";
 		c.globalCompositeOperation = "lighter";
-		c.shadowBlur = 20;
+		//c.shadowBlur = 4;
 		c.lineCap = "round";
 		c.beginPath();	
 		for (i = 12; i > 0; i = i - 3) {
@@ -2322,10 +2322,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.strokeStyle = "rgb(255,105,180,0.2)";
 			c.shadowColor = "rgb(255,105,180)";
 			c.globalCompositeOperation = "lighter";
-			c.shadowBlur = 20;
+			//c.shadowBlur = 4;
 			c.lineCap = "round";
 			c.beginPath();	
-			for (i = 12; i > 0; i = i - 3) {
+			for (i = 13; i > 0; i = i - 3) {
 				c.lineWidth = i;
 				c.rect(roofTopLeftX, roofTopLeftY, roofTopRightX - roofTopLeftX, roofBottomRightY - roofTopLeftY );
 				c.stroke();
