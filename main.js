@@ -6,7 +6,8 @@ console.log("start");
 
 // to do
 
-// door colors set building by building
+// door  and neon colors set building by building
+
 
 // get the camera out of the drawing functions - for the buildings
 // put the door coordinates etc into the building objects and set it to draw doors automatically
@@ -2267,43 +2268,37 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.globalCompositeOperation = "lighter";
 		c.shadowBlur = 20;
 		c.lineCap = "round";
-		
+		c.beginPath();	
 		for (i = 12; i > 0; i = i - 3) {
-			c.beginPath();	
+			
 			c.lineWidth = i;
-			c.lineTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
+			c.moveTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
 			c.lineTo(roofBottomLeftX, roofBottomLeftY);
 			c.stroke();
-			c.closePath();
+			
 		}
-				
 		for (i = 12; i > 0; i = i - 3) {
 			c.beginPath();	
 			c.lineWidth = i;
-			c.lineTo(upperLeftX - cameraX, upperLeftY - cameraY);
+			c.moveTo(upperLeftX - cameraX, upperLeftY - cameraY);
 			c.lineTo(roofTopLeftX, roofTopLeftY);
 			c.stroke();
-			c.closePath();
 		}
-		
 		for (i = 12; i > 0; i = i - 3) {
 			c.beginPath();	
 			c.lineWidth = i;
-			c.lineTo(lowerRightX - cameraX, lowerRightY - cameraY);
+			c.moveTo(lowerRightX - cameraX, lowerRightY - cameraY);
 			c.lineTo(roofBottomRightX, roofBottomRightY);
 			c.stroke();
-			c.closePath();
 		}
-		
 		for (i = 12; i > 0; i = i - 3) {
 			c.beginPath();	
 			c.lineWidth = i;
-			c.lineTo(upperRightX - cameraX, upperRightY - cameraY);
+			c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
 			c.lineTo(roofTopRightX, roofTopRightY);
 			c.stroke();
-			c.closePath();		
 		}
-		
+		c.closePath();	
 		c.lineCap = "butt";
 		c.shadowBlur = 0;
 		c.lineWidth = 1;
@@ -2329,17 +2324,13 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.globalCompositeOperation = "lighter";
 			c.shadowBlur = 20;
 			c.lineCap = "round";
+			c.beginPath();	
 			for (i = 12; i > 0; i = i - 3) {
-				c.beginPath();	
 				c.lineWidth = i;
-				c.moveTo(roofTopLeftX, roofTopLeftY);
-				c.lineTo(roofTopRightX, roofTopRightY);
-				c.lineTo(roofBottomRightX, roofBottomRightY);
-				c.lineTo(roofBottomLeftX, roofBottomLeftY);
-				c.lineTo(roofTopLeftX, roofTopLeftY);
+				c.rect(roofTopLeftX, roofTopLeftY, roofTopRightX - roofTopLeftX, roofBottomRightY - roofTopLeftY );
 				c.stroke();
-				c.closePath();
 			}
+			c.closePath();
 		} // draw neon edges to roof	
 		c.lineCap = "butt";
 		c.shadowBlur = 0;
@@ -5087,7 +5078,7 @@ function debugHUD(){
 	c.fillStyle = 'black';
 	c.strokeStyle = "black";
 		var showWayPoints = true;
-		var showPlayer = true;
+		var showPlayer = false;
 		if (showWayPoints) {
 		
 		theWayPoints.forEach( function(i,j) {
