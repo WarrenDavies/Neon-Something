@@ -2194,7 +2194,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
 		c.lineTo(theBuildings[buildingNo].southDoor.doorTopRightX, theBuildings[buildingNo].southDoor.doorTopRightY);
 		
-		c.fillStyle = "black";
+		c.fillStyle = theBuildings[buildingNo].southDoor.leftDoorColor;
 		c.fill();
 		c.strokeStyle = "black";
 		c.stroke();
@@ -2231,7 +2231,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopLeftX, theBuildings[buildingNo].southDoor.rightDoorTopLeftY);
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopRightX, theBuildings[buildingNo].southDoor.rightDoorTopRightY);
 		
-		c.fillStyle = "blue";
+		c.fillStyle = theBuildings[buildingNo].southDoor.rightDoorColor;
 		c.fill();
 		c.strokeStyle = "blue";
 		c.stroke();
@@ -2374,6 +2374,9 @@ theBuildings[1] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	northDoor: {
 		exists: true,
@@ -2393,6 +2396,10 @@ theBuildings[1] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
+		
 	},
 	
 	eastDoor: {
