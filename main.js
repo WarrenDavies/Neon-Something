@@ -21,13 +21,15 @@ console.log("start");
 // collission with left door not working on larger doors
 
 
+// Civilian movement
+
+// car physics 
+
 // then collision detection
 
 // animation for getting into cars, should enter car by the door?
 
 // get better graphics - make it look more 80s.
-
-/// start looking at the NEON effect
 
 // collect other cars with a tow truck
 
@@ -2263,8 +2265,8 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 // draw NEON corners
 // Credit to a pen by Giovanny for how to make this neon effect: https://codepen.io/agar3s/pen/pJpoya
 	if (theBuildings[buildingNo].neonCorners === true && Player1.inBuilding != buildingNo ) {	
-		c.strokeStyle = "rgb(255,105,180,0.2)";
-		c.shadowColor = "rgb(255,105,180)";
+		c.strokeStyle = theBuildings[buildingNo].neonColor;
+		c.shadowColor = theBuildings[buildingNo].neonShadowColor;
 		c.globalCompositeOperation = "lighter";
 		//c.shadowBlur = 4;
 		c.lineCap = "round";
@@ -2319,8 +2321,8 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.fill();
 		c.closePath();
 		if (theBuildings[buildingNo].neonRoof === true) {
-			c.strokeStyle = "rgb(255,105,180,0.2)";
-			c.shadowColor = "rgb(255,105,180)";
+			c.strokeStyle = theBuildings[buildingNo].neonColor;
+			c.shadowColor = theBuildings[buildingNo].neonShadowColor;
 			c.globalCompositeOperation = "lighter";
 			//c.shadowBlur = 4;
 			c.lineCap = "round";
@@ -2411,6 +2413,8 @@ theBuildings[1] = {
 	},
 	
 	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
 	neonRoof: true,
 	
 };
@@ -2448,6 +2452,9 @@ theBuildings[2] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	northDoor: {
 		exists: false,
@@ -2459,6 +2466,8 @@ theBuildings[2] = {
 		exists: false,
 	},
 	neonCorners: true,
+	neonColor: "rgb(255,105,180,0.2)",
+	neonShadowColor: "rgb(255,105,180)",	
 	neonRoof: true,
 };
 
@@ -2481,6 +2490,8 @@ theBuildings[4] = {
 	floor: indoorFloorImage,
 	neonCorners: true,
 	neonRoof: true,
+	neonColor: "rgb(255,105,180,0.2)",
+	neonShadowColor: "rgb(255,105,180)",
 	southDoor: {
 		exists: true,
 		distanceFromDoor: 0,
@@ -2499,6 +2510,9 @@ theBuildings[4] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	northDoor: {
 		exists: false,
@@ -2556,7 +2570,8 @@ theBuildings[20] = {
 	upperLeftTile: 7,
 	lowerRightTile: 16,
 	floor: indoorFloorImage,
-	//neonCorners: true,
+	neonColor: "rgb(255,105,180,0.2)",
+	neonShadowColor: "rgb(255,105,180)",
 	southDoor: {
 		exists: false,
 	},
@@ -2752,6 +2767,9 @@ theBuildings[9] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	southDoor: {
 		exists: true,
@@ -2771,6 +2789,9 @@ theBuildings[9] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	eastDoor: {
 		exists: false,
@@ -2795,6 +2816,8 @@ theBuildings[10] = {
 	lowerRightTile: 16,
 	floor: indoorFloorImage,
 	neonCorners: true,
+	neonColor: "rgb(255,105,180,0.2)",
+	neonShadowColor: "rgb(255,105,180)",
 	southDoor: {
 		exists: false,
 	},
@@ -2820,6 +2843,9 @@ theBuildings[10] = {
 		bottomDoorTopLeftY: 0,
 		bottomDoorTopRightX: 0,
 		bottomDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	
 	westDoor: {
@@ -2841,8 +2867,13 @@ theBuildings[10] = {
 		bottomDoorTopLeftY: 0,
 		bottomDoorTopRightX: 0,
 		bottomDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	neonCorners: true,
+	neonColor: "rgb(255,105,180,0.2)",
+	neonShadowColor: "rgb(255,105,180)",
 	neonRoof: true,
 };
 
@@ -2878,6 +2909,9 @@ theBuildings[11] = {
 		rightDoorTopLeftY: 0,
 		rightDoorTopRightX: 0,
 		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	northDoor: {
 		exists: false,
