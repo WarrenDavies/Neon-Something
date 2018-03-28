@@ -8,6 +8,7 @@ console.log("start");
 
 // door  and neon colors set building by building
 
+// make functions smaller
 
 // get the camera out of the drawing functions - for the buildings
 // put the door coordinates etc into the building objects and set it to draw doors automatically
