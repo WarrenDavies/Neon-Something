@@ -3100,7 +3100,6 @@ function updateCivilians() {
 					c.strokeStyle = "blue";
 					c.lineWidth = 2;
 					c.stroke();
-					
 					c.beginPath();
 					c.moveTo(k.x + 20, k.y - 20);
 					c.lineTo(k.x - 20, k.y + 20);
@@ -3116,71 +3115,73 @@ function updateCivilians() {
 		if (i.walking) {
 			
 // check collisions with other civilians
-			for (k = 0; k < theCivilians.length - 1; k++) {
-				if ( k != j ) {
-					if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
-					||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
-						i.collisionCourse = true;
-						i.collidesWith = k;
-					}	
+				for (k = 0; k < theCivilians.length - 1; k++) {
+					if ( k != j ) {
+						if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
+						||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
+							i.collisionCourse = true;
+							i.collidesWith = k;
+						}	
+					}
 				}
-			}
 			
 // check collisions with player
-			if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
-			||  getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
-				i.collisionCourse = true;
-				i.collidesWith = "Player";
-			}
+				if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
+				||  getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
+					i.collisionCourse = true;
+					i.collidesWith = "Player";
+				}
 			
 // what we do if a collision was detected
-			if (i.collisionCourse) {
-				i.walking = false;
-				var holdAngle = i.angle - 1.5;
-				var holdCos = Math.cos(holdAngle);
-				var holdSin = Math.sin(holdAngle);
-				
-				i.wayPoints.push({
-					x: i.x + (holdCos * 70),
-					y: i.y + (holdSin * 70)
-				});
-				i.collisionCourse = false;
-				i.collidesWith = 0;
-			} else {
-				i.x += i.speed * i.xVector;
-				i.y += i.speed * i.yVector;
-				}
+				if (i.collisionCourse) {
+					i.walking = false;
+					var holdAngle = i.angle - 1.5;
+					var holdCos = Math.cos(holdAngle);
+					var holdSin = Math.sin(holdAngle);
+					
+					i.wayPoints.push({
+						x: i.x + (holdCos * 70),
+						y: i.y + (holdSin * 70)
+					});
+					i.collisionCourse = false;
+					i.collidesWith = 0;
+				} 
 			}
 		} 
 		
 		if (!i.walking) {
 // method that looks for the angle which shortens the distance by the most
 // NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
+		
+		if (i.wayPoints.length > 0) {
+			var xDifference = (i.wayPoints[i.wayPoints.length - 1].x - i.x) * (i.wayPoints[i.wayPoints.length - 1].x - i.x);
+			var	yDifference = (i.wayPoints[i.wayPoints.length - 1].y - i.y) * (i.wayPoints[i.wayPoints.length - 1].y - i.y);
+			var distanceHolder = Math.sqrt(xDifference + yDifference);
+			
+			var xStepDifference = (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector)) * (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector));
+			var	yStepDifference = (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.yVector)) *  (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.yVector));
 
-			if (i.wayPoints.length > 0) {
-				var xDifference = (i.wayPoints[i.wayPoints.length - 1].x - i.x) * (i.wayPoints[i.wayPoints.length - 1].x - i.x);
-				var	yDifference = (i.wayPoints[i.wayPoints.length - 1].y - i.y) * (i.wayPoints[i.wayPoints.length - 1].y - i.y);
-				var distanceHolder = Math.sqrt(xDifference + yDifference);
-				
-				var xStepDifference = (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector)) * (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector));
-				var	yStepDifference = (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.wayPoints[i.wayPoints.length - 1].y)) * (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.wayPoints[i.wayPoints.length - 1].y));
-				
-				var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
-				
-				i.distanceHolder = distanceHolder;
-				i.distanceStepHolder = distanceStepHolder;
-				
-				
-				var targetAngle = Math.atan2(i.wayPoints[i.wayPoints.length - 1].y - i.y, i.wayPoints[i.wayPoints.length - 1].x - i.x );
+			var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
+			
+			i.distanceHolder = distanceHolder;
+			i.distanceStepHolder = distanceStepHolder;
+			
+			
+			var targetAngle = Math.atan2(i.wayPoints[i.wayPoints.length - 1].y - i.y, i.wayPoints[i.wayPoints.length - 1].x - i.x );
 
-				targetAngle = targetAngle * (180/Math.PI);
-				if (j === 1) {console.log(targetAngle);}
-				if (j === 1) {console.log(i.angle);}
-			}
+			targetAngle = targetAngle * (180 / Math.PI);
+			if (j === 1) {console.log(i.distanceHolder);}
+			if (j === 1) {console.log(i.distanceStepHolder);}
+		}
 					
 // if the civilian is facing the target, do this
 			if (distanceHolder - distanceStepHolder > 1.99) {
 				i.walking = true;
+				if (j === 1) {console.log(i.speed);}
+				if (j === 1) {console.log(i.xVector);}
+				if (j === 1) {console.log(i.yVector);}
+				if (j === 1) {console.log(i.x + (i.speed * i.xVector));}
+			
 			}
 		
 			if (i.wayPoints.length > 0) {
@@ -3188,6 +3189,13 @@ function updateCivilians() {
 			} else {
 				i.angle += .025;
 			}
+			i.xVector = Math.cos(i.angle);
+			i.yVector = Math.sin(i.angle);
+		}
+		
+		if (i.walking) {
+			i.x += i.speed * i.xVector;
+			i.y += i.speed * i.yVector;
 		}
 	});
 	if (theCivilians.length === 0) {
@@ -5163,7 +5171,6 @@ function debugHUD(){
 			}
 			
 			if (debugTarget){
-			console.log("Target on");
 			c.font = 'bold 14pt Calibri';
 			c.fillText("ID: " + Math.floor(debugTarget.ID), 500, 125);
 			c.fillText("x: " + Math.floor(debugTarget.x), 500, 150);
