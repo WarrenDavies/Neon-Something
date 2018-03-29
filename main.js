@@ -2993,7 +2993,8 @@ theBuildings.forEach( function(i, j) {
 			yVector: 0,
 			collisionCourse: false,
 			wayPoints: [],
-			collidesWith: 0
+			collidesWith: 0,
+			currentStatus: "spawned"
 			
 		 });
 		theCivilians[j].x = theWayPoints[j].x;
@@ -3006,7 +3007,6 @@ theBuildings.forEach( function(i, j) {
 			type: "mapWaypoint",
 			wayPointNo: j,
 		};
-		console.log(theCivilians[j].wayPoints[0]);
 	 } // for
 }
 loadCivilian();
@@ -3014,15 +3014,16 @@ theCivilians[2].targetWP = 1;
 
 function updateCivilians() {
 	theCivilians.forEach(function(i, j) {
-
-// if the civilian has reached the way point 
 		if (i.wayPoints.length > 0) {
+// if the civilian has reached the way point 
 			if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40) ) {
+// stop walking
+			i.walking = false;
+			i.currentStatus = "Reached wayPoint"
 // if this is a map waypoint, log where we are so we can choose a new waypoint that connects to this one
-			if (i.wayPoints[i.wayPoints.length - 1].type = "mapWayPoint") {
-				i.currentWayPoint = i.wayPoints[i.wayPoints.length - 1].wayPointNo;
-			}
-				
+				if (i.wayPoints[i.wayPoints.length - 1].type = "mapWayPoint") {
+					i.currentWayPoint = i.wayPoints[i.wayPoints.length - 1].wayPointNo;
+				}			
 // if other waypoints exist, splice the one we just reached, and stop walking so that we can turn and face the next waypoint			
 				if (i.wayPoints.length > 0) {
 					i.wayPoints.splice (i.wayPoints.length - 1, 1);
@@ -3030,28 +3031,23 @@ function updateCivilians() {
 				}
 			}
 		}
-// if no waypoints exist, we have reached the final destination. For now, we will just stop walking and set a new random waypoint.
+// if no waypoints exist, we have reached the final destination. 
 		if (i.wayPoints.length === 0) {
-			i.walking = false;
+// For now, we will just stop walking and set a new random waypoint.
 			var newTargetWayPoint = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
-			
 			i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[newTargetWayPoint];
 			i.wayPoints.push({
 				x: theWayPoints[i.targetWayPoint].x,
-				y: theWayPoints[i.targetWayPoint].y
+				y: theWayPoints[i.targetWayPoint].y,
+				type: "mapWaypoint",
+				wayPointNo: i.targetWayPoint,
 			});
-
 // set the new target angle. May not need this.
 				var deltaX = i.wayPoints[i.wayPoints.length - 1].x - i.x;
 				var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
 				i.targetAngle = Math.atan(deltaY / deltaX);
 			}
 		
-			
-				
-			
-	
-	
 		//i.xVector = Math.cos(i.angle);
 		//i.yVector = Math.sin(i.angle);
 		
@@ -3094,23 +3090,25 @@ function updateCivilians() {
 
 //draw interim waypoint
 			i.wayPoints.forEach(function (k, l) {
-				c.beginPath();
-				c.save();
-				c.translate(i.x - cameraX, i.y - cameraY); 
-				c.translate(-i.x , -i.y);
-				c.moveTo(k.x - 20, k.y - 20);
-				c.lineTo(k.x + 20, k.y + 20);
-				c.strokeStyle = "blue";
-				c.lineWidth = 2;
-				c.stroke();
-				
-				c.beginPath();
-				c.moveTo(k.x + 20, k.y - 20);
-				c.lineTo(k.x - 20, k.y + 20);
-				c.stroke()
-				c.fillStyle = "black";
-				c.fillText(j, i.x - 5, i.y - 20);
-				c.restore();
+				if (collidesSpecify(cameraX, cameraY, cameraW, cameraH, k.x - 20, k.y - 20, 40, 40)) {
+					c.beginPath();
+					c.save();
+					c.translate(i.x - cameraX, i.y - cameraY); 
+					c.translate(-i.x , -i.y);
+					c.moveTo(k.x - 20, k.y - 20);
+					c.lineTo(k.x + 20, k.y + 20);
+					c.strokeStyle = "blue";
+					c.lineWidth = 2;
+					c.stroke();
+					
+					c.beginPath();
+					c.moveTo(k.x + 20, k.y - 20);
+					c.lineTo(k.x - 20, k.y + 20);
+					c.stroke()
+					c.fillStyle = "black";
+					c.fillText(j, i.x - 5, i.y - 20);
+					c.restore();
+				}
 			});
 		 
 	
@@ -3175,12 +3173,12 @@ function updateCivilians() {
 				
 				var targetAngle = Math.atan2(i.wayPoints[i.wayPoints.length - 1].y - i.y, i.wayPoints[i.wayPoints.length - 1].x - i.x );
 
-			targetAngle = targetAngle * (180/Math.PI);
-				
+				targetAngle = targetAngle * (180/Math.PI);
+				if (j === 1) {console.log(targetAngle);}
+				if (j === 1) {console.log(i.angle);}
 			}
+					
 // if the civilian is facing the target, do this
-			
-				
 			if (distanceHolder - distanceStepHolder > 1.99) {
 				i.walking = true;
 			}
