@@ -2987,13 +2987,15 @@ theBuildings.forEach( function(i, j) {
 			standImage: civStand,
 			walkAnimations: ["", civWalk1, civWalk2, civWalk3, civWalk4],
 			targetWayPoint: 0,
+			targetAngle: 0,
 			currentWayPoint: 0,
 			facingBackwards: false,
 			xVector: 0,
 			yVector: 0,
 			collisionCourse: false,
 			wayPoints: [],
-			collidesWith: 0,
+			collidesWithType: "No Collision",
+			collidesWithID: -1,
 			currentStatus: "spawned"
 			
 		 });
@@ -3012,28 +3014,53 @@ theBuildings.forEach( function(i, j) {
 loadCivilian();
 theCivilians[2].targetWP = 1;
 
+function getXDirection (x, y, xt, yt) {
+	var deltaX = xt - x;
+	var deltaY = yt - y;
+	var rotation = Math.atan2(deltaY, deltaX);
+	var xtarget = Math.cos(rotation);
+	var ytarget = Math.sin(rotation);
+	return xtarget;
+}
+
+function getYDirection (x, y, xt, yt) {
+	var deltaX = xt - x;
+	var deltaY = yt - y;
+	var rotation = Math.atan2(deltaY, deltaX);
+	var xtarget = Math.cos(rotation);
+	var ytarget = Math.sin(rotation);
+	return ytarget;
+}
+
+
+
 function updateCivilians() {
 	theCivilians.forEach(function(i, j) {
 		if (i.wayPoints.length > 0) {
+			
 // if the civilian has reached the way point 
 			if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40) ) {
+				
 // stop walking
 			i.walking = false;
 			i.currentStatus = "Reached wayPoint"
+			
 // if this is a map waypoint, log where we are so we can choose a new waypoint that connects to this one
 				if (i.wayPoints[i.wayPoints.length - 1].type = "mapWayPoint") {
 					i.currentWayPoint = i.wayPoints[i.wayPoints.length - 1].wayPointNo;
-				}			
-// if other waypoints exist, splice the one we just reached, and stop walking so that we can turn and face the next waypoint			
+				}	
+				
+// if other waypoints exist, splice the one we just reached
 				if (i.wayPoints.length > 0) {
 					i.wayPoints.splice (i.wayPoints.length - 1, 1);
-					i.walking = false;
 				}
 			}
 		}
+		
 // if no waypoints exist, we have reached the final destination. 
 		if (i.wayPoints.length === 0) {
-// For now, we will just stop walking and set a new random waypoint.
+			
+// For now, we will just set a new random waypoint.
 			var newTargetWayPoint = Math.floor(Math.random()*theWayPoints[i.currentWayPoint].connections.length);
 			i.targetWayPoint = theWayPoints[i.currentWayPoint].connections[newTargetWayPoint];
 			i.wayPoints.push({
@@ -3042,15 +3069,17 @@ function updateCivilians() {
 				type: "mapWaypoint",
 				wayPointNo: i.targetWayPoint,
 			});
-// set the new target angle. May not need this.
-				var deltaX = i.wayPoints[i.wayPoints.length - 1].x - i.x;
-				var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
-				i.targetAngle = Math.atan(deltaY / deltaX);
-			}
-		
-		//i.xVector = Math.cos(i.angle);
-		//i.yVector = Math.sin(i.angle);
-		
+		}
+// set direction for movement		
+			i.xVector = getXDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+			i.yVector = getYDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+			
+// set the new target angle.
+			var deltaX = i.wayPoints[i.wayPoints.length - 1].x - i.x;
+			var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
+			i.targetAngle = Math.atan(deltaY / deltaX);
+			
+			
 //draw collision areas
 		lineColor = "black";
 		c.beginPath();
@@ -3083,12 +3112,7 @@ function updateCivilians() {
 		c.restore();
 		
 		if (i.wayPoints.length > 0) {
-// this should not need to be set every frame.
-			i.xTarget = i.wayPoints[i.wayPoints.length - 1].x;
-			i.yTarget = i.wayPoints[i.wayPoints.length - 1].y;
-		
-
-//draw interim waypoint
+//draw interim waypoint FOR DEBUGGIN
 			i.wayPoints.forEach(function (k, l) {
 				if (collidesSpecify(cameraX, cameraY, cameraW, cameraH, k.x - 20, k.y - 20, 40, 40)) {
 					c.beginPath();
@@ -3109,7 +3133,7 @@ function updateCivilians() {
 					c.restore();
 				}
 			});
-		 
+		 }
 	
 // Check if the civilian is walking and if so, detect collision	
 		if (i.walking) {
@@ -3117,86 +3141,81 @@ function updateCivilians() {
 // check collisions with other civilians
 				for (k = 0; k < theCivilians.length - 1; k++) {
 					if ( k != j ) {
-						if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x - 20, theCivilians[k].y + 20, theCivilians[k].x + 20, theCivilians[k].y - 20)  
-						||   getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), theCivilians[k].x + 20, theCivilians[k].y + 20, theCivilians[k].x - 20, theCivilians[k].y - 20)) {
+						if (collidesSpecify(i.x + (i.speed * i.xVector), i.y + (i.speed * i.yVector), i.w, i.h, theCivilians[k].x, theCivilians[k].y, theCivilians[k].w, theCivilians[k].h)) {
 							i.collisionCourse = true;
-							i.collidesWith = k;
+							i.collidesWithID = k;
+							i.collidesWithType = "Civilian";
+							
 						}	
 					}
 				}
 			
 // check collisions with player
-				if (getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x - 20, Player1.y + 20, Player1.x + 20, Player1.y - 20)			
-				||  getLineIntersection(i.x, i.y, i.x + (i.xVector * i.collideDistance), i.y + (i.yVector * i.collideDistance), Player1.x + 20, Player1.y + 20, Player1.x - 20, Player1.y - 20) ) {
+				if (collidesSpecify(i.x + (i.speed * i.xVector), i.y + (i.speed * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
 					i.collisionCourse = true;
-					i.collidesWith = "Player";
+					i.collidesWithType = "Player";
+					i.collidesWithID = -1;
 				}
 			
 // what we do if a collision was detected
 				if (i.collisionCourse) {
 					i.walking = false;
-					var holdAngle = i.angle - 1.5;
+					
+					if (theCivilians[i.collidesWithID].collidesWithID === j) {
+						var holdAngle = i.angle + 1.5;
+					} else {
+						var holdAngle = i.angle - 1.5;
+					}
 					var holdCos = Math.cos(holdAngle);
 					var holdSin = Math.sin(holdAngle);
-					
 					i.wayPoints.push({
 						x: i.x + (holdCos * 70),
 						y: i.y + (holdSin * 70)
 					});
+					
+						
 					i.collisionCourse = false;
 					i.collidesWith = 0;
+					
+					i.xVector = getXDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+					i.yVector = getYDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
 				} 
 			}
-		} 
+		 
 		
-		if (!i.walking) {
-// method that looks for the angle which shortens the distance by the most
-// NEED TO - determine the quickest and best way to rotate when avoiding obstacles, right now it's just anti clockwise
+			if (!i.walking) {
+				if (i.wayPoints.length > 0) {
+					if (i.targetAngle > i.angle){
+						i.angle += .025;						
+					}
+					if (i.targetAngle < i.angle){
+						i.angle -= .025;						
+					}
+					if (i.angle > 6.283 && i.angle < -6.283) {
+						i.angle = 0.001;
+					}
+				
+					if (i.angle > i.targetAngle - 0.0251 && i.angle < i.targetAngle + 0.0251) {
+						i.walking = true;
+					}
+				} 
+			} 
 		
-		if (i.wayPoints.length > 0) {
-			var xDifference = (i.wayPoints[i.wayPoints.length - 1].x - i.x) * (i.wayPoints[i.wayPoints.length - 1].x - i.x);
-			var	yDifference = (i.wayPoints[i.wayPoints.length - 1].y - i.y) * (i.wayPoints[i.wayPoints.length - 1].y - i.y);
-			var distanceHolder = Math.sqrt(xDifference + yDifference);
-			
-			var xStepDifference = (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector)) * (i.wayPoints[i.wayPoints.length - 1].x - (i.x + i.speed * i.xVector));
-			var	yStepDifference = (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.yVector)) *  (i.wayPoints[i.wayPoints.length - 1].y - (i.y + i.speed * i.yVector));
-
-			var distanceStepHolder = Math.sqrt(xStepDifference + yStepDifference);
-			
-			i.distanceHolder = distanceHolder;
-			i.distanceStepHolder = distanceStepHolder;
-			
-			
-			var targetAngle = Math.atan2(i.wayPoints[i.wayPoints.length - 1].y - i.y, i.wayPoints[i.wayPoints.length - 1].x - i.x );
-
-			targetAngle = targetAngle * (180 / Math.PI);
-			if (j === 1) {console.log(i.distanceHolder);}
-			if (j === 1) {console.log(i.distanceStepHolder);}
-		}
-					
-// if the civilian is facing the target, do this
-			if (distanceHolder - distanceStepHolder > 1.99) {
-				i.walking = true;
-				if (j === 1) {console.log(i.speed);}
-				if (j === 1) {console.log(i.xVector);}
-				if (j === 1) {console.log(i.yVector);}
-				if (j === 1) {console.log(i.x + (i.speed * i.xVector));}
-			
+			if (i.walking) {
+				if (i.angle > i.targetAngle - 0.0011 && i.angle < i.targetAngle + 0.0011) {
+					if (i.targetAngle > i.angle){
+							i.angle += .001;
+					}
+					if (i.targetAngle < i.angle){
+						i.angle -= .001;						
+					}
+					if (i.angle > 6.283 && i.angle < -6.283) {
+						i.angle = 0.01;
+					}
+				}			
+				i.x += i.speed * i.xVector;
+				i.y += i.speed * i.yVector;
 			}
-		
-			if (i.wayPoints.length > 0) {
-				i.angle -= .025;
-			} else {
-				i.angle += .025;
-			}
-			i.xVector = Math.cos(i.angle);
-			i.yVector = Math.sin(i.angle);
-		}
-		
-		if (i.walking) {
-			i.x += i.speed * i.xVector;
-			i.y += i.speed * i.yVector;
-		}
 	});
 	if (theCivilians.length === 0) {
 		loadCivilian();
@@ -5126,7 +5145,7 @@ function debugHUD(){
 	c.fillStyle = 'black';
 	c.strokeStyle = "black";
 		var showWayPoints = true;
-		var showPlayer = false;
+		var showPlayer = true;
 		if (showWayPoints) {
 		
 		theWayPoints.forEach( function(i,j) {
@@ -5198,6 +5217,9 @@ function debugHUD(){
 			debugTarget.collidesWith,500, 525);
 			c.fillText("No. of waypoints: " +
 			debugTarget.wayPoints.length,500, 550);
+			
+			c.fillText("Angle degrees: " +
+			debugTarget.targetAnglePI,500, 575);
 			
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
