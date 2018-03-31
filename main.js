@@ -3032,6 +3032,11 @@ function getYDirection (x, y, xt, yt) {
 	return ytarget;
 }
 
+function getAngle (x, y, xt, yt) {
+	var deltaX = xt - x;
+	var deltaY = yt - y;
+	return Math.atan2(deltaY,  deltaX);
+}
 
 
 function updateCivilians() {
@@ -3187,33 +3192,12 @@ function updateCivilians() {
 		 
 			if (!i.walking) {
 				if (i.wayPoints.length > 0) {
-					if (i.targetAngle > i.angle){
-						i.angle += .025;						
-					}
-					if (i.targetAngle < i.angle){
-						i.angle -= .025;						
-					}
-					if (i.angle > 6.283 && i.angle < -6.283) {
-						i.angle = 0.001;
-					}
-					if (i.angle > i.targetAngle - 0.0251 && i.angle < i.targetAngle + 0.0251) {
-						i.walking = true;
-					}
+					i.angle = getAngle(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+					i.walking = true;
 				} 
 			} 
 		
 			if (i.walking) {
-				if (i.angle > i.targetAngle - 0.0011 && i.angle < i.targetAngle + 0.0011) {
-					if (i.targetAngle > i.angle){
-							i.angle += .001;
-					}
-					if (i.targetAngle < i.angle){
-						i.angle -= .001;						
-					}
-					if (i.angle > 6.283 && i.angle < -6.283) {
-						i.angle = 0.01;
-					}
-				}			
 				i.x += i.speed * i.xVector;
 				i.y += i.speed * i.yVector;
 			}
