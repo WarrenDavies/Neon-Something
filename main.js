@@ -3159,30 +3159,32 @@ function updateCivilians() {
 			
 // what we do if a collision was detected
 				if (i.collisionCourse) {
-					i.walking = false;
-					
-					if (theCivilians[i.collidesWithID].collidesWithID === j) {
-						var holdAngle = i.angle + 1.5;
-					} else {
-						var holdAngle = i.angle - 1.5;
-					}
-					var holdCos = Math.cos(holdAngle);
-					var holdSin = Math.sin(holdAngle);
-					i.wayPoints.push({
-						x: i.x + (holdCos * 70),
-						y: i.y + (holdSin * 70)
-					});
-					
+					if (i.collidesWithType !== "Civilian" || i.wayPoints[i.wayPoints.length - 1].type !== "Avoid Civilian") {
+						i.walking = false;
 						
-					i.collisionCourse = false;
-					i.collidesWith = 0;
-					
-					i.xVector = getXDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
-					i.yVector = getYDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+						if (theCivilians[i.collidesWithID].collidesWithID === j) {
+							var holdAngle = i.angle + 1.5;
+						} else {
+							var holdAngle = i.angle - 1.5;
+						}
+						var holdCos = Math.cos(holdAngle);
+						var holdSin = Math.sin(holdAngle);
+						i.wayPoints.push({
+							x: i.x + (holdCos * 50),
+							y: i.y + (holdSin * 50),
+							type: "Avoid Civilian",
+						});
+						
+							
+						i.collisionCourse = false;
+						i.collidesWith = 0;
+						
+						i.xVector = getXDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+						i.yVector = getYDirection(i.x, i.y, i.wayPoints[i.wayPoints.length - 1].x, i.wayPoints[i.wayPoints.length - 1].y);
+					}
 				} 
 			}
 		 
-		
 			if (!i.walking) {
 				if (i.wayPoints.length > 0) {
 					if (i.targetAngle > i.angle){
@@ -3194,7 +3196,6 @@ function updateCivilians() {
 					if (i.angle > 6.283 && i.angle < -6.283) {
 						i.angle = 0.001;
 					}
-				
 					if (i.angle > i.targetAngle - 0.0251 && i.angle < i.targetAngle + 0.0251) {
 						i.walking = true;
 					}
