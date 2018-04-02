@@ -3169,19 +3169,28 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 					i.collidesWithID = -1;
 				}
 			
-// what we do if a collision was detected
+// This part defines what we do if a collision was detected
 				if (i.collisionCourse) {
+
+				
 					if (i.collidesWithType !== "Civilian" || i.wayPoints[i.wayPoints.length - 1].type !== "Avoid Civilian") {
 						i.walking = false;
-						
+
+// if two civilian collide with each other (must be head on), have them move opposite directions to avoid each other (i.e., both rotate clockwise), if it's a civilian but not headon (hit their side, or shunt), make it random as to which way they move to avoid				
 						if (i.collidesWithType === "Civilian") { 
 							if (theCivilians[i.collidesWithID].collidesWithID === j) {
 								var holdAngle = i.angle + 1.5;
 							} else {
-								var holdAngle = i.angle - 1.5;
+								var directionRandomizer = Math.round(Math.random());
+								if (directionRandomizer === 0) {
+									var holdAngle = i.angle + 1.5;
+								} else {
+									var holdAngle = i.angle - 1.5;
+								}
 							}
 						}
-						
+
+// if colliding with the player, it's random as to whether we move to the left or to the right to avoid						
 						if (i.collidesWithType === "Player") {
 							var directionRandomizer = Math.round(Math.random());
 							if (directionRandomizer === 0) {
@@ -3192,7 +3201,7 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 						}
 							
 							
-						
+// set a waypoint to the side, so can move around the collision. The 80 here is how far away to walk -- can customize this later to make it adjust based on the size of the colliding object.
 						var holdCos = Math.cos(holdAngle);
 						var holdSin = Math.sin(holdAngle);
 						i.wayPoints.push({
