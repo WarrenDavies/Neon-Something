@@ -293,6 +293,12 @@ var race = {
 }
 var theBullets = [];
 var debug = true;
+var showWayPoints = false;
+var showPlayer = false;
+
+
+
+
 
 function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, pLine2x2, pLine2y2, testing, buildingNo) {
 
@@ -3083,8 +3089,9 @@ function updateCivilians() {
 			var deltaX = i.wayPoints[i.wayPoints.length - 1].x - i.x;
 			var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
 			i.targetAngle = Math.atan(deltaY / deltaX);
-			
-			
+
+// some stuff for debugging			
+if (i.wayPoints.length > 0 && showWayPoints) {		
 //draw collision areas
 		lineColor = "black";
 		c.beginPath();
@@ -3116,7 +3123,7 @@ function updateCivilians() {
 		c.stroke();
 		c.restore();
 		
-		if (i.wayPoints.length > 0) {
+
 //draw interim waypoint FOR DEBUGGIN
 			i.wayPoints.forEach(function (k, l) {
 				if (collidesSpecify(cameraX, cameraY, cameraW, cameraH, k.x - 20, k.y - 20, 40, 40)) {
@@ -3146,7 +3153,7 @@ function updateCivilians() {
 // check collisions with other civilians
 				for (k = 0; k < theCivilians.length - 1; k++) {
 					if ( k != j ) {
-						if (collidesSpecify(i.x + (i.speed * i.xVector), i.y + (i.speed * i.yVector), i.w, i.h, theCivilians[k].x, theCivilians[k].y, theCivilians[k].w, theCivilians[k].h)) {
+						if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, theCivilians[k].x, theCivilians[k].y, theCivilians[k].w, theCivilians[k].h)) {
 							i.collisionCourse = true;
 							i.collidesWithID = k;
 							i.collidesWithType = "Civilian";
@@ -3156,7 +3163,7 @@ function updateCivilians() {
 				}
 			
 // check collisions with player
-				if (collidesSpecify(i.x + (i.speed * i.xVector), i.y + (i.speed * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
+				if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
 					i.collisionCourse = true;
 					i.collidesWithType = "Player";
 					i.collidesWithID = -1;
@@ -3167,16 +3174,30 @@ function updateCivilians() {
 					if (i.collidesWithType !== "Civilian" || i.wayPoints[i.wayPoints.length - 1].type !== "Avoid Civilian") {
 						i.walking = false;
 						
-						if (theCivilians[i.collidesWithID].collidesWithID === j) {
-							var holdAngle = i.angle + 1.5;
-						} else {
-							var holdAngle = i.angle - 1.5;
+						if (i.collidesWithType === "Civilian") { 
+							if (theCivilians[i.collidesWithID].collidesWithID === j) {
+								var holdAngle = i.angle + 1.5;
+							} else {
+								var holdAngle = i.angle - 1.5;
+							}
 						}
+						
+						if (i.collidesWithType === "Player") {
+							var directionRandomizer = Math.round(Math.random());
+							if (directionRandomizer === 0) {
+								var holdAngle = i.angle + 1.5;
+							} else {
+								var holdAngle = i.angle - 1.5;
+							}
+						}
+							
+							
+						
 						var holdCos = Math.cos(holdAngle);
 						var holdSin = Math.sin(holdAngle);
 						i.wayPoints.push({
-							x: i.x + (holdCos * 50),
-							y: i.y + (holdSin * 50),
+							x: i.x + (holdCos * 80),
+							y: i.y + (holdSin * 80),
 							type: "Avoid Civilian",
 						});
 						
@@ -5129,8 +5150,8 @@ function debugHUD(){
 	c.font = '18pt Calibri';
 	c.fillStyle = 'black';
 	c.strokeStyle = "black";
-		var showWayPoints = true;
-		var showPlayer = true;
+		var showWayPoints = false;
+		var showPlayer = false;
 		if (showWayPoints) {
 		
 		theWayPoints.forEach( function(i,j) {
