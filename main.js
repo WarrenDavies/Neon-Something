@@ -3124,7 +3124,7 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 		c.restore();
 		
 
-//draw interim waypoint FOR DEBUGGIN
+//draw interim waypoint FOR DEBUGGING
 			i.wayPoints.forEach(function (k, l) {
 				if (collidesSpecify(cameraX, cameraY, cameraW, cameraH, k.x - 20, k.y - 20, 40, 40)) {
 					c.beginPath();
@@ -3543,23 +3543,8 @@ function checkVehicleCollision() {
 								console.log ("theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX = " + (theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX));
 								
 								}
-								//console.log("ioij");
-								//c.lineWidth = 1;
-								//c.beginPath(); 
-								//c.moveTo(i.lines[vehicleLine].p1x -(i.xtarget * i.speed ) - i.xTurnTarget + 400 , 
-								//i.lines[vehicleLine].p1y -(i.ytarget * i.speed ) - i.yTurnTarget + 300 );
-								
-								//c.lineTo( i.lines[vehicleLine].p2x -(i.xtarget * i.speed ) - i.xTurnTarget + 400, 
-								//i.lines[vehicleLine].p2y -(i.ytarget * i.speed ) - i.yTurnTarget + 300 );
-								
 								c.stroke();
-								
 								c.beginPath();
-								//c.moveTo(theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
-								//theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY );
-								//c.lineTo( theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
-								//theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY);
-								//c.stroke();
 								
 								if (theBuildings[k].walls.hasOwnProperty(wallLine)) {
 								if (testLines(
@@ -3585,14 +3570,42 @@ function checkVehicleCollision() {
 									
 									console.log("vehicle-wall collision -" + vehicleLine);
 									i.collision = true;
-								}
-							}
-						}
-					});
-				}
-			}
-		}
-	});// check collision with vehicles
+								} // check collision in these two walls
+							} // if this wall line exists
+						} // for loop cycling through wall lines
+					}); // buildings on screen for each
+					console.log ("Looping vehicles");
+					vehiclesOnScreen.forEach ( function(k, l) {
+						console.log ("Looping vehicles");
+						if (l !== j) {
+						console.log ("not testing coll with itself");
+							for (var vehicleLine in k.lines) {
+								if (k.lines.hasOwnProperty(vehicleLine)) {
+									if (testLines(
+										i.lines[vehicleLine].p1x -(i.xtarget * i.speed ) - i.xTurnTarget, 
+										i.lines[vehicleLine].p1y -(i.ytarget * i.speed ) - i.yTurnTarget, 
+										i.lines[vehicleLine].p2x -(i.xtarget * i.speed ) - i.xTurnTarget, 
+										i.lines[vehicleLine].p2y -(i.ytarget * i.speed ) - i.yTurnTarget, 
+										k.lines[vehicleLine].p1x-Player1.x + cameraX, 
+										k.lines[vehicleLine].p1y-Player1.y + cameraY, 
+										k.lines[vehicleLine].p2x-Player1.x + cameraX, 
+										k.lines[vehicleLine].p2y-Player1.y + cameraY,)) {
+											console.log ("VEHICLE COLLISION");
+										}
+								} // second if this vehicle line exists
+							} // second for loop cycling through vehicle lines
+						} // check vehicle is not testing collision with itself
+					}); // second vehicles on screen for each (k, l)
+					
+					
+					
+				} // if this vehicle line exists
+			} // for loop cycling through vehicle lines
+		} // if this vehicles speed is > 0 
+	});// vehicles on screen for each
+	
+
+	
 } //checkVehicleCollision
 
 
