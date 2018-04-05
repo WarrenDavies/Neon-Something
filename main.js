@@ -3658,6 +3658,7 @@ function checkThisVehicleCollision(j) {
 						if (l === 2 && j === 1) {
 							for (var vehicleLine in k.lines) {
 								if (k.lines.hasOwnProperty(vehicleLine)) {
+
 									console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
 									console.log(k.lines[vehicleLine].p1x);
 									console.log(k.lines[vehicleLine].p1y);
@@ -3665,6 +3666,7 @@ function checkThisVehicleCollision(j) {
 									console.log(k.lines[vehicleLine].p2y);
 									console.log ("testing vehicle collision line");
 									
+
 									if (testLines(
 										vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
 										vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
@@ -3676,7 +3678,11 @@ function checkThisVehicleCollision(j) {
 										k.lines[vehicleLine].p2y,)) {
 											console.log ("VEHICLE COLLISION");
 										}
+
 										
+
+										console.log ("testing vehicle collision line");
+
 								} // second if this vehicle line exists
 							} // second for loop cycling through vehicle lines
 						} // check vehicle is not testing collision with itself
@@ -3719,11 +3725,19 @@ function checkThisVehicleCollision(j) {
 										}
 									}
 									if (wallLine === "bottom" || wallLine === "bottom2" ) {
+
 										
 										if (vehicleLine === "frontLine" && wallLine === "bottom"){
 											adjusterX += 1;
 										}
 										
+
+										
+										if (vehicleLine === "frontLine" && wallLine === "bottom"){
+											adjusterX += 1;
+										}
+										
+
 										if (vehicleLine === "frontLine" && wallLine === "top"){
 											adjusterX -= 1;
 										}
