@@ -3626,198 +3626,161 @@ function checkVehicleCollision() {
 function checkThisVehicleCollision(j) {
 // check collision with buildings
 	vehiclesOnScreen[j].collision = false;
-		if (vehiclesOnScreen[j].speed != 0) {
-			// check for collision with buildings
-			for (var vehicleLine in vehiclesOnScreen[j].lines) {
-				if (vehiclesOnScreen[j].lines.hasOwnProperty(vehicleLine)) {
-					
-					buildingsOnScreen.forEach( function(k, l) {
-						for (var wallLine in theBuildings[k].walls) {
-							if (theBuildings[k].walls.hasOwnProperty(wallLine)) {
-								var kkk = 1;
+	if (vehiclesOnScreen[j].speed != 0) {
+		// check for collision with buildings
+		for (var vehicleLine in vehiclesOnScreen[j].lines) {
+			if (vehiclesOnScreen[j].lines.hasOwnProperty(vehicleLine)) {
+				
+				buildingsOnScreen.forEach( function(k, l) {
+					for (var wallLine in theBuildings[k].walls) {
+						if (theBuildings[k].walls.hasOwnProperty(wallLine)) {
+							var loopChecker = 1;
+							c.beginPath();
+							var checkCollision = false;
+							if (testLines(
+							vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
+							vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
+							vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
+							vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
+							
+							theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
+							theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
+							theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
+							theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
+								vehiclesOnScreen[j].x = vehiclesOnScreen[j].xPrevious;
+								vehiclesOnScreen[j].y = vehiclesOnScreen[j].yPrevious;
+								calculateVehicleLines(j);
+								vehiclesOnScreen[j].speed = 0;
+								console.log("vehicle-wall collision -" + vehicleLine);
+								vehiclesOnScreen[j].collision = true;
+								checkCollision = true;
+							} else {
+								checkCollision = false;
+								vehiclesOnScreen[j].collision = false;
+							}
+							loopChecker++;
+							if (loopChecker === 10) {console.log("Stuck in loop");}
+						} // if this wall line exists
+						
+						checkCollision = false;
+						/// check if the vehicle is stuck in a wall, and untick it if so
+						do { 
+							if (testLines(
+							vehiclesOnScreen[j].lines[vehicleLine].p1x, 
+							vehiclesOnScreen[j].lines[vehicleLine].p1y, 
+							vehiclesOnScreen[j].lines[vehicleLine].p2x, 
+							vehiclesOnScreen[j].lines[vehicleLine].p2y,
+							theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
+							theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
+							theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
+							theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
+								console.log(wallLine);
+								console.log(vehiclesOnScreen[j].x + ", " + vehiclesOnScreen[j].y);
 								
+								var adjusterX = 0;
+								var adjusterY = 0;
+								if (wallLine === "top" || wallLine === "top2") {
+									if (Player1.inBuilding > 0) {									
+										adjusterY += 1;
+									} else {
+										adjusterY -= 1;
+									}
+								}
+								if (wallLine === "right" || wallLine === "right2") {
+									if (Player1.inBuilding > 0) {									
+										adjusterX -= 1;
+									} else {
+										adjusterX += 1;
+									}
+								}
+								if (wallLine === "bottom" || wallLine === "bottom2" ) {
+									if (vehicleLine === "frontLine" && wallLine === "bottom"){
+										adjusterX += 1;
+									}
+									if (vehicleLine === "frontLine" && wallLine === "bottom"){
+										adjusterX += 1;
+									}
+									if (vehicleLine === "frontLine" && wallLine === "top"){
+										adjusterX -= 1;
+									}
+									if (Player1.inBuilding > 0) {	
+										adjusterY -= 1;
+									} else {
+										adjusterY += 1;
+									}
+								}
+								
+								if (wallLine === "left" || wallLine === "left2") {
+									if (Player1.inBuilding > 0) {
+										adjusterX += 1;
+									} else {
+										adjusterX -= 1;
+									}
+								}
+								if (adjusterX != 0 || adjusterY != 0) {
+									unstickVehicleFromWall(j, wallLine, adjusterX, adjusterY);
+								}
+							} else {
+								checkCollision = false;
+							}
+						} while (checkCollision === true);
+					} // for loop cycling through wall lines
+				}); // buildings on screen for each
+					
+				vehiclesOnScreen.forEach ( function(k, l) {
+					// only checking 2 vehicles to limit slow-down while testing
+					if (l === 2 && j === 1) {
+						for (var vehicleLineTargetVehicle in k.lines) {
+							if (k.lines.hasOwnProperty(vehicleLineTargetVehicle)) {
+								// values for debugging
+								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
+								console.log(k.lines[vehicleLine].p1x);
+								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
+								console.log(k.lines[vehicleLine].p1y);
+								console.log(l + " " + j); 
+								
+								// draw the target vehicle collision lines for debugging									
+								c.lineWidth = 3;
+								c.strokeStyle ="blue";
 								c.beginPath();
-								var checkCollision = false;
+								c.moveTo(k.lines[vehicleLine].p1x, k.lines[vehicleLine].p1y);
+								c.lineTo(k.lines[vehicleLine].p2x, k.lines[vehicleLine].p2y);
+								c.stroke();
+								c.closePath()
+									
+								console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
+								
+								// check for a collision
 								if (testLines(
 								vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
 								vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
 								vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
 								vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
-								
-								theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
-								theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
-								theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
-								theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
-									vehiclesOnScreen[j].x = vehiclesOnScreen[j].xPrevious;
-									vehiclesOnScreen[j].y = vehiclesOnScreen[j].yPrevious;
-									calculateVehicleLines(j);
-									vehiclesOnScreen[j].speed = 0;
-									console.log("vehicle-wall collision -" + vehicleLine);
-									vehiclesOnScreen[j].collision = true;
-									checkCollision = true;
-								} else {
-									checkCollision = false;
-									vehiclesOnScreen[j].collision = false;
+								k.lines[vehicleLineTargetVehicle].p1x, 
+								k.lines[vehicleLineTargetVehicle].p1y, 
+								k.lines[vehicleLineTargetVehicle].p2x, 
+								k.lines[vehicleLineTargetVehicle].p2y, 
+								"vehicle",
+								)) {
+									// just indicate we have one for now
+									c.fillText ("VEHICLE COLLISION", 200,200);
 								}
-								kkk++;
-								if (kkk === 10) {console.log("Stuck in loop");}
-							} // if this wall line exists
-							
-							checkCollision = false;
-							
-								/// check if the vehicle is stuck in a wall, and untick it if so
-							do { 
-								if (testLines(
-								vehiclesOnScreen[j].lines[vehicleLine].p1x, 
-								vehiclesOnScreen[j].lines[vehicleLine].p1y, 
-								vehiclesOnScreen[j].lines[vehicleLine].p2x, 
-								vehiclesOnScreen[j].lines[vehicleLine].p2y,
-								
-								theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
-								theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
-								theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
-								theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
-									console.log(wallLine);
-									console.log(vehiclesOnScreen[j].x + ", " + vehiclesOnScreen[j].y);
-									
-									var adjusterX = 0;
-									var adjusterY = 0;
-									
-									if (wallLine === "top" || wallLine === "top2") {
-										if (Player1.inBuilding > 0) {									
-											adjusterY += 1;
-										} else {
-											adjusterY -= 1;
-										}
-									}
-									
-									if (wallLine === "right" || wallLine === "right2") {
-										if (Player1.inBuilding > 0) {									
-											adjusterX -= 1;
-										} else {
-											adjusterX += 1;
-										}
-									}
-									if (wallLine === "bottom" || wallLine === "bottom2" ) {
-
-										
-										if (vehicleLine === "frontLine" && wallLine === "bottom"){
-											adjusterX += 1;
-										}
-										
-
-										
-										if (vehicleLine === "frontLine" && wallLine === "bottom"){
-											adjusterX += 1;
-										}
-										
-
-										if (vehicleLine === "frontLine" && wallLine === "top"){
-											adjusterX -= 1;
-										}
-											
-										if (Player1.inBuilding > 0) {	
-											adjusterY -= 1;
-										} else {
-											adjusterY += 1;
-										}
-									}
-									
-									if (wallLine === "left" || wallLine === "left2") {
-										if (Player1.inBuilding > 0) {									
-											adjusterX += 1;
-										} else {
-											adjusterX -= 1;
-										}
-									}
-									
-									if (adjusterX != 0 || adjusterY != 0) {
-										unstickVehicleFromWall(j, wallLine, adjusterX, adjusterY);
-									}
-									
-								
-								
-								//calculateVehicleLines(j);
-								checkCollision = true;
-								} else {
-								checkCollision = false;
-								}
-								
-								} while (checkCollision === true);
-							
-							
-							
-							
-						//c.restore();
-						} // for loop cycling through wall lines
-					}); // buildings on screen for each
-						
-							
-							
-					vehiclesOnScreen.forEach ( function(k, l) {
-						//if (l != j) {
-						if (l === 2 && j === 1) {
-							for (var vehicleLineTargetVehicle in k.lines) {
-								if (k.lines.hasOwnProperty(vehicleLineTargetVehicle)) {
-
-								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
-									console.log(k.lines[vehicleLine].p1x);
-									console.log(vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
-									console.log(k.lines[vehicleLine].p1y);
-									console.log(l + " " + j); 
-										c.lineWidth = 3;
-										c.strokeStyle ="blue";
-										c.beginPath();
-										
-										c.moveTo(k.lines[vehicleLine].p1x, k.lines[vehicleLine].p1y);
-										c.lineTo(k.lines[vehicleLine].p2x, k.lines[vehicleLine].p2y);
-										c.stroke();
-										c.closePath()
-										
-															
-									console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
-									
-									
-									if (testLines(
-										vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
-										k.lines[vehicleLineTargetVehicle].p1x, 
-										k.lines[vehicleLineTargetVehicle].p1y, 
-										k.lines[vehicleLineTargetVehicle].p2x, 
-										k.lines[vehicleLineTargetVehicle].p2y, 
-										"vehicle",
-										)) {
-											c.fillText ("VEHICLE COLLISION", 200,200);
-										}
-
-										
-
-										
-
-								} // second if this vehicle line exists
-							} // second for loop cycling through vehicle lines
-						} // check vehicle is not testing collision with itself
-						//}
-					}); // second vehicles on screen for each (k, l)
-							
-					c.strokeStyle ="red";
-					c.lineWidth = 1;
-					c.beginPath();
-							
-					c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep, vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
-					c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep, vehiclesOnScreen[j].lines[vehicleLine].p2yStep);
-					c.stroke();
-					c.closePath()
-												
-							
-							
-						
-				} // if this vehicle line exists
-			} // for loop cycling through vehicle lines
-		} // if this vehicles speed is > 0 
-	
+							} // second if this vehicle line exists
+						} // second for loop cycling through vehicle lines
+					} // check vehicle is not testing collision with itself
+				}); // second vehicles on screen for each (k, l)
+				
+				// draw collision lines for the moving vehicle
+				c.strokeStyle ="red";
+				c.lineWidth = 1;
+				c.beginPath();
+				c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep, vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
+				c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep, vehiclesOnScreen[j].lines[vehicleLine].p2yStep);
+				c.stroke();
+				c.closePath()
+			} // if this vehicle line exists
+		} // for loop cycling through vehicle lines
+	} // if this vehicles speed is > 0 
 } //checkThisVehicleCollision
 
 
