@@ -309,11 +309,11 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
 
     var    s = (-s1_y * (pLine1x1 - pLine2x1) + s1_x * (pLine1y1 - pLine2y1)) / (-s2_x * s1_y + s1_x * s2_y);
     var   t = ( s2_x * (pLine1y1 - pLine2y1) - s2_y * (pLine1x1 - pLine2x1)) / (-s2_x * s1_y + s1_x * s2_y);
+	if (testing === "vehicle") {
 	
-	
-	
-    if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
-    {
+	console.log(pLine1x1 + ", " + pLine1y1 + ", " + pLine1x2 + ", " + pLine1y2 + ", " + pLine2x1 + ", " + pLine2y1 + ", " + pLine2x2 + ", " + pLine2y2 + ", " + testing)
+	}
+	if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
 	//console.log ("iohoih");
 	
 	if (testing === "withinHeadlights"){
@@ -343,6 +343,10 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))]);
 		//console.log("CLL: " + checkLeftLine[0][0]);
+		return [(pLine1x1 + (t * s1_x)),
+				(pLine1y1 + (t * s1_y))];
+	} else if (testing === "vehicle"){
+		console.log("vehicle coll testlines");
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	
@@ -760,6 +764,16 @@ vehiclesOnScreen[1] = {
 	forwardTurnRight: false,
  };
  
+// update vehicle collision lines for all vehicles. Lines don't update unless a vehicle moves, so this run this at the start of the game
+function calculateAllVehicleLines(single) {
+		vehiclesOnScreen.forEach ( function(i, j) {
+			if (j != 0) {
+				calculateVehicleLines(j);		
+			}
+		});
+	
+}
+calculateAllVehicleLines();
  
 function unstickVehicleFromWall(j, wallLine, adjusterX, adjusterY) {
 
@@ -3651,47 +3665,7 @@ function checkThisVehicleCollision(j) {
 							
 							checkCollision = false;
 							
-							
-							
-					vehiclesOnScreen.forEach ( function(k, l) {
-						//if (l !== j) {
-						if (l === 2 && j === 1) {
-							for (var vehicleLine in k.lines) {
-								if (k.lines.hasOwnProperty(vehicleLine)) {
-
-									console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
-									console.log(k.lines[vehicleLine].p1x);
-									console.log(k.lines[vehicleLine].p1y);
-									console.log(k.lines[vehicleLine].p2x);
-									console.log(k.lines[vehicleLine].p2y);
-									console.log ("testing vehicle collision line");
-									
-
-									if (testLines(
-										vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
-										vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
-										k.lines[vehicleLine].p1x, 
-										k.lines[vehicleLine].p1y, 
-										k.lines[vehicleLine].p2x, 
-										k.lines[vehicleLine].p2y,)) {
-											console.log ("VEHICLE COLLISION");
-										}
-
-										
-
-										console.log ("testing vehicle collision line");
-
-								} // second if this vehicle line exists
-							} // second for loop cycling through vehicle lines
-						} // check vehicle is not testing collision with itself
-					}); // second vehicles on screen for each (k, l)
-							
-							
-							
-							
-							/// check if the vehicle is stuck in a wall, and untick it if so
+								/// check if the vehicle is stuck in a wall, and untick it if so
 							do { 
 								if (testLines(
 								vehiclesOnScreen[j].lines[vehicleLine].p1x, 
@@ -3777,6 +3751,69 @@ function checkThisVehicleCollision(j) {
 						//c.restore();
 						} // for loop cycling through wall lines
 					}); // buildings on screen for each
+						
+							
+							
+					vehiclesOnScreen.forEach ( function(k, l) {
+						//if (l != j) {
+						if (l === 2 && j === 1) {
+							for (var vehicleLineTargetVehicle in k.lines) {
+								if (k.lines.hasOwnProperty(vehicleLineTargetVehicle)) {
+
+								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
+									console.log(k.lines[vehicleLine].p1x);
+									console.log(vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
+									console.log(k.lines[vehicleLine].p1y);
+									console.log(l + " " + j); 
+										c.lineWidth = 3;
+										c.strokeStyle ="blue";
+										c.beginPath();
+										
+										c.moveTo(k.lines[vehicleLine].p1x, k.lines[vehicleLine].p1y);
+										c.lineTo(k.lines[vehicleLine].p2x, k.lines[vehicleLine].p2y);
+										c.stroke();
+										c.closePath()
+										
+															
+									console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
+									
+									
+									if (testLines(
+										vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
+										vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
+										vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
+										vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
+										k.lines[vehicleLineTargetVehicle].p1x, 
+										k.lines[vehicleLineTargetVehicle].p1y, 
+										k.lines[vehicleLineTargetVehicle].p2x, 
+										k.lines[vehicleLineTargetVehicle].p2y, 
+										"vehicle",
+										)) {
+											c.fillText ("VEHICLE COLLISION", 200,200);
+										}
+
+										
+
+										
+
+								} // second if this vehicle line exists
+							} // second for loop cycling through vehicle lines
+						} // check vehicle is not testing collision with itself
+						//}
+					}); // second vehicles on screen for each (k, l)
+							
+					c.strokeStyle ="red";
+					c.lineWidth = 1;
+					c.beginPath();
+							
+					c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep, vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
+					c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep, vehiclesOnScreen[j].lines[vehicleLine].p2yStep);
+					c.stroke();
+					c.closePath()
+												
+							
+							
+						
 				} // if this vehicle line exists
 			} // for loop cycling through vehicle lines
 		} // if this vehicles speed is > 0 
