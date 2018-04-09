@@ -6,8 +6,6 @@ console.log("start");
 
 // to do
 
-// door  and neon colors set building by building
-
 // make functions smaller
 
 // get the camera out of the drawing functions - for the buildings
@@ -21,11 +19,7 @@ console.log("start");
 // COLLISION
 // collission with left door not working on larger doors
 
-
-// Civilian movement
-
 // car physics 
-
 // then collision detection
 
 // animation for getting into cars, should enter car by the door?
@@ -295,10 +289,6 @@ var theBullets = [];
 var debug = true;
 var showWayPoints = false;
 var showPlayer = false;
-
-
-
-
 
 function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, pLine2x2, pLine2y2, testing, buildingNo) {
 
@@ -979,8 +969,10 @@ function drawPlayer() {
 
 
 function calculateVehicleLines(j) {
-	c.save();
-	c.translate(vehiclesOnScreen[j].x - cameraX, vehiclesOnScreen[j].y - cameraY);
+	//c.save();
+	// VEHICLE COLLISION TESTING
+	// Add X and Y coordinates to each equation here
+	//c.translate(vehiclesOnScreen[j].x - cameraX, vehiclesOnScreen[j].y - cameraY);
 	vehiclesOnScreen[j].lines.frontLine.p1x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
 	vehiclesOnScreen[j].lines.frontLine.p1y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
 	vehiclesOnScreen[j].lines.frontLine.p2x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
@@ -1000,7 +992,7 @@ function calculateVehicleLines(j) {
 	vehiclesOnScreen[j].lines.leftLine.p1y = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
 	vehiclesOnScreen[j].lines.leftLine.p2x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
 	vehiclesOnScreen[j].lines.leftLine.p2y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
-	c.restore();
+	//c.restore();
 }
 	
 function calculateVehicleStepLines(j) {
@@ -1208,11 +1200,13 @@ function drawVehicles() {
 	c.beginPath();
 	c.save();
 	c.translate(vehiclesOnScreen[Player1.mot].x - cameraX, vehiclesOnScreen[Player1.mot].y - cameraY);
-	//c.moveTo(vehiclesOnScreen[Player1.mot].lines.frontLine.p1x, vehiclesOnScreen[Player1.mot].lines.frontLine.p1y);
-	//c.lineTo(vehiclesOnScreen[Player1.mot].lines.frontLine.p2x, vehiclesOnScreen[Player1.mot].lines.frontLine.p2y);
-	//c.lineTo(vehiclesOnScreen[Player1.mot].lines.rightLine.p2x, vehiclesOnScreen[Player1.mot].lines.rightLine.p2y);
-	//c.lineTo(vehiclesOnScreen[Player1.mot].lines.backLine.p2x, vehiclesOnScreen[Player1.mot].lines.backLine.p2y);
-	//c.lineTo(vehiclesOnScreen[Player1.mot].lines.leftLine.p2x, vehiclesOnScreen[Player1.mot].lines.leftLine.p2y);
+	
+	// draw vehicle collision lines for debugging
+	c.moveTo(vehiclesOnScreen[Player1.mot].lines.frontLine.p1x, vehiclesOnScreen[Player1.mot].lines.frontLine.p1y);
+	c.lineTo(vehiclesOnScreen[Player1.mot].lines.frontLine.p2x, vehiclesOnScreen[Player1.mot].lines.frontLine.p2y);
+	c.lineTo(vehiclesOnScreen[Player1.mot].lines.rightLine.p2x, vehiclesOnScreen[Player1.mot].lines.rightLine.p2y);
+	c.lineTo(vehiclesOnScreen[Player1.mot].lines.backLine.p2x, vehiclesOnScreen[Player1.mot].lines.backLine.p2y);
+	c.lineTo(vehiclesOnScreen[Player1.mot].lines.leftLine.p2x, vehiclesOnScreen[Player1.mot].lines.leftLine.p2y);
 	
 	c.lineWidth = 1;
 	c.strokeStyle = 'red';
@@ -3617,9 +3611,6 @@ function checkVehicleCollision() {
 			} // for loop cycling through vehicle lines
 		} // if this vehicles speed is > 0 
 	});// vehicles on screen for each
-	
-
-	
 } //checkVehicleCollision
 
 
