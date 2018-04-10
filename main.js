@@ -971,6 +971,7 @@ function drawPlayer() {
 function calculateVehicleLines(j) {
 	//c.save();
 	// test
+	//test 2
 	// VEHICLE COLLISION TESTING
 	// Add X and Y coordinates to each equation here
 	//c.translate(vehiclesOnScreen[j].x - cameraX, vehiclesOnScreen[j].y - cameraY);
