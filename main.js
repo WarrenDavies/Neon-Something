@@ -975,25 +975,25 @@ function calculateVehicleLines(j) {
 	// VEHICLE COLLISION TESTING
 	// Add X and Y coordinates to each equation here
 	//c.translate(vehiclesOnScreen[j].x - cameraX, vehiclesOnScreen[j].y - cameraY);
-	vehiclesOnScreen[j].lines.frontLine.p1x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.frontLine.p1y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.frontLine.p2x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.frontLine.p2y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
+	vehiclesOnScreen[j].lines.frontLine.p1x = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.frontLine.p1y = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.frontLine.p2x = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.frontLine.p2y = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
 	
-	vehiclesOnScreen[j].lines.rightLine.p1x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.rightLine.p1y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.rightLine.p2x = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.rightLine.p2y = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
+	vehiclesOnScreen[j].lines.rightLine.p1x = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.rightLine.p1y = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.rightLine.p2x = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.rightLine.p2y = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
 	
-	vehiclesOnScreen[j].lines.backLine.p1x = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.backLine.p1y = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.backLine.p2x = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.backLine.p2y = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
+	vehiclesOnScreen[j].lines.backLine.p1x = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.backLine.p1y = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.backLine.p2x = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.backLine.p2y = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
 	
-	vehiclesOnScreen[j].lines.leftLine.p1x = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.leftLine.p1y = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.leftLine.p2x = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle));
-	vehiclesOnScreen[j].lines.leftLine.p2y = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle));
+	vehiclesOnScreen[j].lines.leftLine.p1x = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.leftLine.p1y = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.leftLine.p2x = vehiclesOnScreen[j].x -(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
+	vehiclesOnScreen[j].lines.leftLine.p2y = vehiclesOnScreen[j].y -(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
 	//c.restore();
 }
 	
@@ -3736,8 +3736,8 @@ function checkThisVehicleCollision(j) {
 								c.lineWidth = 3;
 								c.strokeStyle ="blue";
 								c.beginPath();
-								c.moveTo(k.lines[vehicleLine].p1x, k.lines[vehicleLine].p1y);
-								c.lineTo(k.lines[vehicleLine].p2x, k.lines[vehicleLine].p2y);
+								c.moveTo(k.lines[vehicleLine].p1x - cameraX, k.lines[vehicleLine].p1y - cameraY);
+								c.lineTo(k.lines[vehicleLine].p2x - cameraX, k.lines[vehicleLine].p2y - cameraY);
 								c.stroke();
 								c.closePath()
 									
