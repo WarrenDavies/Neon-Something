@@ -301,7 +301,7 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
     var   t = ( s2_x * (pLine1y1 - pLine2y1) - s2_y * (pLine1x1 - pLine2x1)) / (-s2_x * s1_y + s1_x * s2_y);
 	if (testing === "vehicle") {
 	
-	console.log(pLine1x1 + ", " + pLine1y1 + ", " + pLine1x2 + ", " + pLine1y2 + ", " + pLine2x1 + ", " + pLine2y1 + ", " + pLine2x2 + ", " + pLine2y2 + ", " + testing)
+	//console.log(pLine1x1 + ", " + pLine1y1 + ", " + pLine1x2 + ", " + pLine1y2 + ", " + pLine2x1 + ", " + pLine2y1 + ", " + pLine2x2 + ", " + pLine2y2 + ", " + testing)
 	}
 	if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
 	//console.log ("iohoih");
@@ -999,25 +999,25 @@ function calculateVehicleLines(j) {
 	
 function calculateVehicleStepLines(j) {
 	
-	vehiclesOnScreen[j].lines.frontLine.p1xr = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.frontLine.p1yr = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.frontLine.p2xr = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.frontLine.p2yr = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
+	vehiclesOnScreen[j].lines.frontLine.p1xr = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.frontLine.p1yr = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.frontLine.p2xr = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.frontLine.p2yr = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
 	
-	vehiclesOnScreen[j].lines.rightLine.p1xr = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.rightLine.p1yr = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.rightLine.p2xr = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.rightLine.p2yr = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
+	vehiclesOnScreen[j].lines.rightLine.p1xr = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.rightLine.p1yr = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.rightLine.p2xr = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.rightLine.p2yr = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
 	
-	vehiclesOnScreen[j].lines.backLine.p1xr = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.backLine.p1yr = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.backLine.p2xr = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.backLine.p2yr = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
+	vehiclesOnScreen[j].lines.backLine.p1xr = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.backLine.p1yr = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.backLine.p2xr = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.backLine.p2yr = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
 	
-	vehiclesOnScreen[j].lines.leftLine.p1xr = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.leftLine.p1yr = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.leftLine.p2xr = (-(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget));
-	vehiclesOnScreen[j].lines.leftLine.p2yr = (-(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget));
+	vehiclesOnScreen[j].lines.leftLine.p1xr = vehiclesOnScreen[j].x + (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.leftLine.p1yr = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.leftLine.p2xr = vehiclesOnScreen[j].x - (vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angleTarget) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angleTarget);
+	vehiclesOnScreen[j].lines.leftLine.p2yr = vehiclesOnScreen[j].y - (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angleTarget) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angleTarget);
 	
 	
 	var speedHolder = vehiclesOnScreen[j].speed;
@@ -1049,25 +1049,25 @@ function calculateVehicleStepLines(j) {
 	
 	
 	
-	vehiclesOnScreen[j].lines.frontLine.p1xStep = vehiclesOnScreen[j].lines.frontLine.p1x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p1yStep = vehiclesOnScreen[j].lines.frontLine.p1y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2xStep = vehiclesOnScreen[j].lines.frontLine.p2x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2yStep = vehiclesOnScreen[j].lines.frontLine.p2y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.frontLine.p1xStep = vehiclesOnScreen[j].lines.frontLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.frontLine.p1yStep = vehiclesOnScreen[j].lines.frontLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.frontLine.p2xStep = vehiclesOnScreen[j].lines.frontLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.frontLine.p2yStep = vehiclesOnScreen[j].lines.frontLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	
-	vehiclesOnScreen[j].lines.rightLine.p1xStep = vehiclesOnScreen[j].lines.rightLine.p1x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p1yStep = vehiclesOnScreen[j].lines.rightLine.p1y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2xStep = vehiclesOnScreen[j].lines.rightLine.p2x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2yStep = vehiclesOnScreen[j].lines.rightLine.p2y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.rightLine.p1xStep = vehiclesOnScreen[j].lines.rightLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.rightLine.p1yStep = vehiclesOnScreen[j].lines.rightLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.rightLine.p2xStep = vehiclesOnScreen[j].lines.rightLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.rightLine.p2yStep = vehiclesOnScreen[j].lines.rightLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	
-	vehiclesOnScreen[j].lines.backLine.p1xStep = vehiclesOnScreen[j].lines.backLine.p1x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p1yStep = vehiclesOnScreen[j].lines.backLine.p1y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2xStep = vehiclesOnScreen[j].lines.backLine.p2x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2yStep = vehiclesOnScreen[j].lines.backLine.p2y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.backLine.p1xStep = vehiclesOnScreen[j].lines.backLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.backLine.p1yStep = vehiclesOnScreen[j].lines.backLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.backLine.p2xStep = vehiclesOnScreen[j].lines.backLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.backLine.p2yStep = vehiclesOnScreen[j].lines.backLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	
-	vehiclesOnScreen[j].lines.leftLine.p1xStep = vehiclesOnScreen[j].lines.leftLine.p1x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p1yStep = vehiclesOnScreen[j].lines.leftLine.p1y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2xStep = vehiclesOnScreen[j].lines.leftLine.p2x - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2yStep = vehiclesOnScreen[j].lines.leftLine.p2y - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.leftLine.p1xStep = vehiclesOnScreen[j].lines.leftLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.leftLine.p1yStep = vehiclesOnScreen[j].lines.leftLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+	vehiclesOnScreen[j].lines.leftLine.p2xStep = vehiclesOnScreen[j].lines.leftLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+	vehiclesOnScreen[j].lines.leftLine.p2yStep = vehiclesOnScreen[j].lines.leftLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	
 	
 	
@@ -1780,34 +1780,34 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		
 	theBuildings[buildingNo].walls = {
 		left: {
-			p1x: upperLeftX - cameraX, 
-			p1y: upperLeftY - cameraY,
-			p2x: lowerLeftX - cameraX,
-			p2y: lowerLeftY - cameraY,
+			p1x: upperLeftX, 
+			p1y: upperLeftY,
+			p2x: lowerLeftX,
+			p2y: lowerLeftY,
 			w: 1,
 			h: lowerLeftY - upperLeftY
 		},
 		top: {
-			p1x: upperLeftX - cameraX, 
-			p1y: upperLeftY - cameraY,
-			p2x: upperRightX - cameraX,
-			p2y: upperRightY - cameraY,	
+			p1x: upperLeftX, 
+			p1y: upperLeftY,
+			p2x: upperRightX,
+			p2y: upperRightY,	
 			w: upperRightX - upperLeftX,
 			h: 1
 		},
 		bottom: {
-			p1x: lowerLeftX - cameraX, 
-			p1y: lowerLeftY - cameraY,
-			p2x: lowerRightX - cameraX,
-			p2y: lowerRightY - cameraY,
+			p1x: lowerLeftX, 
+			p1y: lowerLeftY,
+			p2x: lowerRightX,
+			p2y: lowerRightY,
 			w: lowerRightX - lowerLeftX,
 			h: 1
 		},
 		right: {
-			p1x: upperRightX - cameraX, 
-			p1y: upperRightY - cameraY,
-			p2x: lowerRightX - cameraX,
-			p2y: lowerRightY - cameraY,	
+			p1x: upperRightX, 
+			p1y: upperRightY,
+			p2x: lowerRightX,
+			p2y: lowerRightY,	
 			w: 1,
 			h: lowerRightY - upperRightY,
 		}
@@ -1815,19 +1815,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 	if (theBuildings[buildingNo].southDoor.exists === true) {
 		theBuildings[buildingNo].walls.bottom = {
-			p1x: lowerLeftX - cameraX, 
-			p1y: lowerLeftY - cameraY,
-			p2x: lowerLeftX - cameraX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition,
-			p2y: lowerRightY - cameraY,
+			p1x: lowerLeftX, 
+			p1y: lowerLeftY,
+			p2x: lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition,
+			p2y: lowerRightY,
 			w: theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition,
 			h: 1	
 		}
 		
 		theBuildings[buildingNo].walls.bottom2 = {
-			p1x: lowerLeftX - cameraX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.rightDoorPosition, 
-			p1y: lowerLeftY - cameraY,
-			p2x: lowerRightX - cameraX,
-			p2y: lowerRightY - cameraY,
+			p1x: lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.rightDoorPosition, 
+			p1y: lowerLeftY,
+			p2x: lowerRightX,
+			p2y: lowerRightY,
 			w: ((lowerRightX - lowerLeftX) - theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].southDoor.rightDoorPosition,
 			
 			h: 1	
@@ -1836,19 +1836,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 	if (theBuildings[buildingNo].northDoor.exists === true) {
 		theBuildings[buildingNo].walls.top = {
-			p1x: upperLeftX - cameraX, 
-			p1y: upperLeftY - cameraY,
-			p2x: upperLeftX - cameraX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorPosition,
-			p2y: upperRightY - cameraY,
+			p1x: upperLeftX, 
+			p1y: upperLeftY,
+			p2x: upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorPosition,
+			p2y: upperRightY,
 			w: theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorPosition,
 			h: 1	
 		}
 		
 		theBuildings[buildingNo].walls.top2 = {
-			p1x: upperLeftX - cameraX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.rightDoorPosition, 
-			p1y: upperLeftY - cameraY,
-			p2x: upperRightX - cameraX,
-			p2y: upperRightY - cameraY,
+			p1x: upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].northDoor.rightDoorPosition, 
+			p1y: upperLeftY,
+			p2x: upperRightX,
+			p2y: upperRightY,
 			w: ((lowerRightX - lowerLeftX) - theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].northDoor.rightDoorPosition,
 			
 			h: 1	
@@ -1858,19 +1858,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 	if (theBuildings[buildingNo].eastDoor.exists === true) {
 		theBuildings[buildingNo].walls.right = {
-			p1x: upperRightX - cameraX, 
-			p1y: upperRightY - cameraY,
-			p2x: upperRightX - cameraX,
-			p2y: upperRightY - cameraY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop + theBuildings[buildingNo].eastDoor.topDoorPosition,
+			p1x: upperRightX, 
+			p1y: upperRightY,
+			p2x: upperRightX,
+			p2y: upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop + theBuildings[buildingNo].eastDoor.topDoorPosition,
 			w: 1,
 			h: theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop + theBuildings[buildingNo].eastDoor.topDoorPosition	
 		}
 		
 		theBuildings[buildingNo].walls.right2 = {
-			p1x: upperRightX - cameraX,
-			p1y: upperRightY - cameraY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition, 
-			p2x: lowerRightX - cameraX,
-			p2y: lowerRightY - cameraY,
+			p1x: upperRightX,
+			p1y: upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition, 
+			p2x: lowerRightX,
+			p2y: lowerRightY,
 			w: 1,
 			h: ((upperRightX - lowerRightX) - theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].northDoor.bottomDoorPosition,
 				
@@ -1879,19 +1879,19 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 	if (theBuildings[buildingNo].westDoor.exists === true) {
 		theBuildings[buildingNo].walls.left = {
-			p1x: upperLeftX - cameraX, 
-			p1y: upperLeftY - cameraY,
-			p2x: upperLeftX - cameraX,
-			p2y: upperLeftY - cameraY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTop + theBuildings[buildingNo].westDoor.topDoorPosition,
+			p1x: upperLeftX, 
+			p1y: upperLeftY,
+			p2x: upperLeftX,
+			p2y: upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTop + theBuildings[buildingNo].westDoor.topDoorPosition,
 			w: 1,
 			h: theBuildings[buildingNo].westDoor.doorwayDistanceFromTop + theBuildings[buildingNo].westDoor.topDoorPosition	
 		}
 		
 		theBuildings[buildingNo].walls.left2 = {
-			p1x: upperLeftX - cameraX,
-			p1y: upperLeftY - cameraY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].westDoor.bottomDoorPosition, 
-			p2x: lowerLeftX - cameraX,
-			p2y: lowerLeftY - cameraY,
+			p1x: upperLeftX,
+			p1y: upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].westDoor.bottomDoorPosition, 
+			p2x: lowerLeftX,
+			p2y: lowerLeftY,
 			w: 1,
 			h: ((upperLeftX - lowerLeftX) - theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].northDoor.bottomDoorPosition,
 				
@@ -3666,20 +3666,20 @@ function checkThisVehicleCollision(j) {
 							c.beginPath();
 							var checkCollision = false;
 							if (testLines(
-							vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
-							vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
-							vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
+							vehiclesOnScreen[j].lines[vehicleLine].p1xStep,
+							vehiclesOnScreen[j].lines[vehicleLine].p1yStep,
+							vehiclesOnScreen[j].lines[vehicleLine].p2xStep,
 							vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
 							
-							theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
-							theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
-							theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
-							theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
+							theBuildings[k].walls[wallLine].p1x,
+							theBuildings[k].walls[wallLine].p1y,
+							theBuildings[k].walls[wallLine].p2x,
+							theBuildings[k].walls[wallLine].p2y)) {
 								vehiclesOnScreen[j].x = vehiclesOnScreen[j].xPrevious;
 								vehiclesOnScreen[j].y = vehiclesOnScreen[j].yPrevious;
 								calculateVehicleLines(j);
 								vehiclesOnScreen[j].speed = 0;
-								console.log("vehicle-wall collision -" + vehicleLine);
+								console.log("vehicle-wall collision! Vehicle Line: " + vehicleLine + ", Building: " + k + ", buildingLine: " + wallLine);
 								vehiclesOnScreen[j].collision = true;
 								checkCollision = true;
 							} else {
@@ -3698,12 +3698,12 @@ function checkThisVehicleCollision(j) {
 							vehiclesOnScreen[j].lines[vehicleLine].p1y, 
 							vehiclesOnScreen[j].lines[vehicleLine].p2x, 
 							vehiclesOnScreen[j].lines[vehicleLine].p2y,
-							theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX, 
-							theBuildings[k].walls[wallLine].p1y-Player1.y + cameraY, 
-							theBuildings[k].walls[wallLine].p2x-Player1.x + cameraX, 
-							theBuildings[k].walls[wallLine].p2y-Player1.y + cameraY)) {
-								console.log(wallLine);
-								console.log(vehiclesOnScreen[j].x + ", " + vehiclesOnScreen[j].y);
+							theBuildings[k].walls[wallLine].p1x, 
+							theBuildings[k].walls[wallLine].p1y, 
+							theBuildings[k].walls[wallLine].p2x, 
+							theBuildings[k].walls[wallLine].p2y)) {
+								console.log("Stuck on " + wallLine);
+								//console.log(vehiclesOnScreen[j].x + ", " + vehiclesOnScreen[j].y);
 								
 								var adjusterX = 0;
 								var adjusterY = 0;
@@ -3761,22 +3761,22 @@ function checkThisVehicleCollision(j) {
 						for (var vehicleLineTargetVehicle in k.lines) {
 							if (k.lines.hasOwnProperty(vehicleLineTargetVehicle)) {
 								// values for debugging
-								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
-								console.log(k.lines[vehicleLine].p1x);
-								console.log(vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
-								console.log(k.lines[vehicleLine].p1y);
-								console.log(l + " " + j); 
+								//console.log(vehiclesOnScreen[j].lines[vehicleLine].p1xStep);
+								//console.log(k.lines[vehicleLine].p1x);
+								//console.log(vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
+								//console.log(k.lines[vehicleLine].p1y);
+								//console.log(l + " " + j); 
 								
 								// draw the target vehicle collision lines for debugging									
 								c.lineWidth = 3;
 								c.strokeStyle ="blue";
 								c.beginPath();
-								c.moveTo(k.lines[vehicleLine].p1x - cameraX, k.lines[vehicleLine].p1y - cameraY);
+								c.moveTo(k.lines[vehicleLine].p1x - cameraX, k.lines[vehicleLine].p1y - cameraY );
 								c.lineTo(k.lines[vehicleLine].p2x - cameraX, k.lines[vehicleLine].p2y - cameraY);
 								c.stroke();
 								c.closePath()
 									
-								console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
+								//console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
 								
 								// check for a collision
 								if (testLines(
@@ -3802,8 +3802,8 @@ function checkThisVehicleCollision(j) {
 				c.strokeStyle ="red";
 				c.lineWidth = 1;
 				c.beginPath();
-				c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep, vehiclesOnScreen[j].lines[vehicleLine].p1yStep);
-				c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep, vehiclesOnScreen[j].lines[vehicleLine].p2yStep);
+				c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p1yStep - cameraY);
+				c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p2yStep - cameraY );
 				c.stroke();
 				c.closePath()
 			} // if this vehicle line exists
