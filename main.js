@@ -3406,8 +3406,8 @@ var wallCollisionCounter = 0;
 				
 				// test y vector
 				if (collidesSpecify(
-						Player1.x - cameraX - (Player1.w / 2),
-						yStep * 2 + Player1.y - cameraY - (Player1.h / 2), 
+						Player1.x - (Player1.w / 2),
+						yStep * 2 + Player1.y - (Player1.h / 2), 
 						Player1.w, 
 						Player1.h, 
 						theBuildings[i].walls[line].p1x, 
@@ -3477,8 +3477,8 @@ var wallCollisionCounter = 0;
 				
 				/// test x vector
 				if (collidesSpecify(
-						xStep * 2 + Player1.x - cameraX - (Player1.w / 2),
-						Player1.y - cameraY - (Player1.h / 2),
+						xStep * 2 + Player1.x - (Player1.w / 2),
+						Player1.y - (Player1.h / 2),
 						Player1.w,
 						Player1.h,
 						theBuildings[i].walls[line].p1x,
