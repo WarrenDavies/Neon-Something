@@ -3801,19 +3801,20 @@ function checkThisVehicleCollision(j) {
 								if (testingVehicleCollision) {
 									// just indicate we have one for now
 									c.fillText ("VEHICLE COLLISION", 200,200);
+									
+									// save the vehicles current position, in case the collision causes it to hit a wall or other object and it cannot move
 									k.xPrevious = k.x;
 									k.yPrevious = k.y;
 									
 									
-									
+									// get the distance between the impact point and the center of the vehicle
 									xDifference = (k.x - testingVehicleCollision[0]) * (k.x - testingVehicleCollision[0]);
 									yDifference = (k.y - testingVehicleCollision[1]) * (k.y - testingVehicleCollision[1]);
 									var distanceFromVehicleCenter = Math.sqrt(xDifference + yDifference);
 									
-									// need to figure out what is the half way point between
+									// need to figure out what is the half way point of the line that was impaceted
 									
-									//determine where the impact occurred relative to the center of the vehicle, which will tell us which way to rotate it
-									// this isn't the right value to change the angle by, it's just a place holder		
+									//determine where the impact occurred relative to the center of the vehicle, which will tell us which way to rotate it -- this method does not work, need a new way of figuring out which way to rotate the impacted vehicle
 									if (testingVehicleCollision[0] < k.x) {
 										if ( testingVehicleCollision[1] < k.y) {
 											k.angleTarget += 0.1;
@@ -4138,15 +4139,15 @@ if (race.distaceToCheckPoint < 200) {
 				
 			 
 			if (testLines(
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1x - cameraX + Player1.x, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1y - cameraY + Player1.y, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2x - cameraX + Player1.x, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2y - cameraY + Player1.y, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1x, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1y, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2x, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2y, 
 				
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1x - cameraX, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1y - cameraY, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2x - cameraX, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2y - cameraY)) {
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1x, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1y, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2x, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2y)) {
 				
 				race.collidesCheckPoint = true;
 				console.log("collissiosnoisn");
