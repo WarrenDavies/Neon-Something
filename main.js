@@ -8,8 +8,12 @@ console.log("start");
 
 // make functions smaller
 
+// vehicle moves forward on the screen when accelerating
+
 // get the camera out of the drawing functions - for the buildings
 // put the door coordinates etc into the building objects and set it to draw doors automatically
+
+// race track collision not working after vehicle collision updates
 
 // could do windows by drawing a P shape in the polygon - or just make blue squares. But is there a point if I'll eventually get textures?
 
@@ -1352,8 +1356,13 @@ vehiclesOnScreen.forEach ( function(i, j) {
 		//c.strokeStyle = 'blue';
 		//c.stroke();
 		//c.restore();
-	
-	
+		
+	if (j === 2) {
+		c.fillStyle = "blue";
+		console.log(i.angle);
+		c.fillText (i.angle, 200,275);	
+		c.fillText (i.x, 200,300);
+	}
 	c.rotate(i.angle);
 	c.translate(-i.x,-i.y);
 	
@@ -3779,7 +3788,7 @@ function checkThisVehicleCollision(j) {
 								//console.log ("testing vehicle collision line " + vehicleLineTargetVehicle);
 								
 								// check for a collision
-								if (testLines(
+								var testingVehicleCollision = testLines(
 								vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
 								vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
 								vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
@@ -3788,15 +3797,49 @@ function checkThisVehicleCollision(j) {
 								k.lines[vehicleLineTargetVehicle].p1y, 
 								k.lines[vehicleLineTargetVehicle].p2x, 
 								k.lines[vehicleLineTargetVehicle].p2y, 
-								"vehicle",
-								)) {
+								"vehicle",)
+								if (testingVehicleCollision) {
 									// just indicate we have one for now
 									c.fillText ("VEHICLE COLLISION", 200,200);
 									k.xPrevious = k.x;
 									k.yPrevious = k.y;
+									
+									
+									
+									xDifference = (k.x - testingVehicleCollision[0]) * (k.x - testingVehicleCollision[0]);
+									yDifference = (k.y - testingVehicleCollision[1]) * (k.y - testingVehicleCollision[1]);
+									var distanceFromVehicleCenter = Math.sqrt(xDifference + yDifference);
+									
+									// need to figure out what is the half way point between
+									
+									//determine where the impact occurred relative to the center of the vehicle, which will tell us which way to rotate it
+									// this isn't the right value to change the angle by, it's just a place holder		
+									if (testingVehicleCollision[0] < k.x) {
+										if ( testingVehicleCollision[1] < k.y) {
+											k.angleTarget += 0.1;
+										} else {
+											k.angleTarget -= 0.1;
+										}
+									} else {
+										if ( testingVehicleCollision[1] < k.y) {
+											k.angleTarget -= 0.1;
+										} else {
+											k.angleTarget += 0.1;
+										}
+									}
+									
+																
+									//k.angleTarget += distanceFromVehicleCenter;
+									
+									
+									
+									
+									c.fillText (distanceFromVehicleCenter, 200,225);
+									c.fillText (k.angle, 200,250);
+									
 									k.x -= (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
 									k.y -= (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-									updateVehicleLines(l);
+									updateVehicleLines(l, );
 								}
 							} // second if this vehicle line exists
 						} // second for loop cycling through vehicle lines
