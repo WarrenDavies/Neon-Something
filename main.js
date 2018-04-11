@@ -558,7 +558,7 @@ vehiclesOnScreen[1] = {
  };
  
  vehiclesOnScreen[2] = {
-	x: Player1.x,
+	x: Player1.x + 300,
 	y: Player1.y + 100,
 	
 	xPrevious: 0,
@@ -3792,6 +3792,11 @@ function checkThisVehicleCollision(j) {
 								)) {
 									// just indicate we have one for now
 									c.fillText ("VEHICLE COLLISION", 200,200);
+									k.xPrevious = k.x;
+									k.yPrevious = k.y;
+									k.x -= (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
+									k.y -= (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
+									updateVehicleLines(l);
 								}
 							} // second if this vehicle line exists
 						} // second for loop cycling through vehicle lines
