@@ -1711,6 +1711,14 @@ function spliceBuildings() {
 	});
 }
 
+
+function drawIrregularlyShapedBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, wallColor, roofColor, buildingNo, ) {
+	
+	
+}
+
+
+
 function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, wallColor, roofColor, buildingNo) {
 	c.lineWidth = 1;
 	var upperRightX = lowerRightX;
