@@ -1713,7 +1713,16 @@ function spliceBuildings() {
 
 
 function drawIrregularlyShapedBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, wallColor, roofColor, buildingNo, ) {
-	
+	// get roof coordinates
+	// forEach loop through array holding wall coordinates
+		// each item is an object with p1x, p1y, p2x, p2y, door: {all door properties}
+		// if door, 
+			// get door coordinates and position
+			// draw door
+		// draw wall
+			// if door
+				// draw around doorframe
+		
 	
 }
 
