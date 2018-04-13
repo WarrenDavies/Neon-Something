@@ -6,6 +6,9 @@ console.log("start");
 
 // to do
 
+// make save/restore more efficien -- don't need to do this in every loop surely.
+// also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
+
 // make functions smaller
 
 // vehicle moves forward on the screen when accelerating
