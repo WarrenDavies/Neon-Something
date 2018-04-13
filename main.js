@@ -391,19 +391,6 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
 	//var theResult = s >= 0 && s <= 1 && t >= 0 && t <= 1
    return false;
 }
- 
- 
- 
- 
-
-var johnWaite = new Audio("music/John_Waite-Missing_You.mp3");
-var goWest = new Audio("music/go_west-call_me.mp3");
-var acdc = new Audio("music/ACDC-Shoot-To-Thrill.mp3");
-var journey = new Audio("music/Only-The-Young.mp3");
-var REO = new Audio("REO_Speedwagon-Keep_on_Loving_You.mp3");
-var jessie = new Audio("music/jessie.mp3");
-var bonJovi = new Audio("music/bon_jovi_-_livin_on_a_prayer.mp3");
-
 
 var rightDoorPosition = 125;
 var leftDoorPosition = 125;
@@ -878,6 +865,9 @@ if (Player1.mot === 0) {
  
 function drawPlayer() {
  
+ 
+  //////// BELOW IS TO DEBUG PLAYER AND CIV COLLISION
+ 
  // to help test civ collision
  
 //	Player1.xVector = Math.cos(Player1.angle);
@@ -973,9 +963,6 @@ function drawPlayer() {
 
 
 function calculateVehicleLines(j) {
-	//c.save();
-	// test
-	//test 2
 	// VEHICLE COLLISION TESTING
 	// Add X and Y coordinates to each equation here
 	//c.translate(vehiclesOnScreen[j].x - cameraX, vehiclesOnScreen[j].y - cameraY);
@@ -998,7 +985,6 @@ function calculateVehicleLines(j) {
 	vehiclesOnScreen[j].lines.leftLine.p1y = vehiclesOnScreen[j].y + (vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
 	vehiclesOnScreen[j].lines.leftLine.p2x = vehiclesOnScreen[j].x -(vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle);
 	vehiclesOnScreen[j].lines.leftLine.p2y = vehiclesOnScreen[j].y -(vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle);
-	//c.restore();
 }
 	
 function calculateVehicleStepLines(j) {
@@ -1027,32 +1013,6 @@ function calculateVehicleStepLines(j) {
 	var speedHolder = vehiclesOnScreen[j].speed;
 	//vehiclesOnScreen[j].speed = 100;
 	
-	
-/*	vehiclesOnScreen[j].lines.frontLine.p1xStep = vehiclesOnScreen[j].lines.frontLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p1yStep = vehiclesOnScreen[j].lines.frontLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2xStep = vehiclesOnScreen[j].lines.frontLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2yStep = vehiclesOnScreen[j].lines.frontLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.rightLine.p1xStep = vehiclesOnScreen[j].lines.rightLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p1yStep = vehiclesOnScreen[j].lines.rightLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2xStep = vehiclesOnScreen[j].lines.rightLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2yStep = vehiclesOnScreen[j].lines.rightLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.backLine.p1xStep = vehiclesOnScreen[j].lines.backLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p1yStep = vehiclesOnScreen[j].lines.backLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2xStep = vehiclesOnScreen[j].lines.backLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2yStep = vehiclesOnScreen[j].lines.backLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.leftLine.p1xStep = vehiclesOnScreen[j].lines.leftLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p1yStep = vehiclesOnScreen[j].lines.leftLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2xStep = vehiclesOnScreen[j].lines.leftLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2yStep = vehiclesOnScreen[j].lines.leftLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget; */
-	// old working version with out taking account of vehicle position
-	
-	
-	
-	
-	
 	vehiclesOnScreen[j].lines.frontLine.p1xStep = vehiclesOnScreen[j].lines.frontLine.p1xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
 	vehiclesOnScreen[j].lines.frontLine.p1yStep = vehiclesOnScreen[j].lines.frontLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	vehiclesOnScreen[j].lines.frontLine.p2xStep = vehiclesOnScreen[j].lines.frontLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
@@ -1072,41 +1032,6 @@ function calculateVehicleStepLines(j) {
 	vehiclesOnScreen[j].lines.leftLine.p1yStep = vehiclesOnScreen[j].lines.leftLine.p1yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
 	vehiclesOnScreen[j].lines.leftLine.p2xStep = vehiclesOnScreen[j].lines.leftLine.p2xr - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
 	vehiclesOnScreen[j].lines.leftLine.p2yStep = vehiclesOnScreen[j].lines.leftLine.p2yr - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//vehiclesOnScreen[j].speed = speedHolder;
-	
-	/*  // steps
-	
-	vehiclesOnScreen[j].lines.frontLine.p1xStep = -((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[wwj].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p1yStep = -((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2xStep = -((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.frontLine.p2yStep = -((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.rightLine.p1xStep = -((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p1yStep = -((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2xStep = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.rightLine.p2yStep = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.backLine.p1xStep = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - -(vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p1yStep = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + -(vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2xStep = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.backLine.p2yStep = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	vehiclesOnScreen[j].lines.leftLine.p1xStep = ((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p1yStep = ((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2xStep = -((vehiclesOnScreen[j].l/2) * Math.cos(vehiclesOnScreen[j].angle) - (vehiclesOnScreen[j].w/2) * Math.sin(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].xtarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].xTurnTarget;
-	vehiclesOnScreen[j].lines.leftLine.p2yStep = -((vehiclesOnScreen[j].l/2) * Math.sin(vehiclesOnScreen[j].angle) + (vehiclesOnScreen[j].w/2) * Math.cos(vehiclesOnScreen[j].angle)) - (vehiclesOnScreen[j].ytarget * vehiclesOnScreen[j].speed) - vehiclesOnScreen[j].yTurnTarget;
-	
-	*/
 }
 
 function updateVehicleLines(j) {
@@ -1313,36 +1238,7 @@ vehiclesOnScreen.forEach ( function(i, j) {
 	c.beginPath();
 	c.save();
 	c.translate(i.x - cameraX, i.y - cameraY);
-	
-/*	i.lines.frontLine.p1x = -(i.l/2) * Math.cos(i.angle) - (i.w/2) * Math.sin(i.angle);
-	i.lines.frontLine.p1y = -(i.l/2) * Math.sin(i.angle) + (i.w/2) * Math.cos(i.angle);
-	i.lines.frontLine.p2x = -(i.l/2) * Math.cos(i.angle) - -(i.w/2) * Math.sin(i.angle);
-	i.lines.frontLine.p2y = -(i.l/2) * Math.sin(i.angle) + -(i.w/2) * Math.cos(i.angle);
-	
-	i.lines.rightLine.p1x = -(i.l/2) * Math.cos(i.angle) - -(i.w/2) * Math.sin(i.angle);
-	i.lines.rightLine.p1y = -(i.l/2) * Math.sin(i.angle) + -(i.w/2) * Math.cos(i.angle);
-	i.lines.rightLine.p2x = (i.l/2) * Math.cos(i.angle) - -(i.w/2) * Math.sin(i.angle);
-	i.lines.rightLine.p2y = (i.l/2) * Math.sin(i.angle) + -(i.w/2) * Math.cos(i.angle);
-	
-	i.lines.backLine.p1x = (i.l/2) * Math.cos(i.angle) - -(i.w/2) * Math.sin(i.angle);
-	i.lines.backLine.p1y = (i.l/2) * Math.sin(i.angle) + -(i.w/2) * Math.cos(i.angle);
-	i.lines.backLine.p2x = (i.l/2) * Math.cos(i.angle) - (i.w/2) * Math.sin(i.angle);
-	i.lines.backLine.p2y = (i.l/2) * Math.sin(i.angle) + (i.w/2) * Math.cos(i.angle);
-	
-	i.lines.leftLine.p1x = (i.l/2) * Math.cos(i.angle) - (i.w/2) * Math.sin(i.angle);
-	i.lines.leftLine.p1y = (i.l/2) * Math.sin(i.angle) + (i.w/2) * Math.cos(i.angle);
-	i.lines.leftLine.p2x = -(i.l/2) * Math.cos(i.angle) - (i.w/2) * Math.sin(i.angle);
-	i.lines.leftLine.p2y = -(i.l/2) * Math.sin(i.angle) + (i.w/2) * Math.cos(i.angle);
-	
-	*/
-	
-	
-	
-	
-	
-	
-	
-		c.beginPath();
+	c.beginPath();
 		//c.save();
 		//c.translate(Player1.x - cameraX, Player1.y - cameraY);
 		
@@ -1412,42 +1308,7 @@ vehiclesOnScreen.forEach ( function(i, j) {
 	c.strokeStyle = 'yellow';
 	c.stroke();
 	c.restore();
-	
-	
-	// cancel player movement offset
-	//cancel player movement offset 
-	/*/
-if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].speed != 0) {
-				cameraX -= (vehiclesOnScreen[Player1.mot].xtarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].xTurnTarget;
-				cameraY -= (vehiclesOnScreen[Player1.mot].ytarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].yTurnTarget;
-				}
-		*/
-	
-	
-	
-//	c.beginPath();
-//	c.save();
-//	c.translate(i.x - cameraX, i.y - cameraY);
-//	c.rotate(i.angle);
-//	c.translate(-i.x,-i.y);
-//	 
-//	c.moveTo(i.x - 17, i.y + 15); 	
-//	c.lineTo(i.x - 17, i.y + 18);
-//	 
-//	c.moveTo(i.x + 17, i.y + 15); 	
-//	c.lineTo(i.x + 17, i.y + 18);
-//	 
-//	c.moveTo(i.x - 18, i.y - 15); 	
-//	c.lineTo(i.x - 18, i.y - 18);
-//	 
-//	c.moveTo(i.x + 18, i.y - 15); 	
-//	c.lineTo(i.x + 18, i.y - 18);
-//	 
-//	c.lineWidth = 10;
-//	c.strokeStyle = "black";
-//	c.stroke();  
-//	c.restore();
-//	c.closePath();
+
 }
 });
 
@@ -3443,128 +3304,7 @@ var wallCollisionCounter = 0;
 						console.log("vertical collision");
 						wallCollision[line] = true;
 						wallCollisionCounter++;
-						
-						
-						/*
-						if (line === "bottom" && theBuildings[i].southDoor === true) {
-							if (Player1.x - cameraX - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].southDoorwayDistanceFromLeft + ( theBuildings[i].southLeftDoorPosition)
-							&&
-							Player1.x - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].southDoorwayDistanceFromLeftToMiddle + theBuildings[i].southRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						
-						} else if (line === "top" && theBuildings[i].northDoor === true) { 
-							if (Player1.x - cameraX - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].northDoorwayDistanceFromLeft + (theBuildings[i].northLeftDoorPosition)
-							&&
-							Player1.x - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].northDoorwayDistanceFromLeftToMiddle + theBuildings[i].northRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						} else if (line === "right" && theBuildings[i].eastDoor === true) { 
-							if (Player1.y + yStep - cameraY - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].eastDoorwayDistanceFromTop + theBuildings[i].eastLeftDoorPosition
-							&&
-							Player1.y + yStep - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].eastDoorwayDistanceFromTopToMiddle + theBuildings[i].eastRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						} else if (line === "left" && theBuildings[i].westDoor === true) { 
-							if (Player1.y + yStep - cameraY - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].westDoorwayDistanceFromTop + theBuildings[i].westLeftDoorPosition
-							&&
-							Player1.y + yStep - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].westDoorwayDistanceFromTopToMiddle + theBuildings[i].westRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						} else {
-							Player1.yVector = 0;
-						}
-						 /// will need more else ifs like above but for east and west doors
-						
-						
-						*/
-						Player1.yVector = 0;
-						console.log(line);	
-						//console.log(line);
-						//console.log(wallCollision[line]);
-				}
-				
-				
-				/// test x vector
-				if (collidesSpecify(
-						xStep * 2 + Player1.x - (Player1.w / 2),
-						Player1.y - (Player1.h / 2),
-						Player1.w,
-						Player1.h,
-						theBuildings[i].walls[line].p1x,
-						theBuildings[i].walls[line].p1y,
-						theBuildings[i].walls[line].w,
-						theBuildings[i].walls[line].h )) {
-						console.log("horizontal collision");
-						wallCollision[line] = true;
-						wallCollisionCounter++;
-						//Player1.xVector = 0;
-						//console.log(line);
-						//console.log(wallCollision[line]);
-				
-				
-				/*
-						if (line === "bottom" && theBuildings[i].southDoor === true) {
-							if (Player1.x + xStep - cameraX - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].southDoorwayDistanceFromLeft + ( theBuildings[i].southLeftDoorPosition)
-							&&
-							Player1.x + xStep - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].southDoorwayDistanceFromLeftToMiddle + theBuildings[i].southRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.xVector = 0;
-							console.log("hitting door");
-							}
-						
-						} else if (line === "top" && theBuildings[i].northDoor === true) { 
-							if (Player1.x + xStep - cameraX - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].northDoorwayDistanceFromLeftToMiddle - (25 - theBuildings[i].northLeftDoorPosition)
-							&&
-							Player1.x + xStep - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].northDoorwayDistanceFromLeftToMiddle + theBuildings[i].northRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.xVector = 0;
-							console.log("hitting door");
-							}
-						} else if (line === "right" && theBuildings[i].eastDoor === true) { 
-							if (Player1.y - cameraY - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].eastDoorwayDistanceFromTop + theBuildings[i].eastLeftDoorPosition
-							&&
-							Player1.y - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].eastDoorwayDistanceFromTopToMiddle + theBuildings[i].eastRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						} else if (line === "left" && theBuildings[i].westDoor === true) { 
-							if (Player1.y - cameraY - (Player1.w / 2) > theBuildings[i].walls[line].p1x + theBuildings[i].westDoorwayDistanceFromTop + theBuildings[i].westLeftDoorPosition
-							&&
-							Player1.y - cameraX + (Player1.w / 2) < theBuildings[i].walls[line].p1x + theBuildings[i].westDoorwayDistanceFromTopToMiddle + theBuildings[i].westRightDoorPosition
-							) {
-							console.log("going through door");
-							} else {
-							Player1.yVector = 0;
-							console.log("hitting door");
-							}
-						} else {
-							Player1.xVector = 0;
-						}
-				*/
+					
 						Player1.xVector = 0;
 						console.log(line);	
 				}
