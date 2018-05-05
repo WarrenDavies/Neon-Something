@@ -6,6 +6,9 @@ console.log("start");
 
 // to do
 
+
+// Player - building collision not working
+
 // make save/restore more efficien -- don't need to do this in every loop surely.
 // also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
 
@@ -537,7 +540,7 @@ vehiclesOnScreen[1] = {
 	distanceFromPlayer: 10000,
 	accelerating: false,
 	reversing: false,
-	track: johnWaite,
+	track: null,
 	image: vehicleCar,
 	headlightsOn: false,
 	collision: false,
@@ -576,7 +579,7 @@ vehiclesOnScreen[1] = {
 	weight: 100,
 	color: "pink",
 	distanceFromPlayer: 10000,
-	track: goWest,
+	track: null,
 	image: vehicleTJF_Car_Truck,
 	headlightsOn: false,
 	lines: {
@@ -614,7 +617,7 @@ vehiclesOnScreen[1] = {
 	weight: 15,
 	color: "blue",
 	distanceFromPlayer: 10000,
-	track: journey,
+	track: null,
 	image: vehicleTJF_Car_Limo,
 	headlightsOn: false,
 	lines: {
@@ -654,7 +657,7 @@ vehiclesOnScreen[1] = {
 	distanceFromPlayer: 10000,
 	accelerating: false,
 	reversing: false,
-	track: bonJovi,
+	track: null,
 	image: vehicleTJF_Car_Blue,
 	headlightsOn: false,
 	lines: {
@@ -694,7 +697,7 @@ vehiclesOnScreen[1] = {
 	distanceFromPlayer: 10000,
 	accelerating: false,
 	reversing: false,
-	track: jessie,
+	track: null,
 	image: vehicleTJF_Car_Military,
 	headlightsOn: false,
 	lines: {
@@ -734,7 +737,7 @@ vehiclesOnScreen[1] = {
 	distanceFromPlayer: 10000,
 	accelerating: false,
 	reversing: false,
-	track: acdc,
+	track: null,
 	image: vehicleTJF_Car_Green,
 	headlightsOn: false,
 	lines: {
@@ -2213,7 +2216,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		//c.shadowBlur = 4;
 		c.lineCap = "round";
 		c.beginPath();	
-		for (i = 12; i > 0; i = i - 3) {
+		for (i = 12; i > 0; i -= 3) {
 			
 			c.lineWidth = i;
 			c.moveTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
@@ -2221,21 +2224,21 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.stroke();
 			
 		}
-		for (i = 12; i > 0; i = i - 3) {
+		for (i = 12; i > 0; i -= 3) {
 			c.beginPath();	
 			c.lineWidth = i;
 			c.moveTo(upperLeftX - cameraX, upperLeftY - cameraY);
 			c.lineTo(roofTopLeftX, roofTopLeftY);
 			c.stroke();
 		}
-		for (i = 12; i > 0; i = i - 3) {
+		for (i = 12; i > 0; i -= 3) {
 			c.beginPath();	
 			c.lineWidth = i;
 			c.moveTo(lowerRightX - cameraX, lowerRightY - cameraY);
 			c.lineTo(roofBottomRightX, roofBottomRightY);
 			c.stroke();
 		}
-		for (i = 12; i > 0; i = i - 3) {
+		for (i = 12; i > 0; i -= 3) {
 			c.beginPath();	
 			c.lineWidth = i;
 			c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
@@ -4876,16 +4879,17 @@ function detectKeys(){
 		
 		if (distanceKeeper < 5) {
 			Player1.mot = Player1.gettingInVehicle;
-			if (vehiclesOnScreen[Player1.gettingInVehicle].track) {
+			/*if (vehiclesOnScreen[Player1.gettingInVehicle].track) {
 				vehiclesOnScreen[Player1.gettingInVehicle].track.play();
-			}
+			}*/
+			// Play music associated with this vehicle
 			Player1.gettingInVehicle = 0;
 			mountTimer = 30;
 		}
 		if (Player1.mot > 0 && mountTimer === 0){
-			if (vehiclesOnScreen[Player1.mot].track) { 
+			/*if (vehiclesOnScreen[Player1.mot].track) { 
 				vehiclesOnScreen[Player1.mot].track.pause();
-			}
+			}*/ // pause music
 			Player1.speed = 0;
 			dismountTimer = 30;
 			Player1.mot = 0;
