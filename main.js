@@ -2748,7 +2748,7 @@ theBuildings[9] = {
 //b10
 theBuildings[10] = {
 	name: "home",
-	upperLeftX: 5000,
+	upperLeftX: 4950,
 	upperLeftY: 800,
 	lowerRightX: 5700 - 1,
 	lowerRightY: 1450 - 1,
