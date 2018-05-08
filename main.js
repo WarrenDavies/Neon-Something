@@ -3300,7 +3300,7 @@ var wallCollisionCounter = 0;
 				// test y vector
 				if (collidesSpecify(
 						Player1.x - (Player1.w / 2),
-						yStep * 2 + Player1.y - (Player1.h / 2), 
+						(yStep * 2) + Player1.y - (Player1.h / 2), 
 						Player1.w, 
 						Player1.h, 
 						theBuildings[i].walls[line].p1x, 
@@ -3310,13 +3310,34 @@ var wallCollisionCounter = 0;
 						console.log("vertical collision");
 						wallCollision[line] = true;
 						wallCollisionCounter++;
-					
+						Player1.yVector = 0;
+						console.log(line);	
+				}
+			}
+		}
+		for (var line in theBuildings[i].walls) {
+			if (theBuildings[i].walls.hasOwnProperty(line)) {
+				//  .fillRect(theBuildings[i].walls[line].p1x, 
+				//	theBuildings[i].walls[line].p1y, 
+				//	theBuildings[i].walls[line].w, 
+				//	theBuildings[i].walls[line].h);
+				
+				// test y vector
+				if (collidesSpecify(
+						Player1.x + (xStep * 2) - (Player1.w / 2),
+						Player1.y - (Player1.h / 2), 
+						Player1.w, 
+						Player1.h, 
+						theBuildings[i].walls[line].p1x, 
+						theBuildings[i].walls[line].p1y, 
+						theBuildings[i].walls[line].w, 
+						theBuildings[i].walls[line].h )) {
+						console.log("horizontal collision");
+						wallCollision[line] = true;
+						wallCollisionCounter++;
 						Player1.xVector = 0;
 						console.log(line);	
 				}
-				
-				
-			
 			}
 		}
 	});
