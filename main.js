@@ -6,22 +6,20 @@ console.log("start");
 
 // to do
 
-
-// Player - building collision not working
-
 // make save/restore more efficien -- don't need to do this in every loop surely.
 // also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
 
 // make functions smaller
 
+// Make variables more local
+
+// Split game into multiple files
+
 // vehicle moves forward on the screen when accelerating
+// vehicles maintain their speed when player leaves them
 
 // get the camera out of the drawing functions - for the buildings
 // put the door coordinates etc into the building objects and set it to draw doors automatically
-
-// race track collision not working after vehicle collision updates
-
-// could do windows by drawing a P shape in the polygon - or just make blue squares. But is there a point if I'll eventually get textures?
 
 // BUG ---- DOORS can be seen through walls -- see building 4
 
