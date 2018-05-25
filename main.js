@@ -299,6 +299,7 @@ var theBullets = [];
 var debug = true;
 var showWayPoints = false;
 var showPlayer = false;
+var weaponChangeTimer = 0;
 
 function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, pLine2x2, pLine2y2, testing, buildingNo) {
 
@@ -460,38 +461,39 @@ var brownWallSouth=c.createPattern(brownWall,"repeat");
 
  // Player coords and initial location
  function Player () {
- this.x = 400; 
- this.y = 600;
- this.w = 20;
- this.h = 20;
- this.deltaX = 0;
- this.deltaY = 0;
- this.xTarget = 0;
- this.yTarget = 0;
- this.tired = false;
- this.speed = 0;
- this.topSpeed = 4;
- this.energy = 150;
- this.health = 150;
- this.recovery = 0
- this.xcenter = 400;
- this.ycenter = 300;
- this.fill = '#000000';
- this.xdirection = 1;
- this.ydirection = 0;
- this.acceleration = 1;
- this.radius = 0;
- this.angle = 1.7;
- this.mot = 0;
- this.closestVehicle = 0;
- this.gettingInVehicle = 0;
- this.inBuilding = 0;
- this.walkTimer = 0;
- this.xVector = 0;
- this.yVector = 0;
- this.standImage = playerStand;
- this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
- this.activeWeapon = 0;
+	 this.x = 400; 
+	 this.y = 600;
+	 this.w = 20;
+	 this.h = 20;
+	 this.deltaX = 0;
+	 this.deltaY = 0;
+	 this.xTarget = 0;
+	 this.yTarget = 0;
+	 this.tired = false;
+	 this.speed = 0;
+	 this.topSpeed = 4;
+	 this.energy = 150;
+	 this.health = 150;
+	 this.recovery = 0
+	 this.xcenter = 400;
+	 this.ycenter = 300;
+	 this.fill = '#000000';
+	 this.xdirection = 1;
+	 this.ydirection = 0;
+	 this.acceleration = 1;
+	 this.radius = 0;
+	 this.angle = 1.7;
+	 this.mot = 0;
+	 this.closestVehicle = 0;
+	 this.gettingInVehicle = 0;
+	 this.inBuilding = 0;
+	 this.walkTimer = 0;
+	 this.xVector = 0;
+	 this.yVector = 0;
+	 this.standImage = playerStand;
+	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
+	 this.activeWeapon = 0;
+	 this.weaponsPossessed = [true, true, true];
  } 
  var Player1 = new Player();
 
@@ -1435,6 +1437,10 @@ function drawHUD() {
 	c.strokeStyle = "black";
 	c.fillText("Time:", 520, 25);	
 	c.fillText(Math.floor(time), 580, 25);
+	
+	c.fillText("Weapon:", 630, 25);	
+	c.fillText(Player1.activeWeapon, 720, 25);	
+	
 	
 }
 
@@ -3791,6 +3797,26 @@ function drawBullets() {
 
 
 
+function changeWeapon(change) {
+		var checkWeapon = Player1.activeWeapon;
+		for (j = Player1.weaponsPossessed.length; j >= 0; j--) {
+			checkWeapon += change;
+			if (checkWeapon < 0) {
+				checkWeapon = Player1.weaponsPossessed.length - 1;
+			}
+			if (checkWeapon > Player1.weaponsPossessed.length) {
+				checkWeapon = 0;
+			}
+			if (Player1.weaponsPossessed[(checkWeapon)] === true) {
+				Player1.activeWeapon = checkWeapon;
+				keys[81] = false;
+				keys[69] = false;
+				console.log(Player1.activeWeapon);
+				break;
+			}
+		}
+	}
+
 
  // game loop interval
  setInterval(mainDraw, INTERVAL);
@@ -3883,13 +3909,13 @@ var newAngle = Math.atan(deltaY / deltaX);
 
 //Timers
 if (dismountTimer > 0) {
-dismountTimer -= 1;
+	dismountTimer -= 1;
 } 
 if (mountTimer > 0) {
-mountTimer -= 1;
+	mountTimer -= 1;
 }
 if (headlightsTimer > 0) {
-headlightsTimer -= 1;
+	headlightsTimer -= 1;
 }
 
 
@@ -4840,23 +4866,6 @@ function detectKeys(){
 		}
 	} // end of vehicle key presses
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// "flat" player movement (w is up, a is left, etc)
 	if (Player1.mot === 0) {
 		
@@ -4886,9 +4895,6 @@ function detectKeys(){
 		}
 	} 
 
-	
-	
-	
 	if (keys[70]) { // F for getting in the vehicle
 		if (Player1.closestVehicle > 0 && dismountTimer === 0) {
 			Player1.gettingInVehicle = Player1.closestVehicle;
@@ -4937,13 +4943,22 @@ function detectKeys(){
 	if (keys[40]) {
 		cameraY += 15;
 	} 
-		 
-
+	
+	if (keys[81]) {
+		changeWeapon(-1);
+	}
+	
+	if (keys[69]) {
+		changeWeapon(1);
+	}
+	
 	 // 70 = f
 	 // 65 = left  / a
 	 // 68	 = right / d
 	 // 87 = forward / w
 	 // 83 = backwards / s
+	 // 81 = q
+	 // 69 = e
 	 return false;
 } // detect keys
 
