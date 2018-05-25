@@ -1771,7 +1771,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			p2x: lowerRightX,
 			p2y: lowerRightY,
 			w: 1,
-			h: ((upperRightX - lowerRightX) - theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].northDoor.bottomDoorPosition,
+			h: 	lowerRightY - (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorPosition) ,
 				
 		}
 	} // if east door exists
@@ -1792,10 +1792,9 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			p2x: lowerLeftX,
 			p2y: lowerLeftY,
 			w: 1,
-			h: ((upperLeftX - lowerLeftX) - theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle) - theBuildings[buildingNo].northDoor.bottomDoorPosition,
-				
+			h: 	lowerLeftY - (upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].westDoor.bottomDoorPosition) ,
 		}
-	} // if east door exists
+	} // if west door exists
 	
 	
 	
@@ -3323,6 +3322,10 @@ var wallCollisionCounter = 0;
 		}
 		for (var line in theBuildings[i].walls) {
 			if (theBuildings[i].walls.hasOwnProperty(line)) {
+				
+				if (line === "left2") {
+					console.log(theBuildings[i].walls[line].h);
+				}
 				//  .fillRect(theBuildings[i].walls[line].p1x, 
 				//	theBuildings[i].walls[line].p1y, 
 				//	theBuildings[i].walls[line].w, 
@@ -3667,11 +3670,11 @@ function createBullet(targetX, targetY, shooterX, shooterY, type) {
 	var limitX = xtarget * 500;
 	var limitY = ytarget * 500;
 	var weaponType = "";
-	if (type === 0){ 
+	//if (type === 0){ 
 		weaponColor="#000";
 		weaponType = "bullet";
 		checkBulletPush = true;
-		}
+	//	}
 	if (checkBulletPush === true) {
 		theBullets.push({
 			active:true,
@@ -4993,7 +4996,7 @@ canvas.addEventListener("click", function() {
 		
 	} else {
 		if (Player1.mot === 0) {
-			if (!debug) {
+			if (Player1.activeWeapon === 1) {
 				createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon);
 			}
 		}
