@@ -1259,12 +1259,7 @@ vehiclesOnScreen.forEach ( function(i, j) {
 		//c.stroke();
 		//c.restore();
 		
-	if (j === 2) {
-		c.fillStyle = "blue";
-		console.log(i.angle);
-		c.fillText (i.angle, 200,275);	
-		c.fillText (i.x, 200,300);
-	}
+	
 	c.rotate(i.angle);
 	c.translate(-i.x,-i.y);
 	
@@ -5057,8 +5052,8 @@ function debugHUD(){
 			c.font = 'bold 14pt Calibri';
 			
 			c.fillText("PLAYER ", 100, 125);
-			c.fillText("x: " + Player1.x, 100, 150);
-			c.fillText("y: " + Player1.y, 100, 175);
+			//c.fillText("x: " + Player1.x, 100, 150);
+			//c.fillText("y: " + Player1.y, 100, 175);
 			c.fillText("angle: " + Player1.angle, 100, 200);
 			c.fillText("xVector: " + Math.cos(Player1.angle) , 100, 225);
 			c.fillText("yVector: " + Math.sin(Player1.angle), 100, 250);
@@ -5118,8 +5113,8 @@ function debugHUD(){
 			// intersection
 			c.font = 'bold 14pt Calibri';
 			c.strokeStyle = "white";
-			c.fillText("x: " + lineIntersectionForDebug[0], 200, 45);
-			c.fillText("y: " + lineIntersectionForDebug[1], 300, 45);
+			//c.fillText("x: " + lineIntersectionForDebug[0], 200, 45);
+			//c.fillText("y: " + lineIntersectionForDebug[1], 300, 45);
 		
 }
 
