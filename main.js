@@ -1595,14 +1595,15 @@ function drawIrregularlyShapedBuilding(upperLeftX, upperLeftY, lowerRightX, lowe
 
 
 function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, wallColor, roofColor, buildingNo) {
-	c.lineWidth = 1;
+	
 	var upperRightX = lowerRightX;
 	var upperRightY = upperLeftY;
 	var lowerLeftX = upperLeftX;
 	var lowerLeftY = lowerRightY;
 
 	c.beginPath();
-	
+	c.lineWidth = 1;
+	c.strokeStyle = wallColor;
 	// roof top left
 	var dx = upperLeftX - cameraX - 400;
 	var dy = upperLeftY - cameraY - 300;				
@@ -2254,6 +2255,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	if (Player1.inBuilding != buildingNo) {
 		c.beginPath();
 		c.fillStyle = roofColor;
+		c.strokeStyle = wallColor;
 		c.beginPath();	
 		c.moveTo(roofTopLeftX, roofTopLeftY);
 		c.lineTo(roofTopRightX, roofTopRightY);
@@ -2261,6 +2263,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(roofBottomLeftX, roofBottomLeftY);
 		c.lineTo(roofTopLeftX, roofTopLeftY);
 		c.fillStyle = roofColor;
+		c.stroke();
 		c.fill();
 		c.closePath();
 		if (theBuildings[buildingNo].neonRoof === true) {
@@ -2275,7 +2278,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 				c.rect(roofTopLeftX, roofTopLeftY, roofTopRightX - roofTopLeftX, roofBottomRightY - roofTopLeftY );
 				c.stroke();
 			}
-			c.closePath();
+			c.closePath(); 
 		} // draw neon edges to roof	
 		c.lineCap = "butt";
 		c.shadowBlur = 0;
@@ -5105,6 +5108,7 @@ function debugHUD(){
 			c.lineTo(debugTarget.x + (debugTarget.xVector * 5000), debugTarget.y + (debugTarget.yVector * 5000) );
 			c.lineWidth = 1;
 			c.stroke();
+			
 			
 			c.restore();
 			
