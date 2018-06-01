@@ -3817,95 +3817,77 @@ function changeWeapon(change) {
 	}
 
 function updateTime() {
-		
-//time += .01;
-if (time > 24) {time = 0;}
+	//time += .01;
+	if (time > 24) {time = 0;}
 
+	switch(Math.floor(time)) {
+		case 17:
+			light = 0.1;
+			break;
+		case 18:
+			light = 0.2;
+			break;
+		case 19:
+			light = 0.3;
+			break;
+		case 20:
+			light = 0.4;
+			break;
+		case 21:
+			light = 0.5;
+			break;
+		case 22:
+			light = 0.6;
+			break;
+		case 23:
+			light = 0.7;
+			break;
+		case 0:
+			light = 0.7;
+			break;
+		case 1:
+			light = 0.7;
+			break;
+		case 2:
+			light = 0.7;
+			break;
+		case 3:
+			light = 0.6;
+			break;
+		case 4:
+			light = 0.5;
+			break;
+		case 5:
+			light = 0.4;
+			break;
+		case 6:
+			light = 0.3;
+			break;
+		case 7:
+			light = 0.2;
+			break;
+		case 8:
+			light = 0.1;
+			break;
+		default:
+			light = 0.0;
+	} 
 
-switch(Math.floor(time)) {
-    case 17:
-        light = 0.1;
-        break;
-    case 18:
-        light = 0.2;
-        break;
-	case 19:
-        light = 0.3;
-        break;
-    case 20:
-        light = 0.4;
-        break;
-    case 21:
-        light = 0.5;
-        break;
-    case 22:
-        light = 0.6;
-        break;
-    case 23:
-        light = 0.7;
-        break;
-    case 0:
-        light = 0.7;
-        break;
-    case 1:
-        light = 0.7;
-        break;
-	case 2:
-        light = 0.7;
-        break;
-    case 3:
-        light = 0.6;
-        break;
-    case 4:
-        light = 0.5;
-        break;
-	case 5:
-        light = 0.4;
-        break;
-	case 6:
-        light = 0.3;
-        break;
-	case 7:
-        light = 0.2;
-        break;
-	case 8:
-        light = 0.1;
-        break;
-
-	default:
-        light = 0.0;
-} 
-
-if (light != 0 && light != 0.7) {
-	
-	if (time < 12) {
-		light += (0.1 - ((time % 1) / 10));
-		
-		//console.log("light = " + light);
-		//console.log ( (time % 1) / 10 );
-	} else {
-		light += ((time % 1) / 10)
-		//console.log("light = " + light);
+	if (light != 0 && light != 0.7) {
+		if (time < 12) {
+			light += (0.1 - ((time % 1) / 10));
+		} else {
+			light += ((time % 1) / 10)
+		}
 	}
-}
-
-//X = x*cos(θ) - y*sin(θ)
-//Y = x*sin(θ) + y*cos(θ)
-if (Player1.mot > 0) {
-	
-	//c.stroke();
-	
-}
-	
-	
-c.fillStyle = "rgba(0, 0, 0," + light + ")";
-c.beginPath();
-c.moveTo(0, 0);
-c.lineTo(800, 0);
-c.lineTo(800, 600);
-c.lineTo(0, 600);
-c.lineTo(0, 0);
-
+		
+	c.fillStyle = "rgba(0, 0, 0," + light + ")";
+	c.beginPath();
+	c.moveTo(0, 0);
+	c.lineTo(800, 0);
+	c.lineTo(800, 600);
+	c.lineTo(0, 600);
+	c.lineTo(0, 0);
 }
 	
 	
