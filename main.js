@@ -3769,7 +3769,6 @@ function checkBulletCivilianCollision(i, j) {
 	}
 }
 
-
 function drawBullets() {
 	theBullets.forEach ( function(i, j) {
 		if (i.active === true) {	
@@ -3793,8 +3792,6 @@ function drawBullets() {
 		}	
 	});
 } // draw bullets 
-
-
 
 function changeWeapon(change) {
 		var checkWeapon = Player1.activeWeapon;
@@ -3947,33 +3944,21 @@ drawSplats();
 // move the player - detect keystrokes
 detectKeys();   
  
- 
 //updateVehicles();
-//draw vehicles
 //checkVehicleCollision();
 drawVehicles(); 
- 
 
 updatePlayer();   
-// draw player with the new angle so that it faces the mouse
-drawPlayer();  
- 
+drawPlayer(); 
  
 updateBullets();
 drawBullets();
- 
+
 updateCivilians();
 drawCivilians(); 
 
 drawBuildings();
 
- 
-
-
-//buildingsOnScreen.splice(0);
- 
-
-// draw the HUD with life, energy etc
 drawHUD(); 
 
 // get the angle between the player coords and the mouse coords  
@@ -3992,11 +3977,7 @@ if (headlightsTimer > 0) {
 	headlightsTimer -= 1;
 }
 
-
 /// STUFF NOT SPLIT OUT YET
-
-
-
 
 ////race
 if (race.completeTimer < 0.1) {
@@ -4034,7 +4015,6 @@ if (race.distaceToCheckPoint < 200) {
 				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2y)) {
 				
 				race.collidesCheckPoint = true;
-				console.log("collissiosnoisn");
 			}
 		}	
 	}
