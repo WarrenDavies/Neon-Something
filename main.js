@@ -3886,7 +3886,20 @@ function updateTime() {
 	c.lineTo(0, 600);
 	c.lineTo(0, 0);
 }
-	
+
+function updateTimers() {
+	//Timers
+	if (dismountTimer > 0) {
+		dismountTimer -= 1;
+	} 
+	if (mountTimer > 0) {
+		mountTimer -= 1;
+	}
+	if (headlightsTimer > 0) {
+		headlightsTimer -= 1;
+	}
+}
+
 	
 	
  // game loop interval
@@ -3965,6 +3978,9 @@ drawHUD();
 deltaX = mouseX - Player1.x;
 deltaY = mouseY - Player1.y;
 var newAngle = Math.atan(deltaY / deltaX);
+
+
+updateTimers();
 
 //Timers
 if (dismountTimer > 0) {
