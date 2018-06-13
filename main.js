@@ -3900,221 +3900,7 @@ function updateTimers() {
 	}
 }
 
-	
-	
- // game loop interval
- setInterval(mainDraw, INTERVAL);
-
- // clear canvas function
-  function clear(c) {
-  c.clearRect(0, 0, WIDTH, HEIGHT);
-	}
- /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
- 
- if (!keys[37] && !keys[39] && !keys[38] && !keys[40] ) {
-cameraX = (Player1.x + Player1.w / 2) - (cameraW / 2);
-cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
-}
- // drawing function / game loop
-  function mainDraw(canvas, message) {
-  
-// vehiclesOnScr.track.play();
-
-	// clear the canvas and draw the background again
-	clear(c);
-	c.beginPath();
-	//c.fillStyle = "rgb(45,133,22)";
-	c.fillStyle = "green";
-	c.rect(0,0,800,600);
-	c.fill();
-	
-	c.closePath();
- 
-
- 
-// work out which tiles to draw based on player position
-whichTiles();
-	
- 
-drawMap();
-
-//draw dead people
-drawSplats(); 
- //console.log(theSplats);
-
- 
-// move the player - detect keystrokes
-detectKeys();   
- 
-//updateVehicles();
-//checkVehicleCollision();
-drawVehicles(); 
-
-updatePlayer();   
-drawPlayer(); 
- 
-updateBullets();
-drawBullets();
-
-updateCivilians();
-drawCivilians(); 
-
-drawBuildings();
-
-drawHUD(); 
-
-// get the angle between the player coords and the mouse coords  
-deltaX = mouseX - Player1.x;
-deltaY = mouseY - Player1.y;
-var newAngle = Math.atan(deltaY / deltaX);
-
-
-updateTimers();
-
-//Timers
-if (dismountTimer > 0) {
-	dismountTimer -= 1;
-} 
-if (mountTimer > 0) {
-	mountTimer -= 1;
-}
-if (headlightsTimer > 0) {
-	headlightsTimer -= 1;
-}
-
-/// STUFF NOT SPLIT OUT YET
-
-////race
-if (race.completeTimer < 0.1) {
-c.fillStyle = raceCheckPoints[race.currentCheckPoint].colour;
-c.beginPath();
-		c.save();
-
-		
-c.fillRect(
-raceCheckPoints[race.currentCheckPoint].x - cameraX, 
-raceCheckPoints[race.currentCheckPoint].y - cameraY, 
-raceCheckPoints[race.currentCheckPoint].w, 
-raceCheckPoints[race.currentCheckPoint].h);
-c.fill();
-//console.log(raceCheckPoints[race.currentCheckPoint].x);
-//console.log(raceCheckPoints[race.currentCheckPoint].y);
-
-//console.log (raceCheckPoints[0].lines.top.p2x); 
-
-race.collidesCheckPoint = false;
-if (race.distaceToCheckPoint < 200) {
-	for (var vehicleLine in vehiclesOnScreen[Player1.mot].lines) {
-		for (var checkPointLine in raceCheckPoints[race.currentCheckPoint].lines) {
-				
-			 
-			if (testLines(
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1x, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1y, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2x, 
-				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2y, 
-				
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1x, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1y, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2x, 
-				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2y)) {
-				
-				race.collidesCheckPoint = true;
-			}
-		}	
-	}
-}	
-
-//if (collidesSpecify( Player1.x, Player1.y, Player1.w, Player1.h, raceCheckPoints[race.currentCheckPoint].x, raceCheckPoints[race.currentCheckPoint].y, raceCheckPoints[race.currentCheckPoint].w, raceCheckPoints[race.currentCheckPoint].h ) && race.completeTimer < 1 ) {
-
-if (race.collidesCheckPoint === true) {	
-	
-	if (race.currentCheckPoint === 0) {
-		race.on = true;
-	}
-	console.log("checkpoint");
-	if (raceCheckPoints[race.currentCheckPoint].colour === "red") {
-		race.on = false;
-		race.currentCheckPoint = 0;
-		
-		
-		race.completeTimer = 60;
-	} else {
-		race.currentCheckPoint++;
-	}
-	
-	
-}
-
-//console.log(race.on);
-
-if (race.on === true) {
-	
-	race.deltaX = (raceCheckPoints[race.currentCheckPoint].x + (raceCheckPoints[race.currentCheckPoint].w / 2)) - Player1.x;
-	race.deltaY = (raceCheckPoints[race.currentCheckPoint].y + (raceCheckPoints[race.currentCheckPoint].h / 2)) - Player1.y;
-	race.angle = Math.atan2(race.deltaY,  race.deltaX);
-	race.xVector = Math.cos(race.angle);
-	race.yVector = Math.sin(race.angle);
-	
-	
-	//race.distaceToCheckPoint = Math.sqrt(Math.pow(race.xVector * 100, 2) + Math.pow(race.yVector * 100, 2) )
-	
-	race.distaceToCheckPoint = Math.sqrt(Math.pow(race.deltaX, 2) + Math.pow(race.deltaY, 2) )
-	
-	console.log (race.distaceToCheckPoint);
-	
-	if (race.distaceToCheckPoint < 150) {
-		race.indicatorAdjustor = 150 - race.distaceToCheckPoint;
-	} else {
-		race.indicatorAdjustor = 0;
-	}
-	
-	race.indicatorX = race.xVector * (150 - race.indicatorAdjustor);
-	race.indicatorY = race.yVector * (150 - race.indicatorAdjustor);
-	
-	
-	
-	c.beginPath();
-	c.save();
-	c.fillStyle = raceCheckPoints[race.currentCheckPoint].colour;
-	c.translate(Player1.x, Player1.y);
-	c.arc(race.indicatorX - 5 - cameraX, race.indicatorY - 5 - cameraY, 5, 0, 2*Math.PI);
-	c.lineWidth = 2;
-	c.stroke();
-	c.fill();
-	c.restore();
-	
-	race.currentRaceTime += 0.02; 
-}
-
-}
-
-///time
-updateTime();
-
-
-//	c.moveTo(200,0);
-//	c.lineTo(200,100);
-//	c.lineTo(500,100);
-//	c.lineTo(500,0);
-	//c.moveTo(200,0);
-
-
-//console.log(Player1.inBuilding); 
-
-// check if player is in car with headlights on
-if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
+function drawHeadlights() {
 	
 	c.save();
 	c.strokeStyle="black";
@@ -4614,6 +4400,211 @@ do {
 	//c.lineTo(Player1.x + -40, Player1.y + -20);
 	c.restore();
 	c.closePath();
+}	//draw headlights
+	
+ // game loop interval
+ setInterval(mainDraw, INTERVAL);
+
+ // clear canvas function
+  function clear(c) {
+  c.clearRect(0, 0, WIDTH, HEIGHT);
+	}
+ /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+ 
+ if (!keys[37] && !keys[39] && !keys[38] && !keys[40] ) {
+cameraX = (Player1.x + Player1.w / 2) - (cameraW / 2);
+cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
+}
+ // drawing function / game loop
+  function mainDraw(canvas, message) {
+  
+// vehiclesOnScr.track.play();
+
+	// clear the canvas and draw the background again
+	clear(c);
+	c.beginPath();
+	//c.fillStyle = "rgb(45,133,22)";
+	c.fillStyle = "green";
+	c.rect(0,0,800,600);
+	c.fill();
+	
+	c.closePath();
+ 
+
+ 
+// work out which tiles to draw based on player position
+whichTiles();
+	
+ 
+drawMap();
+
+//draw dead people
+drawSplats(); 
+ //console.log(theSplats);
+
+ 
+// move the player - detect keystrokes
+detectKeys();   
+ 
+//updateVehicles();
+//checkVehicleCollision();
+drawVehicles(); 
+
+updatePlayer();   
+drawPlayer(); 
+ 
+updateBullets();
+drawBullets();
+
+updateCivilians();
+drawCivilians(); 
+
+drawBuildings();
+
+drawHUD(); 
+
+// get the angle between the player coords and the mouse coords  
+deltaX = mouseX - Player1.x;
+deltaY = mouseY - Player1.y;
+var newAngle = Math.atan(deltaY / deltaX);
+
+
+updateTimers();
+
+
+
+/// STUFF NOT SPLIT OUT YET
+
+////race
+if (race.completeTimer < 0.1) {
+c.fillStyle = raceCheckPoints[race.currentCheckPoint].colour;
+c.beginPath();
+		c.save();
+
+		
+c.fillRect(
+raceCheckPoints[race.currentCheckPoint].x - cameraX, 
+raceCheckPoints[race.currentCheckPoint].y - cameraY, 
+raceCheckPoints[race.currentCheckPoint].w, 
+raceCheckPoints[race.currentCheckPoint].h);
+c.fill();
+//console.log(raceCheckPoints[race.currentCheckPoint].x);
+//console.log(raceCheckPoints[race.currentCheckPoint].y);
+
+//console.log (raceCheckPoints[0].lines.top.p2x); 
+
+race.collidesCheckPoint = false;
+if (race.distaceToCheckPoint < 200) {
+	for (var vehicleLine in vehiclesOnScreen[Player1.mot].lines) {
+		for (var checkPointLine in raceCheckPoints[race.currentCheckPoint].lines) {			
+			if (testLines(
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1x, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p1y, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2x, 
+				vehiclesOnScreen[Player1.mot].lines[vehicleLine].p2y, 
+				
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1x, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p1y, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2x, 
+				raceCheckPoints[race.currentCheckPoint].lines[checkPointLine].p2y)) {
+				
+				race.collidesCheckPoint = true;
+			}
+		}	
+	}
+}	
+
+//if (collidesSpecify( Player1.x, Player1.y, Player1.w, Player1.h, raceCheckPoints[race.currentCheckPoint].x, raceCheckPoints[race.currentCheckPoint].y, raceCheckPoints[race.currentCheckPoint].w, raceCheckPoints[race.currentCheckPoint].h ) && race.completeTimer < 1 ) {
+
+if (race.collidesCheckPoint === true) {	
+	
+	if (race.currentCheckPoint === 0) {
+		race.on = true;
+	}
+	console.log("checkpoint");
+	if (raceCheckPoints[race.currentCheckPoint].colour === "red") {
+		race.on = false;
+		race.currentCheckPoint = 0;
+		
+		
+		race.completeTimer = 60;
+	} else {
+		race.currentCheckPoint++;
+	}
+	
+	
+}
+
+//console.log(race.on);
+
+if (race.on === true) {
+	
+	race.deltaX = (raceCheckPoints[race.currentCheckPoint].x + (raceCheckPoints[race.currentCheckPoint].w / 2)) - Player1.x;
+	race.deltaY = (raceCheckPoints[race.currentCheckPoint].y + (raceCheckPoints[race.currentCheckPoint].h / 2)) - Player1.y;
+	race.angle = Math.atan2(race.deltaY,  race.deltaX);
+	race.xVector = Math.cos(race.angle);
+	race.yVector = Math.sin(race.angle);
+	
+	
+	//race.distaceToCheckPoint = Math.sqrt(Math.pow(race.xVector * 100, 2) + Math.pow(race.yVector * 100, 2) )
+	
+	race.distaceToCheckPoint = Math.sqrt(Math.pow(race.deltaX, 2) + Math.pow(race.deltaY, 2) )
+	
+	console.log (race.distaceToCheckPoint);
+	
+	if (race.distaceToCheckPoint < 150) {
+		race.indicatorAdjustor = 150 - race.distaceToCheckPoint;
+	} else {
+		race.indicatorAdjustor = 0;
+	}
+	
+	race.indicatorX = race.xVector * (150 - race.indicatorAdjustor);
+	race.indicatorY = race.yVector * (150 - race.indicatorAdjustor);
+	
+	
+	
+	c.beginPath();
+	c.save();
+	c.fillStyle = raceCheckPoints[race.currentCheckPoint].colour;
+	c.translate(Player1.x, Player1.y);
+	c.arc(race.indicatorX - 5 - cameraX, race.indicatorY - 5 - cameraY, 5, 0, 2*Math.PI);
+	c.lineWidth = 2;
+	c.stroke();
+	c.fill();
+	c.restore();
+	
+	race.currentRaceTime += 0.02; 
+}
+
+}
+
+///time
+updateTime();
+
+
+//	c.moveTo(200,0);
+//	c.lineTo(200,100);
+//	c.lineTo(500,100);
+//	c.lineTo(500,0);
+	//c.moveTo(200,0);
+
+
+//console.log(Player1.inBuilding); 
+
+// check if player is in car with headlights on
+if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
+	drawHeadlights();
 } // check if player is in car with headlights on
 
 //c.strokeStyle = "white";
