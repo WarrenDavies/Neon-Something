@@ -3885,6 +3885,7 @@ function updateTime() {
 	c.lineTo(800, 600);
 	c.lineTo(0, 600);
 	c.lineTo(0, 0);
+	//c.fill();
 }
 
 function updateTimers() {
@@ -4400,6 +4401,33 @@ do {
 	//c.lineTo(Player1.x + -40, Player1.y + -20);
 	c.restore();
 	c.closePath();
+	
+	
+	for (j = buildingsOnScreen.length - 1; j 
+	> -1; j--) {
+	var i = buildingsOnScreen[j];
+	
+	// make sure roofs are dark
+	if (i != Player1.inBuilding){ 
+	//	c.moveTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
+	//	c.lineTo(theBuildings[i].roofTopRightX, theBuildings[i].roofTopRightY);
+	//	c.lineTo(theBuildings[i].roofBottomRightX, theBuildings[i].roofBottomRightY);
+	//	c.lineTo(theBuildings[i].roofBottomLeftX, theBuildings[i].roofBottomLeftY);
+	//	c.lineTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
+	}
+}
+
+if (Player1.inBuilding != false) {
+	var i = Player1.inBuilding;	
+	c.moveTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
+	c.lineTo(theBuildings[i].roofBottomLeftX, theBuildings[i].roofBottomLeftY);
+	c.lineTo(theBuildings[i].roofBottomRightX, theBuildings[i].roofBottomRightY);
+	c.lineTo(theBuildings[i].roofTopRightX, theBuildings[i].roofTopRightY);
+	c.lineTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
+
+}
+c.fill();
+	
 }	//draw headlights
 	
 	
@@ -4415,11 +4443,7 @@ function updateRace() {
 	raceCheckPoints[race.currentCheckPoint].w, 
 	raceCheckPoints[race.currentCheckPoint].h);
 	c.fill();
-	//console.log(raceCheckPoints[race.currentCheckPoint].x);
-	//console.log(raceCheckPoints[race.currentCheckPoint].y);
-
-	//console.log (raceCheckPoints[0].lines.top.p2x); 
-
+	
 	race.collidesCheckPoint = false;
 	if (race.distaceToCheckPoint < 200) {
 		for (var vehicleLine in vehiclesOnScreen[Player1.mot].lines) {
@@ -4520,8 +4544,7 @@ function updateRace() {
    /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////
+  ///////////////mainDraw Starts///////////////////////////////
   /////////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
@@ -4533,10 +4556,7 @@ cameraX = (Player1.x + Player1.w / 2) - (cameraW / 2);
 cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
 }
  // drawing function / game loop
-  function mainDraw(canvas, message) {
-  
-// vehiclesOnScr.track.play();
-
+function mainDraw(canvas, message) {
 	// clear the canvas and draw the background again
 	clear(c);
 	c.beginPath();
@@ -4544,120 +4564,61 @@ cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
 	c.fillStyle = "green";
 	c.rect(0,0,800,600);
 	c.fill();
-	
 	c.closePath();
  
-
  
 // work out which tiles to draw based on player position
-whichTiles();
+	whichTiles();
 	
- 
-drawMap();
+// then draw the map 
+	drawMap();
 
 //draw dead people
-drawSplats(); 
- //console.log(theSplats);
-
+	drawSplats(); 
  
 // move the player - detect keystrokes
-detectKeys();   
- 
-//updateVehicles();
-//checkVehicleCollision();
-drawVehicles(); 
+	detectKeys();   
 
-updatePlayer();   
-drawPlayer(); 
- 
-updateBullets();
-drawBullets();
+//update and draw everything	
+	//updateVehicles();
+	//checkVehicleCollision();
+	drawVehicles(); 
 
-updateCivilians();
-drawCivilians(); 
+	updatePlayer();   
+	drawPlayer(); 
+	 
+	updateBullets();
+	drawBullets();
 
-drawBuildings();
+	updateCivilians();
+	drawCivilians(); 
 
-drawHUD(); 
+	drawBuildings();
+
+	drawHUD(); 
 
 // get the angle between the player coords and the mouse coords  
-deltaX = mouseX - Player1.x;
-deltaY = mouseY - Player1.y;
-var newAngle = Math.atan(deltaY / deltaX);
+	deltaX = mouseX - Player1.x;
+	deltaY = mouseY - Player1.y;
+	var newAngle = Math.atan(deltaY / deltaX);
 
+// increment debouncing timers for key presses (getting in cars etc)
+	updateTimers();
 
-updateTimers();
+// If the player is in a time trial race, that is updated here. This function needs to be split out into smaller functions, and also set up to accept multiple races -- at the moment there is only one possible race.	
+	updateRace();
 
+// slightly confusing name but updateTime refers to updating the time of day, and making the game area darker at night. This can be activated by uncommenting the first line which increments the time of day timer. 
+	updateTime();
 
-
-/// STUFF NOT SPLIT OUT YET
-
-updateRace();
-
-///time
-updateTime();
-
-
-//	c.moveTo(200,0);
-//	c.lineTo(200,100);
-//	c.lineTo(500,100);
-//	c.lineTo(500,0);
-	//c.moveTo(200,0);
-
-
-//console.log(Player1.inBuilding); 
-
-// check if player is in car with headlights on
-if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
-	drawHeadlights();
-} // check if player is in car with headlights on
-
-//c.strokeStyle = "white";
-//c.moveTo(whiteLine[0], whiteLine[1]);
-//c.lineTo(whiteLine[2], whiteLine[3]);
-//c.stroke();
-
-for (j = buildingsOnScreen.length - 1; j 
-	> -1; j--) {
-	var i = buildingsOnScreen[j];
-	
-	// make sure roofs are dark
-	if (i != Player1.inBuilding){ 
-	//	c.moveTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
-	//	c.lineTo(theBuildings[i].roofTopRightX, theBuildings[i].roofTopRightY);
-	//	c.lineTo(theBuildings[i].roofBottomRightX, theBuildings[i].roofBottomRightY);
-	//	c.lineTo(theBuildings[i].roofBottomLeftX, theBuildings[i].roofBottomLeftY);
-	//	c.lineTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
-	}
-}
-
-if (Player1.inBuilding != false) {
-
-	var i = Player1.inBuilding;
-	
-	c.moveTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
-	c.lineTo(theBuildings[i].roofBottomLeftX, theBuildings[i].roofBottomLeftY);
-	c.lineTo(theBuildings[i].roofBottomRightX, theBuildings[i].roofBottomRightY);
-	c.lineTo(theBuildings[i].roofTopRightX, theBuildings[i].roofTopRightY);
-	c.lineTo(theBuildings[i].roofTopLeftX, theBuildings[i].roofTopLeftY);
-
-}
-	
-//c.moveTo(200, 200);
-//c.lineTo(200, 400);
-//c.lineTo(600, 400);
-//c.lineTo(600, 200);
-//c.lineTo(200, 200);
-
-//c.rect(400,400,200,-200);
-
-c.fill();
-// c.fillRect(0, 0, 800, 600);
+// check if player is in car with headlights on, and if so draw them. Also, don't do this if the player is in a building (buildings are always lit up)
+	if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
+		drawHeadlights();
+	} // check if player is in car with headlights on
 
 
 if (debug) {
 	debugHUD();
-
 }
 
 
@@ -4667,6 +4628,8 @@ if (debug) {
 //cameraY = Player1.y - (cameraH / 2);
 
 //if ( (keys[83] || keys[87] || keys[65] || keys[68] || keys[70] || (Player1.mot > 0 || vehiclesOnScreen[Player1.mot].speed != 0) || Player1.speed > 0) &&  (!keys[37] && !keys[39] && !keys[38] && !keys[40]) ) {
+	
+//if arrow keys are not being pressed, center the camera on the player	
 if ( !keys[37] && !keys[39] && !keys[38] && !keys[40]  ) {
 
 cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
