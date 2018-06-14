@@ -1237,9 +1237,9 @@ vehiclesOnScreen.forEach ( function(i, j) {
 
 	
 // drawing begins	
-
-
-
+	if (Player1.mot === j) {
+	
+	}
 
 	c.beginPath();
 	c.save();
@@ -4530,6 +4530,20 @@ function updateRace() {
 	}
 } // updateRace	
 	
+function updateCamera() {
+//if arrow keys are not being pressed, continue	
+	if ( !keys[37] && !keys[39] && !keys[38] && !keys[40]  ) {
+		if (Player1.mot === 0) {
+// if not in a vehicle center the camera on the player
+			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
+			cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
+		} else {
+// if we are in a vehicle, center the camera on the vehice. However, the third part of this expression adds on the speed of the vehicle to the camera position -- otherwise the vehicle image moves forward on the screen a little, in line with its acceleration. 
+			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2) - (((vehiclesOnScreen[Player1.mot].xtarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].xTurnTarget));
+			cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2) - (((vehiclesOnScreen[Player1.mot].ytarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].yTurnTarget));
+		}
+	}
+}
 	
 	
  // game loop interval
@@ -4622,41 +4636,14 @@ if (debug) {
 }
 
 
-
+updateCamera();
 // update camera position
 //cameraX = Player1.x - (cameraW / 2);
 //cameraY = Player1.y - (cameraH / 2);
 
 //if ( (keys[83] || keys[87] || keys[65] || keys[68] || keys[70] || (Player1.mot > 0 || vehiclesOnScreen[Player1.mot].speed != 0) || Player1.speed > 0) &&  (!keys[37] && !keys[39] && !keys[38] && !keys[40]) ) {
 	
-//if arrow keys are not being pressed, center the camera on the player	
-if ( !keys[37] && !keys[39] && !keys[38] && !keys[40]  ) {
 
-cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
-cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
-
-//cameraX = Player1.x - (cameraW / 2);
-//cameraY = Player1.y - (cameraH / 2);
-
-if (Player1.mot > 0) {
-	Player1.x = vehiclesOnScreen[Player1.mot].x;
-	Player1.y = vehiclesOnScreen[Player1.mot].y;
-	Player1.angle = vehiclesOnScreen[Player1.mot].angle;
-	Player1.speed = vehiclesOnScreen[Player1.mot].speed;
-	
-	cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
-	cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
-		
-	// adjust camera posisiton to put more of the map in front of th playuer when drivign
-	if (vehiclesOnScreen[Player1.mot].speed != 0) {
-		//cameraX -= ((vehiclesOnScreen[Player1.mot].xtarget * (vehiclesOnScreen[Player1.mot].speed * 8)) - vehiclesOnScreen[Player1.mot].xTurnTarget);
-		//cameraY -= ((vehiclesOnScreen[Player1.mot].ytarget * (vehiclesOnScreen[Player1.mot].speed * 8)) - vehiclesOnScreen[Player1.mot].yTurnTarget);
-	}
-}
-
-
-
-}
 
 //testLines();
 } // main looop
