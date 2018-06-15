@@ -4545,7 +4545,25 @@ function updateCamera() {
 	}
 }
 	
-	
+function updateMouseCoordinates() {
+	// get the angle between the player coords and the mouse coords  
+	deltaX = mouseX - Player1.x;
+	deltaY = mouseY - Player1.y;
+	var newAngle = Math.atan(deltaY / deltaX);
+}	
+
+function clearCanvas() {
+	// clear the canvas and draw the default green background again
+	clear(c);
+	c.beginPath();
+	//c.fillStyle = "rgb(45,133,22)";
+	c.fillStyle = "green";
+	c.rect(0,0,800,600);
+	c.fill();
+	c.closePath();
+}
+
+
  // game loop interval
  setInterval(mainDraw, INTERVAL);
 
@@ -4571,26 +4589,16 @@ cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
 }
  // drawing function / game loop
 function mainDraw(canvas, message) {
-	// clear the canvas and draw the background again
-	clear(c);
-	c.beginPath();
-	//c.fillStyle = "rgb(45,133,22)";
-	c.fillStyle = "green";
-	c.rect(0,0,800,600);
-	c.fill();
-	c.closePath();
- 
- 
+	
+	clearCanvas();
+	
 // work out which tiles to draw based on player position
 	whichTiles();
 	
 // then draw the map 
 	drawMap();
-
-//draw dead people
-	drawSplats(); 
  
-// move the player - detect keystrokes
+// detect player's keyboard input
 	detectKeys();   
 
 //update and draw everything	
@@ -4600,52 +4608,43 @@ function mainDraw(canvas, message) {
 
 	updatePlayer();   
 	drawPlayer(); 
-	 
+
 	updateBullets();
 	drawBullets();
 
 	updateCivilians();
 	drawCivilians(); 
+	drawSplats(); 
 
+// draw buildings last to ensure other objects don't appear on top of them
 	drawBuildings();
 
 	drawHUD(); 
 
-// get the angle between the player coords and the mouse coords  
-	deltaX = mouseX - Player1.x;
-	deltaY = mouseY - Player1.y;
-	var newAngle = Math.atan(deltaY / deltaX);
+	updateMouseCoordinates();
 
 // increment debouncing timers for key presses (getting in cars etc)
 	updateTimers();
 
-// If the player is in a time trial race, that is updated here. This function needs to be split out into smaller functions, and also set up to accept multiple races -- at the moment there is only one possible race.	
+// If the player is in a time trial race, that is updated here. This function needs to be split out into smaller functions, and also set up to accept multiple races -- at the moment there is only one possible race and hence just this one function that controls it.	
 	updateRace();
 
 // slightly confusing name but updateTime refers to updating the time of day, and making the game area darker at night. This can be activated by uncommenting the first line which increments the time of day timer. 
 	updateTime();
 
-// check if player is in car with headlights on, and if so draw them. Also, don't do this if the player is in a building (buildings are always lit up)
+// check if player is in car with headlights on, and if so, draw them. Also, don't do this if the player is in a building (buildings are always lit up)
 	if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
 		drawHeadlights();
 	} // check if player is in car with headlights on
 
 
-if (debug) {
-	debugHUD();
-}
+	if (debug) {
+		debugHUD();
+	}
 
+	updateCamera();
 
-updateCamera();
-// update camera position
-//cameraX = Player1.x - (cameraW / 2);
-//cameraY = Player1.y - (cameraH / 2);
-
-//if ( (keys[83] || keys[87] || keys[65] || keys[68] || keys[70] || (Player1.mot > 0 || vehiclesOnScreen[Player1.mot].speed != 0) || Player1.speed > 0) &&  (!keys[37] && !keys[39] && !keys[38] && !keys[40]) ) {
-	
-
-
-//testLines();
+	//testLines();
 } // main looop
  /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
