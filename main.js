@@ -3115,38 +3115,76 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 					for (var line in theBuildings[l].walls) {
 						if (theBuildings[l].walls.hasOwnProperty(line)) {
 							if (collidesSpecify(
-									i.x,
-									i.y + ((i.speed * 10) * i.yVector), 
-									i.w, 
-									i.h, 
-									theBuildings[l].walls[line].p1x, 
-									theBuildings[l].walls[line].p1y, 
-									theBuildings[l].walls[line].w, 
-									theBuildings[l].walls[line].h )) {
-										i.collisionCourse = true;
-										i.collidesWithID = l;
-										i.collidesWithType = "Building";
-										i.collidesWithWall = line;
-										i.verticalBuildingCollision = true;
+							i.x,
+							i.y + ((i.speed * 10) * i.yVector), 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								i.collisionCourse = true;
+								i.collidesWithID = l;
+								i.collidesWithType = "Building";
+								i.collidesWithWall = line;
+								i.verticalBuildingCollision = true;
+								if (i.collidesWithWall === "top" ||
+								i.collidesWithWall === "top2" ||
+								i.collidesWithWall === "bottom" ||
+								i.collidesWithWall === "bottom2") {
+									if (i.xVector >= 0) {
+										i.wayPoints.push({
+											x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2x + 60,
+											y: i.y,
+											type: "Avoid Building",
+										});
+									}
+									if (i.xVector < 0) {
+										i.wayPoints.push({
+											x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1x - 60,
+											y: i.y,
+											type: "Avoid Building",
+										});
+									}	
+								}
 							}
 						}
 					}
 					for (var line in theBuildings[l].walls) {
 						if (theBuildings[l].walls.hasOwnProperty(line)) {
 							if (collidesSpecify(
-									i.x + ((i.speed * 10) * i.xVector),
-									i.y, 
-									i.w, 
-									i.h, 
-									theBuildings[l].walls[line].p1x, 
-									theBuildings[l].walls[line].p1y, 
-									theBuildings[l].walls[line].w, 
-									theBuildings[l].walls[line].h )) {
-										i.collisionCourse = true;
-										i.collidesWithID = l;
-										i.collidesWithType = "Building";
-										i.collidesWithWall = line;
-										i.horizontalBuildingCollision = true;
+							i.x + ((i.speed * 10) * i.xVector),
+							i.y, 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								i.collisionCourse = true;
+								i.collidesWithID = l;
+								i.collidesWithType = "Building";
+								i.collidesWithWall = line;
+								i.horizontalBuildingCollision = true;
+								if (i.collidesWithWall === "left" ||
+									i.collidesWithWall === "left2" ||
+									i.collidesWithWall === "right" ||
+									i.collidesWithWall === "right2") {
+									if (i.yVector >= 0) {
+										i.wayPoints.push({
+											x: i.x,
+											y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2y + 60,
+											type: "Avoid Building",
+										});
+									}
+									if (i.yVector < 0) {
+										i.wayPoints.push({
+											x: i.x,
+											y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1y - 60,
+											type: "Avoid Building",
+										});
+									}	
+								}	
 							}
 						}
 					}
@@ -3203,44 +3241,8 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 						}
 						
 						if (i.collidesWithType === "Building") {
-							if (i.collidesWithWall === "left" ||
-								i.collidesWithWall === "left2" ||
-								i.collidesWithWall === "right" ||
-								i.collidesWithWall === "right2") {
-								if (i.yVector >= 0) {
-									i.wayPoints.push({
-										x: i.x,
-										y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2y + 60,
-										type: "Avoid Building",
-									});
-								}
-								if (i.yVector < 0) {
-									i.wayPoints.push({
-										x: i.x,
-										y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1y - 60,
-										type: "Avoid Building",
-									});
-								}	
-							}
-							if (i.collidesWithWall === "top" ||
-								i.collidesWithWall === "top2" ||
-								i.collidesWithWall === "bottom" ||
-								i.collidesWithWall === "bottom2") {
-								if (i.xVector >= 0) {
-									i.wayPoints.push({
-										x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2x + 60,
-										y: i.y,
-										type: "Avoid Building",
-									});
-								}
-								if (i.xVector < 0) {
-									i.wayPoints.push({
-										x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1x - 60,
-										y: i.y,
-										type: "Avoid Building",
-									});
-								}	
-							}
+							
+							
 						}
 						
 						
