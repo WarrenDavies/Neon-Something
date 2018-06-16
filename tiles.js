@@ -77,6 +77,58 @@ civWalk4.src = 'images/civWalk4.png';
 civStand = new Image();
 civStand.src = 'images/civStand.png';
 
+zombieWalk0 = new Image();
+zombieWalk0.src = 'images/skeleton-move_0';
+
+zombieWalk1 = new Image();
+zombieWalk1.src = 'images/skeleton-move_1';
+
+zombieWalk2 = new Image();
+zombieWalk2.src = 'images/skeleton-move_2';
+
+zombieWalk3 = new Image();
+zombieWalk3.src = 'images/skeleton-move_3';
+
+zombieWalk4 = new Image();
+zombieWalk4.src = 'images/skeleton-move_4';
+
+zombieWalk5 = new Image();
+zombieWalk5.src = 'images/skeleton-move_5';
+
+zombieWalk6 = new Image();
+zombieWalk6.src = 'images/skeleton-move_6';
+
+zombieWalk7 = new Image();
+zombieWalk7.src = 'images/skeleton-move_7';
+
+zombieWalk8 = new Image();
+zombieWalk8.src = 'images/skeleton-move_8';
+
+zombieWalk9 = new Image();
+zombieWalk9.src = 'images/skeleton-move_9';
+
+zombieWalk10 = new Image();
+zombieWalk10.src = 'images/skeleton-move_10';
+
+zombieWalk11 = new Image();
+zombieWalk11.src = 'images/skeleton-move_11';
+
+zombieWalk12 = new Image();
+zombieWalk12.src = 'images/skeleton-move_12';
+
+zombieWalk13 = new Image();
+zombieWalk13.src = 'images/skeleton-move_13';
+
+zombieWalk14 = new Image();
+zombieWalk14.src = 'images/skeleton-move_14';
+
+zombieWalk15 = new Image();
+zombieWalk15.src = 'images/skeleton-move_15';
+
+zombieWalk16 = new Image();
+zombieWalk16.src = 'images/skeleton-move_16';
+
+
 
 
 }
