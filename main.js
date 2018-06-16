@@ -9,6 +9,8 @@ console.log("start");
 // make save/restore more efficien -- don't need to do this in every loop surely.
 // also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
 
+// check civilian waypoints don't appear inside buidings
+
 // make functions smaller
 
 // Make variables more local
@@ -302,6 +304,8 @@ var debug = true;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
+var theZombies = [];
+
 
 function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, pLine2x2, pLine2y2, testing, buildingNo) {
 
@@ -2947,9 +2951,9 @@ theBuildings.forEach( function(i, j) {
 			collidesWithWall: "No Collision",
 			verticalBuildingCollision: false,
 			horizontalBuildingCollision: false,
+			stuck: false,
 			collidesWithID: -1,
-			currentStatus: "spawned"
-			
+			currentStatus: "spawned",	
 		 });
 		theCivilians[j].x = theWayPoints[j].x;
 		theCivilians[j].y = theWayPoints[j].y;
@@ -3108,88 +3112,8 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 						}	
 					}
 				}
-//check collisions with buildings				
-				i.horizontalBuildingCollision = false;
-				i.verticalBuildingCollision = false;
-				theBuildings.forEach( function(k, l) {
-					for (var line in theBuildings[l].walls) {
-						if (theBuildings[l].walls.hasOwnProperty(line)) {
-							if (collidesSpecify(
-							i.x,
-							i.y + ((i.speed * 10) * i.yVector), 
-							i.w, 
-							i.h, 
-							theBuildings[l].walls[line].p1x, 
-							theBuildings[l].walls[line].p1y, 
-							theBuildings[l].walls[line].w, 
-							theBuildings[l].walls[line].h )) {
-								i.collisionCourse = true;
-								i.collidesWithID = l;
-								i.collidesWithType = "Building";
-								i.collidesWithWall = line;
-								i.verticalBuildingCollision = true;
-								if (i.collidesWithWall === "top" ||
-								i.collidesWithWall === "top2" ||
-								i.collidesWithWall === "bottom" ||
-								i.collidesWithWall === "bottom2") {
-									if (i.xVector >= 0) {
-										i.wayPoints.push({
-											x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2x + 60,
-											y: i.y,
-											type: "Avoid Building",
-										});
-									}
-									if (i.xVector < 0) {
-										i.wayPoints.push({
-											x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1x - 60,
-											y: i.y,
-											type: "Avoid Building",
-										});
-									}	
-								}
-							}
-						}
-					}
-					for (var line in theBuildings[l].walls) {
-						if (theBuildings[l].walls.hasOwnProperty(line)) {
-							if (collidesSpecify(
-							i.x + ((i.speed * 10) * i.xVector),
-							i.y, 
-							i.w, 
-							i.h, 
-							theBuildings[l].walls[line].p1x, 
-							theBuildings[l].walls[line].p1y, 
-							theBuildings[l].walls[line].w, 
-							theBuildings[l].walls[line].h )) {
-								i.collisionCourse = true;
-								i.collidesWithID = l;
-								i.collidesWithType = "Building";
-								i.collidesWithWall = line;
-								i.horizontalBuildingCollision = true;
-								if (i.collidesWithWall === "left" ||
-									i.collidesWithWall === "left2" ||
-									i.collidesWithWall === "right" ||
-									i.collidesWithWall === "right2") {
-									if (i.yVector >= 0) {
-										i.wayPoints.push({
-											x: i.x,
-											y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2y + 60,
-											type: "Avoid Building",
-										});
-									}
-									if (i.yVector < 0) {
-										i.wayPoints.push({
-											x: i.x,
-											y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1y - 60,
-											type: "Avoid Building",
-										});
-									}	
-								}	
-							}
-						}
-					}
 				
-				});
+checkNPCCollisionWithBuilding(i);
 			
 // check collisions with player
 				if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
@@ -3269,12 +3193,135 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 				if (!i.verticalBuildingCollision) {
 					i.y += i.speed * i.yVector;
 				}
+				if (i.horizontalBuildingCollision && i.verticalBuildingCollision) {
+					i.stuck = true;
+					// set a random way point but check it's not inside a building
+				}
+				
 			}
 	});
 	if (theCivilians.length === 0) {
 		loadCivilian();
 	}	
 } //updateCivilians
+
+function checkNPCCollisionWithBuilding(i) {
+	//check collisions with buildings				
+	i.horizontalBuildingCollision = false;
+	i.verticalBuildingCollision = false;
+	theBuildings.forEach( function(k, l) {
+		for (var line in theBuildings[l].walls) {
+			if (theBuildings[l].walls.hasOwnProperty(line)) {
+				if (collidesSpecify(
+				i.x,
+				i.y + ((i.speed * 10) * i.yVector), 
+				i.w, 
+				i.h, 
+				theBuildings[l].walls[line].p1x, 
+				theBuildings[l].walls[line].p1y, 
+				theBuildings[l].walls[line].w, 
+				theBuildings[l].walls[line].h )) {
+					i.collisionCourse = true;
+					i.collidesWithID = l;
+					i.collidesWithType = "Building";
+					i.collidesWithWall = line;
+					i.verticalBuildingCollision = true;
+					if (i.collidesWithWall === "top" ||
+					i.collidesWithWall === "top2") {
+						if (i.xVector >= 0) {
+							i.wayPoints.push({
+								x: theBuildings[i.collidesWithID].lowerRightX + 60,
+								y: theBuildings[i.collidesWithID].upperLeftY - 30,
+								type: "Avoid Building",
+							});
+						}
+						if (i.xVector < 0) {
+							i.wayPoints.push({
+								x: theBuildings[i.collidesWithID].upperLeftX - 60,
+								y: theBuildings[i.collidesWithID].upperLeftY - 30,
+								type: "Avoid Building",
+							});
+						}	
+					}
+					if (i.collidesWithWall === "bottom" ||
+					i.collidesWithWall === "bottom2") {
+						if (i.xVector >= 0) {
+							i.wayPoints.push({
+								x: theBuildings[i.collidesWithID].lowerRightX + 60,
+								y: theBuildings[i.collidesWithID].lowerRightY + 30,
+								type: "Avoid Building",
+							});
+						}
+						if (i.xVector < 0) {
+							i.wayPoints.push({
+								x: theBuildings[i.collidesWithID].upperLeftX - 60,
+								y: theBuildings[i.collidesWithID].lowerRightY + 30,
+								type: "Avoid Building",
+							});
+						}	
+					}
+				}
+			}
+		}
+		for (var line in theBuildings[l].walls) {
+			if (theBuildings[l].walls.hasOwnProperty(line)) {
+				if (collidesSpecify(
+				i.x + ((i.speed * 10) * i.xVector),
+				i.y, 
+				i.w, 
+				i.h, 
+				theBuildings[l].walls[line].p1x, 
+				theBuildings[l].walls[line].p1y, 
+				theBuildings[l].walls[line].w, 
+				theBuildings[l].walls[line].h )) {
+					i.collisionCourse = true;
+					i.collidesWithID = l;
+					i.collidesWithType = "Building";
+					i.collidesWithWall = line;
+					i.horizontalBuildingCollision = true;
+					if (!i.stuck) {
+						if (i.collidesWithWall === "left" ||
+						i.collidesWithWall === "left2") {
+							if (i.yVector >= 0) {
+								i.wayPoints.push({
+									x: theBuildings[i.collidesWithID].upperLeftX - 30,
+									y: theBuildings[i.collidesWithID].lowerRightY + 60,
+									type: "Avoid Building",
+								});
+							}
+							if (i.yVector < 0) {
+								i.wayPoints.push({
+									x: theBuildings[i.collidesWithID].upperLeftX - 30,
+									y: theBuildings[i.collidesWithID].upperLeftY - 60,
+									type: "Avoid Building",
+								});
+							}
+						}
+						if (i.collidesWithWall === "right" ||
+						i.collidesWithWall === "right2") {
+							if (i.yVector >= 0) {
+								i.wayPoints.push({
+									x: theBuildings[i.collidesWithID].lowerRightX + 30,
+									y: theBuildings[i.collidesWithID].lowerRightY + 60,
+									type: "Avoid Building",
+								});
+							}
+							if (i.yVector < 0) {
+								i.wayPoints.push({
+									x: theBuildings[i.collidesWithID].lowerRightX + 30,
+									y: theBuildings[i.collidesWithID].upperLeftY - 60,
+									type: "Avoid Building",
+								});
+							}
+						}
+					}
+					i.stuck = false;
+				}
+			}
+		}
+	
+	});
+}
 
 
 function drawCivilians() {
@@ -4663,6 +4710,57 @@ function clearCanvas() {
 	c.closePath();
 }
 
+function spawnZombie() {
+	theZombies.push({
+			x: 100,
+			y: 100,
+			w: 20,
+			h: 20,
+			xTarget: 0,
+			yTarget: 0,
+			speed: 2,
+			health: 150,
+			xdirection: 1,
+			ydirection: 0,
+			acceleration: 1,
+			radius: 0,
+			targetAngle: 0,
+			angle: 0,
+			mot: 0,
+			closestVehicle: 0,
+			gettingInVehicle: 0,
+			inBuilding: 0,
+			collideDistance: 80,
+			walkTimer: 0,
+			walking: true,
+			standImage: civStand,
+			walkAnimations: ["", civWalk1, civWalk2, civWalk3, civWalk4],
+			targetWayPoint: 0,
+			targetAngle: 0,
+			currentWayPoint: 0,
+			facingBackwards: false,
+			xVector: 0,
+			yVector: 0,
+			collisionCourse: false,
+			wayPoints: [],
+			collidesWithType: "No Collision",
+			collidesWithWall: "No Collision",
+			verticalBuildingCollision: false,
+			horizontalBuildingCollision: false,
+			stuck: false,
+			collidesWithID: -1,
+			currentStatus: "spawned",	
+		});
+}
+
+function updateZombies() {
+	
+}
+
+function drawZombies() {
+	
+}
+
 
  // game loop interval
  setInterval(mainDraw, INTERVAL);
@@ -4716,6 +4814,10 @@ function mainDraw(canvas, message) {
 	drawCivilians(); 
 	drawSplats(); 
 
+	spawnZombie();
+	updateZombies();
+	drawZombies();
+	
 // draw buildings last to ensure other objects don't appear on top of them
 	drawBuildings();
 
@@ -5134,8 +5236,8 @@ function debugHUD(){
 			c.fillText("No. of waypoints: " +
 			debugTarget.wayPoints.length,500, 550);
 			
-			c.fillText("Angle degrees: " +
-			debugTarget.targetAnglePI,500, 575);
+			c.fillText("stuck: " +
+			debugTarget.stuck,500, 575);
 			
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
