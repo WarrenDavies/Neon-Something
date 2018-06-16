@@ -21,8 +21,12 @@ console.log("start");
 // get the camera out of the drawing functions - for the buildings
 // put the door coordinates etc into the building objects and set it to draw doors automatically
 
-// BUG ---- DOORS can be seen through walls -- see building 4
+// splice bullets when they hit buildings
 
+// BUGS
+
+/// ---- DOORS can be seen through walls -- see building 4
+/// 
 // 
 // COLLISION
 // collission with left door not working on larger doors
@@ -2940,6 +2944,7 @@ theBuildings.forEach( function(i, j) {
 			collisionCourse: false,
 			wayPoints: [],
 			collidesWithType: "No Collision",
+			collidesWithWall: "No Collision",
 			collidesWithID: -1,
 			currentStatus: "spawned"
 			
@@ -3029,7 +3034,8 @@ function updateCivilians() {
 			var deltaY = i.wayPoints[i.wayPoints.length - 1].y - i.y;
 			i.targetAngle = Math.atan(deltaY / deltaX);
 
-// some stuff for debugging			
+// some stuff for debugging		
+showWayPoints = true;	
 if (i.wayPoints.length > 0 && showWayPoints) {		
 //draw collision areas
 		lineColor = "black";
@@ -3100,6 +3106,31 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 						}	
 					}
 				}
+//check collisions with buildings				
+				theBuildings.forEach( function(k, l) {
+					for (var line in k.walls) {
+						if (k.walls.hasOwnProperty(line)) {
+							if (collidesSpecify(
+							i.x + ((i.speed * 10) * i.xVector),
+							i.y + ((i.speed * 10) * i.yVector),
+							i.w,
+							i.h,
+							k.walls[line].p1x, 
+							k.walls[line].p1y, 
+							k.walls[line].w, 
+							k.walls[line].h )) {		
+								i.collisionCourse = true;
+								i.collidesWithID = l;
+								i.collidesWithType = "Building";
+								i.collidesWithWall = line;
+								if (j === 1) {
+									console.log("Civ building collision");
+									console.log(i.collidesWithID);
+								}
+							}
+						}
+					}
+				});
 			
 // check collisions with player
 				if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
@@ -3139,17 +3170,59 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 							}
 						}
 							
-							
 // set a waypoint to the side, so can move around the collision. The 80 here is how far away to walk -- can customize this later to make it adjust based on the size of the colliding object.
-						var holdCos = Math.cos(holdAngle);
-						var holdSin = Math.sin(holdAngle);
-						i.wayPoints.push({
-							x: i.x + (holdCos * 80),
-							y: i.y + (holdSin * 80),
-							type: "Avoid Civilian",
-						});
+						if (i.collidesWithType === "Player" || i.collidesWithType === "Civilian") {
+							var holdCos = Math.cos(holdAngle);
+							var holdSin = Math.sin(holdAngle);
+							i.wayPoints.push({
+								x: i.x + (holdCos * 80),
+								y: i.y + (holdSin * 80),
+								type: "Avoid Civilian",
+							});
+						}
 						
-							
+						if (i.collidesWithType === "Building") {
+							if (i.collidesWithWall === "left" ||
+								i.collidesWithWall === "left2" ||
+								i.collidesWithWall === "right" ||
+								i.collidesWithWall === "right2") {
+								if (i.yVector >= 0) {
+									i.wayPoints.push({
+										x: i.x,
+										y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2y + 60,
+										type: "Avoid Building",
+									});
+								}
+								if (i.yVector < 0) {
+									i.wayPoints.push({
+										x: i.x,
+										y: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1y - 60,
+										type: "Avoid Building",
+									});
+								}	
+							}
+							if (i.collidesWithWall === "top" ||
+								i.collidesWithWall === "top2" ||
+								i.collidesWithWall === "bottom" ||
+								i.collidesWithWall === "bottom2") {
+								if (i.xVector >= 0) {
+									i.wayPoints.push({
+										x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p2x + 60,
+										y: i.y,
+										type: "Avoid Building",
+									});
+								}
+								if (i.xVector < 0) {
+									i.wayPoints.push({
+										x: theBuildings[i.collidesWithID].walls[i.collidesWithWall].p1x - 60,
+										y: i.y,
+										type: "Avoid Building",
+									});
+								}	
+							}
+						}
+						
+						
 						i.collisionCourse = false;
 						i.collidesWith = 0;
 						
@@ -4932,8 +5005,17 @@ canvas.addEventListener("click", function() {
 			debugTarget = theCivilians[j];
 			debugTarget.ID = j;
 	 
-	}
+		}
 	});
+	
+	if (debugTarget) {
+		theCivilians[debugTarget.ID].wayPoints.push({
+			x: mouseX + cameraX,
+			y:  mouseY + cameraY,
+			type: "Debug",
+		});
+	}
+	
 });
 
 
