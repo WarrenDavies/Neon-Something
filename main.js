@@ -2945,6 +2945,8 @@ theBuildings.forEach( function(i, j) {
 			wayPoints: [],
 			collidesWithType: "No Collision",
 			collidesWithWall: "No Collision",
+			verticalBuildingCollision: false,
+			horizontalBuildingCollision: false,
 			collidesWithID: -1,
 			currentStatus: "spawned"
 			
@@ -3107,29 +3109,48 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 					}
 				}
 //check collisions with buildings				
+				i.horizontalBuildingCollision = false;
+				i.verticalBuildingCollision = false;
 				theBuildings.forEach( function(k, l) {
-					for (var line in k.walls) {
-						if (k.walls.hasOwnProperty(line)) {
+					for (var line in theBuildings[l].walls) {
+						if (theBuildings[l].walls.hasOwnProperty(line)) {
 							if (collidesSpecify(
-							i.x + ((i.speed * 10) * i.xVector),
-							i.y + ((i.speed * 10) * i.yVector),
-							i.w,
-							i.h,
-							k.walls[line].p1x, 
-							k.walls[line].p1y, 
-							k.walls[line].w, 
-							k.walls[line].h )) {		
-								i.collisionCourse = true;
-								i.collidesWithID = l;
-								i.collidesWithType = "Building";
-								i.collidesWithWall = line;
-								if (j === 1) {
-									console.log("Civ building collision");
-									console.log(i.collidesWithID);
-								}
+									i.x,
+									i.y + ((i.speed * 10) * i.yVector), 
+									i.w, 
+									i.h, 
+									theBuildings[l].walls[line].p1x, 
+									theBuildings[l].walls[line].p1y, 
+									theBuildings[l].walls[line].w, 
+									theBuildings[l].walls[line].h )) {
+										i.collisionCourse = true;
+										i.collidesWithID = l;
+										i.collidesWithType = "Building";
+										i.collidesWithWall = line;
+										i.verticalBuildingCollision = true;
 							}
 						}
 					}
+					for (var line in theBuildings[l].walls) {
+						if (theBuildings[l].walls.hasOwnProperty(line)) {
+							if (collidesSpecify(
+									i.x + ((i.speed * 10) * i.xVector),
+									i.y, 
+									i.w, 
+									i.h, 
+									theBuildings[l].walls[line].p1x, 
+									theBuildings[l].walls[line].p1y, 
+									theBuildings[l].walls[line].w, 
+									theBuildings[l].walls[line].h )) {
+										i.collisionCourse = true;
+										i.collidesWithID = l;
+										i.collidesWithType = "Building";
+										i.collidesWithWall = line;
+										i.horizontalBuildingCollision = true;
+							}
+						}
+					}
+				
 				});
 			
 // check collisions with player
@@ -3240,8 +3261,12 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 			} 
 		
 			if (i.walking) {
-				i.x += i.speed * i.xVector;
-				i.y += i.speed * i.yVector;
+				if (!i.horizontalBuildingCollision) {
+					i.x += i.speed * i.xVector;
+				}
+				if (!i.verticalBuildingCollision) {
+					i.y += i.speed * i.yVector;
+				}
 			}
 	});
 	if (theCivilians.length === 0) {
