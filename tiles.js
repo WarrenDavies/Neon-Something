@@ -78,58 +78,58 @@ civStand = new Image();
 civStand.src = 'images/civStand.png';
 
 zombieWalk0 = new Image();
-zombieWalk0.src = 'images/skeleton-move_0';
+zombieWalk0.src = 'images/skeleton-move_0.png';
 
 zombieWalk1 = new Image();
-zombieWalk1.src = 'images/skeleton-move_1';
+zombieWalk1.src = 'images/skeleton-move_1.png';
 
 zombieWalk2 = new Image();
-zombieWalk2.src = 'images/skeleton-move_2';
+zombieWalk2.src = 'images/skeleton-move_2.png';
 
 zombieWalk3 = new Image();
-zombieWalk3.src = 'images/skeleton-move_3';
+zombieWalk3.src = 'images/skeleton-move_3.png';
 
 zombieWalk4 = new Image();
-zombieWalk4.src = 'images/skeleton-move_4';
+zombieWalk4.src = 'images/skeleton-move_4.png';
 
 zombieWalk5 = new Image();
-zombieWalk5.src = 'images/skeleton-move_5';
+zombieWalk5.src = 'images/skeleton-move_5.png';
 
 zombieWalk6 = new Image();
-zombieWalk6.src = 'images/skeleton-move_6';
+zombieWalk6.src = 'images/skeleton-move_6.png';
 
 zombieWalk7 = new Image();
-zombieWalk7.src = 'images/skeleton-move_7';
+zombieWalk7.src = 'images/skeleton-move_7.png';
 
 zombieWalk8 = new Image();
-zombieWalk8.src = 'images/skeleton-move_8';
+zombieWalk8.src = 'images/skeleton-move_8.png';
 
 zombieWalk9 = new Image();
-zombieWalk9.src = 'images/skeleton-move_9';
+zombieWalk9.src = 'images/skeleton-move_9.png';
 
 zombieWalk10 = new Image();
-zombieWalk10.src = 'images/skeleton-move_10';
+zombieWalk10.src = 'images/skeleton-move_10.png';
 
 zombieWalk11 = new Image();
-zombieWalk11.src = 'images/skeleton-move_11';
+zombieWalk11.src = 'images/skeleton-move_11.png';
 
 zombieWalk12 = new Image();
-zombieWalk12.src = 'images/skeleton-move_12';
+zombieWalk12.src = 'images/skeleton-move_12.png';
 
 zombieWalk13 = new Image();
-zombieWalk13.src = 'images/skeleton-move_13';
+zombieWalk13.src = 'images/skeleton-move_13.png';
 
 zombieWalk14 = new Image();
-zombieWalk14.src = 'images/skeleton-move_14';
+zombieWalk14.src = 'images/skeleton-move_14.png';
 
 zombieWalk15 = new Image();
-zombieWalk15.src = 'images/skeleton-move_15';
+zombieWalk15.src = 'images/skeleton-move_15.png';
 
 zombieWalk16 = new Image();
-zombieWalk16.src = 'images/skeleton-move_16';
+zombieWalk16.src = 'images/skeleton-move_16.png';
 
-
-
+zombieStand = new Image();
+zombieStand.src = 'images/skeleton-idle_0.png';
 
 }
 loadImages(); 

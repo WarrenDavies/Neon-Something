@@ -3041,7 +3041,7 @@ function updateCivilians() {
 			i.targetAngle = Math.atan(deltaY / deltaX);
 
 // some stuff for debugging		
-showWayPoints = true;	
+//showWayPoints = true;	
 if (i.wayPoints.length > 0 && showWayPoints) {		
 //draw collision areas
 		lineColor = "black";
@@ -3862,6 +3862,11 @@ function updateBullets() {
 			return	
 		}
 		
+		if (checkBulletCivilianCollision(i, j) ){
+			theBullets.splice(j, 1);
+			return	
+		}
+		
 		i.x += i.xtarget * i.xVelocity;
 		i.y += i.ytarget * i.yVelocity;
 		
@@ -3901,12 +3906,30 @@ function checkBulletWallCollision(i, j) {
 }
 
 function checkBulletCivilianCollision(i, j) {
-	var collisionDetected = false;
+	let collisionDetected = false;
 	theCivilians.forEach( function(k, l) {
 		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
 			collisionDetected = true;
 			theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
 			theCivilians.splice(l, 1);
+		}
+	});
+	if (collisionDetected) {
+		return true 
+	} else {
+		return false;
+	}
+}
+
+function checkBulletCivilianCollision(i, j) {
+	let collisionDetected = false;
+	theZombies.forEach( function(k, l) {
+		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
+			if (collisionDetected === false) {
+				theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
+				theZombies.splice(l, 1);
+				collisionDetected = true;
+			}
 		}
 	});
 	if (collisionDetected) {
@@ -4711,9 +4734,35 @@ function clearCanvas() {
 }
 
 function spawnZombie() {
-	theZombies.push({
-			x: 100,
-			y: 100,
+	if (theZombies.length < 50) {
+// spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
+		let positionChooser = Math.floor(Math.random() * 2);
+		console.log(positionChooser);
+		let spawnX;
+		let spawnY;
+		if (positionChooser === 0) {
+// 0 means the zombie will go along the a vertical edge. So there's another random number here which determines whether it will be the left or right edge.
+			if (Math.floor(Math.random() * 2) === 0) {
+// an x value of 10 means the zombie will spawn 10 pixels from the left edge of the map
+				spawnX = 10;
+			} else {
+//otherwise, we spaen it 10 pixels to the left of the right edge of the map, as determined by the length of row [0] in the map array (any would do, they are all the same size because it's just a simple grid.)
+			spawnX = (map[0].length * 50) - 10
+			}
+// then we just choose a random number for the Y coordinate based on the length of the map * 50, which is the width of the tiles
+			spawnY = Math.floor(Math.random() * (map.length * 50))
+		} else {
+// 1 means the zombie will spawn along a horizontal edge. This is exactly the same principle as above
+			if (Math.floor(Math.random() * 2) === 0) {
+				spawnY = 10;
+			} else {
+				spawnY = (map.length * 50) - 10
+			}
+			spawnX = Math.floor(Math.random() * (map[0].length * 50))
+		}
+		theZombies.push({
+			x: spawnX,
+			y: spawnY,
 			w: 20,
 			h: 20,
 			xTarget: 0,
@@ -4726,15 +4775,12 @@ function spawnZombie() {
 			radius: 0,
 			targetAngle: 0,
 			angle: 0,
-			mot: 0,
 			closestVehicle: 0,
-			gettingInVehicle: 0,
-			inBuilding: 0,
 			collideDistance: 80,
 			walkTimer: 0,
 			walking: true,
-			standImage: civStand,
-			walkAnimations: ["", civWalk1, civWalk2, civWalk3, civWalk4],
+			standImage: zombieStand,
+			walkAnimations: ["", zombieWalk1, zombieWalk2, zombieWalk3, zombieWalk4, zombieWalk5, zombieWalk6, zombieWalk7, zombieWalk8, zombieWalk9, zombieWalk10, zombieWalk11, zombieWalk12, zombieWalk13, zombieWalk14, zombieWalk15, zombieWalk16],
 			targetWayPoint: 0,
 			targetAngle: 0,
 			currentWayPoint: 0,
@@ -4751,14 +4797,80 @@ function spawnZombie() {
 			collidesWithID: -1,
 			currentStatus: "spawned",	
 		});
+	}
 }
 
 function updateZombies() {
+	theZombies.forEach(function(i, j) {
+// target the player and set direction for movement. Later will make them target civilians too but first thing's first.
+		i.xTarget = Player1.x;
+		i.yTarget = Player1.y;
+		i.xVector = getXDirection(i.x, i.y, i.xTarget, i.yTarget);
+		i.yVector = getYDirection(i.x, i.y, i.xTarget, i.yTarget);
 	
-}
+// set the new target angle.
+		var deltaX = i.xTarget - i.x;
+		var deltaY = i.yTarget - i.y;
+		i.targetAngle = Math.atan(deltaY / deltaX);
+		i.angle = i.targetAngle;
+
+// Check if the zombie is walking and if so, detect collision	
+		if (i.walking) {
+			if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
+				i.collisionCourse = true;
+				i.collidesWithType = "Player";
+				i.collidesWithID = -1;
+				Player1.health -= 1;
+			}
+		}
+		
+// move the zombie if needed
+		i.x += i.speed * i.xVector; 
+		i.y += i.speed * i.yVector;
+		
+// Check building collision. This needs to be more sophisticated with zombies, such that they ignore wayPoints if there is a direct line of sight to the player
+		//checkNPCCollisionWithBuilding(i);
+	
+	
+	}); //zombies forEach
+} // updateZombies
 
 function drawZombies() {
-	
+	theZombies.forEach(function(i, j) {
+		if (isOnScreen(i)) {
+			c.save();
+			c.translate(i.x - cameraX, i.y - cameraY);
+			if (i.xTarget - i.x < 0) {
+				c.rotate(i.angle);
+				c.scale(-1, 1);
+			} else {
+				c.rotate(i.angle);
+			} 
+			c.translate(-i.x , -i.y);
+			
+			c.fillStyle = "black";
+			c.fillRect(i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h);	
+			if (i.walking === true ) {
+				i.walkTimer += 0.15;	
+				if (i.walkTimer >= 15.8) {
+					i.walkTimer = 0.1;
+				}
+				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+			} else {
+				i.walkTimer = 0;
+				c.drawImage( i.standImage, i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+			}
+			c.restore();
+		} // if isOnScreen
+	}); // theZombies.forEach
+} // drawZombies();
+
+function isOnScreen(i) {
+	if (i.x > cameraX - 100 && i.x < (cameraX + cameraW + 100) && i.y > cameraY - 100 && i.y < (cameraY + cameraH + 100)) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 
@@ -4787,7 +4899,7 @@ cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
 }
  // drawing function / game loop
 function mainDraw(canvas, message) {
-	
+	//console.log(theZombies.length);
 	clearCanvas();
 	
 // work out which tiles to draw based on player position
@@ -4799,6 +4911,8 @@ function mainDraw(canvas, message) {
 // detect player's keyboard input
 	detectKeys();   
 
+	drawSplats(); 
+	
 //update and draw everything	
 	//updateVehicles();
 	//checkVehicleCollision();
@@ -4812,7 +4926,7 @@ function mainDraw(canvas, message) {
 
 	updateCivilians();
 	drawCivilians(); 
-	drawSplats(); 
+	
 
 	spawnZombie();
 	updateZombies();
