@@ -843,7 +843,6 @@ if (Player1.mot === 0) {
 
 	
 	//c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
-	
 	theCivilians.forEach( function(i, j) {
 		if (collidesSpecify (Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h, i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h) ) {
 		
@@ -853,6 +852,23 @@ if (Player1.mot === 0) {
 			
 			theSplats.push({x: i.x - (i.w / 2), y: i.y - (i.h / 2), w: i.w, h: i.h });
 			theCivilians.splice(j, 1);
+			//console.log("hit");
+			
+			} else {
+			i.x += Player1.xVector * (Player1.speed);
+			i.y += Player1.yVector * (Player1.speed);
+			}
+			
+			
+		}
+	
+	});
+	
+	theZombies.forEach( function(i, j) {
+		if (collidesSpecify (Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h, i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h) ) {
+			if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].speed >5 ) {
+				theSplats.push({x: i.x - (i.w / 2), y: i.y - (i.h / 2), w: i.w, h: i.h });
+				theZombies.splice(j, 1);
 			//console.log("hit");
 			
 			} else {
@@ -4803,6 +4819,8 @@ function spawnZombie() {
 function updateZombies() {
 	theZombies.forEach(function(i, j) {
 // target the player and set direction for movement. Later will make them target civilians too but first thing's first.
+
+// need to change this to check if there is a way point, and if so, if it's still relevant or if there the player or a civilian is now within line of sightf
 		i.xTarget = Player1.x;
 		i.yTarget = Player1.y;
 		i.xVector = getXDirection(i.x, i.y, i.xTarget, i.yTarget);
@@ -4823,6 +4841,9 @@ function updateZombies() {
 				Player1.health -= 1;
 			}
 		}
+
+// check collision with other zombies to prevent them standing on top of each other
+
 		
 // move the zombie if needed
 		i.x += i.speed * i.xVector; 
@@ -4848,8 +4869,8 @@ function drawZombies() {
 			} 
 			c.translate(-i.x , -i.y);
 			
-			c.fillStyle = "black";
-			c.fillRect(i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h);	
+			//c.fillStyle = "black";
+			//c.fillRect(i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h);	
 			if (i.walking === true ) {
 				i.walkTimer += 0.15;	
 				if (i.walkTimer >= 15.8) {
