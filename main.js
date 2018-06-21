@@ -2905,7 +2905,8 @@ theBuildings.forEach( function(i, j) {
 	var upperLeftY = Math.floor(i.upperLeftY / 50);
 	var lowerRightX = Math.floor(i.lowerRightX / 50);
 	var lowerRightY = Math.floor(i.lowerRightY / 50);
-
+	i.centerX = i.lowerRightX - i.upperLeftX;
+	i.centerY = i.lowerRightY - i.upperLeftY;
 	//console.log("upperLeftY " + upperLeftY);
 	//console.log("lowerRightY " + lowerRightY);
 	
@@ -3223,6 +3224,8 @@ checkNPCCollisionWithBuilding(i);
 } //updateCivilians
 
 function checkNPCCollisionWithBuilding(i) {
+	let xPushTarget;
+	let yPushTarget;
 	//check collisions with buildings
 	i.collidesWithType = null;
 	i.horizontalBuildingCollision = false;
@@ -3259,7 +3262,24 @@ function checkNPCCollisionWithBuilding(i) {
 								y: theBuildings[i.collidesWithID].upperLeftY - 30,
 								type: "Avoid Building",
 							});
-						}	
+						}
+						if (collidesSpecify(
+						i.x,
+						i.y, 
+						i.w, 
+						i.h, 
+						theBuildings[l].walls[line].p1x, 
+						theBuildings[l].walls[line].p1y, 
+						theBuildings[l].walls[line].w, 
+						theBuildings[l].walls[line].h )) {
+							let xDirection = i.x - theBuildings[l].centerX;
+							let yDirection = i.y - theBuildings[l].centerY;
+							let rotation = Math.atan2(deltaY, deltaX);
+							let xtarget = Math.cos(rotation);
+							let ytarget = Math.sin(rotation);
+							i.x += (xtarget * 2);
+							i.y += (ytarget * 2);
+						}
 					}
 					if (i.collidesWithWall === "bottom" ||
 					i.collidesWithWall === "bottom2") {
@@ -3276,7 +3296,24 @@ function checkNPCCollisionWithBuilding(i) {
 								y: theBuildings[i.collidesWithID].lowerRightY + 30,
 								type: "Avoid Building",
 							});
-						}	
+						}
+						if (collidesSpecify(
+						i.x,
+						i.y, 
+						i.w, 
+						i.h, 
+						theBuildings[l].walls[line].p1x, 
+						theBuildings[l].walls[line].p1y, 
+						theBuildings[l].walls[line].w, 
+						theBuildings[l].walls[line].h )) {
+							let xDirection = i.x - theBuildings[l].centerX;
+							let yDirection = i.y - theBuildings[l].centerY;
+							let rotation = Math.atan2(deltaY, deltaX);
+							let xtarget = Math.cos(rotation);
+							let ytarget = Math.sin(rotation);
+							i.x += (xtarget * 2);
+							i.y += (ytarget * 2);
+						}
 					}
 				}
 			}
@@ -3314,6 +3351,23 @@ function checkNPCCollisionWithBuilding(i) {
 									type: "Avoid Building",
 								});
 							}
+							if (collidesSpecify(
+							i.x,
+							i.y, 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								let xDirection = i.x - theBuildings[l].centerX;
+								let yDirection = i.y - theBuildings[l].centerY;
+								let rotation = Math.atan2(deltaY, deltaX);
+								let xtarget = Math.cos(rotation);
+								let ytarget = Math.sin(rotation);
+								i.x += (xtarget * 2);
+								i.y += (ytarget * 2);
+							}	
 						}
 						if (i.collidesWithWall === "right" ||
 						i.collidesWithWall === "right2") {
@@ -3330,6 +3384,21 @@ function checkNPCCollisionWithBuilding(i) {
 									y: theBuildings[i.collidesWithID].upperLeftY - 60,
 									type: "Avoid Building",
 								});
+							}
+							if (collidesSpecify(
+							i.x,
+							i.y, 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								
+								let xdirection = getXDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
+								let ydirection = getYDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
+								i.x += (xdirection * 5);
+								i.y += (ydirection * 5);
 							}
 						}
 					}
@@ -4757,7 +4826,6 @@ function spawnZombie() {
 	if (theZombies.length < 50) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
-		console.log(positionChooser);
 		let spawnX;
 		let spawnY;
 		if (positionChooser === 0) {
@@ -4856,11 +4924,23 @@ function updateZombies() {
 			}
 
 // check collision with buildings
-			if (checkNPCCollisionWithBuilding(i)) {
-				console.log("here");
+			checkNPCCollisionWithBuilding(i)
+				
+			if (i.wayPoints.length > 0) {
 				setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
-				i.collisionCourse = false;
-			};
+			}
+
+// check collision with waypoints
+			if (i.wayPoints.length > 0) {
+				if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
+					i.collisionCourse = false;
+					i.collidesWithType = null;
+					i.collidesWithID = null;
+					i.wayPoints.splice(i.wayPoints.length - 1);
+					setNPCdirection(i, Player1);			
+				}
+			}
+
 			
 // check collision with other zombies to prevent them standing on top of each other
 
