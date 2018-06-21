@@ -29,6 +29,7 @@ console.log("start");
 
 /// ---- DOORS can be seen through walls -- see building 4
 /// 
+/// darkess isn't working
 // 
 // COLLISION
 // collission with left door not working on larger doors
@@ -3222,7 +3223,8 @@ checkNPCCollisionWithBuilding(i);
 } //updateCivilians
 
 function checkNPCCollisionWithBuilding(i) {
-	//check collisions with buildings				
+	//check collisions with buildings
+	i.collidesWithType = null;
 	i.horizontalBuildingCollision = false;
 	i.verticalBuildingCollision = false;
 	theBuildings.forEach( function(k, l) {
@@ -3335,8 +3337,10 @@ function checkNPCCollisionWithBuilding(i) {
 				}
 			}
 		}
-	
 	});
+	if (i.collidesWithType === "Building") {
+		return true;
+	}
 }
 
 
@@ -4811,43 +4815,66 @@ function spawnZombie() {
 			horizontalBuildingCollision: false,
 			stuck: false,
 			collidesWithID: -1,
-			currentStatus: "spawned",	
+			currentStatus: "spawned",
+			type: "zombie",
 		});
 	}
+}
+
+function setNPCdirection(i, target) {
+	i.xTarget = target.x;
+	i.yTarget = target.y;
+	i.xVector = getXDirection(i.x, i.y, i.xTarget, i.yTarget);
+	i.yVector = getYDirection(i.x, i.y, i.xTarget, i.yTarget);
+
+// set the new target angle.
+	var deltaX = i.xTarget - i.x;
+	var deltaY = i.yTarget - i.y;
+	i.targetAngle = Math.atan(deltaY / deltaX);
+	i.angle = i.targetAngle;
 }
 
 function updateZombies() {
 	theZombies.forEach(function(i, j) {
 // target the player and set direction for movement. Later will make them target civilians too but first thing's first.
 
-// need to change this to check if there is a way point, and if so, if it's still relevant or if there the player or a civilian is now within line of sightf
-		i.xTarget = Player1.x;
-		i.yTarget = Player1.y;
-		i.xVector = getXDirection(i.x, i.y, i.xTarget, i.yTarget);
-		i.yVector = getYDirection(i.x, i.y, i.xTarget, i.yTarget);
-	
-// set the new target angle.
-		var deltaX = i.xTarget - i.x;
-		var deltaY = i.yTarget - i.y;
-		i.targetAngle = Math.atan(deltaY / deltaX);
-		i.angle = i.targetAngle;
-
-// Check if the zombie is walking and if so, detect collision	
+		if (i.wayPoints.length === 0) {
+// if there is no waypoint, the zombie is not navigating around an obstable, so head for the player
+			setNPCdirection(i, Player1);
+		}
+		
+// Check if the zombie is walking and if so, set collision course to false, detect collision with Player, buildings, and other obstacles. 	
 		if (i.walking) {
-			if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
+			i.collisionCourse = false;
+			
+// check for player collision
+			if (collidesSpecify(i.x + ((i.speed) * i.xVector), i.y + ((i.speed) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
 				i.collisionCourse = true;
 				i.collidesWithType = "Player";
 				i.collidesWithID = -1;
 				Player1.health -= 1;
 			}
-		}
 
+// check collision with buildings
+			if (checkNPCCollisionWithBuilding(i)) {
+				console.log("here");
+				setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
+				i.collisionCourse = false;
+			};
+			
 // check collision with other zombies to prevent them standing on top of each other
 
+		}
 		
 // move the zombie if needed
-		i.x += i.speed * i.xVector; 
-		i.y += i.speed * i.yVector;
+		if (i.collisionCourse === false) {
+			if (i.collidesWithType != null) {
+				i.collidesWithType = null;
+				i.collidesWithID = null;
+			}
+			i.x += i.speed * i.xVector; 
+			i.y += i.speed * i.yVector;
+		}
 		
 // Check building collision. This needs to be more sophisticated with zombies, such that they ignore wayPoints if there is a direct line of sight to the player
 		//checkNPCCollisionWithBuilding(i);
@@ -5267,6 +5294,14 @@ canvas.addEventListener("click", function() {
 	theCivilians.forEach( function(i, j) {
 		if (collidesSpecify(i.x, i.y, i.w, i.h, mouseX + cameraX, mouseY + cameraY, 5, 5) ) {
 			debugTarget = theCivilians[j];
+			debugTarget.ID = j;
+	 
+		}
+	});
+	
+	theZombies.forEach( function(i, j) {
+		if (collidesSpecify(i.x, i.y, i.w, i.h, mouseX + cameraX, mouseY + cameraY, 5, 5) ) {
+			debugTarget = theZombies[j];
 			debugTarget.ID = j;
 	 
 		}
