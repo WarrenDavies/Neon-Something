@@ -3224,8 +3224,8 @@ checkNPCCollisionWithBuilding(i);
 } //updateCivilians
 
 function checkNPCCollisionWithBuilding(i) {
-	let xPushTarget;
-	let yPushTarget;
+	let xPushTarget = null;
+	let yPushTarget = null;
 	//check collisions with buildings
 	i.collidesWithType = null;
 	i.horizontalBuildingCollision = false;
@@ -3250,18 +3250,12 @@ function checkNPCCollisionWithBuilding(i) {
 					if (i.collidesWithWall === "top" ||
 					i.collidesWithWall === "top2") {
 						if (i.xVector >= 0) {
-							i.wayPoints.push({
-								x: theBuildings[i.collidesWithID].lowerRightX + 60,
-								y: theBuildings[i.collidesWithID].upperLeftY - 30,
-								type: "Avoid Building",
-							});
+							xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 60;
+							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
 						}
 						if (i.xVector < 0) {
-							i.wayPoints.push({
-								x: theBuildings[i.collidesWithID].upperLeftX - 60,
-								y: theBuildings[i.collidesWithID].upperLeftY - 30,
-								type: "Avoid Building",
-							});
+							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60
+							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
 						}
 						if (collidesSpecify(
 						i.x,
@@ -3284,18 +3278,12 @@ function checkNPCCollisionWithBuilding(i) {
 					if (i.collidesWithWall === "bottom" ||
 					i.collidesWithWall === "bottom2") {
 						if (i.xVector >= 0) {
-							i.wayPoints.push({
-								x: theBuildings[i.collidesWithID].lowerRightX + 60,
-								y: theBuildings[i.collidesWithID].lowerRightY + 30,
-								type: "Avoid Building",
-							});
+							xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 60;
+							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
 						}
 						if (i.xVector < 0) {
-							i.wayPoints.push({
-								x: theBuildings[i.collidesWithID].upperLeftX - 60,
-								y: theBuildings[i.collidesWithID].lowerRightY + 30,
-								type: "Avoid Building",
-							});
+							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60;
+							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
 						}
 						if (collidesSpecify(
 						i.x,
@@ -3338,18 +3326,12 @@ function checkNPCCollisionWithBuilding(i) {
 						if (i.collidesWithWall === "left" ||
 						i.collidesWithWall === "left2") {
 							if (i.yVector >= 0) {
-								i.wayPoints.push({
-									x: theBuildings[i.collidesWithID].upperLeftX - 30,
-									y: theBuildings[i.collidesWithID].lowerRightY + 60,
-									type: "Avoid Building",
-								});
+								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
 							}
 							if (i.yVector < 0) {
-								i.wayPoints.push({
-									x: theBuildings[i.collidesWithID].upperLeftX - 30,
-									y: theBuildings[i.collidesWithID].upperLeftY - 60,
-									type: "Avoid Building",
-								});
+								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 							}
 							if (collidesSpecify(
 							i.x,
@@ -3372,18 +3354,12 @@ function checkNPCCollisionWithBuilding(i) {
 						if (i.collidesWithWall === "right" ||
 						i.collidesWithWall === "right2") {
 							if (i.yVector >= 0) {
-								i.wayPoints.push({
-									x: theBuildings[i.collidesWithID].lowerRightX + 30,
-									y: theBuildings[i.collidesWithID].lowerRightY + 60,
-									type: "Avoid Building",
-								});
+								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
 							}
 							if (i.yVector < 0) {
-								i.wayPoints.push({
-									x: theBuildings[i.collidesWithID].lowerRightX + 30,
-									y: theBuildings[i.collidesWithID].upperLeftY - 60,
-									type: "Avoid Building",
-								});
+								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 							}
 							if (collidesSpecify(
 							i.x,
@@ -3394,7 +3370,6 @@ function checkNPCCollisionWithBuilding(i) {
 							theBuildings[l].walls[line].p1y, 
 							theBuildings[l].walls[line].w, 
 							theBuildings[l].walls[line].h )) {
-								
 								let xdirection = getXDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
 								let ydirection = getYDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
 								i.x += (xdirection * 5);
@@ -3406,6 +3381,24 @@ function checkNPCCollisionWithBuilding(i) {
 				}
 			}
 		}
+	if (xPushTarget != null && yPushTarget != null) {
+		
+		if (i.wayPoints.length > 0) {
+			if (xPushTarget != i.wayPoints[i.wayPoints.length - 1].x && yPushTarget != i.wayPoints[i.wayPoints.length - 1].y) {
+				i.wayPoints.push({
+					x: xPushTarget,
+					y: yPushTarget,
+					type: "Avoid Building",
+				});
+			}
+		} else {		
+			i.wayPoints.push({
+				x: xPushTarget,
+				y: yPushTarget,
+				type: "Avoid Building",
+			});
+		}
+	}
 	});
 	if (i.collidesWithType === "Building") {
 		return true;
@@ -4966,6 +4959,11 @@ function updateZombies() {
 function drawZombies() {
 	theZombies.forEach(function(i, j) {
 		if (isOnScreen(i)) {
+			c.strokeStyle = "black";
+			c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);	
+			c.lineWidth = 1;
+			c.stroke();
+			
 			c.save();
 			c.translate(i.x - cameraX, i.y - cameraY);
 			if (i.xTarget - i.x < 0) {
@@ -4976,8 +4974,7 @@ function drawZombies() {
 			} 
 			c.translate(-i.x , -i.y);
 			
-			//c.fillStyle = "black";
-			//c.fillRect(i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h);	
+			
 			if (i.walking === true ) {
 				i.walkTimer += 0.15;	
 				if (i.walkTimer >= 15.8) {
