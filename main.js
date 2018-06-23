@@ -4816,50 +4816,7 @@ function clearCanvas() {
 }
 
 function spawnZombie() {
-	if (theZombies.length < 1) { 
-	theZombies.push({
-			x: 300,
-			y: 300,
-			w: 20,
-			h: 20,
-			xTarget: 0,
-			yTarget: 0,
-			speed: 2,
-			health: 150,
-			xdirection: 1,
-			ydirection: 0,
-			acceleration: 1,
-			radius: 0,
-			targetAngle: 0,
-			angle: 0,
-			closestVehicle: 0,
-			collideDistance: 80,
-			walkTimer: 0,
-			walking: true,
-			standImage: zombieStand,
-			walkAnimations: ["", zombieWalk1, zombieWalk2, zombieWalk3, zombieWalk4, zombieWalk5, zombieWalk6, zombieWalk7, zombieWalk8, zombieWalk9, zombieWalk10, zombieWalk11, zombieWalk12, zombieWalk13, zombieWalk14, zombieWalk15, zombieWalk16],
-			targetWayPoint: 0,
-			targetAngle: 0,
-			currentWayPoint: 0,
-			facingBackwards: false,
-			xVector: 0,
-			yVector: 0,
-			collisionCourse: false,
-			canWalkX: true,
-			canWalkY: true,
-			wayPoints: [],
-			collidesWithType: "No Collision",
-			collidesWithWall: "No Collision",
-			verticalBuildingCollision: false,
-			horizontalBuildingCollision: false,
-			stuck: false,
-			collidesWithID: -1,
-			currentStatus: "spawned",
-			type: "zombie",
-		});
-	}
-	//if (theZombies.length < 50) {
-	if (1 === 2) {
+	if (theZombies.length < 50) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
@@ -4970,12 +4927,47 @@ function updateZombies() {
 
 // check collision with waypoints
 			if (i.wayPoints.length > 0) {
-				if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
-					i.collisionCourse = false;
-					i.collidesWithType = null;
-					i.collidesWithID = null;
-					i.wayPoints.splice(i.wayPoints.length - 1);
-					setNPCdirection(i, Player1);			
+// if zombie can see the player, ignore the waypoint and head right for him
+				console.log(buildingsOnScreen);
+				var canSeePlayer = true;
+				buildingsOnScreen.forEach(function(k, l) {
+					for (var line in theBuildings[k].walls) {
+						if (theBuildings[k].walls.hasOwnProperty(line)) {
+							
+							c.beginPath();
+							c.moveTo(i.x + (i.w / 2), 
+							i.y + (i.h / 2));
+							c.lineTo(Player1.x + (Player1.w / 2), 
+							Player1.y + (Player1.h / 2));
+							c.stroke();
+							
+							if (getLineIntersection(
+							i.x + (i.w / 2), 
+							i.y + (i.h / 2), 
+							Player1.x + (Player1.w / 2), 
+							Player1.y + (Player1.h / 2),
+							theBuildings[k].walls[line].p1x, 
+							theBuildings[k].walls[line].p1y,
+							theBuildings[k].walls[line].p2x, 
+							theBuildings[k].walls[line].p2y,
+							)){
+								canSeePlayer = false;
+							}
+						}	
+					}
+				});
+				
+				if (canSeePlayer === true) {
+					i.wayPoints.splice(0);
+					setNPCdirection(i, Player1);
+				} else {				
+					if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
+						i.collisionCourse = false;
+						i.collidesWithType = null;
+						i.collidesWithID = null;
+						i.wayPoints.splice(i.wayPoints.length - 1);
+						setNPCdirection(i, Player1);			
+					}
 				}
 			}
 
