@@ -4816,7 +4816,50 @@ function clearCanvas() {
 }
 
 function spawnZombie() {
-	if (theZombies.length < 50) {
+	if (theZombies.length < 1) { 
+	theZombies.push({
+			x: 300,
+			y: 300,
+			w: 20,
+			h: 20,
+			xTarget: 0,
+			yTarget: 0,
+			speed: 2,
+			health: 150,
+			xdirection: 1,
+			ydirection: 0,
+			acceleration: 1,
+			radius: 0,
+			targetAngle: 0,
+			angle: 0,
+			closestVehicle: 0,
+			collideDistance: 80,
+			walkTimer: 0,
+			walking: true,
+			standImage: zombieStand,
+			walkAnimations: ["", zombieWalk1, zombieWalk2, zombieWalk3, zombieWalk4, zombieWalk5, zombieWalk6, zombieWalk7, zombieWalk8, zombieWalk9, zombieWalk10, zombieWalk11, zombieWalk12, zombieWalk13, zombieWalk14, zombieWalk15, zombieWalk16],
+			targetWayPoint: 0,
+			targetAngle: 0,
+			currentWayPoint: 0,
+			facingBackwards: false,
+			xVector: 0,
+			yVector: 0,
+			collisionCourse: false,
+			canWalkX: true,
+			canWalkY: true,
+			wayPoints: [],
+			collidesWithType: "No Collision",
+			collidesWithWall: "No Collision",
+			verticalBuildingCollision: false,
+			horizontalBuildingCollision: false,
+			stuck: false,
+			collidesWithID: -1,
+			currentStatus: "spawned",
+			type: "zombie",
+		});
+	}
+	//if (theZombies.length < 50) {
+	if (1 === 2) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
@@ -4999,20 +5042,15 @@ function updateZombies() {
 function drawZombies() {
 	theZombies.forEach(function(i, j) {
 		if (isOnScreen(i)) {
-			c.strokeStyle = "black";
-			c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);	
-			c.lineWidth = 1;
-			c.stroke();
-			
 			c.save();
-			c.translate(i.x - cameraX, i.y - cameraY);
+			c.translate(i.x + (i.w / 2) - cameraX, i.y + (i.h / 2) - cameraY);
 			if (i.xTarget - i.x < 0) {
 				c.rotate(i.angle);
 				c.scale(-1, 1);
 			} else {
 				c.rotate(i.angle);
 			} 
-			c.translate(-i.x, -i.y);
+			c.translate(-i.x - (i.w / 2), -i.y - (i.h / 2) );
 			
 			
 			if (i.walking === true ) {
@@ -5020,10 +5058,11 @@ function drawZombies() {
 				if (i.walkTimer >= 15.8) {
 					i.walkTimer = 0.1;
 				}
-				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - 15, i.y - 15 , i.w + 30, i.h + 30);
+			
 			} else {
 				i.walkTimer = 0;
-				c.drawImage( i.standImage, i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				//c.drawImage( i.standImage, i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
 			}
 			c.restore();
 		} // if isOnScreen
