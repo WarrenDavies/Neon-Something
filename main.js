@@ -4869,6 +4869,8 @@ function spawnZombie() {
 			xVector: 0,
 			yVector: 0,
 			collisionCourse: false,
+			canWalkX: true,
+			canWalkY: true,
 			wayPoints: [],
 			collidesWithType: "No Collision",
 			collidesWithWall: "No Collision",
@@ -4936,8 +4938,42 @@ function updateZombies() {
 
 			
 // check collision with other zombies to prevent them standing on top of each other
-
-		}
+			// x axis collisions
+			i.canWalkX = true;
+			theZombies.forEach(function(k, l) {
+				if (j !== l) {
+					if (collidesSpecify(
+						i.x + ((i.speed) * i.xVector), 
+						i.y, 
+						i.w, 
+						i.h, 
+						k.x, 
+						k.y, 
+						k.w, 
+						k.h
+					)) {
+						i.canWalkX = false;
+					}
+				}
+			});
+			i.canWalkY = true;
+			theZombies.forEach(function(k, l) {
+				if (j !== l) {
+					if (collidesSpecify(
+						i.x, 
+						i.y + ((i.speed) * i.yVector), 
+						i.w, 
+						i.h, 
+						k.x, 
+						k.y, 
+						k.w, 
+						k.h
+					)) {
+						i.canWalkY = false;
+					}
+				}
+			});		
+		} // if walking
 		
 // move the zombie if needed
 		if (i.collisionCourse === false) {
@@ -4945,8 +4981,12 @@ function updateZombies() {
 				i.collidesWithType = null;
 				i.collidesWithID = null;
 			}
-			i.x += i.speed * i.xVector; 
-			i.y += i.speed * i.yVector;
+			if (i.canWalkX) {
+				i.x += i.speed * i.xVector; 
+			}
+			if (i.canWalkY) {
+				i.y += i.speed * i.yVector;
+			}
 		}
 		
 // Check building collision. This needs to be more sophisticated with zombies, such that they ignore wayPoints if there is a direct line of sight to the player
@@ -4972,7 +5012,7 @@ function drawZombies() {
 			} else {
 				c.rotate(i.angle);
 			} 
-			c.translate(-i.x , -i.y);
+			c.translate(-i.x, -i.y);
 			
 			
 			if (i.walking === true ) {
