@@ -3243,12 +3243,20 @@ function checkNPCCollisionWithBuilding(i) {
 	i.collidesWithType = null;
 	i.horizontalBuildingCollision = false;
 	i.verticalBuildingCollision = false;
+	c.fillStyle = "blue";
+	c.lineWidth = 1;
+	c.rect(i.x + ((i.speed * 5) * i.xVector) - cameraX, i.y + ((i.speed * 5) * i.yVector) - cameraY, i.w, i.h);
+	
+	c.fillStyle = "black";
+	c.lineWidth = 1;
+	c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
+	c.stroke();
 	theBuildings.forEach( function(k, l) {
 		for (var line in theBuildings[l].walls) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
 				if (collidesSpecify(
 				i.x,
-				i.y + ((i.speed * 10) * i.yVector), 
+				i.y + ((i.speed * 5) * i.yVector), 
 				i.w, 
 				i.h, 
 				theBuildings[l].walls[line].p1x, 
@@ -3322,7 +3330,7 @@ function checkNPCCollisionWithBuilding(i) {
 		for (var line in theBuildings[l].walls) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
 				if (collidesSpecify(
-				i.x + ((i.speed * 10) * i.xVector),
+				i.x + ((i.speed * 5) * i.xVector),
 				i.y, 
 				i.w, 
 				i.h, 
@@ -3463,9 +3471,7 @@ if (i.x > cameraX - 100 && i.x < cameraX + cameraW + 100 && i.y > cameraY - 100 
 		c.translate(-i.x , -i.y);
 		
 		// console.log("j: x = "+ i.x + " y = " + i.y);
-		//c.rect(i.x - (i.w / 2), i.y - (i.h / 2), i.w, i.h);
-		//c.lineWidth = 1;
-		//c.stroke();
+		
 		
 	
 		
@@ -3480,7 +3486,10 @@ if (i.x > cameraX - 100 && i.x < cameraX + cameraW + 100 && i.y > cameraY - 100 
 		}
 		c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w / 2) - 10, i.y - (i.h / 2) - 10, i.w + 20, i.h + 20);
 		
-			
+		c.strokeStyle = "black";
+		c.rect(i.x , i.y , i.w, i.h);
+		c.lineWidth = 1;
+		c.stroke();	
 		
 		
 		} else {
@@ -4933,7 +4942,9 @@ function updateZombies() {
 
 // check collision with buildings
 			checkNPCCollisionWithBuilding(i)
-				
+			if (i.collidesWithType === "Avoid Building") {
+				i.x -= (i.speed * i.xVector);
+			}			
 			if (i.wayPoints.length > 0) {
 				setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
 			}
