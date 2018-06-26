@@ -5012,6 +5012,13 @@ function updateZombies() {
 						k.h
 					)) {
 						i.canWalkX = false;
+						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+							if (j < l) {
+								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+							} else {
+								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];								
+							}
+						}
 					}
 				}
 			});
@@ -5029,6 +5036,21 @@ function updateZombies() {
 						k.h
 					)) {
 						i.canWalkY = false;
+						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+							if (j < l) {
+								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+							} else {
+								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];								
+							}
+						} else { /* zombie goes to random waypoint on collision
+							let newXTarget = k.x + (Math.floor(Math.random() * 30));
+							let newYTarget = k.y + (Math.floor(Math.random() * 30));
+							k.wayPoints.push({
+								x: newXTarget,
+								y: newYTarget,
+								type: "Zombie Collision",
+							}); */
+						}
 					}
 				}
 			});		
