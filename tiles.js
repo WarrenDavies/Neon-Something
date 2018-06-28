@@ -20,32 +20,7 @@ sandImage.src = 'images/sandImage.png';
 indoorFloorImage = new Image();
 indoorFloorImage.src = 'images/indoorFloorImage.png';
 
-vehicleAudi = new Image();
-vehicleAudi.src = 'images/Audi.png';
 
-vehicleCar = new Image();
-vehicleCar.src = 'images/Car.png';
-
-vehicleTruck = new Image();
-vehicleTruck.src = 'images/Mini_truck.png';
-
-vehicleTJF_Car_Ambulance = new Image();
-vehicleTJF_Car_Ambulance.src = 'images/TJF_Car_Ambulance.png';
-
-vehicleTJF_Car_Blue = new Image();
-vehicleTJF_Car_Blue.src = 'images/TJF_Car_Blue.png';
-
-vehicleTJF_Car_Military = new Image();
-vehicleTJF_Car_Military.src = 'images/TJF_Car_Military.png';
-
-vehicleTJF_Car_Truck = new Image();
-vehicleTJF_Car_Truck.src = 'images/TJF_Car_Truck.png';
-
-vehicleTJF_Car_Green = new Image();
-vehicleTJF_Car_Green.src = 'images/TJF_Car_Green.png';
-
-vehicleTJF_Car_Limo = new Image();
-vehicleTJF_Car_Limo.src = 'images/TJF_Car_Limo.png';
 
 playerWalk1 = new Image();
 playerWalk1.src = 'images/playerWalk1.png';
