@@ -1,6 +1,6 @@
 function spawnZombie() {
-	//if (theZombies.length < 50) {
-	if (theZombies.length < 1) {
+	if (theZombies.length < 50) {
+	//if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
@@ -27,8 +27,8 @@ function spawnZombie() {
 			spawnX = Math.floor(Math.random() * (map[0].length * 50))
 		}
 
-		spawnX = Player1.x - 200;
-		spawnY = Player1.y - 200;
+		//spawnX = Player1.x - 200;
+		//spawnY = Player1.y - 200;
 		let zomID = theZombies.length;
 		theZombies.push({
 			ID: zomID,
@@ -227,8 +227,9 @@ function updateZombies() {
 
 			if ( !(i.zombieBlock) || (i.xPrevious === i.x && i.yPrevious === i.y)) {
 				buildingsOnScreen.forEach(function(k, l) {
-					i.x -= ((i.speed * 2) * i.xVector);
-					i.y -= ((i.speed * 2) * i.yVector);
+					// collision rebound
+					//i.x -= ((i.speed * 2) * i.xVector);
+					//i.y -= ((i.speed * 2) * i.yVector);
 					for (var line in theBuildings[k].walls) {
 						if (collidesSpecify(
 							i.x, 
