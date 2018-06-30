@@ -533,7 +533,7 @@ function objectifyMap() {
 	});
 }
 //objectifyMap();
-console.log(map[5][5]);
+
 
 
 
@@ -620,3 +620,199 @@ function objectifyTile(k, j, l) {
 	}
 }
 
+function updateTime() {
+	//time += .01;
+	if (time > 24) {time = 0;}
+
+	switch(Math.floor(time)) {
+		case 17:
+			light = 0.1;
+			break;
+		case 18:
+			light = 0.2;
+			break;
+		case 19:
+			light = 0.3;
+			break;
+		case 20:
+			light = 0.4;
+			break;
+		case 21:
+			light = 0.5;
+			break;
+		case 22:
+			light = 0.6;
+			break;
+		case 23:
+			light = 0.7;
+			break;
+		case 0:
+			light = 0.7;
+			break;
+		case 1:
+			light = 0.7;
+			break;
+		case 2:
+			light = 0.7;
+			break;
+		case 3:
+			light = 0.6;
+			break;
+		case 4:
+			light = 0.5;
+			break;
+		case 5:
+			light = 0.4;
+			break;
+		case 6:
+			light = 0.3;
+			break;
+		case 7:
+			light = 0.2;
+			break;
+		case 8:
+			light = 0.1;
+			break;
+		default:
+			light = 0.0;
+	} 
+
+	if (light != 0 && light != 0.7) {
+		if (time < 12) {
+			light += (0.1 - ((time % 1) / 10));
+		} else {
+			light += ((time % 1) / 10)
+		}
+	}
+		
+	c.fillStyle = "rgba(0, 0, 0," + light + ")";
+	c.beginPath();
+	c.moveTo(0, 0);
+	c.lineTo(800, 0);
+	c.lineTo(800, 600);
+	c.lineTo(0, 600);
+	c.lineTo(0, 0);
+	//c.fill();
+}
+
+function updateTimers() {
+	//Timers
+	if (dismountTimer > 0) {
+		dismountTimer -= 1;
+	} 
+	if (mountTimer > 0) {
+		mountTimer -= 1;
+	}
+	if (headlightsTimer > 0) {
+		headlightsTimer -= 1;
+	}
+}
+
+function updateMouseCoordinates() {
+	// get the angle between the player coords and the mouse coords  
+	deltaX = mouseX - Player1.x;
+	deltaY = mouseY - Player1.y;
+	var newAngle = Math.atan(deltaY / deltaX);
+}
+
+ // clear canvas function
+  function clear(c) {
+  c.clearRect(0, 0, WIDTH, HEIGHT);
+	}
+
+function clearCanvas() {
+	// clear the canvas and draw the default green background again
+	clear(c);
+	c.beginPath();
+	//c.fillStyle = "rgb(45,133,22)";
+	c.fillStyle = "green";
+	c.rect(0,0,800,600);
+	c.fill();
+	c.closePath();
+}
+
+function whichTiles() {
+	//onXTile = Math.floor(Player1.x / 50);
+	//onYTile = Math.floor(Player1.y / 50);
+	//console.log("onXTime = " + onXTile);
+
+	onXTile = Math.floor((cameraX + (cameraW / 2)) / 50);
+	onYTile = Math.floor((cameraY + (cameraH / 2)) / 50);
+	
+	
+}
+
+function updateCamera() {
+//if arrow keys are not being pressed, continue	
+	if ( !keys[37] && !keys[39] && !keys[38] && !keys[40]  ) {
+		if (Player1.mot === 0) {
+// if not in a vehicle center the camera on the player
+			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
+			cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
+		} else {
+// if we are in a vehicle, center the camera on the vehice. However, the third part of this expression adds on the speed of the vehicle to the camera position -- otherwise the vehicle image moves forward on the screen a little, in line with its acceleration. 
+			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2) - (((vehiclesOnScreen[Player1.mot].xtarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].xTurnTarget));
+			cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2) - (((vehiclesOnScreen[Player1.mot].ytarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].yTurnTarget));
+		}
+	}
+}
+
+function drawMap() {
+var tileCount = 0
+	c.beginPath();
+	for (j = onYTile - 7; j < onYTile + 8; j++ ) {
+		for (l = onXTile - 8; l < onXTile + 10; l++) {
+			if (j >= 0  && l >= 0 && j < map.length && l < map[j].length) {
+				if (map[j][l].backgroundImage) {
+				// spritesheet version
+				//				c.drawImage( map[j][l].backgroundImage, map[j][l].sourceX, map[j][l].sourceY, map[j][l].w, map[j][l].h, l * 50 - cameraX, j * 50 - cameraY, 50, 50 );
+				
+				// with the -1 offsets for tesselation
+				
+				c.save();
+				c.translate(l * 50 - cameraX - 1, j * 50 - cameraY - 1)
+				c.drawImage( map[j][l].backgroundImage, 0, 0, 51, 51);
+				
+				// the below writes the building no on the floor of the building
+				//if (map[j][l].building) {
+				//	c.font = 'bold 18pt Calibri';
+				//	c.fillText(map[j][l].building, 20,30);
+					
+				//}
+				c.restore();
+				
+				//console.log("after = " + cameraX);
+				
+				
+				
+				//... and without				
+				//c.drawImage( map[j][l].backgroundImage, l * 50 - cameraX , j * 50 - cameraY, 50, 50)
+				
+				
+				} else {
+					c.lineWidth = 1;
+					c.beginPath();
+					c.fillStyle = map[j][l].color;
+					c.strokeStyle = map[j][l].color;
+					c.rect(l * 50 - cameraX, j * 50 - cameraY, 50, 50);	
+					c.fill();
+					c.stroke();
+				 }
+				
+				tileCount +=1;
+				
+				if (map[j][l].building != 0 && buildingsOnScreen.indexOf(map[j][l].building) === -1) {
+					buildingsOnScreen.push(map[j][l].building);
+					//console.log(map[j][l].building);
+				}
+				// uncomment the above and delete the below when building generator is sorted, this just pushes all
+				//buildingsOnScreen.splice(0);
+				//theBuildings.forEach( function(i, j) {
+				//	buildingsOnScreen.push(j);
+				//});
+				
+			}
+		}
+	c.closePath();
+	} 
+} // drawMap
