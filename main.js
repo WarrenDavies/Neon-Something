@@ -5,19 +5,18 @@ console.log("start");
 
 
 // to do
-
+// add the same  from wall function to civs nand zoms that works on vehicles.
 
 //zombie movement updates:
+
+// stop him colliding with two walls
+// only accept direct line of sight to player -- not just around a cornmer
 
 // When two zombies with waypoints collide, have the youngest zombie adopt the waypoint of the older one. This will prevent them getting stuck.
 // as soon as zombies detect a collision with a wall, move them in their opposite direction a few pixels. This will prevent them getting stuck on walls, and give the appearance that the dumb zombies are bumping into things
 // when zombies bump into each other, move them one pixel in the opposite direction -- but see if this is still needed after the above two fixes
 //have zombies target civilians, and turn them into new zombies
 // add experience points to zombies -- they get stronger the older they are, and the more civilians they have killed, doing damage to the player etc.
-
-
-
-
 
 // make save/restore more efficien -- don't need to do this in every loop surely.
 // also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs

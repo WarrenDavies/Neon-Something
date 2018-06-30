@@ -92,30 +92,53 @@ function debugHUD(){
 	c.font = '18pt Calibri';
 	c.fillStyle = 'black';
 	c.strokeStyle = "black";
-		var showWayPoints = false;
+		var showWayPoints = true;
 		var showPlayer = false;
 		if (showWayPoints) {
 		
-		theWayPoints.forEach( function(i,j) {
-				c.beginPath();
-				c.save();
-				c.translate(i.x - cameraX, i.y - cameraY); 
-				c.translate(-i.x , -i.y);
-				c.moveTo(i.x - 10, i.y - 10);
-				c.lineTo(i.x + 10, i.y + 10);
-				c.strokeStyle = "red";
-				c.lineWidth = 2;
-				c.stroke();
-				
-				c.beginPath();
-				c.moveTo(i.x + 10, i.y - 10);
-				c.lineTo(i.x - 10, i.y + 10);
-				c.stroke()
-				
-				c.fillText(j, i.x - 5, i.y - 20);
-				c.restore();
-			});
-		
+			theWayPoints.forEach( function(i, j) {
+					c.beginPath();
+					c.save();
+					c.translate(i.x - cameraX, i.y - cameraY); 
+					c.translate(-i.x , -i.y);
+					c.moveTo(i.x - 10, i.y - 10);
+					c.lineTo(i.x + 10, i.y + 10);
+					c.strokeStyle = "red";
+					c.lineWidth = 2;
+					c.stroke();
+					
+					c.beginPath();
+					c.moveTo(i.x + 10, i.y - 10);
+					c.lineTo(i.x - 10, i.y + 10);
+					c.stroke()
+					
+					c.fillText(j, i.x - 5, i.y - 20);
+					c.restore();
+				});
+
+			if (debugTarget) {
+				if (debugTarget.wayPoints.length > 0) {
+					debugTarget.wayPoints.forEach( function(i, j) {
+						c.beginPath();
+						c.save();
+						c.translate(i.x - cameraX, i.y - cameraY); 
+						c.translate(-i.x , -i.y);
+						c.moveTo(i.x - 10, i.y - 10);
+						c.lineTo(i.x + 10, i.y + 10);
+						c.strokeStyle = "blue";
+						c.lineWidth = 2;
+						c.stroke();
+						
+						c.beginPath();
+						c.moveTo(i.x + 10, i.y - 10);
+						c.lineTo(i.x - 10, i.y + 10);
+						c.stroke()
+						
+						c.fillText(j, i.x - 5, i.y - 20);
+						c.restore();
+					});
+				}
+			}
 		}
 		
 		
@@ -166,9 +189,33 @@ function debugHUD(){
 			c.fillText("No. of waypoints: " +
 			debugTarget.wayPoints.length,500, 550);
 			
-			c.fillText("stuck: " +
-			debugTarget.stuck,500, 575);
-			
+			c.fillText("canWalkX: " +
+			debugTarget.canWalkX, 100, 125);			
+			c.fillText("canWalkY: " +
+			debugTarget.canWalkY, 100, 150);
+			c.fillText("zombieBlock: " +
+			debugTarget.zombieBlock, 100, 175);
+
+			c.fillText("xVector: " +
+			debugTarget.xVector, 100, 200);
+			c.fillText("yVector: " +
+			debugTarget.yVector, 100, 225);
+
+			c.fillText("collisionCourse: " +
+			debugTarget.collisionCourse, 100, 250);
+
+			c.fillText("collides with ID: " +
+			debugTarget.collidesWithID,100, 275);
+
+			c.fillText("wayPointsReached: " +
+			debugTarget.collidesWithID, 100, 300);
+
+			c.fillText("collidesWithType: " +
+			debugTarget.collidesWithType, 100, 325);
+
+			c.fillText("canseeplayer: " +
+			debugTarget.canSeePlayer, 100, 350);
+
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
 			c.translate(-debugTarget.x , -debugTarget.y);
@@ -180,6 +227,22 @@ function debugHUD(){
 			c.stroke();
 			
 			
+			for (var line in theBuildings[1].walls) {
+				if (theBuildings[1].walls.hasOwnProperty(line)) {
+					c.strokeStyle = "green";
+					c.linewidth = 1;
+					c.rect(theBuildings[1].walls[line].p1x - cameraX + Player1.x, 
+					theBuildings[1].walls[line].p1y - cameraY + Player1.y,
+					theBuildings[1].walls[line].w, 
+					theBuildings[1].walls[line].h);
+					c.stroke();
+					c.strokeStyle = "red";
+				}
+			}
+
+
+
+
 			c.restore();
 			
 			}

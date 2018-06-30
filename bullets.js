@@ -109,7 +109,6 @@ function changeWeapon(change) {
 				Player1.activeWeapon = checkWeapon;
 				keys[81] = false;
 				keys[69] = false;
-				console.log(Player1.activeWeapon);
 				break;
 			}
 		}

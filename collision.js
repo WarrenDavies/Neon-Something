@@ -153,11 +153,9 @@ var wallCollisionCounter = 0;
 						theBuildings[i].walls[line].p1y, 
 						theBuildings[i].walls[line].w, 
 						theBuildings[i].walls[line].h )) {
-						console.log("vertical collision");
 						wallCollision[line] = true;
 						wallCollisionCounter++;
 						Player1.yVector = 0;
-						console.log(line);	
 				}
 			}
 		}
@@ -182,11 +180,9 @@ var wallCollisionCounter = 0;
 						theBuildings[i].walls[line].p1y, 
 						theBuildings[i].walls[line].w, 
 						theBuildings[i].walls[line].h )) {
-						console.log("horizontal collision");
 						wallCollision[line] = true;
 						wallCollisionCounter++;
 						Player1.xVector = 0;
-						console.log(line);	
 				}
 			}
 		}
@@ -305,10 +301,13 @@ function checkNPCCollisionWithBuilding(i) {
 	i.collidesWithType = null;
 	i.horizontalBuildingCollision = false;
 	i.verticalBuildingCollision = false;
-	c.fillStyle = "blue";
+	c.beginPath();
+	c.strokeStyle = "blue";
 	c.lineWidth = 1;
-	c.rect(i.x + ((i.speed * 5) * i.xVector) - cameraX, i.y + ((i.speed * 5) * i.yVector) - cameraY, i.w, i.h);
-	
+	c.rect(i.x + ((i.speed * 8) * i.xVector) - cameraX, i.y + ((i.speed * 8) * i.yVector) - cameraY, i.w, i.h);
+	c.stroke()
+
+	c.beginPath();
 	c.fillStyle = "black";
 	c.lineWidth = 1;
 	c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
@@ -318,7 +317,7 @@ function checkNPCCollisionWithBuilding(i) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
 				if (collidesSpecify(
 				i.x,
-				i.y + ((i.speed * 5) * i.yVector), 
+				i.y + ((i.speed * 8) * i.yVector), 
 				i.w, 
 				i.h, 
 				theBuildings[l].walls[line].p1x, 
@@ -326,6 +325,7 @@ function checkNPCCollisionWithBuilding(i) {
 				theBuildings[l].walls[line].w, 
 				theBuildings[l].walls[line].h )) {
 					i.collisionCourse = true;
+					console.log(i.ID + " hits " + l + " " + line);
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
@@ -354,8 +354,9 @@ function checkNPCCollisionWithBuilding(i) {
 							let rotation = Math.atan2(deltaY, deltaX);
 							let xtarget = Math.cos(rotation);
 							let ytarget = Math.sin(rotation);
-							i.x += (xtarget * 2);
-							i.y += (ytarget * 2);
+							//i.x += (xtarget * 2);
+							//i.y += (ytarget * 2);
+							i.y -= 1;
 						}
 					}
 					if (i.collidesWithWall === "bottom" ||
@@ -382,8 +383,9 @@ function checkNPCCollisionWithBuilding(i) {
 							let rotation = Math.atan2(deltaY, deltaX);
 							let xtarget = Math.cos(rotation);
 							let ytarget = Math.sin(rotation);
-							i.x += (xtarget * 2);
-							i.y += (ytarget * 2);
+						//	i.x += (xtarget * 2);
+						//	i.y += (ytarget * 2);
+							i.y += 1
 						}
 					}
 				}
@@ -392,7 +394,7 @@ function checkNPCCollisionWithBuilding(i) {
 		for (var line in theBuildings[l].walls) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
 				if (collidesSpecify(
-				i.x + ((i.speed * 5) * i.xVector),
+				i.x + ((i.speed * 8) * i.xVector),
 				i.y, 
 				i.w, 
 				i.h, 
@@ -401,6 +403,7 @@ function checkNPCCollisionWithBuilding(i) {
 				theBuildings[l].walls[line].w, 
 				theBuildings[l].walls[line].h )) {
 					i.collisionCourse = true;
+					console.log(i.ID + " hits " + l + " " + line);
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
@@ -408,63 +411,77 @@ function checkNPCCollisionWithBuilding(i) {
 					if (!i.stuck) {
 						if (i.collidesWithWall === "left" ||
 						i.collidesWithWall === "left2") {
-							if (i.yVector >= 0) {
-								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
-								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
-							}
-							if (i.yVector < 0) {
-								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
-								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
-							}
-							if (collidesSpecify(
-							i.x,
-							i.y, 
-							i.w, 
-							i.h, 
-							theBuildings[l].walls[line].p1x, 
-							theBuildings[l].walls[line].p1y, 
-							theBuildings[l].walls[line].w, 
-							theBuildings[l].walls[line].h )) {
-								let xDirection = i.x - theBuildings[l].centerX;
-								let yDirection = i.y - theBuildings[l].centerY;
-								let rotation = Math.atan2(deltaY, deltaX);
-								let xtarget = Math.cos(rotation);
-								let ytarget = Math.sin(rotation);
-								i.x += (xtarget * 2);
-								i.y += (ytarget * 2);
-							}	
+							
+								console.log("Here");
+								if (i.yVector >= 0) {
+									xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+									yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
+								}
+								if (i.yVector < 0) {
+									xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+									yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
+								}
+								if (collidesSpecify(
+								i.x,
+								i.y, 
+								i.w, 
+								i.h, 
+								theBuildings[l].walls[line].p1x, 
+								theBuildings[l].walls[line].p1y, 
+								theBuildings[l].walls[line].w, 
+								theBuildings[l].walls[line].h )) {
+									console.log ("unsticking " + i.ID + " from wall");
+									
+								//	i.x = i.xPrevious;
+								//	i.y = i.yPrevious;
+
+									/* let xDirection = i.x - theBuildings[l].centerX;
+									let yDirection = i.y - theBuildings[l].centerY;
+									let rotation = Math.atan2(deltaY, deltaX);
+									let xtarget = Math.cos(rotation);
+									let ytarget = Math.sin(rotation);
+									i.x += (xtarget * 2);
+									i.y += (ytarget * 2); */
+									i.x -= 1;
+								}	
+							
 						}
 						if (i.collidesWithWall === "right" ||
-						i.collidesWithWall === "right2") {
-							if (i.yVector >= 0) {
-								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
-								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
-							}
-							if (i.yVector < 0) {
-								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
-								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
-							}
-							if (collidesSpecify(
-							i.x,
-							i.y, 
-							i.w, 
-							i.h, 
-							theBuildings[l].walls[line].p1x, 
-							theBuildings[l].walls[line].p1y, 
-							theBuildings[l].walls[line].w, 
-							theBuildings[l].walls[line].h )) {
-								let xdirection = getXDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
-								let ydirection = getYDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
-								i.x += (xdirection * 5);
-								i.y += (ydirection * 5);
-							}
+							i.collidesWithWall === "right2") {
+							
+								if (i.x > theBuildings[i.collidesWithID].lowerRightX ) {	
+									if (i.yVector >= 0) {
+										xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+										yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
+									}
+									if (i.yVector < 0) {
+										xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+										yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
+									}
+									if (collidesSpecify(
+									i.x,
+									i.y, 
+									i.w, 
+									i.h, 
+									theBuildings[l].walls[line].p1x, 
+									theBuildings[l].walls[line].p1y, 
+									theBuildings[l].walls[line].w, 
+									theBuildings[l].walls[line].h )) {
+										let xdirection = getXDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
+										let ydirection = getYDirection(theBuildings[l].centerY, theBuildings[l].centerY, i.x, i.y);
+										//i.x += (xdirection * 5);
+										//i.y += (ydirection * 5);
+										i.y += 1;
+									}
+								}
+							
 						}
 					}
 					i.stuck = false;
 				}
 			}
 		}
-	if (xPushTarget != null && yPushTarget != null) {
+	if ((xPushTarget != null || xPushTarget != undefined)  && (yPushTarget != null || yPushTarget != undefined)) {
 		
 		if (i.wayPoints.length > 0) {
 			if (xPushTarget != i.wayPoints[i.wayPoints.length - 1].x && yPushTarget != i.wayPoints[i.wayPoints.length - 1].y) {
@@ -473,13 +490,17 @@ function checkNPCCollisionWithBuilding(i) {
 					y: yPushTarget,
 					type: "Avoid Building",
 				});
+				i.collisionCourse = false;
 			}
-		} else {		
+		} else {
+			console.log("pushing waypoint");		
 			i.wayPoints.push({
 				x: xPushTarget,
 				y: yPushTarget,
 				type: "Avoid Building",
 			});
+			i.collisionCourse = false;
+			console.log(i.wayPoints.length);
 		}
 	}
 	});
