@@ -816,3 +816,25 @@ var tileCount = 0
 	c.closePath();
 	} 
 } // drawMap
+
+function mouseOnInteractiveElement() {
+	return false;
+}
+
+function addBuildingsToTiles() {
+theBuildings.forEach( function(i, j) {
+	var upperLeftX = Math.floor(i.upperLeftX / 50);
+	var upperLeftY = Math.floor(i.upperLeftY / 50);
+	var lowerRightX = Math.floor(i.lowerRightX / 50);
+	var lowerRightY = Math.floor(i.lowerRightY / 50);
+	i.centerX = i.lowerRightX - i.upperLeftX;
+	i.centerY = i.lowerRightY - i.upperLeftY;
+	for (k = upperLeftY; k <= lowerRightY; k++) {
+		for (l = upperLeftX; l <= lowerRightX; l++) {
+			objectifyTile(map[k][l], k, l);
+			map[k][l].building = j;
+			map[k][l].backgroundImage = i.floor;
+		}
+	}
+});
+}

@@ -297,3 +297,259 @@ function isOnScreen(i) {
 		return false;
 	}
 }
+
+function checkNPCCollisionWithBuilding(i) {
+	let xPushTarget = null;
+	let yPushTarget = null;
+	//check collisions with buildings
+	i.collidesWithType = null;
+	i.horizontalBuildingCollision = false;
+	i.verticalBuildingCollision = false;
+	c.fillStyle = "blue";
+	c.lineWidth = 1;
+	c.rect(i.x + ((i.speed * 5) * i.xVector) - cameraX, i.y + ((i.speed * 5) * i.yVector) - cameraY, i.w, i.h);
+	
+	c.fillStyle = "black";
+	c.lineWidth = 1;
+	c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
+	c.stroke();
+	theBuildings.forEach( function(k, l) {
+		for (var line in theBuildings[l].walls) {
+			if (theBuildings[l].walls.hasOwnProperty(line)) {
+				if (collidesSpecify(
+				i.x,
+				i.y + ((i.speed * 5) * i.yVector), 
+				i.w, 
+				i.h, 
+				theBuildings[l].walls[line].p1x, 
+				theBuildings[l].walls[line].p1y, 
+				theBuildings[l].walls[line].w, 
+				theBuildings[l].walls[line].h )) {
+					i.collisionCourse = true;
+					i.collidesWithID = l;
+					i.collidesWithType = "Building";
+					i.collidesWithWall = line;
+					i.verticalBuildingCollision = true;
+					if (i.collidesWithWall === "top" ||
+					i.collidesWithWall === "top2") {
+						if (i.xVector >= 0) {
+							xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 60;
+							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
+						}
+						if (i.xVector < 0) {
+							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60
+							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
+						}
+						if (collidesSpecify(
+						i.x,
+						i.y, 
+						i.w, 
+						i.h, 
+						theBuildings[l].walls[line].p1x, 
+						theBuildings[l].walls[line].p1y, 
+						theBuildings[l].walls[line].w, 
+						theBuildings[l].walls[line].h )) {
+							let xDirection = i.x - theBuildings[l].centerX;
+							let yDirection = i.y - theBuildings[l].centerY;
+							let rotation = Math.atan2(deltaY, deltaX);
+							let xtarget = Math.cos(rotation);
+							let ytarget = Math.sin(rotation);
+							i.x += (xtarget * 2);
+							i.y += (ytarget * 2);
+						}
+					}
+					if (i.collidesWithWall === "bottom" ||
+					i.collidesWithWall === "bottom2") {
+						if (i.xVector >= 0) {
+							xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 60;
+							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
+						}
+						if (i.xVector < 0) {
+							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60;
+							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
+						}
+						if (collidesSpecify(
+						i.x,
+						i.y, 
+						i.w, 
+						i.h, 
+						theBuildings[l].walls[line].p1x, 
+						theBuildings[l].walls[line].p1y, 
+						theBuildings[l].walls[line].w, 
+						theBuildings[l].walls[line].h )) {
+							let xDirection = i.x - theBuildings[l].centerX;
+							let yDirection = i.y - theBuildings[l].centerY;
+							let rotation = Math.atan2(deltaY, deltaX);
+							let xtarget = Math.cos(rotation);
+							let ytarget = Math.sin(rotation);
+							i.x += (xtarget * 2);
+							i.y += (ytarget * 2);
+						}
+					}
+				}
+			}
+		}
+		for (var line in theBuildings[l].walls) {
+			if (theBuildings[l].walls.hasOwnProperty(line)) {
+				if (collidesSpecify(
+				i.x + ((i.speed * 5) * i.xVector),
+				i.y, 
+				i.w, 
+				i.h, 
+				theBuildings[l].walls[line].p1x, 
+				theBuildings[l].walls[line].p1y, 
+				theBuildings[l].walls[line].w, 
+				theBuildings[l].walls[line].h )) {
+					i.collisionCourse = true;
+					i.collidesWithID = l;
+					i.collidesWithType = "Building";
+					i.collidesWithWall = line;
+					i.horizontalBuildingCollision = true;
+					if (!i.stuck) {
+						if (i.collidesWithWall === "left" ||
+						i.collidesWithWall === "left2") {
+							if (i.yVector >= 0) {
+								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
+							}
+							if (i.yVector < 0) {
+								xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
+								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
+							}
+							if (collidesSpecify(
+							i.x,
+							i.y, 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								let xDirection = i.x - theBuildings[l].centerX;
+								let yDirection = i.y - theBuildings[l].centerY;
+								let rotation = Math.atan2(deltaY, deltaX);
+								let xtarget = Math.cos(rotation);
+								let ytarget = Math.sin(rotation);
+								i.x += (xtarget * 2);
+								i.y += (ytarget * 2);
+							}	
+						}
+						if (i.collidesWithWall === "right" ||
+						i.collidesWithWall === "right2") {
+							if (i.yVector >= 0) {
+								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+								yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
+							}
+							if (i.yVector < 0) {
+								xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
+								yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
+							}
+							if (collidesSpecify(
+							i.x,
+							i.y, 
+							i.w, 
+							i.h, 
+							theBuildings[l].walls[line].p1x, 
+							theBuildings[l].walls[line].p1y, 
+							theBuildings[l].walls[line].w, 
+							theBuildings[l].walls[line].h )) {
+								let xdirection = getXDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
+								let ydirection = getYDirection(theBuildings[l].centerX, theBuildings[l].centerY, i.x, i.y);
+								i.x += (xdirection * 5);
+								i.y += (ydirection * 5);
+							}
+						}
+					}
+					i.stuck = false;
+				}
+			}
+		}
+	if (xPushTarget != null && yPushTarget != null) {
+		
+		if (i.wayPoints.length > 0) {
+			if (xPushTarget != i.wayPoints[i.wayPoints.length - 1].x && yPushTarget != i.wayPoints[i.wayPoints.length - 1].y) {
+				i.wayPoints.push({
+					x: xPushTarget,
+					y: yPushTarget,
+					type: "Avoid Building",
+				});
+			}
+		} else {		
+			i.wayPoints.push({
+				x: xPushTarget,
+				y: yPushTarget,
+				type: "Avoid Building",
+			});
+		}
+	}
+	});
+	if (i.collidesWithType === "Building") {
+		return true;
+	}
+}
+
+function checkBulletWallCollision(i, j) {
+	// buildings
+	var collisionDetected = false;
+	buildingsOnScreen.forEach( function(k, l) {
+		for (var line in theBuildings[k].walls) {
+			if (theBuildings[k].walls.hasOwnProperty(line)) {
+				if (testLines(
+						i.x - cameraX,
+						i.y - cameraY,
+						(i.x + i.xtarget * i.xVelocity) - cameraX,
+						(i.y + i.ytarget * i.yVelocity) - cameraY,			
+						theBuildings[k].walls[line].p1x , 
+						theBuildings[k].walls[line].p1y , 
+						theBuildings[k].walls[line].p2x , 
+						theBuildings[k].walls[line].p2y ,
+						"bullet/wall"
+						)) {
+						console.log("bullet / wall collision");
+						console.log(line);	
+						collisionDetected = true;
+						return true;
+				}
+			}
+		}
+	});
+	if (collisionDetected) {
+		return true 
+	} else {
+		return false;
+	}
+}
+
+function checkBulletCivilianCollision(i, j) {
+	let collisionDetected = false;
+	theCivilians.forEach( function(k, l) {
+		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
+			collisionDetected = true;
+			theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
+			theCivilians.splice(l, 1);
+		}
+	});
+	if (collisionDetected) {
+		return true 
+	} else {
+		return false;
+	}
+}
+
+function checkBulletCivilianCollision(i, j) {
+	let collisionDetected = false;
+	theZombies.forEach( function(k, l) {
+		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
+			if (collisionDetected === false) {
+				theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
+				theZombies.splice(l, 1);
+				collisionDetected = true;
+			}
+		}
+	});
+	if (collisionDetected) {
+		return true 
+	} else {
+		return false;
+	}
+}
