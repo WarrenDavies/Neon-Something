@@ -16,6 +16,18 @@ function getYDirection (x, y, xt, yt) {
 	return ytarget;
 }
 
+function getXandYDirection (x, y, xt, yt) {
+	var deltaX = xt - x;
+	var deltaY = yt - y;
+	var rotation = Math.atan2(deltaY, deltaX);
+	var xtarget = Math.cos(rotation);
+	var ytarget = Math.sin(rotation);
+	return { 
+		xTarget: xtarget, 
+		yTarget: ytarget
+	};
+}
+
 function getAngle (x, y, xt, yt) {
 	var deltaX = xt - x;
 	var deltaY = yt - y;
