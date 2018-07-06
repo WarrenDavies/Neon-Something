@@ -37,6 +37,13 @@ function detectKeys(){
 		Player1.gettingInVehicle = 0;
 	}
 
+
+	if (keys[88]) {
+		if (debugTarget) {
+			debugTarget = null;
+		}
+	}
+
 	if (keys[79]) {
 		time -= 1;
 		if (time < 0) {time = 23;}

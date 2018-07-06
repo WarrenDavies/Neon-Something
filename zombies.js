@@ -77,7 +77,7 @@ function spawnZombie() {
 			canSeePlayer: false,
 			stoodStillTimer: 0,
 			byOrderOf: -1,
-			stepDistance: 10,
+			stepDistance: 8,
 			redirectedCount: 0,
 		});
 	}
