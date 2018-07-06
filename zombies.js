@@ -78,6 +78,7 @@ function spawnZombie() {
 			stoodStillTimer: 0,
 			byOrderOf: -1,
 			stepDistance: 10,
+			redirectedCount: 0,
 		});
 	}
 }
@@ -164,37 +165,32 @@ function updateZombies() {
 						k.w, 
 						k.h
 					)) {
-						i.canWalkX = false;
-						// hit a zombie, the youngest zombie adopts that waypoint of the elder
-						let iOrderStatus;
-						let kOrderStatus;
-						if (i.byOrderOf > -1) {
-							iOrderStatus = i.byOrderOf;
-						} else {
-							iOrderStatus = j;
-						}
-						if (k.byOrderOf > -1) {
-							kOrderStatus = k.byOrderOf;
-						} else {
-							kOrderStatus = k;
-						}
-						
-						if (iOrderStatus < kOrderStatus) {
-							if (i.wayPoints.length > 0) {
+						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
+							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
+							let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
+							
+							let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
+							let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
+							let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
+							
+							if (distanceHolder1 < distanceHolder2) {
 								k.wayPoints.splice(0);
 								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
-								k.byOrderOf = j;
-							} else { 
-								setNPCdirection(k, Player1);
-						/* zombie goes to random waypoint on collision
-						let newXTarget = k.x + (Math.floor(Math.random() * 30));
-						let newYTarget = k.y + (Math.floor(Math.random() * 30));
-						k.wayPoints.push({
-							x: newXTarget,
-							y: newYTarget,
-							type: "Zombie Collision",
-						}); */
+								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+							} else {
+								i.wayPoints.splice(0);
+								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 							}
+						}
+						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
+							k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+						}
+						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
+							i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 						}
 					}
 				}
@@ -212,45 +208,32 @@ function updateZombies() {
 						k.w, 
 						k.h
 					)) {
-						i.canWalkY = false;
-						i.zombieBlock = true;
-						if (i.canwalkX === false) {
-							i.collisionCourse = true;
-							i.zombieBlock = true;
-							i.collidesWithType = "zombie";
-						}
-						i.collidesWithType = "zombie";
-						// hit a zombie, the youngest zombie adopts that waypoint of the elder
-						let iOrderStatus;
-						let kOrderStatus;
-						if (i.byOrderOf > -1) {
-							iOrderStatus = i.byOrderOf;
-						} else {
-							iOrderStatus = j;
-						}
-						if (k.byOrderOf > -1) {
-							kOrderStatus = k.byOrderOf;
-						} else {
-							kOrderStatus = k;
-						}
-
-						if (iOrderStatus < kOrderStatus) {
-							if (i.wayPoints.length > 0) {
+						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
+							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
+							let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
+							
+							let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
+							let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
+							let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
+							
+							if (distanceHolder1 < distanceHolder2) {
 								k.wayPoints.splice(0);
 								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
-								k.byOrderOf = j;
-							} else { 
-								setNPCdirection(k, Player1);
-
-						/* zombie goes to random waypoint on collision
-						let newXTarget = k.x + (Math.floor(Math.random() * 30));
-						let newYTarget = k.y + (Math.floor(Math.random() * 30));
-						k.wayPoints.push({
-							x: newXTarget,
-							y: newYTarget,
-							type: "Zombie Collision",
-						}); */
+								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+							} else {
+								i.wayPoints.splice(0);
+								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 							}
+						}
+						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
+							k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+						}
+						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
+							i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 						}
 					}
 				}

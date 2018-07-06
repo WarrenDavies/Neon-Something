@@ -216,6 +216,9 @@ function debugHUD(){
 			c.fillText("canseeplayer: " +
 			debugTarget.canSeePlayer, 100, 350);
 
+			c.fillText("redirectedCount: " +
+			debugTarget.redirectedCount, 100, 375);
+
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
 			c.translate(-debugTarget.x , -debugTarget.y);
