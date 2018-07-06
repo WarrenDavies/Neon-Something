@@ -304,13 +304,13 @@ function checkNPCCollisionWithBuilding(i) {
 	c.beginPath();
 	c.strokeStyle = "blue";
 	c.lineWidth = 1;
-	c.rect(i.x + ((i.speed * 8) * i.xVector) - cameraX, i.y + ((i.speed * 8) * i.yVector) - cameraY, i.w, i.h);
-	c.stroke()
+	//c.rect(i.x + ((i.speed * 8) * i.xVector) - cameraX, i.y + ((i.speed * 8) * i.yVector) - cameraY, i.w, i.h);
+	c.stroke();
 
 	c.beginPath();
 	c.fillStyle = "black";
 	c.lineWidth = 1;
-	c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
+	//c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
 	c.stroke();
 	theBuildings.forEach( function(k, l) {
 		for (var line in theBuildings[l].walls) {

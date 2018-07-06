@@ -77,6 +77,7 @@ function spawnZombie() {
 			canSeePlayer: false,
 			stoodStillTimer: 0,
 			byOrderOf: -1,
+			stepDistance: 10,
 		});
 	}
 }
@@ -154,7 +155,7 @@ function updateZombies() {
 			theZombies.forEach(function(k, l) {
 				if (j !== l) {
 					if (collidesSpecify(
-						i.x + ((i.speed) * i.xVector), 
+						i.x + ((i.speed * i.stepDistance) * i.xVector), 
 						i.y, 
 						i.w, 
 						i.h, 
@@ -164,9 +165,6 @@ function updateZombies() {
 						k.h
 					)) {
 						i.canWalkX = false;
-						i.zombieBlock = true;
-						i.collisionCourse = true;
-						i.collidesWithType = "zombie";
 						// hit a zombie, the youngest zombie adopts that waypoint of the elder
 						let iOrderStatus;
 						let kOrderStatus;
@@ -206,7 +204,7 @@ function updateZombies() {
 				if (j !== l) {
 					if (collidesSpecify(
 						i.x, 
-						i.y + ((i.speed) * i.yVector), 
+						i.y + ((i.speed * i.stepDistance) * i.yVector), 
 						i.w, 
 						i.h, 
 						k.x, 
@@ -216,7 +214,11 @@ function updateZombies() {
 					)) {
 						i.canWalkY = false;
 						i.zombieBlock = true;
-						i.collisionCourse = true;
+						if (i.canwalkX === false) {
+							i.collisionCourse = true;
+							i.zombieBlock = true;
+							i.collidesWithType = "zombie";
+						}
 						i.collidesWithType = "zombie";
 						// hit a zombie, the youngest zombie adopts that waypoint of the elder
 						let iOrderStatus;
@@ -253,6 +255,10 @@ function updateZombies() {
 					}
 				}
 			});
+			if (!(i.canWalkX) && !(i.canWalkY) && i.collidesWithType === "zombie") {
+
+			}
+
 		} // if walking
 		
 // move the zombie if needed
@@ -414,6 +420,20 @@ function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 function drawZombies() {
 	theZombies.forEach(function(i, j) {
 		if (isOnScreen(i)) {
+			
+			c.beginPath();
+			c.strokeStyle = "blue";
+			c.lineWidth = 1;
+			c.rect(i.x + ((i.speed * i.stepDistance) * i.xVector) - cameraX, i.y + ((i.speed * i.stepDistance) * i.yVector) - cameraY, i.w, i.h);
+			c.stroke();
+
+			c.beginPath();
+			c.fillStyle = "black";
+			c.lineWidth = 1;
+			c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
+			c.stroke();
+
+
 			c.save();
 			c.translate(i.x + (i.w / 2) - cameraX, i.y + (i.h / 2) - cameraY);
 			if (i.xTarget - i.x < 0) {
