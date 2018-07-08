@@ -304,38 +304,78 @@ function updateZombies() {
 		if (i.xPrevious === i.x && i.yPrevious === i.y) {
 			i.stoodStillTimer += 1;
 		}
-		//if (i.stoodStillTimer > 10) {
-			theZombies.forEach(function(k, l) {
-				if (j !== l) {
-					if (collidesSpecify(
-						i.x, 
-						i.y, 
-						i.w, 
-						i.h, 
-						k.x, 
-						k.y, 
-						k.w, 
-						k.h
-					)) {
-						iCenter = {
-							x: i.x + i.w / 2,
-							y: i.y + i.h / 2,
-						};
-						kCenter = {
-							x: k.x + k.w / 2,
-							y: k.y + k.h / 2,
-						};
-						console.log(iCenter.x + " " + kCenter.y);
-						let target = getXandYDirection(iCenter.x, iCenter.y, kCenter.x, kCenter.y);
-						console.log(target);
+		theZombies.forEach(function(k, l) {
+			if (j !== l) {
+				if (collidesSpecify(
+					i.x, 
+					i.y, 
+					i.w, 
+					i.h, 
+					k.x, 
+					k.y, 
+					k.w, 
+					k.h
+				)) {
+					iCenter = {
+						x: i.x + i.w / 2,
+						y: i.y + i.h / 2,
+					};
+					kCenter = {
+						x: k.x + k.w / 2,
+						y: k.y + k.h / 2,
+					};
+					console.log(iCenter.x + " " + kCenter.y);
+					let target = getXandYDirection(iCenter.x, iCenter.y, kCenter.x, kCenter.y);
+					console.log(target);
+					let iCanMove = true;
+					buildingsOnScreen.forEach(function(m, n) {
+						for (var line in theBuildings[m].walls) {
+							if (iCanMove === true) {
+								if (collidesSpecify(
+									i.x - (target.xTarget * i.speed), 
+									i.y - (target.yTarget * i.speed), 
+									i.w, 
+									i.h, 
+									m.x, 
+									m.y, 
+									m.w, 
+									m.h
+								)) {
+									iCanMove = false;
+								}
+							}
+						}
+					});
+					if (iCanMove) {
 						i.x -= (target.xTarget * i.speed);
 						i.y -= (target.yTarget * i.speed);
+					}
+					let kCanMove = true;
+					buildingsOnScreen.forEach(function(m, n) {
+						for (var line in theBuildings[m].walls) {
+							if (kCanMove === true) {
+								if (collidesSpecify(
+									k.x + (target.xTarget * i.speed), 
+									k.y + (target.yTarget * i.speed), 
+									k.w, 
+									k.h, 
+									m.x, 
+									m.y, 
+									m.w, 
+									m.h
+								)) {
+									kCanMove = false;
+								}
+							}
+						}
+					});
+					if (kCanMove) {
 						k.x += (target.xTarget * i.speed);
 						k.y += (target.yTarget * i.speed);
-
 					}
 				}
-			});
+			}
+		});
 		//}
 		i.xPrevious = i.x;
 		i.yPrevious = i.y;
@@ -392,7 +432,6 @@ function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 		theBuildings[k].walls[line].p2x, 
 		theBuildings[k].walls[line].p2y,
 		)
-
 		){
 			return false;
 		} else {
@@ -437,7 +476,6 @@ function drawZombies() {
 			
 			} else {
 				i.walkTimer = 0;
-				//c.drawImage( i.standImage, i.x - (i.w / 2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
 			}
 			c.restore();
 		} // if isOnScreen
