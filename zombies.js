@@ -79,6 +79,7 @@ function spawnZombie() {
 			byOrderOf: -1,
 			stepDistance: 8,
 			redirectedCount: 0,
+			lineStuckOn: "",
 		});
 	}
 }
@@ -279,6 +280,7 @@ function updateZombies() {
 							k.w, 
 							k.h
 						)) {
+							i.lineStuckOn = line;
 							console.log ("zombie " + j + "hits wall " + wall + "on building " + k)
 							console.log("deteching stuck zombie");
 							if (line === left || line === left2) {

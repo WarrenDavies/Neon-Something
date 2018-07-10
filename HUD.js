@@ -218,6 +218,9 @@ function debugHUD(){
 
 			c.fillText("redirectedCount: " +
 			debugTarget.redirectedCount, 100, 375);
+			
+			c.fillText("lineStuckOn: " +
+			debugTarget.lineStuckOn, 100, 400);
 
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
