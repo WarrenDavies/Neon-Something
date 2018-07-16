@@ -221,6 +221,9 @@ function debugHUD(){
 			
 			c.fillText("lineStuckOn: " +
 			debugTarget.lineStuckOn, 100, 400);
+		
+			c.fillText("canMove: " +
+			debugTarget.canMove, 100, 425);
 
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
