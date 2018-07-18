@@ -225,6 +225,9 @@ function debugHUD(){
 			c.fillText("canMove: " +
 			debugTarget.canMove, 100, 425);
 
+			c.fillText("collidesWithWall: " +
+			debugTarget.collidesWithWall, 100, 450);
+
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
 			c.translate(-debugTarget.x , -debugTarget.y);

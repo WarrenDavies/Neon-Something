@@ -80,6 +80,7 @@ function spawnZombie() {
 			stepDistance: 8,
 			redirectedCount: 0,
 			lineStuckOn: "",
+			canMOve: "",
 		});
 	}
 }
@@ -340,7 +341,7 @@ function updateZombies() {
 									i.h, 
 									m.x, 
 									m.y, 
-									m.w, 
+									m.w, a
 									m.h
 								)) {
 									iCanMove = false;
@@ -352,6 +353,7 @@ function updateZombies() {
 						i.x -= (target.xTarget * i.speed);
 						i.y -= (target.yTarget * i.speed);
 					}
+					i.canMove = iCanMove;
 					let kCanMove = true;
 					buildingsOnScreen.forEach(function(m, n) {
 						for (var line in theBuildings[m].walls) {
@@ -375,6 +377,7 @@ function updateZombies() {
 						k.x += (target.xTarget * i.speed);
 						k.y += (target.yTarget * i.speed);
 					}
+					k.canMove = kCanMove;
 				}
 			}
 		});
