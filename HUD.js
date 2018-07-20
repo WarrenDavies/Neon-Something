@@ -228,6 +228,12 @@ function debugHUD(){
 			c.fillText("collidesWithWall: " +
 			debugTarget.collidesWithWall, 100, 450);
 
+			c.fillText("xPrevious: " +
+			debugTarget.xPrevious, 100, 475);
+
+			c.fillText("yPrevious: " +
+			debugTarget.yPrevious, 100, 500);
+
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
 			c.translate(-debugTarget.x , -debugTarget.y);

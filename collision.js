@@ -299,6 +299,7 @@ function checkNPCCollisionWithBuilding(i) {
 	let yPushTarget = null;
 	//check collisions with buildings
 	i.collidesWithType = null;
+	i.collidesWithWall = "";
 	i.horizontalBuildingCollision = false;
 	i.verticalBuildingCollision = false;
 	c.beginPath();
@@ -340,6 +341,7 @@ function checkNPCCollisionWithBuilding(i) {
 							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60
 							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
 						}
+						i.y -= 1;
 						if (collidesSpecify(
 						i.x,
 						i.y, 
@@ -369,6 +371,7 @@ function checkNPCCollisionWithBuilding(i) {
 							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60;
 							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
 						}
+						i.y += 1;
 						if (collidesSpecify(
 						i.x,
 						i.y, 
@@ -421,6 +424,7 @@ function checkNPCCollisionWithBuilding(i) {
 									xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
 									yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 								}
+								i.x -= 1;
 								if (collidesSpecify(
 								i.x,
 								i.y, 
@@ -458,6 +462,7 @@ function checkNPCCollisionWithBuilding(i) {
 										xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
 										yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 									}
+									i.x += 1;
 									if (collidesSpecify(
 									i.x,
 									i.y, 

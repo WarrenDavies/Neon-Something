@@ -167,6 +167,8 @@ function updateZombies() {
 						k.w, 
 						k.h
 					)) {
+						i.canWalkX = false;
+						i.zombieBlock = true;
 						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
 							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
 							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
@@ -210,6 +212,8 @@ function updateZombies() {
 						k.w, 
 						k.h
 					)) {
+						i.canWalkY = false;
+						i.zombieBlock = true;
 						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
 							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
 							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
@@ -247,15 +251,19 @@ function updateZombies() {
 		} // if walking
 		
 // move the zombie if needed
+		
+		
 		if (i.collisionCourse === false) {
 			if (i.collidesWithType != null) {
 				i.collidesWithType = null;
 				i.collidesWithID = null;
 			}
 			if (i.canWalkX) {
+				i.xPrevious = i.x;
 				i.x += i.speed * i.xVector; 
 			}
 			if (i.canWalkY) {
+				i.yPrevious = i.y;
 				i.y += i.speed * i.yVector;
 			}
 			if ((i.canWalkX || i.canWalkY) && i.stoodStillTimer > 0) {
@@ -266,47 +274,69 @@ function updateZombies() {
 			
 
 			if ( !(i.zombieBlock) || (i.xPrevious === i.x && i.yPrevious === i.y)) {
-				buildingsOnScreen.forEach(function(k, l) {
-					// collision rebound
-					//i.x -= ((i.speed * 2) * i.xVector);
-					//i.y -= ((i.speed * 2) * i.yVector);
-					for (var line in theBuildings[k].walls) {
-						if (collidesSpecify(
-							i.x, 
-							i.y, 
-							i.w, 
-							i.h, 
-							k.x, 
-							k.y, 
-							k.w, 
-							k.h
-						)) {
-							i.lineStuckOn = line;
-							console.log ("zombie " + j + "hits wall " + wall + "on building " + k)
-							console.log("deteching stuck zombie");
-							if (line === left || line === left2) {
-								i.x -= 1;
-							}
-							if (line === right || line === right2) {
-								i.x += 1;
-							}
-							if (line === top || line === top2) {
-								i.y -= 1;
-							}
-							if (line === bottom || line === bottom2) {
-								i.y += 1;
-							}
-						}
-
-					}
-				});
+				
 			}
 		}
 		
 
-		if (i.xPrevious === i.x && i.yPrevious === i.y) {
+		if (Math.floor(i.xPrevious) === Math.floor(i.x) && Math.floor(i.yPrevious) === Math.floor(i.y)) {
 			i.stoodStillTimer += 1;
 		}
+
+
+
+		buildingsOnScreen.forEach(function(k, l) {
+			// collision rebound
+			//i.x -= ((i.speed * 2) * i.xVector);
+			//i.y -= ((i.speed * 2) * i.yVector);
+			i.lineStuckOn = "";
+			for (var line in theBuildings[k].walls) {
+				if (collidesSpecify(
+					i.x, 
+					i.y, 
+					i.w, 
+					i.h, 
+					k.x, 
+					k.y, 
+					k.w, 
+					k.h
+				)) {
+					i.lineStuckOn = line;
+					console.log ("zombie " + j + "hits wall " + wall + "on building " + k)
+					console.log("deteching stuck zombie");
+					if (line === left || line === left2) {
+						i.x -= 1;
+					}
+					if (line === right || line === right2) {
+						i.x += 1;
+					}
+					if (line === top || line === top2) {
+						i.y -= 1;
+					}
+					if (line === bottom || line === bottom2) {
+						i.y += 1;
+					}
+				}
+
+			}
+			if (i.lineStuckOn === "") {
+				i.collisionCourse = false;
+			}
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		theZombies.forEach(function(k, l) {
 			if (j !== l) {
 				if (collidesSpecify(
@@ -382,8 +412,7 @@ function updateZombies() {
 			}
 		});
 		//}
-		i.xPrevious = i.x;
-		i.yPrevious = i.y;
+
 	}); //zombies forEach
 } // updateZombies
 
