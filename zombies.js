@@ -341,7 +341,7 @@ function updateZombies() {
 									i.h, 
 									m.x, 
 									m.y, 
-									m.w, a
+									m.w, 
 									m.h
 								)) {
 									iCanMove = false;
