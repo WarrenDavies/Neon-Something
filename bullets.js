@@ -24,6 +24,7 @@ function createBullet(targetX, targetY, shooterX, shooterY, type) {
 			y: shooterY,
 			xVelocity: 15,
 			yVelocity: 15,
+			power: 1,
 			xtarget: xtarget,
 			ytarget: ytarget,
 			limitX: limitX,
@@ -58,7 +59,7 @@ function updateBullets() {
 			return	
 		}
 		
-		if (checkBulletCivilianCollision(i, j) ){
+		if (checkBulletZombieCollision(i, j) ){
 			theBullets.splice(j, 1);
 			return	
 		}

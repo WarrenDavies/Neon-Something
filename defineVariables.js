@@ -287,6 +287,7 @@ var theZombies = [];
 	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
 	 this.activeWeapon = 0;
 	 this.weaponsPossessed = [true, true, true];
+	 this.kills = 0;
  } 
  var Player1 = new Player();
 var rightDoorPosition = 125;

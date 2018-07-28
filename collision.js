@@ -552,14 +552,18 @@ function checkBulletCivilianCollision(i, j) {
 	}
 }
 
-function checkBulletCivilianCollision(i, j) {
+function checkBulletZombieCollision(i, j) {
 	let collisionDetected = false;
 	theZombies.forEach( function(k, l) {
 		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
 			if (collisionDetected === false) {
-				theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
-				theZombies.splice(l, 1);
+				k.health -= i.power;
 				collisionDetected = true;
+				if (k.health <= 0) {
+					theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
+					theZombies.splice(l, 1);
+					Player1.kills += 1;
+				}
 			}
 		}
 	});

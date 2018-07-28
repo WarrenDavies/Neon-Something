@@ -1,11 +1,11 @@
 function spawnZombie() {
-	if (theZombies.length < 50) {
+	if (theZombies.length < 500) {
 	//if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
 		let spawnY;
-
+		console.log(positionChooser);
 		if (positionChooser === 0) {
 // 0 means the zombie will go along the a vertical edge. So there's another random number here which determines whether it will be the left or right edge.
 			if (Math.floor(Math.random() * 2) === 0) {
@@ -30,6 +30,11 @@ function spawnZombie() {
 		//spawnX = Player1.x - 200;
 		//spawnY = Player1.y - 200;
 		let zomID = theZombies.length;
+		if (Player1.kills === 0) {
+			var zomHealth = 1;
+		} else {
+			var zomHealth = Math.floor(Player1.kills / 20) + 1;
+		}
 		theZombies.push({
 			ID: zomID,
 			x: spawnX,
@@ -41,7 +46,7 @@ function spawnZombie() {
 			xTarget: 0,
 			yTarget: 0,
 			speed: 2,
-			health: 150,
+			health: zomHealth,
 			xdirection: 1,
 			ydirection: 0,
 			acceleration: 1,
@@ -442,30 +447,7 @@ function updateZombies() {
 
 function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 	
-	c.beginPath();
-	c.lineWidth = 1;
-
-	c.strokeStyle = "blue";
-
-	c.moveTo(i.x - cameraX, i.y - cameraY);
-	c.lineTo(Player1.x - cameraX, Player1.y - cameraY);
 	
-	c.moveTo(i.x + i.w - cameraX, i.y - cameraY);
-	c.lineTo(Player1.x + Player1.w - cameraX, Player1.y - cameraY);
-
-	c.moveTo(i.x - cameraX, i.y + i.h - cameraY);
-	c.lineTo(Player1.x - cameraX, Player1.y + Player1.h - cameraY);
-
-	c.moveTo(i.x + i.w - cameraX, i.y + i.h - cameraY);
-	c.lineTo(Player1.x + Player1.w - cameraX, Player1.y + Player1.h - cameraY);
-	c.stroke();
-	
-	c.beginPath();
-	c.strokeStyle = "red";
-	c.lineWidth = 14;
-	c.moveTo(theBuildings[k].walls[line].p1x, theBuildings[k].walls[line].p1y);
-	c.lineTo(theBuildings[k].walls[line].p2x, theBuildings[k].walls[line].p2y);
-	c.stroke();
 
 	
 	if (getLineIntersection(
@@ -529,7 +511,7 @@ function drawZombies() {
 	theZombies.forEach(function(i, j) {
 		if (isOnScreen(i)) {
 			
-			c.beginPath();
+		/*	c.beginPath();
 			c.strokeStyle = "blue";
 			c.lineWidth = 1;
 			c.rect(i.x + ((i.speed * i.stepDistance) * i.xVector) - cameraX, i.y + ((i.speed * i.stepDistance) * i.yVector) - cameraY, i.w, i.h);
@@ -540,7 +522,7 @@ function drawZombies() {
 			c.lineWidth = 1;
 			c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
 			c.stroke();
-
+		*/
 
 			c.save();
 			c.translate(i.x + (i.w / 2) - cameraX, i.y + (i.h / 2) - cameraY);
