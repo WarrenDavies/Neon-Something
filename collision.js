@@ -10,47 +10,45 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
     var   t = ( s2_x * (pLine1y1 - pLine2y1) - s2_y * (pLine1x1 - pLine2x1)) / (-s2_x * s1_y + s1_x * s2_y);
 	if (testing === "vehicle") {
 	
-	//console.log(pLine1x1 + ", " + pLine1y1 + ", " + pLine1x2 + ", " + pLine1y2 + ", " + pLine2x1 + ", " + pLine2y1 + ", " + pLine2x2 + ", " + pLine2y2 + ", " + testing)
 	}
 	if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-	//console.log ("iohoih");
 	
 	if (testing === "withinHeadlights"){
 		checkWithinHeadlights.push(
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y)) ]);
-		//console.log("Cgrfghregheh");
+
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	} else if (testing === "leftLineTest"){
 		checkLeftLine.push(
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y)) ]);
-		//console.log("CLL: " + checkLeftLine[0][0]);
+
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	} else if (testing === "topLine"){
 		checkTopLine.push(
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y)) ]);
-		//console.log("CLL: " + checkLeftLine[0][0]);
+	
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	} else if (testing === "connectToTopLine"){
-		console.log("Get to this bit first");
+
 		connectToTopLine.push(
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))]);
-		//console.log("CLL: " + checkLeftLine[0][0]);
+	
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	} else if (testing === "vehicle"){
-		console.log("vehicle coll testlines");
+
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 	
 	} else  {
-		//console.log("building Number Pushed to Line Test: " + buildingNo)
+
 		lineIntersectionsOnScreen.push(
 				[(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y)),
@@ -61,8 +59,7 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
 				 buildingNo: buildingNo
 				}
 				]);
-		//console.log(lineIntersectionsOnScreen[0][0]);
-		//console.log(lineIntersectionsOnScreen[0]);
+
 		return [(pLine1x1 + (t * s1_x)),
 				(pLine1y1 + (t * s1_y))];
 		}   // end if
@@ -85,7 +82,7 @@ function testLines(pLine1x1, pLine1y1, pLine1x2, pLine1y2, pLine2x1, pLine2y1, p
 	
     if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
     {
-	//console.log ("iohoih");
+
 	return true;
         // Collision detected
         //result = new Point(
@@ -163,7 +160,7 @@ var wallCollisionCounter = 0;
 			if (theBuildings[i].walls.hasOwnProperty(line)) {
 				
 				if (line === "left2") {
-					console.log(theBuildings[i].walls[line].h);
+
 				}
 				//  .fillRect(theBuildings[i].walls[line].p1x, 
 				//	theBuildings[i].walls[line].p1y, 
@@ -191,11 +188,11 @@ var wallCollisionCounter = 0;
 	//if (wallCollisionCounter === 1) {
 		if (wallCollision.left || wallCollision.right) {
 			//Player1.xVector = 0;
-			//console.log("collision horizontal");
+
 		}
 		if (wallCollision.top || wallCollision.bottom) {
 			//Player1.yVector = 0;
-			//console.log("collision vertical");
+
 		}
 	
 	//} 
@@ -219,9 +216,6 @@ function checkVehicleCollision() {
 					buildingsOnScreen.forEach( function(k, l) {
 						for (var wallLine in theBuildings[k].walls) {
 							if (vehicleLine === "frontLine" && wallLine === "right2" && j === 1 && k === 1) {
-								console.log ("vehicleLine.p1x-Player1.x + cameraX = " + (vehiclesOnScreen[j].lines[vehicleLine].p1x - Player1.x + cameraX));
-								
-								console.log ("theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX = " + (theBuildings[k].walls[wallLine].p1x-Player1.x + cameraX));
 								
 								}
 								c.stroke();
@@ -249,17 +243,17 @@ function checkVehicleCollision() {
 									
 									i.speed = 0;
 									
-									console.log("vehicle-wall collision -" + vehicleLine);
+
 									i.collision = true;
 								} // check collision in these two walls
 							} // if this wall line exists
 						} // for loop cycling through wall lines
 					}); // buildings on screen for each
-					console.log ("Looping vehicles");
+
 					vehiclesOnScreen.forEach ( function(k, l) {
-						console.log ("Looping vehicles");
+
 						if (l !== j) {
-						console.log ("not testing coll with itself");
+
 							for (var vehicleLine in k.lines) {
 								if (k.lines.hasOwnProperty(vehicleLine)) {
 									if (testLines(
@@ -271,7 +265,7 @@ function checkVehicleCollision() {
 										k.lines[vehicleLine].p1y-Player1.y + cameraY, 
 										k.lines[vehicleLine].p2x-Player1.x + cameraX, 
 										k.lines[vehicleLine].p2y-Player1.y + cameraY,)) {
-											console.log ("VEHICLE COLLISION");
+
 										}
 								} // second if this vehicle line exists
 							} // second for loop cycling through vehicle lines
@@ -326,7 +320,7 @@ function checkNPCCollisionWithBuilding(i) {
 				theBuildings[l].walls[line].w, 
 				theBuildings[l].walls[line].h )) {
 					i.collisionCourse = true;
-					console.log(i.ID + " hits " + l + " " + line);
+
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
@@ -406,7 +400,7 @@ function checkNPCCollisionWithBuilding(i) {
 				theBuildings[l].walls[line].w, 
 				theBuildings[l].walls[line].h )) {
 					i.collisionCourse = true;
-					console.log(i.ID + " hits " + l + " " + line);
+
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
@@ -415,7 +409,7 @@ function checkNPCCollisionWithBuilding(i) {
 						if (i.collidesWithWall === "left" ||
 						i.collidesWithWall === "left2") {
 							
-								console.log("Here");
+
 								if (i.yVector >= 0) {
 									xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
 									yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 60;
@@ -434,7 +428,7 @@ function checkNPCCollisionWithBuilding(i) {
 								theBuildings[l].walls[line].p1y, 
 								theBuildings[l].walls[line].w, 
 								theBuildings[l].walls[line].h )) {
-									console.log ("unsticking " + i.ID + " from wall");
+
 									
 								//	i.x = i.xPrevious;
 								//	i.y = i.yPrevious;
@@ -498,14 +492,12 @@ function checkNPCCollisionWithBuilding(i) {
 				i.collisionCourse = false;
 			}
 		} else {
-			console.log("pushing waypoint");		
 			i.wayPoints.push({
 				x: xPushTarget,
 				y: yPushTarget,
 				type: "Avoid Building",
 			});
 			i.collisionCourse = false;
-			console.log(i.wayPoints.length);
 		}
 	}
 	});
@@ -531,8 +523,6 @@ function checkBulletWallCollision(i, j) {
 						theBuildings[k].walls[line].p2y ,
 						"bullet/wall"
 						)) {
-						console.log("bullet / wall collision");
-						console.log(line);	
 						collisionDetected = true;
 						return true;
 				}

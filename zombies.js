@@ -99,167 +99,178 @@ function updateZombies() {
 // Check if the zombie is walking and if so, set collision course to false, detect collision with Player, buildings, and other obstacles. 	
 		if (i.walking) {
 			i.collisionCourse = false;
-			
+			i.canWalkX = true;
+			i.canWalkY = true;
+
 // check for player collision
 			if (collidesSpecify(i.x + ((i.speed) * i.xVector), i.y + ((i.speed) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
 				i.collisionCourse = true;
 				i.collidesWithType = "Player";
 				i.collidesWithID = -1;
 				Player1.health -= 1;
+				i.canWalkX = false;
+				i.canWalkY = false;
 			} 
-
+			
+			
 // check collision with buildings
-			checkNPCCollisionWithBuilding(i)
-			if (i.collidesWithType === "Building") {
-				i.x -= (i.speed * i.xVector);
-			}			
-			if (i.wayPoints.length > 0) {
-				setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
+			if (i.collisionCourse === false) {
+				if (checkNPCCollisionWithBuilding(i)) {
+					i.x -= (i.speed * i.xVector);
+					if (i.wayPoints.length > 0) {
+						setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
+					}
+				}
 			}
-
 // check collision with waypoints
-			if (i.wayPoints.length > 0) {
+			if (i.collisionCourse === false) {
+				if (i.wayPoints.length > 0) {
 // if zombie can see the player, ignore the waypoint and head right for him
-				i.canSeePlayer = true
-				let alreadyFoundPlayer = false;
-				buildingsOnScreen.forEach(function(k, l) {
-					if (!alreadyFoundPlayer) {
-						for (var line in theBuildings[k].walls) {
-							if (theBuildings[k].walls.hasOwnProperty(line)) {
-								if (checkIfZombieCanSeePlayer(i, Player1, k, line)) {
-									i.canSeePlayer = false;
-									alreadyFoundPlayer = true;
+					i.canSeePlayer = true;
+					var alreadyFoundPlayer = false;
+					buildingsOnScreen.forEach(function(k, l) {
+						if (!alreadyFoundPlayer) {
+							for (var line in theBuildings[k].walls) {
+								if (theBuildings[k].walls.hasOwnProperty(line)) {
+									if (checkIfZombieCanSeePlayer(i, Player1, k, line)) {
+										// do something if the zombie CAN see the player
+									} else {
+										i.canSeePlayer = false;
+										alreadyFoundPlayer = true;
+									}
+								}	
+							}
+						}
+					});
+					
+					if (i.canSeePlayer === true) {
+						i.wayPoints.splice(0);
+						i.byOrderOf = -1
+						i.collisionCourse = false;
+						setNPCdirection(i, Player1);
+					} else {				
+						if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
+							i.wayPointsHistory.push(i.wayPoints[i.wayPoints.length - 1]);
+							i.wayPointGrace = 200;
+							i.collisionCourse = false;
+							i.collidesWithType = null;
+							i.collidesWithID = null;
+							i.byOrderOf = -1;
+							i.wayPoints.splice(i.wayPoints.length - 1);
+							setNPCdirection(i, Player1);			
+						}
+					}
+				}
+			}
+			
+// check collision with other zombies to prevent them standing on top of each other
+			// x axis collisions
+			if (i.collisionCourse === false) {
+				
+				i.zombieBlock = false;
+				theZombies.forEach(function(k, l) {
+					if (j !== l) {
+						if (collidesSpecify(
+							i.x + ((i.speed * i.stepDistance) * i.xVector), 
+							i.y, 
+							i.w, 
+							i.h, 
+							k.x, 
+							k.y, 
+							k.w, 
+							k.h
+						)) {
+							i.canWalkX = false;
+							i.zombieBlock = true;
+							i.collidesWithID = l;
+							if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+								let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
+								let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
+								let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
+								
+								let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
+								let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
+								let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
+								
+								if (distanceHolder1 < distanceHolder2) {
+									k.wayPoints.splice(0);
+									k.wayPoints.push(i.wayPoints[i.wayPoints.length - 1]);
+									setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+								} else {
+									i.wayPoints.splice(0);
+									i.wayPoints.push(k.wayPoints[k.wayPoints.length - 1]);
+									setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 								}
-							}	
+							}
+							if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
+								if (k.wayPointsGrace === 0) {
+									k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+									setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+								}
+							}
+							if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
+								if (i.wayPointsGrace === 0) {
+									i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+									setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);	
+								}
+							}
 						}
 					}
 				});
 				
-				if (i.canSeePlayer === true) {
-					i.wayPoints.splice(0);
-					i.byOrderOf = -1
-					i.collisionCourse = false;
-					setNPCdirection(i, Player1);
-				} else {				
-					if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
-						i.wayPointsHistory.push(i.wayPoints[i.wayPoints.length - 1]);
-						i.wayPointGrace = 200;
-						i.collisionCourse = false;
-						i.collidesWithType = null;
-						i.collidesWithID = null;
-						i.byOrderOf = -1;
-						i.wayPoints.splice(i.wayPoints.length - 1);
-						setNPCdirection(i, Player1);			
+				theZombies.forEach(function(k, l) {
+					if (j !== l) {
+						if (collidesSpecify(
+							i.x, 
+							i.y + ((i.speed * i.stepDistance) * i.yVector), 
+							i.w, 
+							i.h, 
+							k.x, 
+							k.y, 
+							k.w, 
+							k.h
+						)) {
+							i.canWalkY = false;
+							i.zombieBlock = true;
+							i.collidesWithID = l;
+							if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
+								let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
+								let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
+								let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
+								
+								let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
+								let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
+								let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
+								
+								if (distanceHolder1 < distanceHolder2) {
+									k.wayPoints.splice(0);
+									k.wayPoints[0] = i.wayPoints[i.wayPoints.length - 1];
+									setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+								} else {
+									i.wayPoints.splice(0);
+									i.wayPoints[0] = k.wayPoints[k.wayPoints.length - 1];
+									setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
+								}
+							}
+							if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
+								if (k.wayPointsGrace === 0) {
+									k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+									setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+								}
+							}
+							if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
+								if (i.wayPointsGrace === 0) {
+									i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+									setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
+								}
+							}
+						}
 					}
+				});
+				if (!(i.canWalkX) && !(i.canWalkY) && i.collidesWithType === "zombie") {
+
 				}
 			}
-
-			
-// check collision with other zombies to prevent them standing on top of each other
-			// x axis collisions
-			i.canWalkX = true;
-			i.zombieBlock = false;
-			theZombies.forEach(function(k, l) {
-				if (j !== l) {
-					if (collidesSpecify(
-						i.x + ((i.speed * i.stepDistance) * i.xVector), 
-						i.y, 
-						i.w, 
-						i.h, 
-						k.x, 
-						k.y, 
-						k.w, 
-						k.h
-					)) {
-						i.canWalkX = false;
-						i.zombieBlock = true;
-						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
-							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
-							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
-							let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
-							
-							let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
-							let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
-							let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
-							
-							if (distanceHolder1 < distanceHolder2) {
-								k.wayPoints.splice(0);
-								k.wayPoints.push(i.wayPoints[i.wayPoints.length - 1]);
-								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
-							} else {
-								i.wayPoints.splice(0);
-								i.wayPoints.push(k.wayPoints[k.wayPoints.length - 1]);
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
-							}
-						}
-						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
-							if (k.wayPointsGrace === 0) {
-								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
-								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
-							}
-						}
-						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
-							if (i.wayPointsGrace === 0) {
-								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);	
-							}
-						}
-					}
-				}
-			});
-			i.canWalkY = true;
-			theZombies.forEach(function(k, l) {
-				if (j !== l) {
-					if (collidesSpecify(
-						i.x, 
-						i.y + ((i.speed * i.stepDistance) * i.yVector), 
-						i.w, 
-						i.h, 
-						k.x, 
-						k.y, 
-						k.w, 
-						k.h
-					)) {
-						i.canWalkY = false;
-						i.zombieBlock = true;
-						if (i.wayPoints.length > 0 && k.wayPoints.length > 0) {
-							let xDifference1 = (Player1.x - i.wayPoints[i.wayPoints.length - 1].x) * (Player1.x - i.wayPoints[i.wayPoints.length - 1].x);
-							let yDifference1 = (Player1.y - i.wayPoints[i.wayPoints.length - 1].y) * (Player1.y - i.wayPoints[i.wayPoints.length - 1].y);
-							let distanceHolder1 = Math.sqrt(xDifference1 + yDifference1);
-							
-							let xDifference2 = (Player1.x - k.wayPoints[k.wayPoints.length - 1].x) * (Player1.x - k.wayPoints[k.wayPoints.length - 1].x);
-							let yDifference2 = (Player1.y - k.wayPoints[k.wayPoints.length - 1].y) * (Player1.y - k.wayPoints[k.wayPoints.length - 1].y);
-							let distanceHolder2 = Math.sqrt(xDifference2 + yDifference2);
-							
-							if (distanceHolder1 < distanceHolder2) {
-								k.wayPoints.splice(0);
-								k.wayPoints[0] = i.wayPoints[i.wayPoints.length - 1];
-								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
-							} else {
-								i.wayPoints.splice(0);
-								i.wayPoints[0] = k.wayPoints[k.wayPoints.length - 1];
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
-							}
-						}
-						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
-							if (k.wayPointsGrace === 0) {
-								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
-								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
-							}
-						}
-						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
-							if (i.wayPointsGrace === 0) {
-								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
-							}
-						}
-					}
-				}
-			});
-			if (!(i.canWalkX) && !(i.canWalkY) && i.collidesWithType === "zombie") {
-
-			}
-
 		} // if walking
 		
 // move the zombie if needed
@@ -311,8 +322,7 @@ function updateZombies() {
 					k.h
 				)) {
 					i.lineStuckOn = line;
-					console.log ("zombie " + j + "hits wall " + wall + "on building " + k)
-					console.log("deteching stuck zombie");
+
 					if (line === left || line === left2) {
 						i.x -= 1;
 					}
@@ -366,9 +376,9 @@ function updateZombies() {
 						x: k.x + (k.w / 2),
 						y: k.y + (k.h / 2),
 					};
-					console.log(iCenter.x + " " + kCenter.y);
+
 					let target = getXandYDirection(iCenter.x, iCenter.y, kCenter.x, kCenter.y);
-					console.log(target);
+
 					let iCanMove = true;
 					buildingsOnScreen.forEach(function(m, n) {
 						for (var line in theBuildings[m].walls) {
@@ -431,60 +441,88 @@ function updateZombies() {
 } // updateZombies
 
 function checkIfZombieCanSeePlayer(i, Player1, k, line) {
+	
+	c.beginPath();
+	c.lineWidth = 1;
+
+	c.strokeStyle = "blue";
+
+	c.moveTo(i.x - cameraX, i.y - cameraY);
+	c.lineTo(Player1.x - cameraX, Player1.y - cameraY);
+	
+	c.moveTo(i.x + i.w - cameraX, i.y - cameraY);
+	c.lineTo(Player1.x + Player1.w - cameraX, Player1.y - cameraY);
+
+	c.moveTo(i.x - cameraX, i.y + i.h - cameraY);
+	c.lineTo(Player1.x - cameraX, Player1.y + Player1.h - cameraY);
+
+	c.moveTo(i.x + i.w - cameraX, i.y + i.h - cameraY);
+	c.lineTo(Player1.x + Player1.w - cameraX, Player1.y + Player1.h - cameraY);
+	c.stroke();
+	
+	c.beginPath();
+	c.strokeStyle = "red";
+	c.lineWidth = 14;
+	c.moveTo(theBuildings[k].walls[line].p1x, theBuildings[k].walls[line].p1y);
+	c.lineTo(theBuildings[k].walls[line].p2x, theBuildings[k].walls[line].p2y);
+	c.stroke();
+
+	
 	if (getLineIntersection(
-		i.x, 
-		i.y, 
-		Player1.x, 
-		Player1.y,
-		theBuildings[k].walls[line].p1x, 
-		theBuildings[k].walls[line].p1y,
-		theBuildings[k].walls[line].p2x, 
-		theBuildings[k].walls[line].p2y,
-		)
-		
-		||
+	i.x, 
+	i.y, 
+	Player1.x, 
+	Player1.y,
+	theBuildings[k].walls[line].p1x, 
+	theBuildings[k].walls[line].p1y,
+	theBuildings[k].walls[line].p2x, 
+	theBuildings[k].walls[line].p2y,
+	)
+	
+	
+	||
 
-		getLineIntersection(
-		i.x + i.w, 
-		i.y, 
-		Player1.x + Player1.w, 
-		Player1.y,
-		theBuildings[k].walls[line].p1x, 
-		theBuildings[k].walls[line].p1y,
-		theBuildings[k].walls[line].p2x, 
-		theBuildings[k].walls[line].p2y,
-		)
+	getLineIntersection(
+	i.x + i.w, 
+	i.y, 
+	Player1.x + Player1.w, 
+	Player1.y,
+	theBuildings[k].walls[line].p1x, 
+	theBuildings[k].walls[line].p1y,
+	theBuildings[k].walls[line].p2x, 
+	theBuildings[k].walls[line].p2y,
+	)
 
-		||
+	||
 
-		getLineIntersection(
-		i.x, 
-		i.y + i.h, 
-		Player1.x, 
-		Player1.y + Player1.h,
-		theBuildings[k].walls[line].p1x, 
-		theBuildings[k].walls[line].p1y,
-		theBuildings[k].walls[line].p2x, 
-		theBuildings[k].walls[line].p2y,
-		)
+	getLineIntersection(
+	i.x, 
+	i.y + i.h, 
+	Player1.x, 
+	Player1.y + Player1.h,
+	theBuildings[k].walls[line].p1x, 
+	theBuildings[k].walls[line].p1y,
+	theBuildings[k].walls[line].p2x, 
+	theBuildings[k].walls[line].p2y,
+	)
 
-		||
+	||
 
-		getLineIntersection(
-		i.x + i.w, 
-		i.y + i.h, 
-		Player1.x + Player1.w, 
-		Player1.y + Player1.h,
-		theBuildings[k].walls[line].p1x, 
-		theBuildings[k].walls[line].p1y,
-		theBuildings[k].walls[line].p2x, 
-		theBuildings[k].walls[line].p2y,
-		)
-		){
-			return false;
-		} else {
-			return true;
-		}
+	getLineIntersection(
+	i.x + i.w, 
+	i.y + i.h, 
+	Player1.x + Player1.w, 
+	Player1.y + Player1.h,
+	theBuildings[k].walls[line].p1x, 
+	theBuildings[k].walls[line].p1y,
+	theBuildings[k].walls[line].p2x, 
+	theBuildings[k].walls[line].p2y,
+	)
+	){
+		return false;
+	} else {
+		return true;
+	}
 }
 
 function drawZombies() {
