@@ -233,6 +233,9 @@ function debugHUD(){
 
 			c.fillText("yPrevious: " +
 			debugTarget.yPrevious, 100, 500);
+			
+			c.fillText("stoodStilTimer: " +
+			debugTarget.stoodStillTimer, 100, 525);
 
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );

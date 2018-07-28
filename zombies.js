@@ -106,11 +106,11 @@ function updateZombies() {
 				i.collidesWithType = "Player";
 				i.collidesWithID = -1;
 				Player1.health -= 1;
-			}
+			} 
 
 // check collision with buildings
 			checkNPCCollisionWithBuilding(i)
-			if (i.collidesWithType === "Avoid Building") {
+			if (i.collidesWithType === "Building") {
 				i.x -= (i.speed * i.xVector);
 			}			
 			if (i.wayPoints.length > 0) {
@@ -184,11 +184,11 @@ function updateZombies() {
 							
 							if (distanceHolder1 < distanceHolder2) {
 								k.wayPoints.splice(0);
-								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+								k.wayPoints.push(i.wayPoints[i.wayPoints.length - 1]);
 								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
 							} else {
 								i.wayPoints.splice(0);
-								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								i.wayPoints.push(k.wayPoints[k.wayPoints.length - 1]);
 								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 							}
 						}
@@ -240,7 +240,7 @@ function updateZombies() {
 								i.wayPoints[0] = k.wayPoints[k.wayPoints.length - 1];
 								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 							}
-						}sd
+						}
 						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
 							if (k.wayPointsGrace === 0) {
 								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
@@ -264,24 +264,21 @@ function updateZombies() {
 		
 // move the zombie if needed
 		
-		
+			
 		if (i.collisionCourse === false) {
 			if (i.collidesWithType != null) {
 				i.collidesWithType = null;
 				i.collidesWithID = null;
 			}
 			if (i.canWalkX) {
-				i.xPrevious = i.x;
 				i.x += i.speed * i.xVector; 
-			}
-			if (i.canWalkY) {
-				i.yPrevious = i.y;
-				i.y += i.speed * i.yVector;
-			}
-			if ((i.canWalkX || i.canWalkY) && i.stoodStillTimer > 0) {
 				i.stoodStillTimer = 0;
 			}
-
+			if (i.canWalkY) {
+				i.y += i.speed * i.yVector;
+				i.stoodStillTimer = 0;
+			}
+			
 		} else {
 			
 
@@ -427,6 +424,9 @@ function updateZombies() {
 		if (i.wayPointGrace > 0) {
 			i.wayPointGrace--;
 		}
+		i.xPrevious = i.x;
+		i.yPrevious = i.y;
+
 	}); //zombies forEach
 } // updateZombies
 

@@ -72,8 +72,8 @@ if (Player1.mot === 0) {
 			//console.log("hit");
 			
 			} else {
-			i.x += Player1.xVector * (Player1.speed);
-			i.y += Player1.yVector * (Player1.speed);
+			//i.x += Player1.xVector * (Player1.speed);
+			//i.y += Player1.yVector * (Player1.speed);
 			}
 			
 			
