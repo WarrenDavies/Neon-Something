@@ -64,6 +64,8 @@ function spawnZombie() {
 			canWalkX: true,
 			canWalkY: true,
 			wayPoints: [],
+			wayPointsHistory: [],
+			wayPointGrace: 0,
 			collidesWithType: "No Collision",
 			collidesWithWall: "No Collision",
 			zombieBlock: false,
@@ -140,6 +142,8 @@ function updateZombies() {
 					setNPCdirection(i, Player1);
 				} else {				
 					if (collidesSpecify(i.x, i.y, i.w, i.h, i.wayPoints[i.wayPoints.length - 1].x - 20, i.wayPoints[i.wayPoints.length - 1].y - 20, 40, 40)) {
+						i.wayPointsHistory.push(i.wayPoints[i.wayPoints.length - 1]);
+						i.wayPointGrace = 200;
 						i.collisionCourse = false;
 						i.collidesWithType = null;
 						i.collidesWithID = null;
@@ -189,12 +193,16 @@ function updateZombies() {
 							}
 						}
 						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
-							k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+							if (k.wayPointsGrace === 0) {
+								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
 								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+							}
 						}
 						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
-							i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
+							if (i.wayPointsGrace === 0) {
+								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);	
+							}
 						}
 					}
 				}
@@ -225,21 +233,25 @@ function updateZombies() {
 							
 							if (distanceHolder1 < distanceHolder2) {
 								k.wayPoints.splice(0);
-								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+								k.wayPoints[0] = i.wayPoints[i.wayPoints.length - 1];
 								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
 							} else {
 								i.wayPoints.splice(0);
+								i.wayPoints[0] = k.wayPoints[k.wayPoints.length - 1];
+								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
+							}
+						}sd
+						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
+							if (k.wayPointsGrace === 0) {
+								k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
+								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
+							}
+						}
+						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
+							if (i.wayPointsGrace === 0) {
 								i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
 								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 							}
-						}
-						if (i.wayPoints.length > 0 && k.wayPoints.length === 0) {
-							k.wayPoints[k.wayPoints.length - 1] = i.wayPoints[i.wayPoints.length - 1];
-								setNPCdirection(k, i.wayPoints[i.wayPoints.length - 1]);
-						}
-						if (k.wayPoints.length > 0 && i.wayPoints.length === 0) {
-							i.wayPoints[i.wayPoints.length - 1] = k.wayPoints[k.wayPoints.length - 1];
-								setNPCdirection(i, k.wayPoints[k.wayPoints.length - 1]);
 						}
 					}
 				}
@@ -350,12 +362,12 @@ function updateZombies() {
 					k.h
 				)) {
 					iCenter = {
-						x: i.x + i.w / 2,
-						y: i.y + i.h / 2,
+						x: i.x + (i.w / 2),
+						y: i.y + (i.h / 2),
 					};
 					kCenter = {
-						x: k.x + k.w / 2,
-						y: k.y + k.h / 2,
+						x: k.x + (k.w / 2),
+						y: k.y + (k.h / 2),
 					};
 					console.log(iCenter.x + " " + kCenter.y);
 					let target = getXandYDirection(iCenter.x, iCenter.y, kCenter.x, kCenter.y);
@@ -412,7 +424,9 @@ function updateZombies() {
 			}
 		});
 		//}
-
+		if (i.wayPointGrace > 0) {
+			i.wayPointGrace--;
+		}
 	}); //zombies forEach
 } // updateZombies
 

@@ -254,7 +254,7 @@ var theZombies = [];
 
 // Player coords and initial location
  function Player () {
-	 this.x = 400; 
+	 this.x = 1400; 
 	 this.y = 600;
 	 this.w = 20;
 	 this.h = 20;
