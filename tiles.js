@@ -688,9 +688,9 @@ function updateTime() {
 	c.fillStyle = "rgba(0, 0, 0," + light + ")";
 	c.beginPath();
 	c.moveTo(0, 0);
-	c.lineTo(800, 0);
-	c.lineTo(800, 600);
-	c.lineTo(0, 600);
+	c.lineTo(cameraW, 0);
+	c.lineTo(cameraW, cameraH);
+	c.lineTo(0, cameraH);
 	c.lineTo(0, 0);
 	//c.fill();
 }
@@ -750,8 +750,8 @@ function updateCamera() {
 	if ( !keys[37] && !keys[39] && !keys[38] && !keys[40]  ) {
 		if (Player1.mot === 0) {
 // if not in a vehicle center the camera on the player
-			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
-			cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
+			cameraX = (Player1.x + Player1.w / 2) - (cameraW / 2);
+			cameraY = (Player1.y + Player1.h / 2) - (cameraH / 2);
 		} else {
 // if we are in a vehicle, center the camera on the vehice. However, the third part of this expression adds on the speed of the vehicle to the camera position -- otherwise the vehicle image moves forward on the screen a little, in line with its acceleration. 
 			cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2) - (((vehiclesOnScreen[Player1.mot].xtarget * vehiclesOnScreen[Player1.mot].speed) - vehiclesOnScreen[Player1.mot].xTurnTarget));
@@ -761,11 +761,20 @@ function updateCamera() {
 }
 
 function drawMap() {
-var tileCount = 0
+	let canvasElem = document.getElementById('canvas');
+	canvasElem.width = window.innerWidth;
+	canvasElem.height = window.innerHeight;
+	cameraW = canvasElem.width;
+	cameraH = canvasElem.height;
+	let screenWidthInTiles = Math.ceil(cameraW / tileSize);
+	let screenHeightInTiles = Math.ceil(cameraH / tileSize);
+	//console.log (Math.floor(screenWidthInTiles / 2));
+	var tileCount = 0
 	c.beginPath();
-	for (j = onYTile - 7; j < onYTile + 8; j++ ) {
-		for (l = onXTile - 8; l < onXTile + 10; l++) {
+	for (j = onYTile - Math.ceil(screenHeightInTiles / 2) - 1; j < onYTile + Math.ceil(screenHeightInTiles / 2) + 1; j++ ) {
+		for (l = onXTile - Math.ceil(screenWidthInTiles / 2) - 1; l < onXTile + Math.ceil(screenWidthInTiles / 2) + 2; l++) {
 			if (j >= 0  && l >= 0 && j < map.length && l < map[j].length) {
+
 				if (map[j][l].backgroundImage) {
 				// spritesheet version
 				//				c.drawImage( map[j][l].backgroundImage, map[j][l].sourceX, map[j][l].sourceY, map[j][l].w, map[j][l].h, l * 50 - cameraX, j * 50 - cameraY, 50, 50 );
@@ -773,8 +782,8 @@ var tileCount = 0
 				// with the -1 offsets for tesselation
 				
 				c.save();
-				c.translate(l * 50 - cameraX - 1, j * 50 - cameraY - 1)
-				c.drawImage( map[j][l].backgroundImage, 0, 0, 51, 51);
+				c.translate(l * tileSize - cameraX - 1, j * tileSize - cameraY - 1)
+				c.drawImage( map[j][l].backgroundImage, 0, 0, tileSize + 1, tileSize + 1);
 				
 				// the below writes the building no on the floor of the building
 				//if (map[j][l].building) {
@@ -797,7 +806,7 @@ var tileCount = 0
 					c.beginPath();
 					c.fillStyle = map[j][l].color;
 					c.strokeStyle = map[j][l].color;
-					c.rect(l * 50 - cameraX, j * 50 - cameraY, 50, 50);	
+					c.rect(l * tileSize - cameraX, j * tileSize - cameraY, tileSize, tileSize);	
 					c.fill();
 					c.stroke();
 				 }
@@ -826,10 +835,10 @@ function mouseOnInteractiveElement() {
 
 function addBuildingsToTiles() {
 theBuildings.forEach( function(i, j) {
-	var upperLeftX = Math.floor(i.upperLeftX / 50);
-	var upperLeftY = Math.floor(i.upperLeftY / 50);
-	var lowerRightX = Math.floor(i.lowerRightX / 50);
-	var lowerRightY = Math.floor(i.lowerRightY / 50);
+	var upperLeftX = Math.floor(i.upperLeftX / tileSize);
+	var upperLeftY = Math.floor(i.upperLeftY / tileSize);
+	var lowerRightX = Math.floor(i.lowerRightX / tileSize);
+	var lowerRightY = Math.floor(i.lowerRightY / tileSize);
 	i.centerX = i.lowerRightX - i.upperLeftX;
 	i.centerY = i.lowerRightY - i.upperLeftY;
 	for (k = upperLeftY; k <= lowerRightY; k++) {

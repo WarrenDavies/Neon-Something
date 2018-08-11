@@ -16,8 +16,12 @@ var dismountTimer = 0;
 var mountTimer = 0;
 var cameraX = 0;
 var cameraY = 0;
-var cameraW = 800;
-var cameraH = 600;
+var cameraW = window.innerWidth;
+var cameraH = window.innerHeight;
+var tileSize = 50;
+console.log(cameraW);
+console.log(cameraH);
+
 var onXTile = 0;
 var onYTile = 0;
 var upLeftRendY = 0;

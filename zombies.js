@@ -303,7 +303,7 @@ function updateZombies() {
 					i.inBuilding = map[i.onTile.y][i.onTile.x].building;
 				}
 				catch (e) {
-					console.log(e);
+					console.log("zombie draw error");
 					console.log("i.x: " + i.x + " i.y: " + i.y );
 					console.log(i.onTile.x + " " + i.onTile.y);
 				}

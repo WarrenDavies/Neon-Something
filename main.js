@@ -7,6 +7,8 @@ console.log("start");
 // to do
 // add the same  from wall function to civs nand zoms that works on vehicles.
 
+// draw closest buildings LAST
+
 //zombie movement updates:
 
 // stop him colliding with two walls
@@ -26,8 +28,6 @@ console.log("start");
 // make functions smaller
 
 // Make variables more local
-
-// Split game into multiple files
 
 // vehicle moves forward on the screen when accelerating
 // vehicles maintain their speed when player leaves them
@@ -83,7 +83,7 @@ var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAni
 // set the initial canvas background before anything is drawn. If you see the pink background something is amiss and it's no small error.
  c.beginPath();
  c.fillStyle = "pink";
- c.rect(0,0,800,600);
+ c.rect(0,0,cameraW,cameraH);
  c.fill();
  c.closePath();
 
