@@ -288,8 +288,10 @@ var theZombies = [];
 	 this.activeWeapon = 0;
 	 this.weaponsPossessed = [true, true, true];
 	 this.kills = 0;
+	 this.onTile = {x: 0, y: 0};
  } 
- var Player1 = new Player();
+var Player1 = new Player();
+Player1.onTile = returnTile(Player1);
 var rightDoorPosition = 125;
 var leftDoorPosition = 125;
 

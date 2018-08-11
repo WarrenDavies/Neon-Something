@@ -176,7 +176,7 @@ function mainDraw(canvas, message) {
 	} // check if player is in car with headlights on
 
 	if (debug) {
-		//debugHUD();
+		debugHUD();
 	}
 
 	updateCamera();

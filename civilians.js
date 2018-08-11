@@ -42,6 +42,7 @@ function loadCivilian() {
 			stuck: false,
 			collidesWithID: -1,
 			currentStatus: "spawned",	
+			inBuilding: false,
 		 });
 		theCivilians[j].x = theWayPoints[j].x;
 		theCivilians[j].y = theWayPoints[j].y;

@@ -23,7 +23,7 @@ if (Player1.mot === 0) {
 		
 		Player1.x += Player1.xVector * Player1.speed;
 		Player1.y += Player1.yVector * Player1.speed;
-		
+		Player1.onTile = returnTile(Player1);
 		//c.fillRect (Player1.xVector * Player1.speed + Player1.x - cameraX - (Player1.w / 2) , Player1.yVector * Player1.speed
 		// + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 			
@@ -34,7 +34,7 @@ if (Player1.mot === 0) {
 			Player1.y = vehiclesOnScreen[Player1.mot].y;
 			Player1.angle = vehiclesOnScreen[Player1.mot].angle;
 			Player1.speed = vehiclesOnScreen[Player1.mot].speed;
-			
+			Player1.onTile = returnTile(Player1);
 			//cameraX = (Player1.x - Player1.w / 2) - (cameraW / 2);
 			//cameraY = (Player1.y - Player1.h / 2) - (cameraH / 2);
 			
@@ -82,14 +82,21 @@ if (Player1.mot === 0) {
 	});
 	
 	
-	Player1.inBuilding = false;
-	buildingsOnScreen.forEach( function(i, j){
-	//delete the below and uncomment the above when the easy building maker is done
-	//theBuildings.forEach( function(j, i){
-		if (Player1.x > theBuildings[i].upperLeftX && Player1.x < theBuildings[i].lowerRightX && Player1.y > theBuildings[i].upperLeftY && Player1.y < theBuildings[i].lowerRightY) {
-			Player1.inBuilding = i;
-		}
-	});
+	// Player1.inBuilding = false;
+	// buildingsOnScreen.forEach( function(i, j) {
+	// //delete the below and uncomment the above when the easy building maker is done
+	// //theBuildings.forEach( function(j, i){
+	// 	if (Player1.x > theBuildings[i].upperLeftX && Player1.x < theBuildings[i].lowerRightX && Player1.y > theBuildings[i].upperLeftY && Player1.y < theBuildings[i].lowerRightY) {
+	// 		Player1.inBuilding = i;
+	// 	}
+	// });
+	if (Player1.onTile.y >= 0 && Player1.onTile.x >= 0) {
+		Player1.inBuilding = map[Player1.onTile.y][Player1.onTile.x].building;
+	}
+		// if (map[Player1.onTile.y][Player1.onTile.x].building) {
+	// }
+
+
 } 
  
  

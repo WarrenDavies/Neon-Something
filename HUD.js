@@ -236,6 +236,13 @@ function debugHUD(){
 			
 			c.fillText("stoodStilTimer: " +
 			debugTarget.stoodStillTimer, 100, 525);
+			
+			c.fillText("onTile.x: " +
+			debugTarget.onTile.x, 100, 550);
+			c.fillText("onTile.y: " +
+			debugTarget.onTile.y, 100, 575);
+			c.fillText("inBuilding: " +
+			debugTarget.inBuilding, 100, 600);
 
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );

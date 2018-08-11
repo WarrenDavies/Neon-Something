@@ -732,14 +732,17 @@ function clearCanvas() {
 }
 
 function whichTiles() {
-	//onXTile = Math.floor(Player1.x / 50);
-	//onYTile = Math.floor(Player1.y / 50);
-	//console.log("onXTime = " + onXTile);
-
 	onXTile = Math.floor((cameraX + (cameraW / 2)) / 50);
 	onYTile = Math.floor((cameraY + (cameraH / 2)) / 50);
-	
-	
+}
+
+function returnTile(i) {
+	let onXTile = Math.floor((i.x + (i.w / 2)) / 50);
+	let onYTile = Math.floor((i.y + (i.h / 2)) / 50);
+	return {
+		x: onXTile,
+		y: onYTile,
+	}
 }
 
 function updateCamera() {

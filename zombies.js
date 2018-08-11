@@ -1,28 +1,27 @@
 function spawnZombie() {
-	if (theZombies.length < 1s00) {
+	if (theZombies.length < 100) {
 	//if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
 		let spawnY;
-		console.log(positionChooser);
 		if (positionChooser === 0) {
 // 0 means the zombie will go along the a vertical edge. So there's another random number here which determines whether it will be the left or right edge.
 			if (Math.floor(Math.random() * 2) === 0) {
 // an x value of 10 means the zombie will spawn 10 pixels from the left edge of the map
-				spawnX = 10;
+				spawnX = 30;
 			} else {
 //otherwise, we spaen it 10 pixels to the left of the right edge of the map, as determined by the length of row [0] in the map array (any would do, they are all the same size because it's just a simple grid.)
-			spawnX = (map[0].length * 50) - 10
+			spawnX = (map[0].length * 50) - 30
 			}
 // then we just choose a random number for the Y coordinate based on the length of the map * 50, which is the width of the tiles
 			spawnY = Math.floor(Math.random() * (map.length * 50))
 		} else {
 // 1 means the zombie will spawn along a horizontal edge. This is exactly the same principle as above
 			if (Math.floor(Math.random() * 2) === 0) {
-				spawnY = 10;
+				spawnY = 30;
 			} else {
-				spawnY = (map.length * 50) - 10
+				spawnY = (map.length * 50) - 30
 			}
 			spawnX = Math.floor(Math.random() * (map[0].length * 50))
 		}
@@ -88,7 +87,10 @@ function spawnZombie() {
 			redirectedCount: 0,
 			lineStuckOn: "",
 			canMOve: "",
+			onTile: {x: 0, y: 0},
+			inBuilding: false,
 		});
+		theZombies[theZombies.length -1].onTile = returnTile(theZombies[theZombies.length -1]);
 	}
 }
 
@@ -122,6 +124,7 @@ function updateZombies() {
 			if (i.collisionCourse === false) {
 				if (checkNPCCollisionWithBuilding(i)) {
 					i.x -= (i.speed * i.xVector);
+					i.y -= (i.speed * i.yVector);
 					if (i.wayPoints.length > 0) {
 						setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
 					}
@@ -294,7 +297,17 @@ function updateZombies() {
 				i.y += i.speed * i.yVector;
 				i.stoodStillTimer = 0;
 			}
-			
+			i.onTile = returnTile(i);
+			if (i.onTile.y >= 0 && i.onTile.x >= 0) {
+				try {
+					i.inBuilding = map[i.onTile.y][i.onTile.x].building;
+				}
+				catch (e) {
+					console.log(e);
+					console.log("i.x: " + i.x + " i.y: " + i.y );
+					console.log(i.onTile.x + " " + i.onTile.y);
+				}
+			}
 		} else {
 			
 
@@ -327,18 +340,34 @@ function updateZombies() {
 					k.h
 				)) {
 					i.lineStuckOn = line;
-
 					if (line === left || line === left2) {
-						i.x -= 1;
+						if (i.inBuilding) {
+							i.x += 1; 
+						} else {
+							i.x -= 1;
+						}
 					}
 					if (line === right || line === right2) {
-						i.x += 1;
+						if (i.inBuilding) {
+							i.x -= 1; 
+						} else {
+							i.x += 1;
+						}
 					}
 					if (line === top || line === top2) {
-						i.y -= 1;
+						if (i.inBuilding) {
+							i.y += 1; 
+						} else {
+							i.y -= 1;
+						}
 					}
 					if (line === bottom || line === bottom2) {
-						i.y += 1;
+						if (i.inBuilding) {
+							i.y -= 1; 
+						} else {
+							i.y += 1;
+							console.log("shove");
+						}
 					}
 				}
 

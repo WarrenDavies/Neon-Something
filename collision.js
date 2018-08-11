@@ -335,7 +335,11 @@ function checkNPCCollisionWithBuilding(i) {
 							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60
 							yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 30;
 						}
-						i.y -= 1;
+						if (i.inBuilding) {
+							i.y += 1;
+						} else {
+							i.y -= 1;
+						}
 						if (collidesSpecify(
 						i.x,
 						i.y, 
@@ -352,7 +356,11 @@ function checkNPCCollisionWithBuilding(i) {
 							let ytarget = Math.sin(rotation);
 							//i.x += (xtarget * 2);
 							//i.y += (ytarget * 2);
-							i.y -= 1;
+							if (i.inBuilding) {
+								i.y += 1;
+							} else {
+								i.y -= 1;
+							}
 						}
 					}
 					if (i.collidesWithWall === "bottom" ||
@@ -365,7 +373,11 @@ function checkNPCCollisionWithBuilding(i) {
 							xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 60;
 							yPushTarget = theBuildings[i.collidesWithID].lowerRightY + 30;
 						}
-						i.y += 1;
+						if (i.inBuilding) {
+							i.y -= 1;
+						} else {
+							i.y += 1;
+						}
 						if (collidesSpecify(
 						i.x,
 						i.y, 
@@ -382,7 +394,11 @@ function checkNPCCollisionWithBuilding(i) {
 							let ytarget = Math.sin(rotation);
 						//	i.x += (xtarget * 2);
 						//	i.y += (ytarget * 2);
-							i.y += 1
+							if (i.inBuilding) {
+								i.y -= 1;
+							} else {
+								i.y += 1;
+							}
 						}
 					}
 				}
@@ -418,7 +434,11 @@ function checkNPCCollisionWithBuilding(i) {
 									xPushTarget = theBuildings[i.collidesWithID].upperLeftX - 30;
 									yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 								}
-								i.x -= 1;
+								if (i.inBuilding) {
+									i.x += 1;
+								} else {
+									i.x -= 1;
+								}
 								if (collidesSpecify(
 								i.x,
 								i.y, 
@@ -440,7 +460,11 @@ function checkNPCCollisionWithBuilding(i) {
 									let ytarget = Math.sin(rotation);
 									i.x += (xtarget * 2);
 									i.y += (ytarget * 2); */
-									i.x -= 1;
+									if (i.inBuilding) {
+										i.x += 1;
+									} else {
+										i.x -= 1;
+									}
 								}	
 							
 						}
@@ -456,7 +480,11 @@ function checkNPCCollisionWithBuilding(i) {
 										xPushTarget = theBuildings[i.collidesWithID].lowerRightX + 30;
 										yPushTarget = theBuildings[i.collidesWithID].upperLeftY - 60;
 									}
-									i.x += 1;
+									if (i.inBuilding) {
+										i.x -= 1;
+									} else {
+										i.x += 1;
+									}
 									if (collidesSpecify(
 									i.x,
 									i.y, 
@@ -470,7 +498,11 @@ function checkNPCCollisionWithBuilding(i) {
 										let ydirection = getYDirection(theBuildings[l].centerY, theBuildings[l].centerY, i.x, i.y);
 										//i.x += (xdirection * 5);
 										//i.y += (ydirection * 5);
-										i.y += 1;
+										if (i.inBuilding) {
+											i.x -= 1;
+										} else {
+											i.x += 1;
+										}
 									}
 								}
 							
