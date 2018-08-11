@@ -1,5 +1,5 @@
 function spawnZombie() {
-	if (theZombies.length < 500) {
+	if (theZombies.length < 1s00) {
 	//if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
@@ -515,7 +515,7 @@ function drawZombies() {
 			c.strokeStyle = "blue";
 			c.lineWidth = 1;
 			c.rect(i.x + ((i.speed * i.stepDistance) * i.xVector) - cameraX, i.y + ((i.speed * i.stepDistance) * i.yVector) - cameraY, i.w, i.h);
-			c.stroke();
+			c.stroke();a
 
 			c.beginPath();
 			c.fillStyle = "black";
