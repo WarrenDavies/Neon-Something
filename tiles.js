@@ -761,6 +761,8 @@ function updateCamera() {
 }
 
 function drawMap() {
+
+	//make this only happen on resize
 	let canvasElem = document.getElementById('canvas');
 	canvasElem.width = window.innerWidth;
 	canvasElem.height = window.innerHeight;
@@ -768,11 +770,11 @@ function drawMap() {
 	cameraH = canvasElem.height;
 	let screenWidthInTiles = Math.ceil(cameraW / tileSize);
 	let screenHeightInTiles = Math.ceil(cameraH / tileSize);
-	//console.log (Math.floor(screenWidthInTiles / 2));
+	
 	var tileCount = 0
 	c.beginPath();
-	for (j = onYTile - Math.ceil(screenHeightInTiles / 2) - 1; j < onYTile + Math.ceil(screenHeightInTiles / 2) + 1; j++ ) {
-		for (l = onXTile - Math.ceil(screenWidthInTiles / 2) - 1; l < onXTile + Math.ceil(screenWidthInTiles / 2) + 2; l++) {
+	for (j = Math.floor((cameraY + (cameraH / 2)) / 50) - Math.ceil(screenHeightInTiles / 2) - 1; j < onYTile + Math.ceil(screenHeightInTiles / 2) + 1; j++ ) {
+		for (l = Math.floor((cameraX + (cameraW / 2)) / 50) - Math.ceil(screenWidthInTiles / 2) - 1; l < onXTile + Math.ceil(screenWidthInTiles / 2) + 2; l++) {
 			if (j >= 0  && l >= 0 && j < map.length && l < map[j].length) {
 
 				if (map[j][l].backgroundImage) {

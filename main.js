@@ -11,6 +11,8 @@ console.log("start");
 
 //zombie movement updates:
 
+// improve HUD
+
 // stop him colliding with two walls
 // only accept direct line of sight to player -- not just around a cornmer
 

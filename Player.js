@@ -90,13 +90,10 @@ if (Player1.mot === 0) {
 	// 		Player1.inBuilding = i;
 	// 	}
 	// });
-	if (Player1.onTile.y >= 0 && Player1.onTile.x >= 0) {
-		Player1.inBuilding = map[Player1.onTile.y][Player1.onTile.x].building;
-	}
-		// if (map[Player1.onTile.y][Player1.onTile.x].building) {
-	// }
 
-
+		if (Player1.x - 10 > 0 && Player1.y - 10 > 0 && Player1.x < (map[0].length * 50) && Player1.y < (map[0].length)) {
+			Player1.inBuilding = map[onYTile][onXTile].building;
+		}
 } 
  
  
