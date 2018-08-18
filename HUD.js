@@ -84,7 +84,7 @@ function drawHUD() {
 	c.fillText("Weapon:", 630, 25);	
 	c.fillText(Player1.activeWeapon, 720, 25);	
 	
-	
+	c.fillRect (0, cameraH - 100, cameraW, 100);
 }
 
 function debugHUD(){

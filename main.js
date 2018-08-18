@@ -11,34 +11,49 @@ console.log("start");
 
 //zombie movement updates:
 
+
 // improve HUD
+	// narrator
+	// weapon selector
+	// responsive to screen size changes
 
-// stop him colliding with two walls
-// only accept direct line of sight to player -- not just around a cornmer
+// map
+	// luxury house with cars in it
+	// keys and point open doors
+	// terrain type affects movement
+	// just head when underwater
+	// day/night time
+	// design the new mapa
 
-// When two zombies with waypoints collide, have the youngest zombie adopt the waypoint of the older one. This will prevent them getting stuck.
-// as soon as zombies detect a collision with a wall, move them in their opposite direction a few pixels. This will prevent them getting stuck on walls, and give the appearance that the dumb zombies are bumping into things
-// when zombies bump into each other, move them one pixel in the opposite direction -- but see if this is still needed after the above two fixes
-//have zombies target civilians, and turn them into new zombies
 // add experience points to zombies -- they get stronger the older they are, and the more civilians they have killed, doing damage to the player etc.
 
-// make save/restore more efficien -- don't need to do this in every loop surely.
-// also need to use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
+// performance
+	// use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
+	// make looping more efficient
 
-// check civilian waypoints don't appear inside buidings
+// civilians 
+	// check civilian waypoints don't appear inside buidings
 
-// make functions smaller
+// code
+	//make functions smaller
+	// Make variables more local
 
-// Make variables more local
+//vehivles
+	// vehicle moves forward on the screen when accelerating
+	// vehicles maintain their speed when player leaves them
 
-// vehicle moves forward on the screen when accelerating
-// vehicles maintain their speed when player leaves them
+//buildings
+	// get the camera out of the drawing functions - for the buildings
+	// put the door coordinates etc into the building objects and set it to draw doors automatically
+	// doors and neon lines are appearing through other walls/buildings
 
-// get the camera out of the drawing functions - for the buildings
-// put the door coordinates etc into the building objects and set it to draw doors automatically
+// weapons
+	// add different weapons and ammo
+	// add to HUD
 
-// splice bullets when they hit buildings
-
+//bullets
+	// splice bullets when they hit buildings
+	// bullet collision is a bit off
 // BUGS
 
 /// ---- DOORS can be seen through walls -- see building 4
