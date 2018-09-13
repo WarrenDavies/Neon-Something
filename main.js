@@ -34,13 +34,17 @@ console.log("start");
 // civilians 
 	// check civilian waypoints don't appear inside buidings
 
+// zombies
+	// different types -- faster, stronger, tougher, tactics, working together
+
 // code
 	//make functions smaller
 	// Make variables more local
 
-//vehivles
+//vehicles
 	// vehicle moves forward on the screen when accelerating
 	// vehicles maintain their speed when player leaves them
+	// dont move if press left or right before forward
 
 //buildings
 	// get the camera out of the drawing functions - for the buildings
@@ -54,6 +58,7 @@ console.log("start");
 //bullets
 	// splice bullets when they hit buildings
 	// bullet collision is a bit off
+	
 // BUGS
 
 /// ---- DOORS can be seen through walls -- see building 4
