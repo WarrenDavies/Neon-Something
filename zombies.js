@@ -471,6 +471,18 @@ function updateZombies() {
 		i.xPrevious = i.x;
 		i.yPrevious = i.y;
 
+		if (theExplosions.length > 0) {
+			for (k = 0; k < theExplosions.length; k++ ) {
+				if (Math.sqrt((i.x - theExplosions[k].x) * (i.x - theExplosions[k].x) + (i.y - theExplosions[k].y) * (i.y - theExplosions[k].y)) < theExplosions[k].r) {
+					i.health -= theExplosions[k].power;
+					if (i.health < 0) {
+						theZombies.splice(j, 1);
+						break;
+					}
+				}
+			}
+		}
+
 	}); //zombies forEach
 } // updateZombies
 

@@ -258,14 +258,18 @@ function mouseMove(e) {
 }
 
 function click(e) {
-
-		
 	if (mouseOnInteractiveElement()) {
 		
 	} else {
 		if (Player1.mot === 0) {
-			if (Player1.activeWeapon === 1) {
-				createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon);
+			if (Player1.activeWeapon === 1 && Player1.ammo[Player1.activeWeapon] > 0) {
+				firePistol();
+			}
+			if (Player1.activeWeapon === 3 && Player1.ammo[Player1.activeWeapon] > 0) {
+				firePlasmaGun();
+			}
+			if (Player1.activeWeapon === 4 && Player1.ammo[Player1.activeWeapon] > 0) {
+				fireRocketLauncher();
 			}
 		}
 	}
@@ -295,10 +299,15 @@ function click(e) {
 	}	
 }
 
+function mousedown(e) {
+	mouseDown = true;
+}
+function mouseup(e) {
+	mouseDown = false;
+}
+
 
 function moveEverything(){
 
 
 };
-
-

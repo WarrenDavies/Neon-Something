@@ -82,9 +82,10 @@ function drawHUD() {
 	c.fillText(Math.floor(time), 580, 25);
 	
 	c.fillText("Weapon:", 630, 25);	
-	c.fillText(Player1.activeWeapon, 720, 25);	
+	c.fillText(Player1.activeWeapon, 725, 25);	
 	
-
+	c.fillText("Ammo:", 770, 25);	
+	c.fillText(Player1.ammo[Player1.activeWeapon], 850, 25);	
 }
 
 function debugHUD(){

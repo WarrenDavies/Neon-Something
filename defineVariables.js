@@ -85,6 +85,7 @@ var buildingsPassed = [];
 var completedHeadlights = false;
 var roofLinesOnScreen = [];
 var vectorSet = false;
+var debugZero = 0;
 var raceCheckPoints = 
 [
 {x: 200, y: 800, w: 50, h: 50, colour: "lime", lines: { 
@@ -290,7 +291,8 @@ var theZombies = [];
 	 this.standImage = playerStand;
 	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
 	 this.activeWeapon = 0;
-	 this.weaponsPossessed = [true, true, true];
+	 this.weaponsPossessed = [true, true, true, true, true];
+	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
 	 this.onTile = {x: 0, y: 0};
  } 
@@ -298,10 +300,11 @@ var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
 var rightDoorPosition = 125;
 var leftDoorPosition = 125;
-
-
+var mouseDown = false;
+var plasmaCharge = 0;
+var rocketReload = 0;
 var vehiclesOnScreen = [];
-
+var theExplosions = [];
 
 
 
@@ -626,6 +629,8 @@ theBuildings[1] = {
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 175,
+		
+
 		leftDoorSize: 25,
 	
 		leftDoorPosition: 25,
@@ -644,7 +649,7 @@ theBuildings[1] = {
 		rightDoorColor: "yellow",
 		
 	},
-	
+		
 	eastDoor: {
 		exists: false,
 	},
@@ -1164,3 +1169,9 @@ theBuildings[11] = {
 		exists: false,
 	},
 };
+
+theBuildings.forEach(function(i, j) {
+	if (i.northDoor) {
+		i.northDoor.doorwayDistanceFromRightToMiddle = i.lowerRightX - i.upperLeftX - i.northDoor.doorwayDistanceFromLeftToMiddle;
+	}
+});

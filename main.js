@@ -95,8 +95,10 @@ canvas.addEventListener("keyup", function (e) {
 });
 canvas.addEventListener('mouseover',handlefocus,true);  
 canvas.addEventListener('mousemove', mouseMove, true);
-canvas.addEventListener('mousemove', mouseMove, true); 
+canvas.addEventListener('mousemove', mouseMove, true);
 canvas.addEventListener("click", click, true);
+canvas.addEventListener("mousedown", mousedown, true);
+canvas.addEventListener("mouseup", mouseup, true);
 
 // Smooth out the animation
 var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -165,9 +167,11 @@ function mainDraw(canvas, message) {
 	updatePlayer();   
 	drawPlayer(); 
 
+	updateWeapons();
 	updateBullets();
 	drawBullets();
-
+	drawExplosions();
+	
 	updateCivilians();
 	drawCivilians(); 
 	

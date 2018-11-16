@@ -26,6 +26,23 @@ function drawBuildings() {
 	}
 }
 
+function getDistanceFromDoor(person, buildingNo, door, leftEdge, distanceFromLeftEdgeToMiddle, frontEdge, distanceFromFrontEdgeToMiddle) {
+	theBuildings[buildingNo][door].distanceFromDoor = Math.sqrt( 
+	(leftEdge + distanceFromLeftEdgeToMiddle - person.x) * (leftEdge + distanceFromLeftEdgeToMiddle - person.x) 
+	+ 
+	(frontEdge + distanceFromFrontEdgeToMiddle - person.y) * (frontEdge + distanceFromFrontEdgeToMiddle - person.y));
+}
+function getDistance(sx, sy, tx, ty) {
+	return Math.sqrt( 
+	(sx - tx) * (sx - tx) 
+	+ 
+	(sy - ty) * (sy - ty));
+}
+
+function drawRectangularBuildingDoor() {
+
+}
+
 function spliceBuildings() {
 
 // the idea here was to check each loop whether the building was outside the camera, and if so, splice it. But surely it's cheaper to just empty buildingsOnScreen each loop - it's being populated in every cycle of draw map anyway, so why not just splice the whole array and re populate each loop, that way if the tile containing the building has moved off camera it will automatically not get drawn.
@@ -254,8 +271,15 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 ///////////////
 	if (theBuildings[buildingNo].northDoor.exists){
 		c.beginPath();
-		theBuildings[buildingNo].northDoor.distanceFromDoor = Math.sqrt( (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (upperRightY - Player1.y) * (upperRightY - Player1.y));
-				
+		//  theBuildings[buildingNo].northDoor.distanceFromDoor = Math.sqrt( (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (upperRightY - Player1.y) * (upperRightY - Player1.y));
+		
+		theBuildings[buildingNo].northDoor.distanceFromDoor = getDistance(Player1.x, Player1.y, 
+		upperRightX - theBuildings[buildingNo].northDoor.doorwayDistanceFromRightToMiddle,
+		upperRightY
+		);
+
+		// getDistanceFromDoor(Player1, buildingNo, "northDoor", upperRightX, -theBuildings[buildingNo].northDoor.doorwayDistanceFromRightToMiddle, upperRightY, 0);
+
 //NORTH LEFT DOOR					
 
 		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
@@ -743,3 +767,4 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.globalCompositeOperation = "source-over";
 	} // draw roof
 } // drawRectangularBuilding
+// 754
