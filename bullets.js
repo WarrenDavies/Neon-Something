@@ -65,14 +65,14 @@ function createBullet(targetX, targetY, shooterX, shooterY, type, range, w, h, p
 	}
 } // end createBullet
 
-function createExplosion(x, y, r, p) {
-	theExplosions.push({x: x, y: y, r: 1, rt: r, power: p});
+function createExplosion(x, y, rt, p) {
+	theExplosions.push({x: x, y: y, r: 1, rt: rt, power: p});
 }
 
 function updateExplosions() {
 	theExplosions.forEach(function(i, j) {
 		if (i.r <= i.rt) {
-			i.r += 6;
+			i.r += 10;
 		}
 		if (i.r > i.rt) {
 			theExplosions.splice(j);
@@ -99,7 +99,7 @@ function updateBullets() {
 		// has the range been reached
 		if (collidesSpecify( i.x - 2, i.y - 2, 2, 2, i.limitX - 3, i.limitY-3, 6, 6) || (i.x > i.limitX - 30 && i.x < i.limitX + 30 && i.y > i.limitY - 30 && i.y < i.limitY + 30) ) {
 			if (i.type === 4) {
-				createExplosion(i.x, i.y, 70, i.power);
+				createExplosion(i.x, i.y, 100, i.power);
 			}
 			theBullets.splice(j);
 			return
@@ -108,14 +108,14 @@ function updateBullets() {
 		//collision with walls
 		if (checkBulletWallCollision(i, j) ){
 			if (i.type === 4) {
-				createExplosion(i.x, i.y, 70, i.power);
+				createExplosion(i.x, i.y, 100, i.power);
 			}
 			theBullets.splice(j, 1);
 			return	
 		}
 		if (checkBulletCivilianCollision(i, j) ){
 			if (i.type === 4) {
-				createExplosion(i.x, i.y, 70, i.power);
+				createExplosion(i.x, i.y, 100, i.power);
 			}
 			if (i.type !== 3) {
 				theBullets.splice(j, 1);
@@ -125,7 +125,7 @@ function updateBullets() {
 		
 		if (checkBulletZombieCollision(i, j) ){
 			if (i.type === 4) {
-				createExplosion(i.x, i.y, 70, i.power);
+				createExplosion(i.x, i.y, 100, i.power);
 			}
 			if (i.type !== 3) {
 				theBullets.splice(j, 1);
