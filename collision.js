@@ -587,7 +587,18 @@ function checkBulletCivilianCollision(i, j) {
 function checkBulletZombieCollision(i, j) {
 	let collisionDetected = false;
 	theZombies.forEach( function(k, l) {
-		if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
+		let hit = false;
+		// yes yes hacky blah blah will fix later
+		if (i.type == 1 || i.type == 2 || i.type == 3) {
+			if (getDistance(i.x, i.y, k.x, k.y) < (i.w + 2) + (k.w)) {
+				hit = true;
+			}
+		} else {
+			if (collidesSpecify (i.x + i.xtarget * i.xVelocity, i.y + i.ytarget * i.yVelocity, i.w, i.h, k.x - (k.w / 2), k.y - (k.h / 2), k.w, k.h) ) {
+				hit = true;
+			}
+		}
+		if (hit) {
 			if (collisionDetected === false) {
 				k.health -= i.power;
 				collisionDetected = true;

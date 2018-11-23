@@ -471,11 +471,13 @@ function updateZombies() {
 		i.xPrevious = i.x;
 		i.yPrevious = i.y;
 
+		// check collision with explosions
 		if (theExplosions.length > 0) {
 			for (k = 0; k < theExplosions.length; k++ ) {
 				if (Math.sqrt((i.x - theExplosions[k].x) * (i.x - theExplosions[k].x) + (i.y - theExplosions[k].y) * (i.y - theExplosions[k].y)) < theExplosions[k].r) {
 					i.health -= theExplosions[k].power;
 					if (i.health < 0) {
+						theSplats.push({x: i.x - (i.w / 2), y: i.y - (i.h / 2), w: i.w, h: i.h });
 						theZombies.splice(j, 1);
 						break;
 					}
@@ -552,18 +554,20 @@ function drawZombies() {
 	theZombies.forEach(function(i, j) {
 		if (isOnScreen(i)) {
 			
-		/*	c.beginPath();
-			c.strokeStyle = "blue";
-			c.lineWidth = 1;
-			c.rect(i.x + ((i.speed * i.stepDistance) * i.xVector) - cameraX, i.y + ((i.speed * i.stepDistance) * i.yVector) - cameraY, i.w, i.h);
-			c.stroke();a
+		
+			// Collision area of the current location and the location the zombie is trying to move into
+			// c.beginPath();
+			// c.strokeStyle = "blue";
+			// c.lineWidth = 1;
+			// c.rect(i.x + ((i.speed * i.stepDistance) * i.xVector) - cameraX, i.y + ((i.speed * i.stepDistance) * i.yVector) - cameraY, i.w, i.h);
+			// c.stroke();a
 
-			c.beginPath();
-			c.fillStyle = "black";
-			c.lineWidth = 1;
-			c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
-			c.stroke();
-		*/
+			// c.beginPath();
+			// c.fillStyle = "black";
+			// c.lineWidth = 1;
+			// c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
+			// c.stroke();
+		
 
 			c.save();
 			c.translate(i.x - cameraX, i.y - cameraY);
@@ -580,6 +584,8 @@ function drawZombies() {
 					i.walkTimer = 0.1;
 				}
 				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				
+				
 				c.rect(i.x- (i.w /2), i.y- (i.h / 2), i.w, i.h);
 				c.strokeStyle = "red";
 				c.stroke();
