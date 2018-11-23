@@ -566,23 +566,23 @@ function drawZombies() {
 		*/
 
 			c.save();
-			c.translate(i.x + (i.w / 2) - cameraX, i.y + (i.h / 2) - cameraY);
+			c.translate(i.x - cameraX, i.y - cameraY);
 			if (i.xTarget - i.x < 0) {
 				c.rotate(i.angle);
 				c.scale(-1, 1);
 			} else {
 				c.rotate(i.angle);
 			} 
-			c.translate(-i.x - (i.w / 2), -i.y - (i.h / 2) );
-			
-			
+			c.translate(-i.x, -i.y);
 			if (i.walking === true ) {
 				i.walkTimer += 0.15;	
 				if (i.walkTimer >= 15.8) {
 					i.walkTimer = 0.1;
 				}
-				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - 15, i.y - 15 , i.w + 30, i.h + 30);
-			
+				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				c.rect(i.x- (i.w /2), i.y- (i.h / 2), i.w, i.h);
+				c.strokeStyle = "red";
+				c.stroke();
 			} else {
 				i.walkTimer = 0;
 			}
