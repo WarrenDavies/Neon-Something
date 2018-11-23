@@ -1,5 +1,5 @@
 function firePistol() {
-	createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 300, 3, 3, 1, "pistol", "black");
+	createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 300, 3, 3, 2, "pistol", "black");
 }
 
 function fireMachineGun() {
@@ -8,15 +8,15 @@ function fireMachineGun() {
 
 function firePlasmaGun() {
 	if (plasmaCharge === 0) {
-		createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 500, 15, 15, 50, "plasmaGun", "blue");
-		plasmaCharge = 100;
+		createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 1000, 15, 15, 300, "plasmaGun", "blue");
+		plasmaCharge = 5;
 	}
 }
 
 function fireRocketLauncher() {
 	if (rocketReload === 0) {
-		createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 700, 25, 10, 300, "rocket", "black");
-		rocketReload = 50;
+		createBullet(mouseX + cameraX, mouseY + cameraY, Player1.x, Player1.y, Player1.activeWeapon, 1200, 25, 10, 500, "rocket", "black");
+		rocketReload = 5;
 	}
 }
 
@@ -45,7 +45,7 @@ function createBullet(targetX, targetY, shooterX, shooterY, type, range, w, h, p
 			y: shooterY,
 			xVelocity: 15,
 			yVelocity: 15,
-			power: 1,
+			power: power,
 			xtarget: xtarget,
 			ytarget: ytarget,
 			xSource: shooterX,

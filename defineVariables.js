@@ -251,7 +251,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = true;
+var debug = false;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;

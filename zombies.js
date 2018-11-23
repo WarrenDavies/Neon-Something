@@ -31,8 +31,10 @@ function spawnZombie() {
 		let zomID = theZombies.length;
 		if (Player1.kills === 0) {
 			var zomHealth = 1;
+			var zomSpeed = 1;
 		} else {
-			var zomHealth = Math.floor(Player1.kills / 20) + 1;
+			var zomHealth = Math.floor(Player1.kills / 100) + 1;
+			var zomSpeed = Math.floor(Player1.kills / 100) + 2;
 		}
 		theZombies.push({
 			ID: zomID,
@@ -44,7 +46,7 @@ function spawnZombie() {
 			h: 20,
 			xTarget: 0,
 			yTarget: 0,
-			speed: 2,
+			speed: zomSpeed,
 			health: zomHealth,
 			xdirection: 1,
 			ydirection: 0,
@@ -586,9 +588,9 @@ function drawZombies() {
 				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
 				
 				
-				c.rect(i.x- (i.w /2), i.y- (i.h / 2), i.w, i.h);
-				c.strokeStyle = "red";
-				c.stroke();
+				// c.rect(i.x- (i.w /2), i.y- (i.h / 2), i.w, i.h);
+				// c.strokeStyle = "red";
+				// c.stroke();
 			} else {
 				i.walkTimer = 0;
 			}

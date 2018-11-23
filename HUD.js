@@ -86,6 +86,9 @@ function drawHUD() {
 	
 	c.fillText("Ammo:", 770, 25);	
 	c.fillText(Player1.ammo[Player1.activeWeapon], 850, 25);	
+	
+	c.fillText("Kills:", 930, 25);	
+	c.fillText(Player1.kills, 980, 25);	
 }
 
 function debugHUD(){
