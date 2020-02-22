@@ -82,18 +82,18 @@ if (Player1.mot === 0) {
 	});
 	
 	
-	// Player1.inBuilding = false;
-	// buildingsOnScreen.forEach( function(i, j) {
-	// //delete the below and uncomment the above when the easy building maker is done
-	// //theBuildings.forEach( function(j, i){
-	// 	if (Player1.x > theBuildings[i].upperLeftX && Player1.x < theBuildings[i].lowerRightX && Player1.y > theBuildings[i].upperLeftY && Player1.y < theBuildings[i].lowerRightY) {
-	// 		Player1.inBuilding = i;
-	// 	}
-	// });
-
-		if (Player1.x - 10 > 0 && Player1.y - 10 > 0 && Player1.x < (map[0].length * 50) && Player1.y < (map[0].length)) {
-			Player1.inBuilding = map[onYTile][onXTile].building;
+	Player1.inBuilding = false;
+	buildingsOnScreen.forEach( function(i, j) {
+	//delete the below and uncomment the above when the easy building maker is done
+	//theBuildings.forEach( function(j, i){
+		if (Player1.x > theBuildings[i].upperLeftX && Player1.x < theBuildings[i].lowerRightX && Player1.y > theBuildings[i].upperLeftY && Player1.y < theBuildings[i].lowerRightY) {
+			Player1.inBuilding = i;
 		}
+	});
+
+		// if (Player1.x - 10 > 0 && Player1.y - 10 > 0 && Player1.x < (map[0].length * 50) && Player1.y < (map[0].length)) {
+		// 	Player1.inBuilding = map[onYTile][onXTile].building;
+		// }
 } 
  
  

@@ -31,10 +31,10 @@ function spawnZombie() {
 		let zomID = theZombies.length;
 		if (Player1.kills === 0) {
 			var zomHealth = 1;
-			var zomSpeed = 1;
+			var zomSpeed = 3;
 		} else {
 			var zomHealth = Math.floor(Player1.kills / 100) + 1;
-			var zomSpeed = Math.floor(Player1.kills / 100) + 2;
+			var zomSpeed = Math.floor(Player1.kills / 100) + 3;
 		}
 		theZombies.push({
 			ID: zomID,
