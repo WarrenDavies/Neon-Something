@@ -294,6 +294,7 @@ function checkNPCCollisionWithBuilding(i) {
 	//check collisions with buildings
 	i.collidesWithType = null;
 	i.collidesWithWall = "";
+	i.collidesWithWalls = [];
 	i.horizontalBuildingCollision = false;
 	i.verticalBuildingCollision = false;
 	c.beginPath();
@@ -307,6 +308,8 @@ function checkNPCCollisionWithBuilding(i) {
 	c.lineWidth = 1;
 	//c.rect(i.x - cameraX, i.y - cameraY, i.w, i.h);
 	c.stroke();
+
+	//VERTICAL COLLISION
 	theBuildings.forEach( function(k, l) {
 		for (var line in theBuildings[l].walls) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
@@ -324,6 +327,10 @@ function checkNPCCollisionWithBuilding(i) {
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
+
+					// to make an array of each wall colliding with. Could be two (eg top, left)
+					i.collidesWithWalls.push(line);
+
 					i.verticalBuildingCollision = true;
 					if (i.collidesWithWall === "top" ||
 					i.collidesWithWall === "top2") {
@@ -404,6 +411,9 @@ function checkNPCCollisionWithBuilding(i) {
 				}
 			}
 		}
+
+
+		// HORIZONTAL COLLISION
 		for (var line in theBuildings[l].walls) {
 			if (theBuildings[l].walls.hasOwnProperty(line)) {
 				if (collidesSpecify(
@@ -420,6 +430,10 @@ function checkNPCCollisionWithBuilding(i) {
 					i.collidesWithID = l;
 					i.collidesWithType = "Building";
 					i.collidesWithWall = line;
+
+					// to make an array of each wall colliding with. Could be two (eg top, left)
+					i.collidesWithWalls.push(line);
+
 					i.horizontalBuildingCollision = true;
 					if (!i.stuck) {
 						if (i.collidesWithWall === "left" ||

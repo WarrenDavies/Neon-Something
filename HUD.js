@@ -192,7 +192,22 @@ function debugHUD(){
 			debugTarget.collidesWith,500, 525);
 			c.fillText("No. of waypoints: " +
 			debugTarget.wayPoints.length,500, 550);
+
+			c.fillText("Distance to Player: " +
+			debugTarget.distanceToPlayer ,500, 575);
 			
+			let wallsString = "";
+			debugTarget.collidesWithWalls.forEach(function(i,j) {
+				wallsString += i + ", ";
+			})
+			c.fillText("collidesWithWalls: " +
+			wallsString ,500, 600);
+			
+			c.fillText("horizontalBuildingCollision: " +
+			debugTarget.horizontalBuildingCollision ,500, 625);
+			c.fillText("verticalBuildingCollision: " +
+			debugTarget.verticalBuildingCollision ,500, 650);
+
 			c.fillText("canWalkX: " +
 			debugTarget.canWalkX, 100, 125);			
 			c.fillText("canWalkY: " +

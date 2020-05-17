@@ -74,6 +74,7 @@ function spawnZombie() {
 			wayPointGrace: 0,
 			collidesWithType: "No Collision",
 			collidesWithWall: "No Collision",
+			collidesWithWalls: [],
 			zombieBlock: false,
 			verticalBuildingCollision: false,
 			horizontalBuildingCollision: false,
@@ -91,6 +92,7 @@ function spawnZombie() {
 			canMOve: "",
 			onTile: {x: 0, y: 0},
 			inBuilding: false,
+			distanceToPlayer: 0,
 		});
 		theZombies[theZombies.length -1].onTile = returnTile(theZombies[theZombies.length -1]);
 	}
@@ -99,6 +101,9 @@ function spawnZombie() {
 function updateZombies() {
 	theZombies.forEach(function(i, j) {
 // target the player and set direction for movement. Later will make them target civilians too but first thing's first.
+
+		// first let's get the distance to the player
+		i.distanceToPlayer = getDistance(i.x, i.y, Player1.x, Player1.y);
 
 		if (i.wayPoints.length === 0) {
 // if there is no waypoint, the zombie is not navigating around an obstable, so head for the player
@@ -136,22 +141,27 @@ function updateZombies() {
 			if (i.collisionCourse === false) {
 				if (i.wayPoints.length > 0) {
 // if zombie can see the player, ignore the waypoint and head right for him
-					i.canSeePlayer = true;
-					var alreadyFoundPlayer = false;
-					buildingsOnScreen.forEach(function(k, l) {
-						if (!alreadyFoundPlayer) {
-							for (var line in theBuildings[k].walls) {
-								if (theBuildings[k].walls.hasOwnProperty(line)) {
-									if (checkIfZombieCanSeePlayer(i, Player1, k, line)) {
-										// do something if the zombie CAN see the player
-									} else {
-										i.canSeePlayer = false;
-										alreadyFoundPlayer = true;
-									}
-								}	
+					
+					// first check whether the player is within range/eyesight 
+										
+					if (i.distanceToPlayer < 200) {
+						i.canSeePlayer = true;
+						var alreadyFoundPlayer = false;
+						buildingsOnScreen.forEach(function(k, l) {
+							if (!alreadyFoundPlayer) {
+								for (var line in theBuildings[k].walls) {
+									if (theBuildings[k].walls.hasOwnProperty(line)) {
+										if (checkIfZombieCanSeePlayer(i, Player1, k, line)) {
+											// do something if the zombie CAN see the player
+										} else {
+											i.canSeePlayer = false;
+											alreadyFoundPlayer = true;
+										}
+									}	
+								}
 							}
-						}
-					});
+						});
+					}
 					
 					if (i.canSeePlayer === true) {
 						i.wayPoints.splice(0);
@@ -492,7 +502,13 @@ function updateZombies() {
 
 function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 	
-	
+
+// create array of corners and check each one, not just the center of the zombie - needs to be a completely clear path
+// zombieCorners = [
+// 	{ 
+
+// 	}
+// ]
 
 	
 	if (getLineIntersection(
@@ -551,6 +567,76 @@ function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 		return true;
 	}
 }
+
+
+// one that works
+// function checkIfZombieCanSeePlayer(i, Player1, k, line) {
+	
+// 	zombieCorners = [
+// 		{ 
+	
+// 		}
+// 	]
+	
+		
+// 		if (getLineIntersection(
+// 		i.x, 
+// 		i.y, 
+// 		Player1.x, 
+// 		Player1.y,
+// 		theBuildings[k].walls[line].p1x, 
+// 		theBuildings[k].walls[line].p1y,
+// 		theBuildings[k].walls[line].p2x, 
+// 		theBuildings[k].walls[line].p2y,
+// 		)
+		
+		
+// 		||
+	
+// 		getLineIntersection(
+// 		i.x + i.w, 
+// 		i.y, 
+// 		Player1.x + Player1.w, 
+// 		Player1.y,
+// 		theBuildings[k].walls[line].p1x, 
+// 		theBuildings[k].walls[line].p1y,
+// 		theBuildings[k].walls[line].p2x, 
+// 		theBuildings[k].walls[line].p2y,
+// 		)
+	
+// 		||
+	
+// 		getLineIntersection(
+// 		i.x, 
+// 		i.y + i.h, 
+// 		Player1.x, 
+// 		Player1.y + Player1.h,
+// 		theBuildings[k].walls[line].p1x, 
+// 		theBuildings[k].walls[line].p1y,
+// 		theBuildings[k].walls[line].p2x, 
+// 		theBuildings[k].walls[line].p2y,
+// 		)
+	
+// 		||
+	
+// 		getLineIntersection(
+// 		i.x + i.w, 
+// 		i.y + i.h, 
+// 		Player1.x + Player1.w, 
+// 		Player1.y + Player1.h,
+// 		theBuildings[k].walls[line].p1x, 
+// 		theBuildings[k].walls[line].p1y,
+// 		theBuildings[k].walls[line].p2x, 
+// 		theBuildings[k].walls[line].p2y,
+// 		)
+// 		){
+// 			return false;
+// 		} else {
+// 			return true;
+// 		}
+// 	}
+
+
 
 function drawZombies() {
 	theZombies.forEach(function(i, j) {
