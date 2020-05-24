@@ -1,5 +1,5 @@
 function spawnZombie() {
-	if (theZombies.length < 100 && 1===3) {
+	if (theZombies.length < 100) {
 	//if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
@@ -104,7 +104,7 @@ function updateZombies() {
 
 		// first let's get the distance to the player
 		i.distanceToPlayer = getDistance(i.x, i.y, Player1.x, Player1.y);
-
+		i.onTile = returnTile(i);
 		if (i.wayPoints.length === 0) {
 // if there is no waypoint, the zombie is not navigating around an obstable, so head for the player
 			setNPCdirection(i, Player1);
@@ -129,9 +129,19 @@ function updateZombies() {
 			
 // check collision with buildings
 			if (i.collisionCourse === false) {
+
+				if (i.onTile.y >= 0  && i.onTile.x >= 0 && i.onTile.y < map.length && i.onTile.x < map[0].length) {
+					map[i.onTile.y][i.onTile.x].nearWalls.forEach( (i, j) => {
+
+					})
+				}
+
+				// old method
 				if (checkNPCCollisionWithBuilding(i)) {
+					
 					i.x -= (i.speed * i.xVector);
 					i.y -= (i.speed * i.yVector);
+					
 					if (i.wayPoints.length > 0) {
 						setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
 					}

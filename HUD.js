@@ -268,6 +268,16 @@ function debugHUD(){
 			c.fillText("inBuilding: " +
 			debugTarget.inBuilding, 100, 600);
 
+			let nearWallsString = "";
+			map[debugTarget.onTile.y][debugTarget.onTile.x].nearWalls.forEach((i, j) => {
+				if (j > 0) {
+					nearWallsString += " / ";	
+				}
+				nearWallsString += i.building + ", " + i.wall;
+			})
+			c.fillText("Near Walls: " + nearWallsString, 100, 625);
+
+
 			c.save();
 			c.translate(debugTarget.x - cameraX, debugTarget.y - cameraY );
 			c.translate(-debugTarget.x , -debugTarget.y);
