@@ -122,18 +122,19 @@ function drawPlayer() {
 			
 	//	}
 	
-	
-	//c.beginPath();
-	//	c.save();
-	//	c.translate(Player1.x - cameraX, Player1.y - cameraY );
-	//	c.translate(-Player1.x , -Player1.y);
+	if (debug) {
+		c.beginPath();
+		c.save();
+		c.translate(Player1.x - cameraX, Player1.y - cameraY );
+		c.translate(-Player1.x , -Player1.y);
+		c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
+		// c.moveTo(Player1.x, Player1.y)
+		// c.lineTo(Player1.x + (Player1.xVector * 70), Player1.y + (Player1.yVector * 70) );
+		c.lineWidth = 1;
+		c.stroke();
+		c.restore();
 		
-	//	c.moveTo(Player1.x, Player1.y)
-	//	c.lineTo(Player1.x + (Player1.xVector * 70), Player1.y + (Player1.yVector * 70) );
-	//	c.lineWidth = 1;
-	//	c.stroke();
-	//	c.restore();
- 
+	}
  //////// ABOVE IS TO DEBUG PLAYER AND CIV COLLISION
  
  	//drawing begins
@@ -164,28 +165,39 @@ function drawPlayer() {
 		}
 		c.translate(-Player1.x,-Player1.y);
 	
-	if (keys[83] || keys[87] || keys[70] || keys[65] || keys[68] ) {
-		Player1.walkTimer += 0.15;
-		if (Player1.walkTimer >= 3.8) {
-			Player1.walkTimer = 0.1;
+		if (keys[83] || keys[87] || keys[70] || keys[65] || keys[68] ) {
+			Player1.walkTimer += 0.15;
+			if (Player1.walkTimer >= 3.8) {
+				Player1.walkTimer = 0.1;
+			}
+				
+			c.drawImage( Player1.walkAnimations[Math.ceil(Player1.walkTimer)], Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
+		
+		} else {
+		
+		Player1.walkTimer = 0;
+		
+		c.drawImage( Player1.standImage, Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
+		
 		}
-			
-		c.drawImage( Player1.walkAnimations[Math.ceil(Player1.walkTimer)], Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
-	
-	} else {
-	
-	Player1.walkTimer = 0;
-	
-	c.drawImage( Player1.standImage, Player1.x - (Player1.w / 2) - 10, Player1.y - (Player1.h / 2) - 10, Player1.w + 20, Player1.h + 20);
-	
-	}
 
 	} else {
 	
 	//console.log("89jj");
-	c.translate(-Player1.x , -Player1.y);
-	//c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
-	
+		// c.translate(-Player1.x , -Player1.y);
+		
+		if (debug) {
+			c.beginPath();
+			c.save();
+			c.translate(Player1.x - cameraX, Player1.y - cameraY );
+			c.translate(-Player1.x , -Player1.y);
+			c.moveTo(Player1.x, Player1.y)
+			c.lineTo(Player1.x + (Player1.xVector * 70), Player1.y + (Player1.yVector * 70) );
+			c.lineWidth = 1;
+			c.stroke();
+			c.restore();
+			c.rect( Player1.x - (Player1.w / 2), Player1.y - (Player1.h / 2), Player1.w, Player1.h);
+		}
 	}
 
 	c.restore();
