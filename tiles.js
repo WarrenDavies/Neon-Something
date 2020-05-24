@@ -447,8 +447,11 @@ var map = [
 
 
 function objectifyMap() {
+	//console.log("here!");
+	let counter = 0;
 	map.forEach( function(i, j) {
 		i.forEach( function(k, l) {
+			// console.log(k);
 			if (k === "water") {
 				map[j][l] = { 
 					type: "water",
@@ -467,6 +470,7 @@ function objectifyMap() {
 					w: 32,
 					h: 32
 				};
+				counter++;
 			}
 			
 			if (k === "grass") {
@@ -487,6 +491,7 @@ function objectifyMap() {
 					w: 32,
 					h: 32
 				};
+				counter++;
 			}
 			
 			if (k === "pavement") {
@@ -507,6 +512,7 @@ function objectifyMap() {
 					w: 32,
 					h: 32
 				};
+				counter++;
 			}
 				
 
@@ -528,21 +534,27 @@ function objectifyMap() {
 					w: 32,
 					h: 32
 				};
+				counter++;
 			}
 		});
 	});
+	console.log("counter: " + counter);
 }
+
+// doesn't look like this function is in use anymore
 //objectifyMap();
 
 
 
 
 function objectifyTile(k, j, l) {
-		if (k === water) {
+	// console.log(k)
+		if (k.type === "water") {
 				map[j][l] = { 
 					type: "water",
 					color: "blue",
 					building: 0,
+					nearWall: [],
 					building: false,
 					northWall: false,
 					eastWall: false,
@@ -558,11 +570,12 @@ function objectifyTile(k, j, l) {
 				};
 			}
 			
-			if (k === grass) {
+			if (k.type === "grass") {
 				map[j][l] = {
 					type: "grass",
 					color: "green",
 					building: 0,
+					nearWall: [],
 					building: false,
 					northWall: false,
 					eastWall: false,
@@ -578,11 +591,12 @@ function objectifyTile(k, j, l) {
 				};
 			}
 			
-			if (k === pavement) {
+			if (k.type === "road") {
 				map[j][l] = {
 					type: "road",
 					color: "grey",
 					building: 0,
+					nearWall: [],
 					building: false,
 					northWall: false,
 					eastWall: false,
@@ -599,7 +613,7 @@ function objectifyTile(k, j, l) {
 			}
 				
 
-			if (k === sand) { 
+			if (k.type === "sand") { 
 				map[j][l] = {
 					type: "sand",
 					color: "yellow",
@@ -824,7 +838,7 @@ function drawMap() {
 				//theBuildings.forEach( function(i, j) {
 				//	buildingsOnScreen.push(j);
 				//});
-				
+				c.fillText("T",l * tileSize - cameraX - (tileSize / 2), j * tileSize - cameraY - (tileSize / 2));
 			}
 		}
 	c.closePath();
@@ -843,12 +857,37 @@ theBuildings.forEach( function(i, j) {
 	var lowerRightY = Math.floor(i.lowerRightY / tileSize);
 	i.centerX = i.lowerRightX - i.upperLeftX;
 	i.centerY = i.lowerRightY - i.upperLeftY;
+	let counter = 0;
 	for (k = upperLeftY; k <= lowerRightY; k++) {
 		for (l = upperLeftX; l <= lowerRightX; l++) {
+			// console.log("Add Building to Tile: mapkl = " + map[k][l].type);
+			
+			if (counter === 0) {
+				console.log(map[k][l]);
+			}
+
 			objectifyTile(map[k][l], k, l);
 			map[k][l].building = j;
 			map[k][l].backgroundImage = i.floor;
+
+			if (counter === 0) {
+				console.log(map[k][l]);
+			}
+
+			counter = 1;
 		}
 	}
+	
+	// indicate in the tiles around the wall that they are near to the wall, and which one/s
+	// for (k = upperLeftY; k <= lowerRightY; k++) {
+	// 	for (l = upperLeftX; l <= lowerRightX; l++) {
+	// 		console.log("Add Building to Tile: mapkl = " + map[k][l]);
+	// 		objectifyTile(map[k][l], k, l);
+	// 		map[k][l].building = j;
+	// 		map[k][l].backgroundImage = i.floor;
+	// 	}
+	// }
+
+
 });
 }

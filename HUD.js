@@ -208,6 +208,11 @@ function debugHUD(){
 			c.fillText("verticalBuildingCollision: " +
 			debugTarget.verticalBuildingCollision ,500, 650);
 
+
+			c.font = 'bold 18pt Calibri';
+			c.fillText("ZOMBIES:", 100, 75)
+
+			c.font = 'bold 14pt Calibri';
 			c.fillText("canWalkX: " +
 			debugTarget.canWalkX, 100, 125);			
 			c.fillText("canWalkY: " +
@@ -274,6 +279,10 @@ function debugHUD(){
 			c.stroke();
 			
 			
+
+
+
+
 			for (var line in theBuildings[1].walls) {
 				if (theBuildings[1].walls.hasOwnProperty(line)) {
 					c.strokeStyle = "green";
@@ -293,6 +302,13 @@ function debugHUD(){
 			c.restore();
 			
 			}
+
+			c.font = 'bold 18pt Calibri';
+			c.fillText("Current tile:", 900, 75)
+			c.font = 'bold 14pt Calibri';
+			c.fillText("Location: x = " + Player1.onTile.x + ", y =" + Player1.onTile.y, 900, 125);
+			c.fillText("Building: " + map[Player1.onTile.y][Player1.onTile.x].building, 900, 150);
+			
 			
 			// intersection
 			c.font = 'bold 14pt Calibri';
