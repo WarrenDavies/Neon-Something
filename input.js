@@ -160,7 +160,14 @@ function detectKeys(){
 			Player1.speed += Player1.acceleration;
 			if (Player1.speed > Player1.topSpeed) {
 				Player1.speed = Player1.topSpeed;
-		
+			}
+			switch (map[Player1.onTile.y][Player1.onTile.x].type) {
+				case "sand":
+					Player1.speed = 3;
+					break;
+				case "water":
+					Player1.speed = 1;
+					break;
 			}
 		} else {
 			Player1.speed = 0;

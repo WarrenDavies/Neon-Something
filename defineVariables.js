@@ -269,7 +269,7 @@ var theZombies = [];
 	 this.yTarget = 0;
 	 this.tired = false;
 	 this.speed = 0;
-	 this.topSpeed = 8;
+	 this.topSpeed = 5;
 	 this.energy = 150;
 	 this.health = 150;
 	 this.recovery = 0
@@ -278,7 +278,7 @@ var theZombies = [];
 	 this.fill = '#000000';
 	 this.xdirection = 1;
 	 this.ydirection = 0;
-	 this.acceleration = 1;
+	 this.acceleration = 0.3;
 	 this.radius = 0;
 	 this.angle = 1.7;
 	 this.mot = 0;
@@ -361,7 +361,7 @@ vehiclesOnScreen[1] = {
 	l: 80,
 	type: "normalCar",
 	acceleration: 5,
-	topForwardSpeed: 12,
+	topForwardSpeed: 15,
 	brakeRate: 0.005,
 	reverseAcceleration: 0.005,
 	reverseTopSpeed: -2,
