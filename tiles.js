@@ -869,6 +869,7 @@ theBuildings.forEach( function(i, j) {
 	var upperLeftY = Math.floor(i.upperLeftY / tileSize);
 	var lowerRightX = Math.floor(i.lowerRightX / tileSize);
 	var lowerRightY = Math.floor(i.lowerRightY / tileSize);
+	
 	i.centerX = i.lowerRightX - i.upperLeftX;
 	i.centerY = i.lowerRightY - i.upperLeftY;
 
@@ -884,9 +885,24 @@ theBuildings.forEach( function(i, j) {
 	//Top Wall
 
 	// top
-	for (k = upperLeftY - 1; k <= upperLeftY; k++) {
-		for (l = upperLeftX - 1; l <= lowerRightX + 1; l++) {
+	let upperLeftXModifier = 1;
+	let upperLeftYModifier = 1;
+	let lowerRightXModifier = 1;
+	let lowerRightYModifier = 1;
+	if (upperLeftX === 0) { upperLeftXModifier = 0}
+	if (upperLeftY === 0) { upperleftYModifier = 0}
+	if (lowerRightX === map[0].length) {lowerRightXModifier = 1}
+	if (lowerRightY === map.length) {lowerRightYModifier = 1}
+
+
+	for (k = upperLeftY - upperLeftYModifier; k <= upperLeftY; k++) {
+		for (l = upperLeftX - upperLeftXModifier; l <= lowerRightX + lowerRightXModifier; l++) {
+			// if (k >= 0 && l < map[0].length - 1) {	
+			if (typeof map[k][l] !== 'undefined') {	
 				if (!i.northDoor.exists) {
+					console.log(k + ", " + l);
+					console.log(map[k][l]);
+					console.log(typeof map[k][l])
 					map[k][l].nearWalls.push({
 						building: j,
 						wall: "top",
@@ -905,12 +921,13 @@ theBuildings.forEach( function(i, j) {
 						})
 					}
 				}
+			}
 		}
 	}
 	//left
-	for (k = upperLeftY - 1; k <= lowerRightY + 1; k++) {
-		for (l = upperLeftX - 1; l <= upperLeftX; l++) {
-			if (!i.westDoor.exists) {
+	for (k = upperLeftY - upperLeftYModifier; k <= lowerRightY + lowerRightYModifier; k++) {
+		for (l = upperLeftX - upperLeftXModifier; l <= upperLeftX; l++) {
+			if (!i.westDoor.exists && k <= map.length && l <= map[0].length) {
 				map[k][l].nearWalls.push({
 					building: j,
 					wall: "left",
@@ -932,8 +949,8 @@ theBuildings.forEach( function(i, j) {
 		}
 	}
 	// bottom
-	for (k = lowerRightY; k <= lowerRightY + 1; k++) {
-		for (l = upperLeftX - 1; l <= lowerRightX + 1; l++) {
+	for (k = lowerRightY; k <= lowerRightY + lowerRightYModifier; k++) {
+		for (l = upperLeftX - upperLeftXModifier; l <= lowerRightX + lowerRightXModifier; l++) {
 			if(!i.southDoor.exists) {
 				map[k][l].nearWalls.push({
 					building: j,
@@ -957,8 +974,8 @@ theBuildings.forEach( function(i, j) {
 		}
 	}
 	// right
-	for (k = upperLeftY - 1; k <= lowerRightY + 1; k++) {
-		for (l = lowerRightX; l <= lowerRightX + 1; l++) {
+	for (k = upperLeftY - upperLeftYModifier; k <= lowerRightY + lowerRightYModifier; k++) {
+		for (l = lowerRightX; l <= lowerRightX + lowerRightXModifier; l++) {
 			if (!i.eastDoor.exists) {
 				map[k][l].nearWalls.push({
 					building: j,

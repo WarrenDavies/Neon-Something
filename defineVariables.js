@@ -259,8 +259,8 @@ var theZombies = [];
 
 // Player coords and initial location
  function Player () {
-	 this.x = 1500; 
-	 this.y = 1000;
+	 this.x = 150; 
+	 this.y = 2500;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -295,7 +295,10 @@ var theZombies = [];
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
 	 this.onTile = {x: 0, y: 0};
- } 
+	 this.inBounds = {
+
+	 }
+} 
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
 var rightDoorPosition = 125;
@@ -1169,6 +1172,120 @@ theBuildings[11] = {
 		exists: false,
 	},
 };
+
+
+theBuildings[100] = {
+	name: "topBounds",
+	upperLeftX: 0,
+	upperLeftY: 0,
+	lowerRightX: map[0].length * 50 - 1,
+	lowerRightY: 49,
+	building: 100,
+	height: 1.5,
+	wallColor: "#990000",
+	roofColor: "brown",
+	type: "rectangular",
+	upperLeftTile: 0,
+	lowerRightTile: map[0].length,
+	floor: indoorFloorImage,
+	southDoor: {
+		exists: false,
+	},
+	northDoor: {
+		exists: false,
+	},
+	eastDoor: {
+		exists: false,
+	},
+	westDoor: {
+		exists: false,
+	},
+};
+
+theBuildings[101] = {
+	name: "rightBounds",
+	upperLeftX: map[0].length * 50 - 50,
+	upperLeftY: 50,
+	lowerRightX: map[0].length * 50 - 1,
+	lowerRightY: map.length * 50 - 50,
+	building: 101,
+	height: 1.5,
+	wallColor: "#990000",
+	roofColor: "brown",
+	type: "rectangular",
+	upperLeftTile: map[0].length,
+	lowerRightTile: map.length,
+	floor: grassImage,
+	southDoor: {
+		exists: false,
+	},
+	northDoor: {
+		exists: false,
+	},
+	eastDoor: {
+		exists: false,
+	},
+	westDoor: {
+		exists: false,
+	},
+};
+
+theBuildings[102] = {
+	name: "bottomBounds",
+	upperLeftX: 0,
+	upperLeftY: map.length * 50 - 50,
+	lowerRightX: map[0].length * 50 - 1,
+	lowerRightY: map.length * 50 - 1,
+	building: 102,
+	height: 1.5,
+	wallColor: "#990000",
+	roofColor: "brown",
+	type: "rectangular",
+	upperLeftTile: map.length,
+	lowerRightTile: map[0].length,
+	floor: indoorFloorImage,
+	southDoor: {
+		exists: false,
+	},
+	northDoor: {
+		exists: false,
+	},
+	eastDoor: {
+		exists: false,
+	},
+	westDoor: {
+		exists: false,
+	},
+};
+
+theBuildings[103] = {
+	name: "leftBounds",
+	upperLeftX: 0,
+	upperLeftY: 50,
+	lowerRightX: 49,
+	lowerRightY: map.length * 50 - 51,
+	building: 103,
+	height: 1.5,
+	wallColor: "#990000",
+	roofColor: "brown",
+	type: "rectangular",
+	upperLeftTile: map.length,
+	lowerRightTile: map[0].length,
+	floor: grassImage,
+	southDoor: {
+		exists: false,
+	},
+	northDoor: {
+		exists: false,
+	},
+	eastDoor: {
+		exists: false,
+	},
+	westDoor: {
+		exists: false,
+	},
+};
+
 
 theBuildings.forEach(function(i, j) {
 	if (i.northDoor) {

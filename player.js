@@ -17,10 +17,24 @@ if (Player1.mot === 0) {
 	if (Player1.speed > 0) {
 		//console.log(checkPlayerCollision(Player1.x + (Player1.xVector * Player1.speed), Player1.y + (Player1.yVector * Player1.speed)));
 		
+		
 		checkPlayerCollision(Player1.xVector * Player1.speed, Player1.yVector * Player1.speed);
 		
+		// Game area boundaries - added buildings around the edge instead
+		// if (
+		// 	(Player1.x + Player1.xVector * Player1.speed > 0) &&
+		// 	(Player1.x + Player1.xVector * Player1.speed < map[0].length * tileSize)
+		// ) {
+		// 	Player1.x += Player1.xVector * Player1.speed;
+		// }
+		// if (
+		// 	(Player1.y + Player1.yVector * Player1.speed > 0) &&
+		// 	(Player1.y + Player1.yVector * Player1.speed < map.length * tileSize)
+		// ) {
+		// 	Player1.y += Player1.yVector * Player1.speed;
+		// }
 		
-		
+
 		Player1.x += Player1.xVector * Player1.speed;
 		Player1.y += Player1.yVector * Player1.speed;
 		Player1.onTile = returnTile(Player1);

@@ -11,7 +11,7 @@ function drawBuildings() {
 				
 			// console.log(isOnCamera(theBuildings[i]));
 			
-			if (isOnCamera(theBuildings[i]) ) {
+			if (isOnCamera(theBuildings[i])) {
 			 
 				drawRectangularBuilding(theBuildings[i].upperLeftX, theBuildings[i].upperLeftY, theBuildings[i].lowerRightX, theBuildings[i].lowerRightY, theBuildings[i].height, theBuildings[i].wallColor, theBuildings[i].roofColor, theBuildings[i].building);
 				

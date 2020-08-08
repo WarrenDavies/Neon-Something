@@ -596,15 +596,61 @@ function checkThisVehicleCollision(j) {
 						} // second for loop cycling through vehicle lines
 					} // check vehicle is not testing collision with itself
 				}); // second vehicles on screen for each (k, l)
+			
+				
+				// don't need this, added walls around the game area
+				// let mapBoundaryLines = [
+				// 	{
+				// 		p1x: 0,
+				// 		p1y: 0,
+				// 		p2x: map[0].length * tileSize,
+				// 		p2y: 1,	
+				// 	},
+				// 	{
+				// 		p1x: 0,
+				// 		p1y: 0,
+				// 		p2x: 1,
+				// 		p2y: map.length * tileSize,	
+				// 	},
+				// 	{
+				// 		p1x: map[0].length * tileSize - 1,
+				// 		p1y: 0,
+				// 		p2x: map[0].length * tileSize,
+				// 		p2y: map.length * tileSize,	
+				// 	},
+				// 	{
+				// 		p1x: 0,
+				// 		p1y: map.length * tileSize,
+				// 		p2x: map[0].length * tileSize,
+				// 		p2y: map.length * tileSize,	
+				// 	},
+				// ]
+				// mapBoundaryLines.forEach((m, n) => {
+				// 	// boundary collision
+				// 	if (testLines(
+				// 		vehiclesOnScreen[j].lines[vehicleLine].p1xStep, 
+				// 		vehiclesOnScreen[j].lines[vehicleLine].p1yStep, 
+				// 		vehiclesOnScreen[j].lines[vehicleLine].p2xStep, 
+				// 		vehiclesOnScreen[j].lines[vehicleLine].p2yStep,
+				// 		m.p1x, 
+				// 		m.p1y, 
+				// 		m.p2x, 
+				// 		m.p2y)) {
+				// 			vehiclesOnScreen[j].collision = true;
+				// 	}
+
+				// });
 				
 				// draw collision lines for the moving vehicle
-				c.strokeStyle ="red";
-				c.lineWidth = 1;
-				c.beginPath();
-				c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p1yStep - cameraY);
-				c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p2yStep - cameraY );
-				c.stroke();
-				c.closePath()
+				if (debug) {
+					c.strokeStyle ="red";
+					c.lineWidth = 1;
+					c.beginPath();
+					c.moveTo(vehiclesOnScreen[j].lines[vehicleLine].p1xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p1yStep - cameraY);
+					c.lineTo(vehiclesOnScreen[j].lines[vehicleLine].p2xStep - cameraX, vehiclesOnScreen[j].lines[vehicleLine].p2yStep - cameraY );
+					c.stroke();
+					c.closePath()
+				}
 			} // if this vehicle line exists
 		} // for loop cycling through vehicle lines
 	} // if this vehicles speed is > 0 
