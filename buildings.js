@@ -606,14 +606,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 // define south left door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX - (cameraW / 2);
 		var dby = lowerLeftY - cameraY - (cameraH / 2);				
-		theBuildings[buildingNo].southDoor.leftDoorTopLeftX = (cameraW / 2) + dbx * 1.1;
-		theBuildings[buildingNo].southDoor.leftDoorTopLeftY = (cameraH / 2) + dby * 1.1;
+		theBuildings[buildingNo].southDoor.leftDoorTopLeftX = (cameraW / 2) + dbx * 1.075;
+		theBuildings[buildingNo].southDoor.leftDoorTopLeftY = (cameraH / 2) + dby * 1.075;
 	
 // define south left door top right
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorPosition - cameraX - (cameraW / 2);
 		var dby = lowerLeftY - cameraY - (cameraH / 2);				
-		theBuildings[buildingNo].southDoor.doorTopRightX = (cameraW / 2) + dbx * 1.1;
-		theBuildings[buildingNo].southDoor.doorTopRightY = (cameraH / 2) + dby * 1.1;
+		theBuildings[buildingNo].southDoor.doorTopRightX = (cameraW / 2) + dbx * 1.075;
+		theBuildings[buildingNo].southDoor.doorTopRightY = (cameraH / 2) + dby * 1.075;
 			
 // draw south left door		
 		c.moveTo(lowerLeftX + (theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft+theBuildings[buildingNo].southDoor.leftDoorPosition) - cameraX, lowerRightY - cameraY);
@@ -641,14 +641,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 // define south right door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorSize + theBuildings[buildingNo].southDoor.rightDoorPosition - cameraX - (cameraW / 2);
 		var dby = lowerLeftY - cameraY - (cameraH / 2);				
-		theBuildings[buildingNo].southDoor.rightDoorTopLeftX = (cameraW / 2) + dbx * 1.1;
-		theBuildings[buildingNo].southDoor.rightDoorTopLeftY = (cameraH / 2) + dby * 1.1;
+		theBuildings[buildingNo].southDoor.rightDoorTopLeftX = (cameraW / 2) + dbx * 1.075;
+		theBuildings[buildingNo].southDoor.rightDoorTopLeftY = (cameraH / 2) + dby * 1.075;
 				
 // define south right door top right
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle + theBuildings[buildingNo].southDoor.leftDoorSize - cameraX - (cameraW / 2);
 		var dby = lowerLeftY - cameraY - (cameraH / 2);				
-		theBuildings[buildingNo].southDoor.rightDoorTopRightX = (cameraW / 2) + dbx * 1.1;
-		theBuildings[buildingNo].southDoor.rightDoorTopRightY = (cameraH / 2) + dby * 1.1;
+		theBuildings[buildingNo].southDoor.rightDoorTopRightX = (cameraW / 2) + dbx * 1.075;
+		theBuildings[buildingNo].southDoor.rightDoorTopRightY = (cameraH / 2) + dby * 1.075;
 		
 // draw south right door
 		c.beginPath();

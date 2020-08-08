@@ -535,7 +535,7 @@ function checkNPCCollisionWithBuilding(i, wallNear) {
 			}
 		}
 	if ((xPushTarget != null || xPushTarget != undefined)  && (yPushTarget != null || yPushTarget != undefined) && i.inBuilding === false  ) {
-		console.log("inside waypoint function");
+		//console.log("inside waypoint function");
 		if (i.wayPoints.length > 0) {
 			if (xPushTarget != i.wayPoints[i.wayPoints.length - 1].x && yPushTarget != i.wayPoints[i.wayPoints.length - 1].y) {
 				i.wayPoints.push({

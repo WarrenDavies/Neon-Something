@@ -1,6 +1,6 @@
 function spawnZombie() {
 	//if (theZombies.length < 100) {
-	if (theZombies.length < 100) {
+	if (theZombies.length < 50) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;

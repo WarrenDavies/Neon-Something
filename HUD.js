@@ -322,7 +322,8 @@ function debugHUD(){
 			c.font = 'bold 14pt Calibri';
 			c.fillText("Location: x = " + Player1.onTile.x + ", y =" + Player1.onTile.y, 900, 125);
 			c.fillText("Building: " + map[Player1.onTile.y][Player1.onTile.x].building, 900, 150);
-			
+			c.fillText("Speed modifier: " + map[Player1.onTile.y][Player1.onTile.x].speedModifier, 900, 225);
+			c.fillText("Speed: " + Player1.speed, 900, 250);
 			let nearWallsString = "";
 			map[Player1.onTile.y][Player1.onTile.x].nearWalls.forEach((i, j) => {
 				if (j > 0) {

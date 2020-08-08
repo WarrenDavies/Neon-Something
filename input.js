@@ -56,11 +56,22 @@ function detectKeys(){
 	// vehicle key presses
 	if (Player1.mot > 0) { 
 		 //accelerating
-		 if (keys[87] && !keys[65] && !keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed || keys[87] && keys[65] && keys[68] && Player1.speed < vehiclesOnScreen[Player1.mot].topForwardSpeed) {
+		 if (keys[87] && !keys[65] && !keys[68] || keys[87] && keys[65] && keys[68]) {
 			vehiclesOnScreen[Player1.mot].accelerating = true;
 			vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].acceleration / vehiclesOnScreen[Player1.mot].weight;
-			if (vehiclesOnScreen[Player1.mot].speed > vehiclesOnScreen[Player1.mot].topForwardSpeed) {
-				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].topForwardSpeed;
+			Player1.onTile = returnTile(Player1);
+			console.log(map[Player1.onTile.y][Player1.onTile.x]);
+
+			console.log(map[Player1.onTile.y][Player1.onTile.x].speedModifier);
+			
+			console.log(vehiclesOnScreen[Player1.mot].topForwardSpeed - map[Player1.onTile.y][Player1.onTile.x].speedModifier);
+			
+			if (vehiclesOnScreen[Player1.mot].speed > vehiclesOnScreen[Player1.mot].topForwardSpeed - map[Player1.onTile.y][Player1.onTile.x].speedModifier) {
+				if (vehiclesOnScreen[Player1.mot].topForwardSpeed - map[Player1.onTile.y][Player1.onTile.x].speedModifier < 0) {
+					vehiclesOnScreen[Player1.mot].speed = 1;
+				} else {
+					vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].topForwardSpeed - map[Player1.onTile.y][Player1.onTile.x].speedModifier;
+				}
 			}	
 		}
 

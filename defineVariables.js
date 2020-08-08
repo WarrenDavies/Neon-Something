@@ -725,7 +725,7 @@ theBuildings[4] = {
 	lowerRightX: 1550 - 1,
 	lowerRightY: 950 - 1,
 	building: 4,
-	height: 1.5,
+	height: 1.2,
 	wallColor: "#040311",
 	roofColor: "#0f0b44",
 	wallColor: "#000",

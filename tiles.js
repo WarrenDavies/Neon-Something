@@ -129,7 +129,8 @@ backgroundImage: waterImage,
 sourceX: 319,
 sourceY: 447,
 w: 32,
-h: 32
+h: 32,
+speedModifier: 9,
 };
 
 grass = { 
@@ -147,7 +148,8 @@ backgroundImage: grassImage,
 sourceX: 128,
 sourceY: 96,
 w: 32,
-h: 32
+h: 32,
+speedModifier: 3,
 };
 
 pavement = { 
@@ -165,7 +167,8 @@ backgroundImage: pavementImage,
 sourceX: 64,
 sourceY: 32,
 w: 32,
-h: 32
+h: 32,
+speedModifier: 0,
 };
 
 
@@ -184,7 +187,8 @@ backgroundImage: sandImage,
 sourceX: 0,
 sourceY: 0,
 w: 32,
-h: 32
+h: 32,
+speedModifier: 5,
 };
 
 grey = { 
@@ -467,7 +471,8 @@ function objectifyMap() {
 					sourceX: 319,
 					sourceY: 447,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 10,
 				};
 			}
 			
@@ -488,7 +493,8 @@ function objectifyMap() {
 					sourceX: 128,
 					sourceY: 96,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 3,
 				};
 			}
 			
@@ -509,7 +515,8 @@ function objectifyMap() {
 					sourceX: 64,
 					sourceY: 32,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 0,
 				};
 			}
 				
@@ -531,7 +538,8 @@ function objectifyMap() {
 					sourceX: 0,
 					sourceY: 0,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 7,
 				};
 			}
 		});
@@ -562,7 +570,8 @@ function objectifyTile(k, j, l) {
 					sourceX: 319,
 					sourceY: 447,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 8,
 				};
 			}
 			
@@ -583,7 +592,8 @@ function objectifyTile(k, j, l) {
 					sourceX: 128,
 					sourceY: 96,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 2,
 				};
 			}
 			
@@ -604,7 +614,8 @@ function objectifyTile(k, j, l) {
 					sourceX: 64,
 					sourceY: 32,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 0,
 				};
 			}
 				
@@ -625,7 +636,8 @@ function objectifyTile(k, j, l) {
 					sourceX: 0,
 					sourceY: 0,
 					w: 32,
-					h: 32
+					h: 32,
+					speedModifier: 5,
 		};
 	}
 }
