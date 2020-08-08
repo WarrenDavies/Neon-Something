@@ -835,6 +835,7 @@ function drawMap() {
 				//	buildingsOnScreen.push(j);
 				//});
 				if (debug) {
+					// shows how many walls this tile is adjacent to
 					if (map[j][l].nearWalls.length > 0) {
 						c.fillText("NW", l * tileSize - cameraX + 20, j * tileSize - cameraY + 17);
 						c.fillText(map[j][l].nearWalls.length, l * tileSize - cameraX + (tileSize / 2), j * tileSize - cameraY + (tileSize / 2) + 5);
@@ -873,37 +874,98 @@ theBuildings.forEach( function(i, j) {
 	// top
 	for (k = upperLeftY - 1; k <= upperLeftY; k++) {
 		for (l = upperLeftX - 1; l <= lowerRightX + 1; l++) {
-				map[k][l].nearWalls.push({
-					building: j,
-					wall: "top",
-				})
+				if (!i.northDoor.exists) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "top",
+					})
+				} else {
+					if (i.northDoor.exists && (l * 50) + 26 > (upperLeftX * 50) + i.northDoor.doorwayDistanceFromLeftToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "top2",
+						})
+					}
+					if (i.northDoor.exists && l * 50 < (upperLeftX * 50) + i.northDoor.doorwayDistanceFromLeftToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "top",
+						})
+					}
+				}
 		}
 	}
 	//left
 	for (k = upperLeftY - 1; k <= lowerRightY + 1; k++) {
 		for (l = upperLeftX - 1; l <= upperLeftX; l++) {
+			if (!i.westDoor.exists) {
 				map[k][l].nearWalls.push({
 					building: j,
 					wall: "left",
 				})
+			} else {
+				if (i.westDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "left2",
+					})
+				}
+				if (i.westDoor.exists && k * 50 < (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "left",
+					})
+				}
+			}
 		}
 	}
 	// bottom
 	for (k = lowerRightY; k <= lowerRightY + 1; k++) {
 		for (l = upperLeftX - 1; l <= lowerRightX + 1; l++) {
+			if(!i.southDoor.exists) {
 				map[k][l].nearWalls.push({
 					building: j,
 					wall: "bottom",
 				})
+			} else {
+				if (i.southDoor.exists && (l * 50) + 26 > (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "bottom2",
+					})
+				}
+				if (i.southDoor.exists && l * 50 < (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "bottom",
+					})
+				}
+			}
+
 		}
 	}
 	// right
 	for (k = upperLeftY - 1; k <= lowerRightY + 1; k++) {
 		for (l = lowerRightX; l <= lowerRightX + 1; l++) {
+			if (!i.eastDoor.exists) {
 				map[k][l].nearWalls.push({
 					building: j,
 					wall: "right",
 				})
+			} else {
+				if (i.eastDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "right2",
+					})
+				}
+				if (i.eastDoor.exists && k * 50 < (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
+					map[k][l].nearWalls.push({
+						building: j,
+						wall: "right",
+					})
+				}
+			}
 		}
 	}
 });

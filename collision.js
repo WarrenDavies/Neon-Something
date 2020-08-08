@@ -289,7 +289,7 @@ function isOnScreen(i) {
 }
 
 function checkNPCCollisionWithBuilding(i, wallNear) {
-	console.log (k);
+	//console.log (k);
 	let xPushTarget = null;
 	let yPushTarget = null;
 	//check collisions with buildings
@@ -311,9 +311,9 @@ function checkNPCCollisionWithBuilding(i, wallNear) {
 	// c.stroke();
 	let l = wallNear.building;
 	let line = wallNear.wall;
-	console.log("l = " + l + ", line = " + line);
-	console.log(theBuildings[l]);
-	console.log(theBuildings[l].walls);
+	// console.log("l = " + l + ", line = " + line);
+	// console.log(theBuildings[l]);
+	// console.log(theBuildings[l].walls);
 	//theBuildings.forEach( function(k, l) {
 	// wallsNear.forEach( (l, line) => {
 
@@ -534,8 +534,8 @@ function checkNPCCollisionWithBuilding(i, wallNear) {
 				}
 			}
 		}
-	if ((xPushTarget != null || xPushTarget != undefined)  && (yPushTarget != null || yPushTarget != undefined)) {
-		
+	if ((xPushTarget != null || xPushTarget != undefined)  && (yPushTarget != null || yPushTarget != undefined) && i.inBuilding === false  ) {
+		console.log("inside waypoint function");
 		if (i.wayPoints.length > 0) {
 			if (xPushTarget != i.wayPoints[i.wayPoints.length - 1].x && yPushTarget != i.wayPoints[i.wayPoints.length - 1].y) {
 				i.wayPoints.push({
@@ -546,11 +546,13 @@ function checkNPCCollisionWithBuilding(i, wallNear) {
 				i.collisionCourse = false;
 			}
 		} else {
+			// console.log("pushing waypoint");
 			i.wayPoints.push({
 				x: xPushTarget,
 				y: yPushTarget,
 				type: "Avoid Building",
 			});
+			// console.log("i.wayPoints.length: " + i.wayPoints.lengtha )
 			i.collisionCourse = false;
 		}
 	}

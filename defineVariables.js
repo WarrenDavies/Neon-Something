@@ -259,8 +259,8 @@ var theZombies = [];
 
 // Player coords and initial location
  function Player () {
-	 this.x = 1400; 
-	 this.y = 600;
+	 this.x = 1500; 
+	 this.y = 1000;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -269,7 +269,7 @@ var theZombies = [];
 	 this.yTarget = 0;
 	 this.tired = false;
 	 this.speed = 0;
-	 this.topSpeed = 4;
+	 this.topSpeed = 8;
 	 this.energy = 150;
 	 this.health = 150;
 	 this.recovery = 0

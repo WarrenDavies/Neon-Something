@@ -150,7 +150,7 @@ function debugHUD(){
 		if (showPlayer){
 			c.beginPath();
 			c.font = 'bold 14pt Calibri';
-			
+			c.fillStyle = "white";
 			c.fillText("PLAYER ", 100, 125);
 			//c.fillText("x: " + Player1.x, 100, 150);
 			//c.fillText("y: " + Player1.y, 100, 175);
@@ -166,6 +166,7 @@ function debugHUD(){
 			
 			if (debugTarget){
 			c.font = 'bold 14pt Calibri';
+			c.fillStyle = "white";
 			c.fillText("ID: " + Math.floor(debugTarget.ID), 500, 125);
 			c.fillText("x: " + Math.floor(debugTarget.x), 500, 150);
 			c.fillText("y: " + Math.floor(debugTarget.y), 500, 175);
@@ -210,6 +211,7 @@ function debugHUD(){
 
 
 			c.font = 'bold 18pt Calibri';
+			c.fillStyle = "white";
 			c.fillText("ZOMBIES:", 100, 75)
 
 			c.font = 'bold 14pt Calibri';
@@ -269,7 +271,7 @@ function debugHUD(){
 			debugTarget.inBuilding, 100, 600);
 
 			let nearWallsString = "";
-			console.log(map[debugTarget.onTile.y][debugTarget.onTile.x]);
+			//console.log(map[debugTarget.onTile.y][debugTarget.onTile.x]);
 			map[debugTarget.onTile.y][debugTarget.onTile.x].nearWalls.forEach((i, j) => {
 				if (j > 0) {
 					nearWallsString += " / ";	
@@ -315,7 +317,8 @@ function debugHUD(){
 			}
 
 			c.font = 'bold 18pt Calibri';
-			c.fillText("Current tile:", 900, 75)
+			c.fillStyle = "white";
+			c.fillText("Current tile:", 900, 75);
 			c.font = 'bold 14pt Calibri';
 			c.fillText("Location: x = " + Player1.onTile.x + ", y =" + Player1.onTile.y, 900, 125);
 			c.fillText("Building: " + map[Player1.onTile.y][Player1.onTile.x].building, 900, 150);

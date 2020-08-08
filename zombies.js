@@ -1,6 +1,6 @@
 function spawnZombie() {
 	//if (theZombies.length < 100) {
-	if (theZombies.length < 1) {
+	if (theZombies.length < 100) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
@@ -27,8 +27,8 @@ function spawnZombie() {
 		}
 
 		// force spawn near player
-		spawnX = Player1.x - 200 - Math.floor(Math.random() * 100);
-		spawnY = Player1.y - 200 - Math.floor(Math.random() * 100);
+		// spawnX = Player1.x - 200 - Math.floor(Math.random() * 100);
+		// spawnY = Player1.y - 200 - Math.floor(Math.random() * 100);
 		
 		
 		let zomID = theZombies.length;
@@ -132,21 +132,27 @@ function updateZombies() {
 			
 // check collision with buildings
 			if (i.collisionCourse === false) {
-				let collisionCounter = 0;
+				
 				if (i.onTile.y >= 0  && i.onTile.x >= 0 && i.onTile.y < map.length && i.onTile.x < map[0].length 
 				&& map[i.onTile.y][i.onTile.x].nearWalls.length > 0
 				) {
 					map[i.onTile.y][i.onTile.x].nearWalls.forEach( (k, l) => {
 						//if (theBuildings[k.building]) {
 							// console.log("here");
-							// console.log(theBuildings[k.building]);
-							checkNPCCollisionWithBuilding(i, k);
-							collisionCounter += 1;
+						//	console.log(k);
+							if (checkNPCCollisionWithBuilding(i, k)) {
+								i.x -= (i.speed * i.xVector);
+								i.y -= (i.speed * i.yVector);
+						
+								if (i.wayPoints.length > 0) {
+									setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
+								}
+							}
 							// to do: fix this to new collision system, don't loop through all buildings, just check the walls passed as k
 						//}
 					});
 				}
-				console.log("Collision counter: " + collisionCounter);
+
 				// // old method
 				// if (checkNPCCollisionWithBuilding(i)) {
 					
@@ -162,19 +168,23 @@ function updateZombies() {
 			if (i.collisionCourse === false) {
 				if (i.wayPoints.length > 0) {
 // if zombie can see the player, ignore the waypoint and head right for him
-					
+				//console.log("In the wapoint function");
 					// first check whether the player is within range/eyesight 
 										
-					if (i.distanceToPlayer < 200) {
+					//if (i.distanceToPlayer < 200) {
 						i.canSeePlayer = true;
-						var alreadyFoundPlayer = false;
+						let alreadyFoundPlayer = false;
+						// console.log(buildingsOnScreen);
 						buildingsOnScreen.forEach(function(k, l) {
 							if (!alreadyFoundPlayer) {
 								for (var line in theBuildings[k].walls) {
 									if (theBuildings[k].walls.hasOwnProperty(line)) {
+									
 										if (checkIfZombieCanSeePlayer(i, Player1, k, line)) {
 											// do something if the zombie CAN see the player
+									
 										} else {
+										
 											i.canSeePlayer = false;
 											alreadyFoundPlayer = true;
 										}
@@ -182,7 +192,7 @@ function updateZombies() {
 								}
 							}
 						});
-					}
+					//}
 					
 					if (i.canSeePlayer === true) {
 						i.wayPoints.splice(0);
@@ -529,7 +539,9 @@ function checkIfZombieCanSeePlayer(i, Player1, k, line) {
 // 	{ 
 
 // 	}
-// ]
+//  ]
+// 	console.log(k);
+// 	console.log(line);
 
 	
 	if (getLineIntersection(
