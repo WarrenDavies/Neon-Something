@@ -175,7 +175,7 @@ if (i.wayPoints.length > 0 && showWayPoints) {
 					}
 				}
 				
-checkNPCCollisionWithBuilding(i);
+// checkNPCCollisionWithBuilding_old(i);
 			
 // check collisions with player
 				if (collidesSpecify(i.x + ((i.speed * 10) * i.xVector), i.y + ((i.speed * 10) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {

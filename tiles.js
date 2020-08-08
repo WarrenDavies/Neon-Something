@@ -1,6 +1,6 @@
 function loadImages() {
-cityOutside = new Image();
-cityOutside.src = 'LPC_city_outside.png';
+// cityOutside = new Image();
+// cityOutside.src = 'LPC_city_outside.png';
 
 grassImage = new Image();
 grassImage.src = 'images/grassImage.png';

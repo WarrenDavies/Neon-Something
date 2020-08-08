@@ -1,6 +1,6 @@
 function spawnZombie() {
-	if (theZombies.length < 100) {
-	//if (theZombies.length < 1) {
+	//if (theZombies.length < 100) {
+	if (theZombies.length < 1) {
 // spawns a zombie along the edge of the map, first by getting a random binary number which chooses either a horizontal or a vertical edge.
 		let positionChooser = Math.floor(Math.random() * 2);
 		let spawnX;
@@ -26,8 +26,11 @@ function spawnZombie() {
 			spawnX = Math.floor(Math.random() * (map[0].length * 50))
 		}
 
-		//spawnX = Player1.x - 200;
-		//spawnY = Player1.y - 200;
+		// force spawn near player
+		spawnX = Player1.x - 200 - Math.floor(Math.random() * 100);
+		spawnY = Player1.y - 200 - Math.floor(Math.random() * 100);
+		
+		
 		let zomID = theZombies.length;
 		if (Player1.kills === 0) {
 			var zomHealth = 1;
@@ -129,23 +132,31 @@ function updateZombies() {
 			
 // check collision with buildings
 			if (i.collisionCourse === false) {
-
-				if (i.onTile.y >= 0  && i.onTile.x >= 0 && i.onTile.y < map.length && i.onTile.x < map[0].length) {
-					map[i.onTile.y][i.onTile.x].nearWalls.forEach( (i, j) => {
-
-					})
+				let collisionCounter = 0;
+				if (i.onTile.y >= 0  && i.onTile.x >= 0 && i.onTile.y < map.length && i.onTile.x < map[0].length 
+				&& map[i.onTile.y][i.onTile.x].nearWalls.length > 0
+				) {
+					map[i.onTile.y][i.onTile.x].nearWalls.forEach( (k, l) => {
+						//if (theBuildings[k.building]) {
+							// console.log("here");
+							// console.log(theBuildings[k.building]);
+							checkNPCCollisionWithBuilding(i, k);
+							collisionCounter += 1;
+							// to do: fix this to new collision system, don't loop through all buildings, just check the walls passed as k
+						//}
+					});
 				}
-
-				// old method
-				if (checkNPCCollisionWithBuilding(i)) {
+				console.log("Collision counter: " + collisionCounter);
+				// // old method
+				// if (checkNPCCollisionWithBuilding(i)) {
 					
-					i.x -= (i.speed * i.xVector);
-					i.y -= (i.speed * i.yVector);
+				// 	i.x -= (i.speed * i.xVector);
+				// 	i.y -= (i.speed * i.yVector);
 					
-					if (i.wayPoints.length > 0) {
-						setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
-					}
-				}
+				// 	if (i.wayPoints.length > 0) {
+				// 		setNPCdirection(i, i.wayPoints[i.wayPoints.length - 1]);
+				// 	}
+				// }
 			}
 // check collision with waypoints
 			if (i.collisionCourse === false) {

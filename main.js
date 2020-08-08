@@ -172,8 +172,9 @@ function mainDraw(canvas, message) {
 	drawBullets();
 	drawExplosions();
 	
-	updateCivilians();
-	drawCivilians(); 
+	// Civilians not really needed for zombie mode
+	// updateCivilians();
+	// drawCivilians(); 
 	
 
 	spawnZombie();

@@ -269,6 +269,7 @@ function debugHUD(){
 			debugTarget.inBuilding, 100, 600);
 
 			let nearWallsString = "";
+			console.log(map[debugTarget.onTile.y][debugTarget.onTile.x]);
 			map[debugTarget.onTile.y][debugTarget.onTile.x].nearWalls.forEach((i, j) => {
 				if (j > 0) {
 					nearWallsString += " / ";	

@@ -312,7 +312,7 @@ var theExplosions = [];
 
 
 vehicleAudi = new Image();
-vehicleAudi.src = 'images/Audi.png';
+vehicleAudi.src = 'images/audi.png';
 
 vehicleCar = new Image();
 vehicleCar.src = 'images/Car.png';
