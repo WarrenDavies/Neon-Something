@@ -898,7 +898,7 @@ theBuildings.forEach( function(i, j) {
 	for (k = upperLeftY - upperLeftYModifier; k <= upperLeftY; k++) {
 		for (l = upperLeftX - upperLeftXModifier; l <= lowerRightX + lowerRightXModifier; l++) {
 			// if (k >= 0 && l < map[0].length - 1) {	
-			if (typeof map[k][l] !== 'undefined') {	
+			if (k > 0 && k < map.length && l > 0 && l < map[0].length) {	
 				if (!i.northDoor.exists) {
 					console.log(k + ", " + l);
 					console.log(map[k][l]);
@@ -927,23 +927,25 @@ theBuildings.forEach( function(i, j) {
 	//left
 	for (k = upperLeftY - upperLeftYModifier; k <= lowerRightY + lowerRightYModifier; k++) {
 		for (l = upperLeftX - upperLeftXModifier; l <= upperLeftX; l++) {
-			if (!i.westDoor.exists && k <= map.length && l <= map[0].length) {
-				map[k][l].nearWalls.push({
-					building: j,
-					wall: "left",
-				})
-			} else {
-				if (i.westDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
-					map[k][l].nearWalls.push({
-						building: j,
-						wall: "left2",
-					})
-				}
-				if (i.westDoor.exists && k * 50 < (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
+				if (k > 0 && k < map.length && l > 0 && l < map[0].length) {	
+				if (!i.westDoor.exists && k <= map.length && l <= map[0].length) {
 					map[k][l].nearWalls.push({
 						building: j,
 						wall: "left",
 					})
+				} else {
+					if (i.westDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "left2",
+						})
+					}
+					if (i.westDoor.exists && k * 50 < (upperLeftY * 50) + i.westDoor.doorwayDistanceFromTopToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "left",
+						})
+					}
 				}
 			}
 		}
@@ -951,48 +953,51 @@ theBuildings.forEach( function(i, j) {
 	// bottom
 	for (k = lowerRightY; k <= lowerRightY + lowerRightYModifier; k++) {
 		for (l = upperLeftX - upperLeftXModifier; l <= lowerRightX + lowerRightXModifier; l++) {
-			if(!i.southDoor.exists) {
-				map[k][l].nearWalls.push({
-					building: j,
-					wall: "bottom",
-				})
-			} else {
-				if (i.southDoor.exists && (l * 50) + 26 > (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
-					map[k][l].nearWalls.push({
-						building: j,
-						wall: "bottom2",
-					})
-				}
-				if (i.southDoor.exists && l * 50 < (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
+				if (k > 0 && k < map.length && l > 0 && l < map[0].length) {	
+				if(!i.southDoor.exists) {
 					map[k][l].nearWalls.push({
 						building: j,
 						wall: "bottom",
 					})
+				} else {
+					if (i.southDoor.exists && (l * 50) + 26 > (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "bottom2",
+						})
+					}
+					if (i.southDoor.exists && l * 50 < (upperLeftX * 50) + i.southDoor.doorwayDistanceFromLeftToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "bottom",
+						})
+					}
 				}
 			}
-
 		}
 	}
 	// right
 	for (k = upperLeftY - upperLeftYModifier; k <= lowerRightY + lowerRightYModifier; k++) {
 		for (l = lowerRightX; l <= lowerRightX + lowerRightXModifier; l++) {
-			if (!i.eastDoor.exists) {
-				map[k][l].nearWalls.push({
-					building: j,
-					wall: "right",
-				})
-			} else {
-				if (i.eastDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
-					map[k][l].nearWalls.push({
-						building: j,
-						wall: "right2",
-					})
-				}
-				if (i.eastDoor.exists && k * 50 < (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
+				if (k > 0 && k < map.length && l > 0 && l < map[0].length) {	
+				if (!i.eastDoor.exists) {
 					map[k][l].nearWalls.push({
 						building: j,
 						wall: "right",
 					})
+				} else {
+					if (i.eastDoor.exists && (k * 50) + 26 > (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "right2",
+						})
+					}
+					if (i.eastDoor.exists && k * 50 < (upperLeftY * 50) + i.eastDoor.doorwayDistanceFromTopToMiddle) {
+						map[k][l].nearWalls.push({
+							building: j,
+							wall: "right",
+						})
+					}
 				}
 			}
 		}
