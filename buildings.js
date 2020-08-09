@@ -24,6 +24,79 @@ function drawBuildings() {
 			 }
 		}
 	}
+	buildingsOnScreen.forEach((i, j) => {
+		//console.log(i);
+		if (i > 99) {
+			let i = buildingsOnScreen[j];
+			justDrawRoof(theBuildings[i].upperLeftX, theBuildings[i].upperLeftY, theBuildings[i].lowerRightX, theBuildings[i].lowerRightY, theBuildings[i].height, theBuildings[i].wallColor, theBuildings[i].roofColor, theBuildings[i].building);
+		}
+	});
+}
+
+function justDrawRoof(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, wallColor, roofColor, buildingNo) { 
+
+	var upperRightX = lowerRightX;
+	var upperRightY = upperLeftY;
+	var lowerLeftX = upperLeftX;
+	var lowerLeftY = lowerRightY;
+
+	c.beginPath();
+	c.lineWidth = 1;
+	c.strokeStyle = wallColor;
+	// roof top left
+	var dx = upperLeftX - cameraX - (cameraW / 2);
+	var dy = upperLeftY - cameraY - (cameraH / 2);				
+	var roofTopLeftX = (cameraW / 2) + dx * height;
+	var roofTopLeftY = (cameraH / 2) + dy * height;
+	
+	theBuildings[buildingNo].roofTopLeftX = roofTopLeftX;
+	theBuildings[buildingNo].roofTopLeftY = roofTopLeftY;
+	theBuildings[buildingNo].roofTopLeftXExtend = (cameraW / 2) + dx * 20;
+	theBuildings[buildingNo].roofTopLeftYExtend = (cameraW / 2) + dy * 20;
+	
+	// roof top right
+	var dx = upperRightX - cameraX - (cameraW / 2);
+	var dy = upperRightY - cameraY - (cameraH / 2);				
+	var roofTopRightX = (cameraW / 2) + dx * height;
+	var roofTopRightY = (cameraH / 2) + dy * height;
+	
+	theBuildings[buildingNo].roofTopRightX = roofTopRightX;
+	theBuildings[buildingNo].roofTopRightY = roofTopRightY;
+	
+	// roof bottom right
+	var dx = lowerRightX - cameraX - (cameraW / 2);
+	var dy = lowerRightY - cameraY - (cameraH / 2);				
+	var roofBottomRightX = (cameraW / 2) + dx * height;
+	var roofBottomRightY = (cameraH / 2) + dy * height;
+	
+	theBuildings[buildingNo].roofBottomRightX = roofBottomRightX;
+	theBuildings[buildingNo].roofBottomRightY = roofBottomRightY;
+	
+	// roof bottom left
+	var dx = lowerLeftX - cameraX -	(cameraW / 2);
+	var dy = lowerLeftY - cameraY - (cameraH / 2);				
+	var roofBottomLeftX = (cameraW / 2) + dx * height;
+	var roofBottomLeftY = (cameraH / 2) + dy * height;
+	
+	theBuildings[buildingNo].roofBottomLeftX = roofBottomLeftX;
+	theBuildings[buildingNo].roofBottomLeftY = roofBottomLeftY;
+	theBuildings[buildingNo].roofBottomLeftXExtend = (cameraW / 2) + dx * 20;
+	theBuildings[buildingNo].roofBottomLeftYExtend = (cameraW / 2) + dy * 20;
+
+	c.beginPath();
+	c.fillStyle = roofColor;
+	c.strokeStyle = wallColor;
+	c.beginPath();	
+	c.moveTo(roofTopLeftX, roofTopLeftY);
+	c.lineTo(roofTopRightX, roofTopRightY);
+	c.lineTo(roofBottomRightX, roofBottomRightY);
+	c.lineTo(roofBottomLeftX, roofBottomLeftY);
+	c.lineTo(roofTopLeftX, roofTopLeftY);
+	c.fillStyle = roofColor;
+	c.stroke();
+	c.fill();
+	c.closePath();
+
 }
 
 function getDistanceFromDoor(person, buildingNo, door, leftEdge, distanceFromLeftEdgeToMiddle, frontEdge, distanceFromFrontEdgeToMiddle) {

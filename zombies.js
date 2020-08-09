@@ -9,19 +9,19 @@ function spawnZombie() {
 // 0 means the zombie will go along the a vertical edge. So there's another random number here which determines whether it will be the left or right edge.
 			if (Math.floor(Math.random() * 2) === 0) {
 // an x value of 10 means the zombie will spawn 10 pixels from the left edge of the map
-				spawnX = 30;
+				spawnX = 100;
 			} else {
 //otherwise, we spaen it 10 pixels to the left of the right edge of the map, as determined by the length of row [0] in the map array (any would do, they are all the same size because it's just a simple grid.)
-			spawnX = (map[0].length * 50) - 30
+			spawnX = (map[0].length * 50) - 100
 			}
 // then we just choose a random number for the Y coordinate based on the length of the map * 50, which is the width of the tiles
 			spawnY = Math.floor(Math.random() * (map.length * 50))
 		} else {
 // 1 means the zombie will spawn along a horizontal edge. This is exactly the same principle as above
 			if (Math.floor(Math.random() * 2) === 0) {
-				spawnY = 30;
+				spawnY = 100;
 			} else {
-				spawnY = (map.length * 50) - 30
+				spawnY = (map.length * 50) - 100
 			}
 			spawnX = Math.floor(Math.random() * (map[0].length * 50))
 		}
