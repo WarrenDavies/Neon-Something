@@ -247,6 +247,10 @@ function detectKeys(){
 		changeWeapon(1);
 	}
 	
+
+
+
+
 	 // 70 = f
 	 // 65 = left  / a
 	 // 68	 = right / d
@@ -281,13 +285,13 @@ function click(e) {
 		
 	} else {
 		if (Player1.mot === 0) {
-			if (Player1.activeWeapon === 1 && Player1.ammo[Player1.activeWeapon] > 0) {
+			if (Player1.activeWeapon === 0 && Player1.weaponsPossessed[Player1.activeWeapon].ammo > 0) {
 				firePistol();
 			}
-			if (Player1.activeWeapon === 3 && Player1.ammo[Player1.activeWeapon] > 0) {
+			if (Player1.activeWeapon === 2 && Player1.weaponsPossessed[Player1.activeWeapon].ammo > 0) {
 				firePlasmaGun();
 			}
-			if (Player1.activeWeapon === 4 && Player1.ammo[Player1.activeWeapon] > 0) {
+			if (Player1.activeWeapon === 3 && Player1.weaponsPossessed[Player1.activeWeapon].ammo > 0) {
 				fireRocketLauncher();
 			}
 		}

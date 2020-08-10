@@ -85,10 +85,71 @@ function drawHUD() {
 	c.fillText(Player1.activeWeapon, 725, 25);	
 	
 	c.fillText("Ammo:", 770, 25);	
-	c.fillText(Player1.ammo[Player1.activeWeapon], 850, 25);	
+	c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 850, 25);	
 	
 	c.fillText("Kills:", 930, 25);	
 	c.fillText(Player1.kills, 980, 25);	
+
+	weaponsBar.forEach ( function( i, j) {
+
+		c.save();
+		c.beginPath();
+		c.translate(i.x, i.y);
+		c.fillStyle = i.fill;
+		
+		c.moveTo(-15, -15);
+		c.lineTo(15, -15);
+		c.lineTo(15, 3);
+		c.lineTo(-15, 3);
+		c.lineTo(-15, -15);
+		c.lineTo(15, -15);
+		
+		//c.rect(-15, -15, 15, 3);
+		c.strokeStyle = i.border;
+		c.lineWidth = 3;
+		if (Player1.activeWeapon === j) {
+			c.lineWidth = 8;
+			c.strokeStyle='white';
+		}
+		c.stroke();
+		c.fill();
+		
+		if (!Player1.weaponsPossessed[j]) {
+			c.lineWidth = 4;
+			c.strokeStyle = 'red';
+			c.moveTo(-15, -15);
+			c.lineTo(15,3);
+			c.moveTo(15,-15);
+			c.lineTo(-15,3);
+			c.stroke();
+		}
+		c.restore();
+		
+		});
+				
+		c.font = '18pt Calibri';
+		c.strokeStyle = 'white';
+		c.fillText("Ammo:", 660, 590);
+
+		if (Player1.activeWeapon === 0) {
+			c.strokeStyle = 'white';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
+		}
+		if (Player1.activeWeapon === 1) {
+			c.strokeStyle = 'blue';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
+		}
+		if (Player1.activeWeapon === 2) {
+			c.strokeStyle = 'orange';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
+		}
+		if (Player1.activeWeapon === 3) {
+			c.strokeStyle = 'purple';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
+		}
+		if (Player1.activeWeapon === 4) {
+			c.strokeStyle = 'white';c.fillText(turretAmmo, 740, 590);
+		}
+		if (Player1.activeWeapon === 5) {
+			c.strokeStyle = 'white';c.fillText(trapAmmo, 740, 590);
+		}
+
 }
 
 function debugHUD(){

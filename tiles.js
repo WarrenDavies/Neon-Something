@@ -643,7 +643,7 @@ function objectifyTile(k, j, l) {
 }
 
 function updateTime() {
-	//time += .01;
+	time += .01;
 	if (time > 24) {time = 0;}
 
 	switch(Math.floor(time)) {
@@ -714,7 +714,30 @@ function updateTime() {
 	c.lineTo(cameraW, cameraH);
 	c.lineTo(0, cameraH);
 	c.lineTo(0, 0);
-	//c.fill();
+	c.fill();
+
+	//c.fillStyle = "rgba(0, 0, 0," + light + ")";
+	// c.beginPath();
+	// c.moveTo(500, 500);
+	// c.lineTo(500, 100);
+	// c.lineTo(100, 100);
+	// c.lineTo(100, 500);
+	// c.lineTo(500, 500);
+	// c.strokeStyle = "yellow";
+	// c.lineWidth = "20px";
+	// c.fill();
+
+
+	// c.beginPath();
+	// c.moveTo(1100, 500);
+	// c.lineTo(600, 500);
+	// c.lineTo(600, 100);
+	// c.lineTo(1100, 100);
+	// c.lineTo(1100, 500);
+	// c.strokeStyle = "yellow";
+	// c.lineWidth = "20px";
+	// c.fill();
+
 }
 
 function updateTimers() {
@@ -900,9 +923,9 @@ theBuildings.forEach( function(i, j) {
 			// if (k >= 0 && l < map[0].length - 1) {	
 			if (k > 0 && k < map.length && l > 0 && l < map[0].length) {	
 				if (!i.northDoor.exists) {
-					console.log(k + ", " + l);
-					console.log(map[k][l]);
-					console.log(typeof map[k][l])
+					// console.log(k + ", " + l);
+					// console.log(map[k][l]);
+					// console.log(typeof map[k][l])
 					map[k][l].nearWalls.push({
 						building: j,
 						wall: "top",

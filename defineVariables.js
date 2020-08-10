@@ -256,11 +256,19 @@ var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
 var theZombies = [];
+var weaponsBar = [
+	{fill: "red", border: "#FF2626", x: 440, y: 590},
+	{fill: "black", border: "grey", x: 480, y: 590},
+	{fill: "blue", border: "#4747FF", x: 520, y: 590},
+	{fill: "purple", border: "#932693", x: 560, y: 590},
+	]
+
+
 
 // Player coords and initial location
  function Player () {
-	 this.x = 150; 
-	 this.y = 2500;
+	 this.x = 500; 
+	 this.y = 500;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -291,7 +299,12 @@ var theZombies = [];
 	 this.standImage = playerStand;
 	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
 	 this.activeWeapon = 0;
-	 this.weaponsPossessed = [true, true, true, true, true];
+	 this.weaponsPossessed = [
+		{name: "Pistol", img: "", possess: true, ammo: 10000},
+		{name: "Machine Gun", img: "", possess: true, ammo: 1500},
+		{name: "Plasma Gun", img: "", possess: true, ammo: 50},
+		{name: "Rocket Launcher", img: "", possess: true, ammo: 30}
+	 ];
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
 	 this.onTile = {x: 0, y: 0};
@@ -301,6 +314,11 @@ var theZombies = [];
 } 
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
+
+
+
+
+
 var rightDoorPosition = 125;
 var leftDoorPosition = 125;
 var mouseDown = false;

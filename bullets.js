@@ -59,7 +59,7 @@ function createBullet(targetX, targetY, shooterX, shooterY, type, range, w, h, p
 			color: weaponColor,
 			angle: rotation
 		});
-		Player1.ammo[Player1.activeWeapon] -= 1;
+		Player1.weaponsPossessed[Player1.activeWeapon].ammo -= 1;
 	}
 } // end createBullet
 
@@ -96,7 +96,7 @@ function updateBullets() {
 		var rocketHit = false;
 		// has the range been reached
 		if (getDistance(i.xSource, i.ySource, i.x, i.y) > i.range) {
-			if (i.type === 4) {
+			if (i.type === 3) {
 				createExplosion(i.x, i.y, 150, i.power);
 			}
 			theBullets.splice(j, 1);
@@ -105,27 +105,27 @@ function updateBullets() {
 			
 		//collision with walls
 		if (checkBulletWallCollision(i, j) ){
-			if (i.type === 4) {
+			if (i.type === 3) {
 				createExplosion(i.x, i.y, 150, i.power);
 			}
 			theBullets.splice(j, 1);
 			return	
 		}
 		if (checkBulletCivilianCollision(i, j) ){
-			if (i.type === 4) {
+			if (i.type === 3) {
 				createExplosion(i.x, i.y, 150, i.power);
 			}
-			if (i.type !== 3) {
+			if (i.type !== 2) {
 				theBullets.splice(j, 1);
 				return	
 			}
 		}
 		
 		if (checkBulletZombieCollision(i, j) ){
-			if (i.type === 4) {
+			if (i.type === 3) {
 				createExplosion(i.x, i.y, 150, i.power);
 			}
-			if (i.type !== 3) {
+			if (i.type !== 2) {
 				theBullets.splice(j, 1);
 				return	
 			}
@@ -147,7 +147,7 @@ function drawBullets() {
 	theBullets.forEach ( function(i, j) {
 		if (i.active === true) {
 			// I know that this is not the right way to do it. later I'll do this with classes and let each bullet draw itself
-			if (i.type == 1 || i.type == 2 || i.type == 3) {
+			if (i.type == 0 || i.type == 1 || i.type == 2) {
 				c.beginPath();
 				c.arc(i.x - cameraX, i.y - cameraY, i.w, 0, 2*Math.PI);
 				c.fillStyle = i.color;
@@ -176,23 +176,4 @@ function drawBullets() {
 		}	
 	});
 } // draw bullets 
-
-function changeWeapon(change) {
-		var checkWeapon = Player1.activeWeapon;
-		for (j = Player1.weaponsPossessed.length; j >= 0; j--) {
-			checkWeapon += change;
-			if (checkWeapon < 0) {
-				checkWeapon = Player1.weaponsPossessed.length - 1;
-			}
-			if (checkWeapon > Player1.weaponsPossessed.length) {
-				checkWeapon = 0;
-			}
-			if (Player1.weaponsPossessed[(checkWeapon)] === true) {
-				Player1.activeWeapon = checkWeapon;
-				keys[81] = false;
-				keys[69] = false;
-				break;
-			}
-		}
-	}
 

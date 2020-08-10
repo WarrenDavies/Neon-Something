@@ -762,48 +762,48 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 // draw NEON corners
 // Credit to a pen by Giovanny for how to make this neon effect: https://codepen.io/agar3s/pen/pJpoya
-	// if (theBuildings[buildingNo].neonCorners === true && Player1.inBuilding != buildingNo ) {	
-	// 	c.strokeStyle = theBuildings[buildingNo].neonColor;
-	// 	c.shadowColor = theBuildings[buildingNo].neonShadowColor;
-	// 	c.globalCompositeOperation = "lighter";
-	// 	//c.shadowBlur = 4;
-	// 	c.lineCap = "round";
-	// 	c.beginPath();	
-	// 	for (i = 12; i > 0; i -= 3) {
+	if (theBuildings[buildingNo].neonCorners === true && Player1.inBuilding != buildingNo ) {	
+		c.strokeStyle = theBuildings[buildingNo].neonColor;
+		c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+		c.globalCompositeOperation = "lighter";
+		//c.shadowBlur = 4;
+		c.lineCap = "round";
+		c.beginPath();	
+		for (i = 12; i > 0; i -= 3) {
 			
-	// 		c.lineWidth = i;
-	// 		c.moveTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
-	// 		c.lineTo(roofBottomLeftX, roofBottomLeftY);
-	// 		c.stroke();
+			c.lineWidth = i;
+			c.moveTo(lowerLeftX - cameraX, lowerLeftY - cameraY);
+			c.lineTo(roofBottomLeftX, roofBottomLeftY);
+			c.stroke();
 			
-	// 	}
-	// 	for (i = 12; i > 0; i -= 3) {
-	// 		c.beginPath();	
-	// 		c.lineWidth = i;
-	// 		c.moveTo(upperLeftX - cameraX, upperLeftY - cameraY);
-	// 		c.lineTo(roofTopLeftX, roofTopLeftY);
-	// 		c.stroke();
-	// 	}
-	// 	for (i = 12; i > 0; i -= 3) {
-	// 		c.beginPath();	
-	// 		c.lineWidth = i;
-	// 		c.moveTo(lowerRightX - cameraX, lowerRightY - cameraY);
-	// 		c.lineTo(roofBottomRightX, roofBottomRightY);
-	// 		c.stroke();
-	// 	}
-	// 	for (i = 12; i > 0; i -= 3) {
-	// 		c.beginPath();	
-	// 		c.lineWidth = i;
-	// 		c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
-	// 		c.lineTo(roofTopRightX, roofTopRightY);
-	// 		c.stroke();
-	// 	}
-	// 	c.closePath();	
-	// 	c.lineCap = "butt";
-	// 	c.shadowBlur = 0;
-	// 	c.lineWidth = 1;
-	// 	c.globalCompositeOperation = "source-over";		
-	// }	// draw neon corners	
+		}
+		for (i = 12; i > 0; i -= 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.moveTo(upperLeftX - cameraX, upperLeftY - cameraY);
+			c.lineTo(roofTopLeftX, roofTopLeftY);
+			c.stroke();
+		}
+		for (i = 12; i > 0; i -= 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.moveTo(lowerRightX - cameraX, lowerRightY - cameraY);
+			c.lineTo(roofBottomRightX, roofBottomRightY);
+			c.stroke();
+		}
+		for (i = 12; i > 0; i -= 3) {
+			c.beginPath();	
+			c.lineWidth = i;
+			c.moveTo(upperRightX - cameraX, upperRightY - cameraY);
+			c.lineTo(roofTopRightX, roofTopRightY);
+			c.stroke();
+		}
+		c.closePath();	
+		c.lineCap = "butt";
+		c.shadowBlur = 0;
+		c.lineWidth = 1;
+		c.globalCompositeOperation = "source-over";		
+	}	// draw neon corners	
 				
 // DRAW ROOF
 	if (Player1.inBuilding != buildingNo) {
@@ -822,20 +822,20 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.closePath();
 
 		// draw neon effect on roof
-		// if (theBuildings[buildingNo].neonRoof === true) {
-		// 	c.strokeStyle = theBuildings[buildingNo].neonColor;
-		// 	c.shadowColor = theBuildings[buildingNo].neonShadowColor;
-		// 	c.globalCompositeOperation = "lighter";
-		// 	//c.shadowBlur = 4;
-		// 	c.lineCap = "round";
-		// 	c.beginPath();	
-		// 	for (i = 13; i > 0; i = i - 3) {
-		// 		c.lineWidth = i;
-		// 		c.rect(roofTopLeftX, roofTopLeftY, roofTopRightX - roofTopLeftX, roofBottomRightY - roofTopLeftY );
-		// 		c.stroke();
-		// 	}
-		// 	c.closePath(); 
-		// } // draw neon edges to roof	
+		if (theBuildings[buildingNo].neonRoof === true) {
+			c.strokeStyle = theBuildings[buildingNo].neonColor;
+			c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+			c.globalCompositeOperation = "lighter";
+			//c.shadowBlur = 4;
+			c.lineCap = "round";
+			c.beginPath();	
+			for (i = 13; i > 0; i = i - 3) {
+				c.lineWidth = i;
+				c.rect(roofTopLeftX, roofTopLeftY, roofTopRightX - roofTopLeftX, roofBottomRightY - roofTopLeftY );
+				c.stroke();
+			}
+			c.closePath(); 
+		} // draw neon edges to roof	
 		c.lineCap = "butt";
 		c.shadowBlur = 0;
 		c.lineWidth = 1;

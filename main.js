@@ -5,40 +5,35 @@ console.log("start");
 
 
 // to do
-// add the same  from wall function to civs nand zoms that works on vehicles.
+// add the same from wall function to civs nand zoms that works on vehicles.
 
 // draw closest buildings LAST
 
-//zombie movement updates:
-
-
 // improve HUD
 	// narrator
-	// weapon selector
-	// responsive to screen size changes
+	// weapon selector - add images
+	// responsive to screen size changes (is viewport change being looked for every loop?)
 
 // map
-	// luxury house with cars in it
-	// keys and point open doors
-	// terrain type affects movement
-	// just head when underwater
+	// keys and points open doors
+	// just head when underwater?
 	// day/night time
-	// design the new mapa
+	// weapon/ammo location
+	// move buildings to new places
 
-// add experience points to zombies -- they get stronger the older they are, and the more civilians they have killed, doing damage to the player etc.
 
 // performance
 	// use layered canvases so I'm not drawing elements that haven't moved. At least do a three way split -- Map and buildings / Player / NPCs
 	// make looping more efficient
 
-// civilians 
-	// check civilian waypoints don't appear inside buidings
-
 // zombies
-	// different types -- faster, stronger, tougher, tactics, working together
+
+	// if way point is border, splice all and head for player
+	// if standing still and thing in way is a zombie, add random movement if odd id
+	// if large distance from player dont heas directly for him
 
 // code
-	//make functions smaller
+	// make functions smaller
 	// Make variables more local
 
 //vehicles
@@ -52,12 +47,12 @@ console.log("start");
 	// doors and neon lines are appearing through other walls/buildings
 
 // weapons
-	// add different weapons and ammo
 	// add to HUD
 
 //bullets
 	// splice bullets when they hit buildings
 	// bullet collision is a bit off
+	
 	
 // BUGS
 
