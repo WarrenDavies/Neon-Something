@@ -36,8 +36,6 @@ console.log("start");
 	// make functions smaller
 	// Make variables more local
 
-//vehicles
-	// dont move if press left or right before forward
 
 //buildings
 	// get the camera out of the drawing functions - for the buildings

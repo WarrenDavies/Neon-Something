@@ -52,13 +52,8 @@ function detectKeys(){
 	if (keys[80]) {
 		time += 1;
 	}
-
-	// vehicle key presses
-	if (Player1.mot > 0) { 
-		 //accelerating
-		 if (keys[87] && !keys[65] && !keys[68] || keys[87] && keys[65] && keys[68]) {
-			vehiclesOnScreen[Player1.mot].accelerating = true;
-			vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].acceleration / vehiclesOnScreen[Player1.mot].weight;
+	function accelerateVehicle() {
+		vehiclesOnScreen[Player1.mot].speed += vehiclesOnScreen[Player1.mot].acceleration / vehiclesOnScreen[Player1.mot].weight;
 			Player1.onTile = returnTile(Player1);
 			//console.log(map[Player1.onTile.y][Player1.onTile.x]);
 
@@ -73,6 +68,13 @@ function detectKeys(){
 					vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].topForwardSpeed - map[Player1.onTile.y][Player1.onTile.x].speedModifier;
 				}
 			}	
+	}
+	// vehicle key presses
+	if (Player1.mot > 0) { 
+		 //accelerating
+		 if (keys[87] && !keys[65] && !keys[68] || keys[87] && keys[65] && keys[68]) {
+			vehiclesOnScreen[Player1.mot].accelerating = true;
+			accelerateVehicle();
 		}
 
 		// not accelerating
@@ -125,6 +127,10 @@ function detectKeys(){
 			vehiclesOnScreen[Player1.mot].forwardTurnLeft = true;
 		} else {
 			vehiclesOnScreen[Player1.mot].forwardTurnLeft = false;
+			if (keys[87]) {
+				vehiclesOnScreen[Player1.mot].accelerating = true;
+				accelerateVehicle();
+			}
 		}
 		 
 		// forward turn right
@@ -132,6 +138,10 @@ function detectKeys(){
 				vehiclesOnScreen[Player1.mot].forwardTurnRight = true;
 		} else {
 				vehiclesOnScreen[Player1.mot].forwardTurnRight = false;
+				if (keys[87]) {
+					vehiclesOnScreen[Player1.mot].accelerating = true;
+					accelerateVehicle();
+				}
 		}
 
 		//no pedal pressed  -should make this speed * inertia... like weight

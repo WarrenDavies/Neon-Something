@@ -119,7 +119,7 @@ hhh++;
 		
 		// Update Target Position
 		
-		if (i.forwardTurnLeft) {
+		if (i.forwardTurnLeft && i.speed > 0.3) {
 			i.angleTarget -= 3 * Math.PI / 180;
 			i.xTurnTarget = -(i.radius * Math.cos(i.angleTarget));
 			i.yTurnTarget = -(i.radius * Math.sin(i.angleTarget));
@@ -128,7 +128,7 @@ hhh++;
 			i.ytarget = Math.sin(i.angleTarget);
 		} 
 		
-		if (i.forwardTurnRight) {
+		if (i.forwardTurnRight && i.speed > 0.3) {
 			i.angleTarget += 3 * Math.PI / 180;
 			i.xTurnTarget = -(i.radius * Math.cos(i.angleTarget));
 			i.yTurnTarget = -(i.radius * Math.sin(i.angleTarget));
