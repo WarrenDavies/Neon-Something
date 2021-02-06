@@ -218,6 +218,7 @@ function detectKeys(){
 				if (theBuildings[Player1.nearBuilding].eastDoor.exists === true) {
 					theBuildings[Player1.nearBuilding].eastDoor.locked = false;
 				}
+				theBuildings[Player1.nearBuilding].locked = false;
 			}
 		}
 

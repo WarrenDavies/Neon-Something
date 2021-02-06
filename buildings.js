@@ -876,7 +876,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.stroke();
 		c.fill();
 		c.closePath();
-
+	} // draw roof
 		// draw neon effect on roof
 		if (theBuildings[buildingNo].neonRoof === true) {
 			// c.strokeStyle = theBuildings[buildingNo].neonColor;
@@ -905,6 +905,6 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.shadowBlur = 0;
 		c.lineWidth = 1;
 		c.globalCompositeOperation = "source-over";
-	} // draw roof
+	
 } // drawRectangularBuilding
 // 754
