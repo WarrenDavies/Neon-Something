@@ -300,13 +300,14 @@ var weaponsBar = [
 	 this.yVector = 0;
 	 this.standImage = playerStand;
 	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
-	 this.activeWeapon = 0;
+	 this.activeWeapon = -1;
 	 this.weaponsPossessed = [
-		{name: "Pistol", img: "", possess: true, ammo: 10000},
-		{name: "Machine Gun", img: "", possess: true, ammo: 1500},
-		{name: "Plasma Gun", img: "", possess: true, ammo: 50},
-		{name: "Rocket Launcher", img: "", possess: true, ammo: 30}
+		{name: "Pistol", img: "", possess: false, ammo: 10000, notHaveColor: '#783a3a', haveColor: 'red'},
+		{name: "Machine Gun", img: "", possess: false, ammo: 1500, notHaveColor: '#595c38', haveColor: '#fffb00'},
+		{name: "Plasma Gun", img: "", possess: false, ammo: 50, notHaveColor: '#388994', haveColor: '#05e2ff'},
+		{name: "Rocket Launcher", img: "", possess: false, ammo: 30, notHaveColor: '#661b61', haveColor: '#ff00ee'}
 	 ];
+	 this.weaponCount = 0;
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
 	 this.onTile = {x: 0, y: 0};
@@ -1305,6 +1306,14 @@ theBuildings[103] = {
 		exists: false,
 	},
 };
+
+theWeaponIcons = [
+	{id: 0, x: 300, y: 300, w: 30, h: 30, color: 'red', collected: false },
+	{id: 1, x: 500, y: 300, w: 30, h: 30, color: '#fffb00', collected: false },
+	{id: 2, x: 700, y: 300, w: 30, h: 30, color: '#05e2ff', collected: false },
+	{id: 3, x: 900, y: 300, w: 30, h: 30, color: '#ff00ee', collected: false }
+];
+
 
 
 theBuildings.forEach(function(i, j) {

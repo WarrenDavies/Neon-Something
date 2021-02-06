@@ -36,3 +36,34 @@ function changeWeapon(change) {
         }
     }
 }
+
+function updateWeaponIcons() {
+    theWeaponIcons.forEach((i, j) => {
+        if (i.collected === false) {
+            if(isOnScreen(i) ) {
+                if (collidesSpecify(Player1.x,Player1.y, Player1.w, Player1.h, i.x, i.y, i.w, i.h)) {
+                    Player1.weaponsPossessed[i.id].possess = true;
+                    Player1.activeWeapon = i.id;
+                    i.collected = true;
+                }
+            } // is on screen
+        } // collected = false
+    });
+}
+
+function drawWeaponIcons() {
+    theWeaponIcons.forEach((i, j) => {
+        if(i.collected === false) {
+            if(isOnScreen(i) ) {
+                c.beginPath();
+                c.save();
+                c.translate(i.x - cameraX, i.y - cameraY);
+                //c.translate(-i.x, -i.y);
+                c.fillStyle = i.color;
+                c.fillRect(0, 0, i.w, i.h);
+                c.restore();
+                c.closePath();
+            }
+        }
+    });
+}

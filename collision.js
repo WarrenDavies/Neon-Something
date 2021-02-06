@@ -907,3 +907,7 @@ function checkBulletZombieCollision(i, j) {
 		return false;
 	}
 }
+
+function checkWeaponIconCollision() {
+	
+}

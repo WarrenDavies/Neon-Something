@@ -154,6 +154,7 @@ function mainDraw(canvas, message) {
 	detectKeys();   
 	drawSplats(); 
 	
+
 //update and draw everything	
 	//updateVehicles();
 	//checkVehicleCollision();
@@ -162,11 +163,15 @@ function mainDraw(canvas, message) {
 	updatePlayer();   
 	drawPlayer(); 
 
-	updateWeapons();
+	//updateWeapons();
 	updateBullets();
 	drawBullets();
 	drawExplosions();
-	
+
+	updateWeaponIcons();
+	drawWeaponIcons();
+
+
 	// Civilians not really needed for zombie mode
 	// updateCivilians();
 	// drawCivilians(); 

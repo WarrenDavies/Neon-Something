@@ -151,8 +151,13 @@ function drawHUD() {
 		c.save();
 		c.beginPath();
 		c.translate(gapToWeaponsBar + (weaponGap * j), ammoY - iconOffset);
-		c.fillStyle = i.fill;
-		
+		if (Player1.weaponsPossessed[j].possess === false) {
+			c.fillStyle = Player1.weaponsPossessed[j].notHaveColor;
+			c.strokeStyle = Player1.weaponsPossessed[j].notHaveColor;
+		} else {
+			c.fillStyle = Player1.weaponsPossessed[j].haveColor;
+			c.strokeStyle = Player1.weaponsPossessed[j].haveColor;
+		}
 		c.moveTo(-15, -15);
 		c.lineTo(15, -15);
 		c.lineTo(15, 3);
@@ -161,9 +166,9 @@ function drawHUD() {
 		c.lineTo(15, -15);
 		
 		//c.rect(-15, -15, 15, 3);
-		c.strokeStyle = i.border;
+		//c.strokeStyle = i.border;
 		c.lineWidth = 3;
-		if (Player1.activeWeapon === j) {
+		if (Player1.activeWeapon === j && Player1.weaponsPossessed[j].possess === true) {
 			c.lineWidth = 8;
 			c.strokeStyle='white';
 		}
