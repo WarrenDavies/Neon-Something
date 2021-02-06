@@ -835,11 +835,25 @@ function checkBulletWallCollision(i, j) {
 	buildingsOnScreen.forEach( function(k, l) {
 		for (var line in theBuildings[k].walls) {
 			if (theBuildings[k].walls.hasOwnProperty(line)) {
+				// if (testLines(
+				// 	i.x - cameraX,
+				// 	i.y - cameraY,
+				// 	(i.x + i.xtarget * i.xVelocity) - cameraX,
+				// 	(i.y + i.ytarget * i.yVelocity) - cameraY,			
+				// 	theBuildings[k].walls[line].p1x , 
+				// 	theBuildings[k].walls[line].p1y , 
+				// 	theBuildings[k].walls[line].p2x , 
+				// 	theBuildings[k].walls[line].p2y ,
+				// 	"bullet/wall"
+				// 	)) {
+				// 	collisionDetected = true;
+				// 	return true;
+				// }
 				if (testLines(
-						i.x - cameraX,
-						i.y - cameraY,
-						(i.x + i.xtarget * i.xVelocity) - cameraX,
-						(i.y + i.ytarget * i.yVelocity) - cameraY,			
+						i.x,
+						i.y,
+						(i.x + i.xtarget * i.xVelocity),
+						(i.y + i.ytarget * i.yVelocity),			
 						theBuildings[k].walls[line].p1x , 
 						theBuildings[k].walls[line].p1y , 
 						theBuildings[k].walls[line].p2x , 
@@ -909,5 +923,5 @@ function checkBulletZombieCollision(i, j) {
 }
 
 function checkWeaponIconCollision() {
-	
+
 }

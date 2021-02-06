@@ -42,9 +42,6 @@ console.log("start");
 	// put the door coordinates etc into the building objects and set it to draw doors automatically
 	// doors and neon lines are appearing through other walls/buildings
 
-// weapons
-	// add to HUD
-
 //bullets
 	// splice bullets when they hit buildings
 	// bullet collision is a bit off
