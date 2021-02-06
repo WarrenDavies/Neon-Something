@@ -1,8 +1,9 @@
 function updateWeapons() {
+    console.log("here");
     if (mouseDown) {
 		if (Player1.mot === 0) {
-			if (Player1.activeWeapon === 1 && Player1.ammo[Player1.activeWeapon] > 0) {
-				fireMachineGun();
+			if (Player1.activeWeapon === 1 && Player1.weaponsPossessed[Player1.activeWeapon].ammo > 0) {
+                fireMachineGun();
 			}
 		}
     }

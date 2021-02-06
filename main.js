@@ -163,7 +163,7 @@ function mainDraw(canvas, message) {
 	updatePlayer();   
 	drawPlayer(); 
 
-	//updateWeapons();
+	updateWeapons();
 	updateBullets();
 	drawBullets();
 	drawExplosions();

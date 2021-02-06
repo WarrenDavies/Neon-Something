@@ -313,13 +313,13 @@ function click(e) {
 		}
 	});
 	
-	if (debugTarget) {
-		theCivilians[debugTarget.ID].wayPoints.push({
-			x: mouseX + cameraX,
-			y:  mouseY + cameraY,
-			type: "Debug",
-		});
-	}	
+	// if (debugTarget) {
+	// 	theCivilians[debugTarget.ID].wayPoints.push({
+	// 		x: mouseX + cameraX,
+	// 		y:  mouseY + cameraY,
+	// 		type: "Debug",
+	// 	});
+	// }	
 }
 
 function mousedown(e) {
