@@ -31,6 +31,7 @@ console.log("start");
 	// if way point is border, splice all and head for player
 	// if standing still and thing in way is a zombie, add random movement if odd id
 	// if large distance from player dont heas directly for him
+	// can get in buildings by the corner, especially the big ones
 
 // code
 	// make functions smaller

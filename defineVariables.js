@@ -293,6 +293,7 @@ var weaponsBar = [
 	 this.angle = 1.7;
 	 this.mot = 0;
 	 this.closestVehicle = 0;
+	 this.distanceFromVehicle = 0;
 	 this.gettingInVehicle = 0;
 	 this.inBuilding = 0;
 	 this.walkTimer = 0;

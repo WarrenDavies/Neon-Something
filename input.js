@@ -222,7 +222,7 @@ function detectKeys(){
 			}
 		}
 
-		if (Player1.closestVehicle > 0 && dismountTimer === 0) {
+		if (Player1.closestVehicle > 0 && dismountTimer === 0 && Player1.distanceFromVehicle < 100) {
 			Player1.gettingInVehicle = Player1.closestVehicle;
 		}
 	

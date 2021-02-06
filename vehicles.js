@@ -260,6 +260,7 @@ vehiclesOnScreen.forEach ( function(i, j) {
 		if (i.distanceFromPlayer < distanceKeeper) {
 			distanceKeeper = i.distanceFromPlayer;
 			Player1.closestVehicle = j;
+			Player1.distanceFromVehicle = i.distanceFromPlayer;
 		} 
 	}	
 	//} else
