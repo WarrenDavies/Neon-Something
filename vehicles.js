@@ -261,8 +261,9 @@ vehiclesOnScreen.forEach ( function(i, j) {
 			distanceKeeper = i.distanceFromPlayer;
 			Player1.closestVehicle = j;
 		} 
-		
-	} else if (Player1.mot != j) {
+	}	
+	//} else
+	 if (Player1.mot != j) {
 	
 		updateThisVehicle(vehiclesOnScreen[j], j);
 	}
