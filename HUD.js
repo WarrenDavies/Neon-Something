@@ -22,14 +22,15 @@ function drawHUD() {
 				c.strokeStyle = "red";
 			}
 			c.stroke();
+			c.closePath();
 		} else {
 			c.strokeStyle = "red";
 			c.fillStyle = 'red';
-			c.lineWidth = 10;
+			c.lineWidth = 1;
 			c.font = 'bold 18pt Calibri';
 			c.fillText("DEAD", healthTitleGap + topHUDXStartPoint, topHUDYTextStartPoint);
 		}
-		c.stroke();
+		//c.stroke();
 
 
 	let healthOffset = topHUDXStartPoint + healthTitleGap + Player1.maxHealth + sectionOffset;

@@ -43,6 +43,7 @@ function justDrawRoof(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, 
 	c.beginPath();
 	c.lineWidth = 1;
 	c.strokeStyle = wallColor;
+	c.fillStyle = wallColor;
 	// roof top left
 	var dx = upperLeftX - cameraX - (cameraW / 2);
 	var dy = upperLeftY - cameraY - (cameraH / 2);				
@@ -86,6 +87,7 @@ function justDrawRoof(upperLeftX, upperLeftY, lowerRightX, lowerRightY, height, 
 	c.beginPath();
 	c.fillStyle = roofColor;
 	c.strokeStyle = wallColor;
+	c.lineWidth = 1;
 	c.beginPath();	
 	c.moveTo(roofTopLeftX, roofTopLeftY);
 	c.lineTo(roofTopRightX, roofTopRightY);
