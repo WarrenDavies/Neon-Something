@@ -103,6 +103,35 @@ zombieWalk15.src = 'images/skeleton-move_15.png';
 zombieWalk16 = new Image();
 zombieWalk16.src = 'images/skeleton-move_16.png';
 
+
+
+zombieAttack0 = new Image();
+zombieAttack0.src = 'images/skeleton-attack_0.png';
+
+zombieAttack1 = new Image();
+zombieAttack1.src = 'images/skeleton-attack_1.png';
+
+zombieAttack2 = new Image();
+zombieAttack2.src = 'images/skeleton-attack_2.png';
+
+zombieAttack3 = new Image();
+zombieAttack3.src = 'images/skeleton-attack_3.png';
+
+zombieAttack4 = new Image();
+zombieAttack4.src = 'images/skeleton-attack_4.png';
+
+zombieAttack5 = new Image();
+zombieAttack5.src = 'images/skeleton-attack_5.png';
+
+zombieAttack6 = new Image();
+zombieAttack6.src = 'images/skeleton-attack_6.png';
+
+zombieAttack7 = new Image();
+zombieAttack7.src = 'images/skeleton-attack_7.png';
+
+zombieAttack8 = new Image();
+zombieAttack8.src = 'images/skeleton-attack_8.png';
+
 zombieStand = new Image();
 zombieStand.src = 'images/skeleton-idle_0.png';
 

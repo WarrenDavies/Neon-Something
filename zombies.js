@@ -60,9 +60,11 @@ function spawnZombie() {
 			closestVehicle: 0,
 			collideDistance: 80,
 			walkTimer: 0,
+			attackTimer: 0,
 			walking: true,
 			standImage: zombieStand,
 			walkAnimations: ["", zombieWalk1, zombieWalk2, zombieWalk3, zombieWalk4, zombieWalk5, zombieWalk6, zombieWalk7, zombieWalk8, zombieWalk9, zombieWalk10, zombieWalk11, zombieWalk12, zombieWalk13, zombieWalk14, zombieWalk15, zombieWalk16],
+			attackAnimations: ["", zombieAttack1, zombieAttack2, zombieAttack3, zombieAttack4, zombieAttack5, zombieAttack6, zombieAttack7, zombieAttack8],
 			targetWayPoint: 0,
 			targetAngle: 0,
 			currentWayPoint: 0,
@@ -127,7 +129,9 @@ function updateZombies() {
 					i.collisionCourse = true;
 					i.collidesWithType = "Player";
 					i.collidesWithID = -1;
-					Player1.health -= 1;
+					if (Math.ceil(i.attackTimer) === 8 ) {
+						Player1.health -= 5;
+					}
 					i.canWalkX = false;
 					i.canWalkY = false;
 				} 
@@ -702,7 +706,14 @@ function drawZombies() {
 				c.rotate(i.angle);
 			} 
 			c.translate(-i.x, -i.y);
-			if (i.walking === true ) {
+			
+			if (i.distanceToPlayer < 100 && i.inBuilding === Player1.inBuilding) {
+				i.attackTimer += .2;
+				if (i.attackTimer > 8) {
+					i.attackTimer = 0.1;
+				} 
+				c.drawImage( i.attackAnimations[Math.ceil(i.attackTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+			} else if (i.walking === true ) {
 				i.walkTimer += 0.15;	
 				if (i.walkTimer >= 15.8) {
 					i.walkTimer = 0.1;
