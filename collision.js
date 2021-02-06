@@ -911,6 +911,7 @@ function checkBulletZombieCollision(i, j) {
 					theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
 					theZombies.splice(l, 1);
 					Player1.kills += 1;
+					Player1.points += 10;
 				}
 			}
 		}

@@ -19,7 +19,7 @@ console.log("start");
 	// just head when underwater?
 	// day/night time
 	// weapon/ammo location
-	// move buildings to new places
+	// move buildings to new placesw
 
 
 // performance
@@ -35,7 +35,8 @@ console.log("start");
 // code
 	// make functions smaller
 	// Make variables more local
-
+// vehicles
+	// super speed when reverse and get out
 
 //buildings
 	// get the camera out of the drawing functions - for the buildings

@@ -1,6 +1,6 @@
 function drawBuildings() {
  //console.log("buildingsOnScreen " + buildingsOnScreen);
-	
+ 	nearDoor = false;
 	for (j = buildingsOnScreen.length - 1; j 
 	> -1; j--) {
 		var i = buildingsOnScreen[j];
@@ -20,7 +20,7 @@ function drawBuildings() {
 					 // console.log("i splice = " + i);
 				 buildingsOnScreen.splice(j, 1);
 				
-				//console.log("IOnjoin");
+
 			 }
 		}
 	}
@@ -341,7 +341,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	
 	
 	
-	
+
 //// NORTH DOOR
 ///////////////
 	if (theBuildings[buildingNo].northDoor.exists){
@@ -354,17 +354,24 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		);
 
 		// getDistanceFromDoor(Player1, buildingNo, "northDoor", upperRightX, -theBuildings[buildingNo].northDoor.doorwayDistanceFromRightToMiddle, upperRightY, 0);
-
+		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100) {
+			Player1.nearDoor = theBuildings[buildingNo].northDoor;
+			Player1.nearBuilding = buildingNo;
+			nearDoor = true;
+		}
 //NORTH LEFT DOOR					
+		if (theBuildings[buildingNo].northDoor.locked === false) {
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
+			theBuildings[buildingNo].northDoor.leftDoorPosition -=1;
+			}
 
-		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
-		theBuildings[buildingNo].northDoor.leftDoorPosition -=1;
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.leftDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize) {
+			theBuildings[buildingNo].northDoor.leftDoorPosition +=1;
+			}
+			c.fillStyle = 'lightgreen';
+		} else {	
+			c.fillStyle = 'red';
 		}
-
-		if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.leftDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize) {
-		theBuildings[buildingNo].northDoor.leftDoorPosition +=1;
-		}
-					
 // define north left door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft - cameraX - (cameraW / 2);
 		var dby = upperLeftY - cameraY - (cameraH / 2);				
@@ -383,26 +390,29 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].northDoor.leftDoorTopLeftX, theBuildings[buildingNo].northDoor.leftDoorTopLeftY);
 		c.lineTo(theBuildings[buildingNo].northDoor.doorTopRightX, theBuildings[buildingNo].northDoor.doorTopRightY);
 		
-		c.fillStyle = wallColor;
+	//	c.fillStyle = wallColor;
 		c.fill();
 		c.strokeStyle = wallColor;
 		c.stroke();
-		c.fillStyle = "black";
+	//	c.fillStyle = "black";
 		c.fill();
 		c.strokeStyle = "black";
 		c.stroke();
 		c.closePath();
 		
 // NORTH RIGHT DOOR
-		
-		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.rightDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize){
-			theBuildings[buildingNo].northDoor.rightDoorPosition +=1;
-		}
+		if (theBuildings[buildingNo].northDoor.locked === false) {
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.rightDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize){
+				theBuildings[buildingNo].northDoor.rightDoorPosition +=1;
+			}
 
-		if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.rightDoorPosition > 0) {
-			theBuildings[buildingNo].northDoor.rightDoorPosition -=1;
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.rightDoorPosition > 0) {
+				theBuildings[buildingNo].northDoor.rightDoorPosition -=1;
+			c.fillStyle = 'lightgreen';
+			}
+		} else {	
+			c.fillStyle = 'red';
 		}
-		
 // define north right door top left
 		var dbx = upperLeftX + theBuildings[buildingNo].northDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].northDoor.leftDoorSize + theBuildings[buildingNo].northDoor.rightDoorPosition - cameraX - (cameraW / 2);
 		var dby = upperLeftY - cameraY - (cameraH / 2);				
@@ -423,7 +433,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].northDoor.rightDoorTopRightX, theBuildings[buildingNo].northDoor.rightDoorTopRightY);
 		c.closePath();
 		
-		c.fillStyle = "blue";
+		//c.fillStyle = "blue";
 		c.fill();
 		c.strokeStyle = "blue";
 		c.stroke();
@@ -459,8 +469,13 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			theBuildings[buildingNo].eastDoor.distanceFromDoor = Math.sqrt( (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
 			* (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) + (upperRightX - Player1.x) * (upperRightX - Player1.x));
 		
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100) {
+				Player1.nearDoor = theBuildings[buildingNo].eastDoor;
+				Player1.nearBuilding = buildingNo;
+				nearDoor = true;
+			}
 // EAST TOP DOOR	
-				
+		if (theBuildings[buildingNo].eastDoor.locked === false) {		
 			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].eastDoor.topDoorPosition -= 1;
 			}
@@ -468,7 +483,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.topDoorPosition < theBuildings[buildingNo].eastDoor.topDoorSize) {
 				theBuildings[buildingNo].eastDoor.topDoorPosition += 1;
 			}
-							
+			c.fillStyle = 'lightgreen';
+		} else {	
+			c.fillStyle = 'red';
+		}
 // define east top door top right
 			var dbx = upperRightX - cameraX - (cameraW / 2);	
 			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTop - cameraY - (cameraH / 2);
@@ -488,21 +506,24 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopRightX, theBuildings[buildingNo].eastDoor.topDoorTopRightY);
 			c.lineTo(theBuildings[buildingNo].eastDoor.topDoorTopLeftX, theBuildings[buildingNo].eastDoor.topDoorTopLeftY);
 			
-			c.fillStyle = "black";
+			//c.fillStyle = "black";
 			c.fill();
 			c.strokeStyle = "black";
 			c.stroke();
 			c.closePath();
 
 // EAST BOTTOM DOOR
-
-			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize) {
-				theBuildings[buildingNo].eastDoor.bottomDoorPosition +=1;
+			if (theBuildings[buildingNo].eastDoor.locked === false) {
+				if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize) {
+					theBuildings[buildingNo].eastDoor.bottomDoorPosition +=1;
+				}
+				if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
+					theBuildings[buildingNo].eastDoor.bottomDoorPosition -=1;
+				}
+				c.fillStyle = 'lightgreen';
+			} else {	
+				c.fillStyle = 'red';
 			}
-			if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
-				theBuildings[buildingNo].eastDoor.bottomDoorPosition -=1;
-			}
-	
 // define east bottom door top left
 			var dbx = upperRightX - cameraX - (cameraW / 2);	
 			var dby = upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].eastDoor.bottomDoorSize - cameraY - (cameraH / 2);	
@@ -522,9 +543,9 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopLeftX, theBuildings[buildingNo].eastDoor.bottomDoorTopLeftY);
 			c.lineTo(theBuildings[buildingNo].eastDoor.bottomDoorTopRightX, theBuildings[buildingNo].eastDoor.bottomDoorTopRightY);
 			
-			c.fillStyle = "blue";
+		//	c.fillStyle = "blue";
 			c.fill();
-			c.strokeStyle = "blue";
+			c.strokeStyle = "black";
 			c.stroke();
 			c.closePath();
 		} // east door
@@ -562,10 +583,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.beginPath();
 			theBuildings[buildingNo].westDoor.distanceFromDoor = Math.sqrt( (upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
 			* (upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle - Player1.y) + (upperLeftX - Player1.x) * (upperLeftX - Player1.x));
-				
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100) {
+				Player1.nearDoor = theBuildings[buildingNo].westDoor;
+				Player1.nearBuilding = buildingNo;
+				nearDoor = true;
+			}
 		
 //WEST TOP DOOR		
-			
+		if (theBuildings[buildingNo].westDoor.locked === false) {	
 			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100 && theBuildings[buildingNo].westDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].westDoor.topDoorPosition -= 1;
 			}
@@ -573,7 +598,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 100 && theBuildings[buildingNo].westDoor.topDoorPosition < theBuildings[buildingNo].westDoor.topDoorSize) {
 				theBuildings[buildingNo].westDoor.topDoorPosition += 1;
 			}
-							
+				c.fillStyle = 'lightgreen';
+			} else {	
+				c.fillStyle = 'red';
+			}					
 // define west top door top right
 			var dbx = upperLeftX - cameraX - (cameraW / 2);	
 			var dby = upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTop - cameraY - (cameraH / 2);
@@ -593,14 +621,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.lineTo(theBuildings[buildingNo].westDoor.topDoorTopRightX, theBuildings[buildingNo].westDoor.topDoorTopRightY);
 			c.lineTo(theBuildings[buildingNo].westDoor.topDoorTopLeftX, theBuildings[buildingNo].westDoor.topDoorTopLeftY);
 		
-			c.fillStyle = "black";
+		//	c.fillStyle = "black";
 			c.fill();
 			c.strokeStyle = "black";
 			c.stroke();
 			c.closePath();
 
 // WEST BOTTOM DOOR
-
+		if (theBuildings[buildingNo].westDoor.locked === false) {
 			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100 && theBuildings[buildingNo].westDoor.bottomDoorPosition < theBuildings[buildingNo].westDoor.bottomDoorSize){
 				theBuildings[buildingNo].westDoor.bottomDoorPosition +=1;
 			}
@@ -608,7 +636,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 100 && theBuildings[buildingNo].westDoor.bottomDoorPosition > 0) {
 				theBuildings[buildingNo].westDoor.bottomDoorPosition -=1;
 			}
-		
+				c.fillStyle = 'lightgreen';
+			} else {	
+				c.fillStyle = 'red';
+			}
 // define west bottom door top left
 			var dbx = upperLeftX - cameraX - (cameraW / 2);	
 			var dby = upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle + theBuildings[buildingNo].westDoor.bottomDoorSize - cameraY - (cameraH / 2);	
@@ -628,7 +659,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.lineTo(theBuildings[buildingNo].westDoor.bottomDoorTopLeftX, theBuildings[buildingNo].westDoor.bottomDoorTopLeftY);
 			c.lineTo(theBuildings[buildingNo].westDoor.bottomDoorTopRightX, theBuildings[buildingNo].westDoor.bottomDoorTopRightY);
 			
-			c.fillStyle = "blue";
+		//	c.fillStyle = "blue";
 			c.fill();
 			c.strokeStyle = "blue";
 			c.stroke();
@@ -668,16 +699,24 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	if (theBuildings[buildingNo].southDoor.exists){
 		c.beginPath();
 		theBuildings[buildingNo].southDoor.distanceFromDoor = Math.sqrt( (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (lowerRightY - Player1.y) * (lowerRightY - Player1.y));
-				
-// SOUTH LEFT DOOR					
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100) {
+			Player1.nearDoor = theBuildings[buildingNo].southDoor;
+			Player1.nearBuilding = buildingNo;
+			nearDoor = true;
+		}
 
+// SOUTH LEFT DOOR					
+	if (theBuildings[buildingNo].southDoor.locked === false) {
 		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.leftDoorPosition > 0){
 			theBuildings[buildingNo].southDoor.leftDoorPosition -=1;
 		}
 		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.leftDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize) {
 			theBuildings[buildingNo].southDoor.leftDoorPosition +=1;
 		}
-					
+			c.fillStyle = 'lightgreen';
+		} else {	
+			c.fillStyle = 'red';
+		}
 // define south left door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft - cameraX - (cameraW / 2);
 		var dby = lowerLeftY - cameraY - (cameraH / 2);				
@@ -696,14 +735,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].southDoor.leftDoorTopLeftX, theBuildings[buildingNo].southDoor.leftDoorTopLeftY);
 		c.lineTo(theBuildings[buildingNo].southDoor.doorTopRightX, theBuildings[buildingNo].southDoor.doorTopRightY);
 		
-		c.fillStyle = theBuildings[buildingNo].southDoor.leftDoorColor;
+		// c.fillStyle = theBuildings[buildingNo].southDoor.leftDoorColor;
 		c.fill();
 		c.strokeStyle = "black";
 		c.stroke();
 		c.closePath();
 
 // RIGHT DOOR
-
+	if (theBuildings[buildingNo].southDoor.locked === false) {
 		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.rightDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize){
 			theBuildings[buildingNo].southDoor.rightDoorPosition +=1;
 		}
@@ -711,7 +750,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.rightDoorPosition > 0) {
 			theBuildings[buildingNo].southDoor.rightDoorPosition -=1;
 		}
-	
+			c.fillStyle = 'lightgreen';
+		} else {	
+			c.fillStyle = 'red';
+		}
 	
 // define south right door top left
 		var dbx = lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeft + theBuildings[buildingNo].southDoor.leftDoorSize + theBuildings[buildingNo].southDoor.rightDoorPosition - cameraX - (cameraW / 2);
@@ -733,7 +775,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopLeftX, theBuildings[buildingNo].southDoor.rightDoorTopLeftY);
 		c.lineTo(theBuildings[buildingNo].southDoor.rightDoorTopRightX, theBuildings[buildingNo].southDoor.rightDoorTopRightY);
 		
-		c.fillStyle = theBuildings[buildingNo].southDoor.rightDoorColor;
+	//	c.fillStyle = theBuildings[buildingNo].southDoor.rightDoorColor;
 		c.fill();
 		c.strokeStyle = "blue";
 		c.stroke();
@@ -761,12 +803,24 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		c.strokeStyle = wallColor;
 		c.stroke();
 	}
-	
+
+	if (nearDoor === false) {
+		Player1.nearDoor = false;
+		Player1.nearBuilding = false;
+	}
+
 // draw NEON corners
 // Credit to a pen by Giovanny for how to make this neon effect: https://codepen.io/agar3s/pen/pJpoya
 	if (theBuildings[buildingNo].neonCorners === true && Player1.inBuilding != buildingNo ) {	
-		c.strokeStyle = theBuildings[buildingNo].neonColor;
-		c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+		// c.strokeStyle = theBuildings[buildingNo].neonColor;
+		// c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+		if (theBuildings[buildingNo].locked === false) {
+			c.strokeStyle = 'rgb(4, 255, 0, 0.2)';
+			c.shadowColor = '#c21f2f';
+		} else {
+			c.strokeStyle = 'rgb(255, 0, 0, 0.2)'
+			c.shadowColor = '#23d420';
+		}
 		c.globalCompositeOperation = "lighter";
 		//c.shadowBlur = 4;
 		c.lineCap = "round";
@@ -825,8 +879,17 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 		// draw neon effect on roof
 		if (theBuildings[buildingNo].neonRoof === true) {
-			c.strokeStyle = theBuildings[buildingNo].neonColor;
-			c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+			// c.strokeStyle = theBuildings[buildingNo].neonColor;
+			// c.shadowColor = theBuildings[buildingNo].neonShadowColor;
+
+			if (theBuildings[buildingNo].locked === false) {
+				c.strokeStyle = 'rgb(4, 255, 0, 0.2)';
+				c.shadowColor = '#c21f2f';
+			} else {
+				c.strokeStyle = 'rgb(255, 0, 0, 0.2)'
+				c.shadowColor = '#23d420';
+			}
+
 			c.globalCompositeOperation = "lighter";
 			//c.shadowBlur = 4;
 			c.lineCap = "round";

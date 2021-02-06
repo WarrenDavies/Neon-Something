@@ -98,13 +98,13 @@ function drawHUD() {
 	c.fillText("Time:", staminaOffset, topHUDYTextStartPoint);	
 	c.fillText(Math.floor(time), staminaOffset + timerTitleGap, topHUDYTextStartPoint);
 	
-	// kills
-	let killsTitleGap = 55;
+	// Points
+	let pointsTitleGap = 73;
 	let timerWidth = 80;
 	let timerOffset = staminaOffset + sectionOffset + timerWidth;
 	
-	c.fillText("Kills:", timerOffset, topHUDYTextStartPoint);	
-	c.fillText(Player1.kills, timerOffset + killsTitleGap, topHUDYTextStartPoint);	
+	c.fillText("Points:", timerOffset, topHUDYTextStartPoint);	
+	c.fillText(Player1.points, timerOffset + pointsTitleGap, topHUDYTextStartPoint);	
 
 	
 

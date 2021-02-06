@@ -308,8 +308,11 @@ var weaponsBar = [
 		{name: "Rocket Launcher", img: "", possess: false, ammo: 30, notHaveColor: '#661b61', haveColor: '#ff00ee'}
 	 ];
 	 this.weaponCount = 0;
+	 this.nearDoor = false;
+	 this.nearBuilding = false;
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
+	 this.points = 10000;
 	 this.onTile = {x: 0, y: 0};
 	 this.inBounds = {
 
@@ -317,7 +320,7 @@ var weaponsBar = [
 } 
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
-
+var nearDoor = false;
 
 
 
@@ -612,6 +615,7 @@ vehiclesOnScreen[1] = {
  
 // define buildings
 theBuildings[1] = {
+	locked: false,
 	name: "home",
 	upperLeftX: 350,
 	upperLeftY: 800,
@@ -628,6 +632,7 @@ theBuildings[1] = {
 	
 	southDoor: {
 		exists: true,
+		locked: false,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 100,
 		doorwayDistanceFromLeftToMiddle: 125,
@@ -650,6 +655,7 @@ theBuildings[1] = {
 	},
 	northDoor: {
 		exists: true,
+		locked: false,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 175,
@@ -691,6 +697,7 @@ theBuildings[1] = {
 
 theBuildings[2] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 800,
 	upperLeftY: 800,
 	lowerRightX: 1099,
@@ -706,6 +713,8 @@ theBuildings[2] = {
 	floor: indoorFloorImage,
 	southDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 100,
 		doorwayDistanceFromLeftToMiddle: 125,
@@ -744,6 +753,7 @@ theBuildings[2] = {
 
 theBuildings[4] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1250,
 	upperLeftY: 800,
 	lowerRightX: 1550 - 1,
@@ -764,6 +774,8 @@ theBuildings[4] = {
 	neonShadowColor: "rgb(255,105,180)",
 	southDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 100,
 		doorwayDistanceFromLeftToMiddle: 125,
@@ -793,11 +805,15 @@ theBuildings[4] = {
 	westDoor: {
 		exists: false,
 	},
-
+	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
+	neonRoof: true,
 };
 
 theBuildings[5] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1700,
 	upperLeftY: 800,
 	lowerRightX: 1950 - 1,
@@ -826,6 +842,7 @@ theBuildings[5] = {
 
 theBuildings[20] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1700,
 	upperLeftY: 700,
 	lowerRightX: 1950 - 1,
@@ -858,6 +875,7 @@ theBuildings[20] = {
 
 theBuildings[21] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1700,
 	upperLeftY: 600,
 	lowerRightX: 1950 - 1,
@@ -889,6 +907,7 @@ theBuildings[21] = {
 
 theBuildings[22] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1500,
 	upperLeftY: 575,
 	lowerRightX: 1600 - 1,
@@ -922,6 +941,7 @@ theBuildings[22] = {
 
 theBuildings[6] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 2200,
 	upperLeftY: 800,
 	lowerRightX: 2400 - 1,
@@ -950,6 +970,7 @@ theBuildings[6] = {
 
 theBuildings[7] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 2650,
 	upperLeftY: 850,
 	lowerRightX: 2750 - 1,
@@ -978,6 +999,7 @@ theBuildings[7] = {
 
 theBuildings[8] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 3100,
 	upperLeftY: 800,
 	lowerRightX: 3400 - 1,
@@ -1006,6 +1028,7 @@ theBuildings[8] = {
 
 theBuildings[9] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 1500,
 	upperLeftY: 1600,
 	lowerRightX: 3650 - 1,
@@ -1021,6 +1044,8 @@ theBuildings[9] = {
 	
 	northDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 200,
@@ -1043,6 +1068,8 @@ theBuildings[9] = {
 	},
 	southDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 1900,
 		doorwayDistanceFromLeftToMiddle: 1950,
@@ -1069,10 +1096,15 @@ theBuildings[9] = {
 	westDoor: {
 		exists: false,
 	},
+	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
+	neonRoof: true,
 };
 //b10
 theBuildings[10] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 4950,
 	upperLeftY: 800,
 	lowerRightX: 5700 - 1,
@@ -1096,6 +1128,8 @@ theBuildings[10] = {
 	},
 	eastDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromTop: 300,
 		doorwayDistanceFromTopToMiddle: 400,
@@ -1120,6 +1154,8 @@ theBuildings[10] = {
 	
 	westDoor: {
 		exists: true,	
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromTop: 250,
 		doorwayDistanceFromTopToMiddle: 300,
@@ -1149,6 +1185,7 @@ theBuildings[10] = {
 
 theBuildings[11] = {
 	name: "home",
+	locked: true,
 	upperLeftX: 5000,
 	upperLeftY: 2050,
 	lowerRightX: 5500 - 1,
@@ -1163,12 +1200,14 @@ theBuildings[11] = {
 	floor: indoorFloorImage,
 	southDoor: {
 		exists: true,
+		locked: true,
+		cost: 100,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 250,
 		leftDoorSize: 100,
 	
-		leftDoorPosition: 25,
+		leftDoorPosition: 100,
 		leftDoorTopLeftX: 0,
 		leftDoorTopLeftY: 0,
 		leftDoorTopRightX: 0,
@@ -1192,6 +1231,10 @@ theBuildings[11] = {
 	westDoor: {
 		exists: false,
 	},
+	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
+	neonRoof: true,
 };
 
 
@@ -1306,6 +1349,7 @@ theBuildings[103] = {
 		exists: false,
 	},
 };
+
 
 theWeaponIcons = [
 	{id: 0, x: 300, y: 300, w: 30, h: 30, color: 'red', collected: false },

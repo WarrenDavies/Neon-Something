@@ -200,7 +200,27 @@ function detectKeys(){
 		}
 	} 
 
-	if (keys[70]) { // F for getting in the vehicle
+	if (keys[70]) { // F action button
+		console.log("Pressing F");
+		if (Player1.nearDoor != false) {
+			if (Player1.nearDoor.locked === true && Player1.points > Player1.nearDoor.cost) {
+				Player1.nearDoor.locked = false;
+				Player1.points -= Player1.nearDoor.cost;
+				if (theBuildings[Player1.nearBuilding].southDoor.exists === true) {
+					theBuildings[Player1.nearBuilding].southDoor.locked = false;
+				}
+				if (theBuildings[Player1.nearBuilding].westDoor.exists === true) {
+					theBuildings[Player1.nearBuilding].westDoor.locked = false;
+				}
+				if (theBuildings[Player1.nearBuilding].northDoor.exists === true) {
+					theBuildings[Player1.nearBuilding].northDoor.locked = false;
+				}
+				if (theBuildings[Player1.nearBuilding].eastDoor.exists === true) {
+					theBuildings[Player1.nearBuilding].eastDoor.locked = false;
+				}
+			}
+		}
+
 		if (Player1.closestVehicle > 0 && dismountTimer === 0) {
 			Player1.gettingInVehicle = Player1.closestVehicle;
 		}
