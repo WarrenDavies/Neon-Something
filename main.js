@@ -37,8 +37,6 @@ console.log("start");
 	// Make variables more local
 
 //vehicles
-	// vehicle moves forward on the screen when accelerating
-	// vehicles maintain their speed when player leaves them
 	// dont move if press left or right before forward
 
 //buildings
