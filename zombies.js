@@ -120,15 +120,18 @@ function updateZombies() {
 			i.canWalkY = true;
 
 // check for player collision
-			if (collidesSpecify(i.x + ((i.speed) * i.xVector), i.y + ((i.speed) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
-				i.collisionCourse = true;
-				i.collidesWithType = "Player";
-				i.collidesWithID = -1;
-				Player1.health -= 1;
-				i.canWalkX = false;
-				i.canWalkY = false;
-			} 
-			
+			// first check they are in the same building - prevents collision when player is inside a building near the wall and the zombie is outside
+			if (Player1.inBuilding === i.inBuilding) {
+				// now check for collision
+				if (collidesSpecify(i.x + ((i.speed) * i.xVector), i.y + ((i.speed) * i.yVector), i.w, i.h, Player1.x, Player1.y, Player1.w, Player1.h)) {
+					i.collisionCourse = true;
+					i.collidesWithType = "Player";
+					i.collidesWithID = -1;
+					Player1.health -= 1;
+					i.canWalkX = false;
+					i.canWalkY = false;
+				} 
+			}
 			
 // check collision with buildings
 			if (i.collisionCourse === false) {

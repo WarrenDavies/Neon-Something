@@ -1,39 +1,51 @@
 function drawHUD() {
+	c.fillStyle = 'black';
+	let topHUDHeight = 30;
+	c.fillRect(0,0,cameraW, topHUDHeight);
+
+	let topHUDXStartPoint = 20;
+	let healthTitleGap = 80;
+	let topHUDYTextStartPoint = 22;
+	let topHUDBarYStartPoint = 16;
+	let sectionOffset = 20;
+	// health bar
+		c.font = '18pt Calibri';
+		c.fillStyle = 'white';
+		c.strokeStyle = "yellow";
+		c.fillText("Health:", topHUDXStartPoint, topHUDYTextStartPoint);	
+		if (Player1.health > 0) {
+			c.beginPath();
+			c.moveTo(healthTitleGap + topHUDXStartPoint, topHUDBarYStartPoint);
+			c.lineTo(healthTitleGap + topHUDXStartPoint + Player1.health, topHUDBarYStartPoint);
+			c.lineWidth = 10;
+			if (Player1.health < 50) {	
+				c.strokeStyle = "red";
+			}
+			c.stroke();
+		} else {
+			c.strokeStyle = "red";
+			c.fillStyle = 'red';
+			c.lineWidth = 10;
+			c.font = 'bold 18pt Calibri';
+			c.fillText("DEAD", healthTitleGap + topHUDXStartPoint, topHUDYTextStartPoint);
+		}
+		c.stroke();
+
+
+	let healthOffset = topHUDXStartPoint + healthTitleGap + Player1.maxHealth + sectionOffset;
+	let staminaTitleGap = 95;
 	// stamina bar
 	c.font = '18pt Calibri';
-	c.fillStyle = 'black';
-	c.strokeStyle = "black";
-	c.fillText("Stamina:", 10, 25);
-	//console.log(race.completeTimer);
-	if (race.on || race.completeTimer > 0.1) {
-		var raceDisplay = Math.round(race.currentRaceTime * 100) / 100
-		if (race.bestRaceTime < raceDisplay && race.bestRaceTime > 0) {
-			c.fillStyle = 'red';
-		}
-		c.fillText("Race Time: " + raceDisplay, 10, 75);
-		c.fillStyle = 'black';
-		if (race.bestRaceTime > 0) {
-			c.fillText("Best Time: " + race.bestRaceTime, 10, 100);
-		}
-		
-		if (race.completeTimer > 0.1) {
-			race.completeTimer -= 0.2;
-			if (race.completeTimer < 0.2 ) {
-				
-				if (race.currentRaceTime < race.bestRaceTime || race.bestRaceTime === 0) {
-					race.bestRaceTime = Math.round(race.currentRaceTime * 100) / 100;
-				}
-				race.currentRaceTime = 0;
-				race.completeTimer = 0;
-			}
-		}
-	}
+	c.fillStyle = 'white';
+	c.strokeStyle = "yellow";
+	c.fillText("Stamina:", healthOffset, topHUDYTextStartPoint);
+
 	//c.fillText("y: " + Player1.y, 10, 75);
-	
+	let staminaBarStartPoint = healthOffset + staminaTitleGap;
 	if (Player1.energy > 0) {
 		c.beginPath();
-		c.moveTo(105, 20);
-		c.lineTo(105 + Player1.energy, 20);
+		c.moveTo(staminaBarStartPoint, topHUDBarYStartPoint);
+		c.lineTo(staminaBarStartPoint + Player1.energy, topHUDBarYStartPoint);
 		c.lineWidth = 10;
 		
 		if (Player1.energy < 50) {
@@ -46,55 +58,98 @@ function drawHUD() {
 		c.fillStyle = 'red';
 		c.lineWidth = 10;
 		c.font = 'bold 18pt Calibri';
-		c.fillText("TIRED", 110, 25);
+		c.fillText("TIRED", staminaBarStartPoint, topHUDYTextStartPoint);
 	}
 	
 	
-	
- 	// health bar
-	c.font = '18pt Calibri';
-	c.fillStyle = 'black';
-	c.strokeStyle = "black";
-	c.fillText("Health:", 280, 25);	
-	if (Player1.health > 0) {
-		c.beginPath();
-		c.moveTo(360, 20);
-		c.lineTo(360 + Player1.health, 20);
-		c.lineWidth = 10;
-		if (Player1.health < 50) {	
-			c.strokeStyle = "red";
+		//console.log(race.completeTimer);
+		if (race.on || race.completeTimer > 0.1) {
+			var raceDisplay = Math.round(race.currentRaceTime * 100) / 100
+			if (race.bestRaceTime < raceDisplay && race.bestRaceTime > 0) {
+				c.fillStyle = 'red';
+			}
+			c.fillText("Race Time: " + raceDisplay, 10, 75);
+			c.fillStyle = 'white';
+			if (race.bestRaceTime > 0) {
+				c.fillText("Best Time: " + race.bestRaceTime, 10, 100);
+			}
+			
+			if (race.completeTimer > 0.1) {
+				race.completeTimer -= 0.2;
+				if (race.completeTimer < 0.2 ) {
+					
+					if (race.currentRaceTime < race.bestRaceTime || race.bestRaceTime === 0) {
+						race.bestRaceTime = Math.round(race.currentRaceTime * 100) / 100;
+					}
+					race.currentRaceTime = 0;
+					race.completeTimer = 0;
+				}
+			}
 		}
-	c.stroke();
-	} else {
-		c.strokeStyle = "red";
-		c.fillStyle = 'red';
-		c.lineWidth = 10;
-		c.font = 'bold 18pt Calibri';
-		c.fillText("DEAD", 410, 25);
-	}
-	c.stroke();
+
 
 	//timer
+	let staminaOffset = healthOffset + staminaTitleGap + Player1.maxEnergy + sectionOffset;
+	let timerTitleGap = 63;
 	c.font = '18pt Calibri';
-	c.fillStyle = 'black';
+	c.fillStyle = 'white';
 	c.strokeStyle = "black";
-	c.fillText("Time:", 520, 25);	
-	c.fillText(Math.floor(time), 580, 25);
+	c.fillText("Time:", staminaOffset, topHUDYTextStartPoint);	
+	c.fillText(Math.floor(time), staminaOffset + timerTitleGap, topHUDYTextStartPoint);
 	
-	c.fillText("Weapon:", 630, 25);	
-	c.fillText(Player1.activeWeapon, 725, 25);	
+	// kills
+	let killsTitleGap = 55;
+	let timerWidth = 80;
+	let timerOffset = staminaOffset + sectionOffset + timerWidth;
 	
-	c.fillText("Ammo:", 770, 25);	
-	c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 850, 25);	
-	
-	c.fillText("Kills:", 930, 25);	
-	c.fillText(Player1.kills, 980, 25);	
+	c.fillText("Kills:", timerOffset, topHUDYTextStartPoint);	
+	c.fillText(Player1.kills, timerOffset + killsTitleGap, topHUDYTextStartPoint);	
 
+	
+
+	let lowerHUDstartPoint = 20;
+	let ammoTitleGap = 80;
+	let ammoY = cameraH - 13;
+	let lowerHUDheight = 40;
+
+	c.fillStyle = 'black';
+	c.fillRect (0, cameraH - lowerHUDheight, cameraW, lowerHUDheight);
+	
+	
+	c.font = '18pt Calibri';
+	c.strokeStyle = 'white';
+	c.fillStyle = 'white';
+	c.fillText("Ammo:", lowerHUDstartPoint, ammoY);
+
+	if (Player1.activeWeapon === 0) {
+		c.strokeStyle = 'white';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, lowerHUDstartPoint + ammoTitleGap, ammoY);
+	}
+	if (Player1.activeWeapon === 1) {
+		c.strokeStyle = 'blue';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, lowerHUDstartPoint + ammoTitleGap, ammoY);
+	}
+	if (Player1.activeWeapon === 2) {
+		c.strokeStyle = 'orange';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, lowerHUDstartPoint + ammoTitleGap, ammoY);
+	}
+	if (Player1.activeWeapon === 3) {
+		c.strokeStyle = 'purple';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, lowerHUDstartPoint + ammoTitleGap, ammoY);
+	}
+	if (Player1.activeWeapon === 4) {
+		c.strokeStyle = 'white';c.fillText(turretAmmo, 740, 590);
+	}
+	if (Player1.activeWeapon === 5) {
+		c.strokeStyle = 'white';c.fillText(trapAmmo, 740, 590);
+	}
+
+	let ammoNumberGap = 100;
+	let gapToWeaponsBar = lowerHUDstartPoint + ammoTitleGap + ammoNumberGap;
+	let iconOffset = 1;
 	weaponsBar.forEach ( function( i, j) {
+
+		let weaponGap = 40;
 
 		c.save();
 		c.beginPath();
-		c.translate(i.x, i.y);
+		c.translate(gapToWeaponsBar + (weaponGap * j), ammoY - iconOffset);
 		c.fillStyle = i.fill;
 		
 		c.moveTo(-15, -15);
@@ -126,29 +181,9 @@ function drawHUD() {
 		c.restore();
 		
 		});
-				
-		c.font = '18pt Calibri';
-		c.strokeStyle = 'white';
-		c.fillText("Ammo:", 660, 590);
+		
 
-		if (Player1.activeWeapon === 0) {
-			c.strokeStyle = 'white';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
-		}
-		if (Player1.activeWeapon === 1) {
-			c.strokeStyle = 'blue';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
-		}
-		if (Player1.activeWeapon === 2) {
-			c.strokeStyle = 'orange';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
-		}
-		if (Player1.activeWeapon === 3) {
-			c.strokeStyle = 'purple';c.fillText(Player1.weaponsPossessed[Player1.activeWeapon].ammo, 740, 590);
-		}
-		if (Player1.activeWeapon === 4) {
-			c.strokeStyle = 'white';c.fillText(turretAmmo, 740, 590);
-		}
-		if (Player1.activeWeapon === 5) {
-			c.strokeStyle = 'white';c.fillText(trapAmmo, 740, 590);
-		}
+
 
 }
 
