@@ -43,7 +43,6 @@ console.log("start");
 	// doors and neon lines are appearing through other walls/buildings
 
 //bullets
-	// splice bullets when they hit buildings
 	// bullet collision is a bit off
 	
 	
