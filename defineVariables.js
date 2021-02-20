@@ -366,6 +366,9 @@ vehicleTJF_Car_Green.src = 'images/TJF_Car_Green.png';
 vehicleTJF_Car_Limo = new Image();
 vehicleTJF_Car_Limo.src = 'images/TJF_Car_Limo.png';
 
+vehicleBuggy = new Image();
+vehicleBuggy.src = 'images/buggy3.png';
+
 vehiclesOnScreen[0] = {
 	acceleration: 2.5,
 	brakeRate: 1,
@@ -613,6 +616,50 @@ vehiclesOnScreen[1] = {
 	forwardTurnRight: false,
  };
  
+ vehiclesOnScreen[7] = {
+	x: Player1.x - 300,
+	y: Player1.y - 100,
+	
+	xPrevious: 0,
+	yPrevious: 0,
+	xtarget: 0,
+	ytarget: 0,
+	xTurnTarget: 0,
+	yTurnTarget: 0,
+	w: 97,
+	l: 130,
+	type: "normalCar",
+	acceleration: 5,
+	topForwardSpeed: 15,
+	brakeRate: 0.005,
+	reverseAcceleration: 0.005,
+	reverseTopSpeed: -2,
+	radius: 70,
+	angle: -1.7,
+	angleTarget: 1.8,
+	speed: 0,
+	weight: 20,
+	color: "red",
+	distanceFromPlayer: 10000,
+	accelerating: false,
+	reversing: false,
+	track: null,
+	image: vehicleBuggy,
+	headlightsOn: false,
+	collision: false,
+	forwardTurnLeft: false,
+	forwardTurnRight: false,
+	lines: {
+		frontLine: {p1x: 0, p1y: 0, p2x: 0, p2y: 0, p1xr: 0, p1yr: 0, p2xr: 0, p2yr: 0, p1xStep: 0, p1yStep: 0, p2xStep: 0, p2yStep: 0},
+		rightLine: {p1x: 0, p1y: 0, p2x: 0, p2y: 0, p1xr: 0, p1yr: 0, p2xr: 0, p2yr: 0, p1xStep: 0, p1yStep: 0, p2xStep: 0, p2yStep: 0},
+		backLine: {p1x: 0, p1y: 0, p2x: 0, p2y: 0, p1xr: 0, p1yr: 0, p2xr: 0, p2yr: 0, p1xStep: 0, p1yStep: 0, p2xStep: 0, p2yStep: 0},
+		leftLine: {p1x: 0, p1y: 0, p2x: 0, p2y: 0, p1xr: 0, p1yr: 0, p2xr: 0, p2yr: 0, p1xStep: 0, p1yStep: 0, p2xStep: 0, p2yStep: 0},
+	},
+	collision: false,
+	forwardTurnLeft: false,
+	forwardTurnRight: false,
+};
+
  
 // define buildings
 theBuildings[1] = {
