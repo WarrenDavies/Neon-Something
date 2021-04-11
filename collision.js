@@ -895,7 +895,7 @@ function checkBulletZombieCollision(i, j) {
 		let hit = false;
 		// yes yes hacky blah blah will fix later
 		if (i.type == 1 || i.type == 2 || i.type == 3) {
-			if (getDistance(i.x, i.y, k.x, k.y) < (i.w + 2) + (k.w)) {
+			if (getDistance(i.x, i.y , k.x, k.y) < (i.w + 2) + (k.w / 2)) {
 				hit = true;
 			}
 		} else {
