@@ -101,7 +101,7 @@ function updateVehicleLines(j) {
 
 var hhh = 0;
 function updateThisVehicle(i, j) {
-	console.log(vehiclesOnScreen[1].speed);
+
 hhh++;
 		//inertia
 		if (i.accelerating === false) {
