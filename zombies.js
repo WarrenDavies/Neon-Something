@@ -112,7 +112,7 @@ function updateZombies() {
 			c.translate(i.x - cameraX, i.y - cameraY);
 			c.translate(-i.x, -i.y);
 			c.strokeStyle = 'red';
-			c.rect((i.x + (i.speed * i.xVector)), (i.y + (i.speed * i.yVector)), i.w, i.h);
+			c.rect((i.x  - (i.w / 2) + (i.speed * i.xVector)), (i.y - (i.h / 2) + (i.speed * i.yVector)), i.w, i.h);
 			c.stroke();
 			c.restore();
 			c.closePath();
@@ -122,7 +122,7 @@ function updateZombies() {
 			c.translate(i.x - cameraX, i.y - cameraY);
 			c.translate(-i.x, -i.y);
 			c.strokeStyle = 'black';
-			c.rect(i.x, i.y, i.w, i.h);
+			c.rect(i.x  - (i.w / 2), i.y  - (i.h / 2), i.w , i.h );
 			c.stroke();
 			c.restore();
 			c.closePath();
@@ -732,13 +732,13 @@ function drawZombies() {
 				if (i.attackTimer > 8) {
 					i.attackTimer = 0.1;
 				} 
-				c.drawImage( i.attackAnimations[Math.ceil(i.attackTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				c.drawImage( i.attackAnimations[Math.ceil(i.attackTimer)], i.x  - 15 - (i.w / 2), i.y - 15 - (i.h / 2), i.w + 30, i.h + 30);
 			} else if (i.walking === true ) {
 				i.walkTimer += 0.15;	
 				if (i.walkTimer >= 15.8) {
 					i.walkTimer = 0.1;
 				}
-				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - (i.w /2) - 15, i.y - (i.h / 2) - 15, i.w + 30, i.h + 30);
+				c.drawImage( i.walkAnimations[Math.ceil(i.walkTimer)], i.x - 15 - (i.w / 2), i.y - 15 - (i.h / 2), i.w + 30, i.h + 30);
 				
 				
 				// c.rect(i.x- (i.w /2), i.y- (i.h / 2), i.w, i.h);
