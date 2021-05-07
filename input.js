@@ -85,7 +85,7 @@ function detectKeys(){
 		//brake
 		 if (keys[83]) {
 			//console.log(vehiclesOnScreen[Player1.mot].speed);
-			vehiclesOnScreen[Player1.mot].reversing === true;
+			vehiclesOnScreen[Player1.mot].reversing = true;
 			if (vehiclesOnScreen[Player1.mot].speed > 0) {
 				vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].brakeRate;
 			}
@@ -100,7 +100,7 @@ function detectKeys(){
 
 		// not braking
 		if (!keys[83]) {
-			vehiclesOnScreen[Player1.mot].reversing === false;
+			vehiclesOnScreen[Player1.mot].reversing = false;
 			if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
 				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
 				console.log (vehiclesOnScreen[Player1.mot].speed);
@@ -146,10 +146,19 @@ function detectKeys(){
 
 		//no pedal pressed  -should make this speed * inertia... like weight
 		if (!keys[83] && !keys[87] && !keys[70]) {
+			vehiclesOnScreen[Player1.mot].reversing = false;
+			vehiclesOnScreen[Player1.mot].accelerating = false;
+			console.log("here");
 			if (Player1.mot > 0) {
-				if (Player1.speed > 0.1) {Player1.speed -= vehiclesOnScreen[Player1.mot].weight;}
-				if (Player1.speed < -0.1) {Player1.speed += vehiclesOnScreen[Player1.mot].weight;}
-				if (Player1.speed < 0.1 && Player1.speed > -0.1) {Player1.speed == 0;}
+				if (Player1.speed > 0.1) {
+					Player1.speed -= vehiclesOnScreen[Player1.mot].weight;
+				}
+				if (Player1.speed < -0.1) {
+					Player1.speed += vehiclesOnScreen[Player1.mot].weight;
+				}
+				if (Player1.speed < 0.1 && Player1.speed > -0.1) {
+					Player1.speed = 0;
+				}
 			}
 		}
 		
@@ -243,6 +252,8 @@ function detectKeys(){
 			/*if (vehiclesOnScreen[Player1.mot].track) { 
 				vehiclesOnScreen[Player1.mot].track.pause();
 			}*/ // pause music
+			vehiclesOnScreen[Player1.mot].accelerating = false;
+			vehiclesOnScreen[Player1.mot].reversing = false;
 			Player1.speed = 0;
 			dismountTimer = 30;
 			Player1.mot = 0;

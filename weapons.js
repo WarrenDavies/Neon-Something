@@ -42,9 +42,13 @@ function updateWeaponIcons() {
         if (i.collected === false) {
             if(isOnScreen(i) ) {
                 if (collidesSpecify(Player1.x,Player1.y, Player1.w, Player1.h, i.x, i.y, i.w, i.h)) {
-                    Player1.weaponsPossessed[i.id].possess = true;
-                    Player1.activeWeapon = i.id;
+                    if (Player1.weaponsPossessed[i.id].possess === false) {                    
+                        Player1.weaponsPossessed[i.id].possess = true;
+                        Player1.activeWeapon = i.id;
+                    }
                     i.collected = true;
+                    Player1.weaponsPossessed[i.id].ammo += i.a;
+
                 }
             } // is on screen
         } // collected = false

@@ -101,16 +101,23 @@ function updateVehicleLines(j) {
 
 var hhh = 0;
 function updateThisVehicle(i, j) {
-	
+	console.log(vehiclesOnScreen[1].speed);
 hhh++;
-		//inertia	
+		//inertia
 		if (i.accelerating === false) {
-		if (i.speed > 0.1) {i.speed -= i.speed / i.weight;}
+			if (i.speed > 0.1) {
+				i.speed -= i.speed / i.weight;
+			}
 		}
 		if (i.reversing === false){
-		if (i.speed < -0.1) {i.speed += i.speed / i.weight;}
+			if (i.speed < -0.1) {
+				i.speed += Math.abs(i.speed) / i.weight;
+				if (i.speed > 0) {
+					i.speed = 0;
+				}
+			}
 		}
-		//if (i.speed < 0.1 && i.speed > -0.1) {i.speed === 0;}
+		if (i.speed < 0.1 && i.speed > -0.1 && Player1.mot != j) {i.speed = 0;}
 
 		// adjust turning circle to match speed
 			if (i.speed > 1 && i.speed < -1) { i.radius = i.speed / 2; }

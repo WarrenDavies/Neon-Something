@@ -46,6 +46,7 @@ console.log("start");
 
 //bullets
 	// bullet collision is a bit off
+	// rockets kill zombies through walls
 	
 	
 // BUGS
@@ -202,6 +203,11 @@ function mainDraw(canvas, message) {
 
 	updateCamera();
 
+	// let wp = 0;
+	// theZombies.forEach( (i, j) => {
+	// 	wp += i.wayPoints.length;
+	// });
+	// console.log("Total waypoints = " + wp);
 } 
  /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////

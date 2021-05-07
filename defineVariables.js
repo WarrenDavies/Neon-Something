@@ -303,10 +303,10 @@ var weaponsBar = [
 	 this.walkAnimations = ["", playerWalk1, playerWalk2, playerWalk3, playerWalk4];
 	 this.activeWeapon = -1;
 	 this.weaponsPossessed = [
-		{name: "Pistol", img: "", possess: false, ammo: 10000, notHaveColor: '#783a3a', haveColor: 'red'},
-		{name: "Machine Gun", img: "", possess: false, ammo: 1500, notHaveColor: '#595c38', haveColor: '#fffb00'},
-		{name: "Plasma Gun", img: "", possess: false, ammo: 50, notHaveColor: '#388994', haveColor: '#05e2ff'},
-		{name: "Rocket Launcher", img: "", possess: false, ammo: 30, notHaveColor: '#661b61', haveColor: '#ff00ee'}
+		{name: "Pistol", img: "", possess: false, ammo: 0, notHaveColor: '#783a3a', haveColor: 'red'},
+		{name: "Machine Gun", img: "", possess: false, ammo: 0, notHaveColor: '#595c38', haveColor: '#fffb00'},
+		{name: "Plasma Gun", img: "", possess: false, ammo: 0, notHaveColor: '#388994', haveColor: '#05e2ff'},
+		{name: "Rocket Launcher", img: "", possess: false, ammo: 0, notHaveColor: '#661b61', haveColor: '#ff00ee'}
 	 ];
 	 this.weaponCount = 0;
 	 this.nearDoor = false;
@@ -1400,10 +1400,10 @@ theBuildings[103] = {
 
 
 theWeaponIcons = [
-	{id: 0, x: 300, y: 300, w: 30, h: 30, color: 'red', collected: false },
-	{id: 1, x: 500, y: 300, w: 30, h: 30, color: '#fffb00', collected: false },
-	{id: 2, x: 700, y: 300, w: 30, h: 30, color: '#05e2ff', collected: false },
-	{id: 3, x: 900, y: 300, w: 30, h: 30, color: '#ff00ee', collected: false }
+	{id: 0, x: 600, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false },
+	{id: 1, x: 500, y: 300, w: 30, h: 30, a: 500, color: '#fffb00', collected: false },
+	{id: 2, x: 700, y: 300, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+	{id: 3, x: 900, y: 300, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false }
 ];
 
 
