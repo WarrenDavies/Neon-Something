@@ -267,8 +267,8 @@ var weaponsBar = [
 
 // Player coords and initial location
  function Player () {
-	 this.x = 500; 
-	 this.y = 500;
+	 this.x = 2200; 
+	 this.y = 750;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -380,8 +380,8 @@ vehiclesOnScreen[0] = {
  };
  
 vehiclesOnScreen[1] = {
-	x: Player1.x,
-	y: Player1.y,
+	x: 5250,
+	y: 2230,
 	xPrevious: 0,
 	yPrevious: 0,
 	xtarget: 0,
@@ -391,11 +391,11 @@ vehiclesOnScreen[1] = {
 	w: 40,
 	l: 80,
 	type: "normalCar",
-	acceleration: 5,
+	acceleration: 1,
 	topForwardSpeed: 15,
 	brakeRate: 0.005,
-	reverseAcceleration: 0.005,
-	reverseTopSpeed: -2,
+	reverseAcceleration: 0.1,
+	reverseTopSpeed: -3,
 	radius: 70,
 	angle: -1.7,
 	angleTarget: 1.8,
@@ -746,10 +746,10 @@ theBuildings[1] = {
 theBuildings[2] = {
 	name: "home",
 	locked: true,
-	upperLeftX: 800,
-	upperLeftY: 800,
+	upperLeftX: 750,
+	upperLeftY: 2450,
 	lowerRightX: 1099,
-	lowerRightY: 949,
+	lowerRightY: 2549,
 	building: 2,
 	height: 1.1,
 	wallColor: "#040311",
@@ -759,7 +759,7 @@ theBuildings[2] = {
 	upperLeftTile: 7,
 	lowerRightTile: 16,
 	floor: indoorFloorImage,
-	southDoor: {
+	northDoor: {
 		exists: true,
 		locked: true,
 		cost: 100,
@@ -783,7 +783,7 @@ theBuildings[2] = {
 		leftDoorColor: "yellow",
 		rightDoorColor: "yellow",
 	},
-	northDoor: {
+	southDoor: {
 		exists: false,
 	},
 	eastDoor: {
@@ -859,134 +859,6 @@ theBuildings[4] = {
 	neonRoof: true,
 };
 
-theBuildings[5] = {
-	name: "home",
-	locked: true,
-	upperLeftX: 1700,
-	upperLeftY: 800,
-	lowerRightX: 1950 - 1,
-	lowerRightY: 850 - 1,
-	building: 5,
-	height: 1.1,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: 7,
-	lowerRightTile: 16,
-	floor: indoorFloorImage,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
-
-theBuildings[20] = {
-	name: "home",
-	locked: true,
-	upperLeftX: 1700,
-	upperLeftY: 700,
-	lowerRightX: 1950 - 1,
-	lowerRightY: 750 - 1,
-	building: 20,
-	height: 1.1,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: 7,
-	lowerRightTile: 16,
-	floor: indoorFloorImage,
-	neonColor: "rgb(255,105,180,0.2)",
-	neonShadowColor: "rgb(255,105,180)",
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
-
-theBuildings[21] = {
-	name: "home",
-	locked: true,
-	upperLeftX: 1700,
-	upperLeftY: 600,
-	lowerRightX: 1950 - 1,
-	lowerRightY: 650 - 1,
-	building: 21,
-	height: 1.1,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: 7,
-	lowerRightTile: 16,
-	floor: indoorFloorImage,
-	//neonCorners: true,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
-
-theBuildings[22] = {
-	name: "home",
-	locked: true,
-	upperLeftX: 1500,
-	upperLeftY: 575,
-	lowerRightX: 1600 - 1,
-	lowerRightY: 625 - 1,
-	building: 22,
-	height: 1.1,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: 7,
-	lowerRightTile: 16,
-	floor: indoorFloorImage,
-	//neonCorners: true,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
-
-
-
 theBuildings[6] = {
 	name: "home",
 	locked: true,
@@ -1008,12 +880,38 @@ theBuildings[6] = {
 	northDoor: {
 		exists: false,
 	},
+	westDoor: {
+		exists: true,
+		locked: true,
+		cost: 100,
+		distanceFromDoor: 0,
+		doorwayDistanceFromTop: 50,
+		doorwayDistanceFromTopToMiddle: 75,
+		topDoorSize: 25,
+		bottomDoorSize: 25,
+		
+		topDoorPosition: 25,
+		topDoorTopLeftX: 0,
+		topDoorTopLeftY: 0,
+		topDoorTopRightX: 0,
+		topDoorTopRightY: 0,
+	
+		bottomDoorPosition: 0,
+		bottomDoorTopLeftX: 0,
+		bottomDoorTopLeftY: 0,
+		bottomDoorTopRightX: 0,
+		bottomDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
+	},
 	eastDoor: {
 		exists: false,
 	},
-	westDoor: {
-		exists: false,
-	},
+	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
+	neonRoof: true,
 };
 
 theBuildings[7] = {
@@ -1024,7 +922,7 @@ theBuildings[7] = {
 	lowerRightX: 2750 - 1,
 	lowerRightY: 1000 - 1,
 	building: 7,
-	height: 1.3,
+	height: 1.1,
 	wallColor: "#040311",
 	roofColor: "#0f0b44",
 	type: "rectangular",
@@ -1038,11 +936,37 @@ theBuildings[7] = {
 		exists: false,
 	},
 	eastDoor: {
-		exists: false,
+		exists: true,
+		locked: true,
+		cost: 100,
+		distanceFromDoor: 0,
+		doorwayDistanceFromTop: 50,
+		doorwayDistanceFromTopToMiddle: 75,
+		topDoorSize: 25,
+		bottomDoorSize: 25,
+		
+		topDoorPosition: 25,
+		topDoorTopLeftX: 0,
+		topDoorTopLeftY: 0,
+		topDoorTopRightX: 0,
+		topDoorTopRightY: 0,
+	
+		bottomDoorPosition: 0,
+		bottomDoorTopLeftX: 0,
+		bottomDoorTopLeftY: 0,
+		bottomDoorTopRightX: 0,
+		bottomDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	westDoor: {
 		exists: false,
 	},
+	neonCorners: true,
+	neonColor: "rgb(125,249,255,0.2)",
+	neonShadowColor: "rgb(125,249,255)",
+	neonRoof: true,
 };
 
 theBuildings[8] = {
@@ -1401,9 +1325,22 @@ theBuildings[103] = {
 
 theWeaponIcons = [
 	{id: 0, x: 600, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false },
-	{id: 1, x: 500, y: 300, w: 30, h: 30, a: 500, color: '#fffb00', collected: false },
-	{id: 2, x: 700, y: 300, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
-	{id: 3, x: 900, y: 300, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false }
+	{id: 0, x: 2325, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false },
+
+	{id: 1, x: 1050, y: 2475, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
+	{id: 1, x: 1500, y: 900, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
+	{id: 1, x: 2680, y: 875, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
+
+	{id: 2, x: 1525, y: 1625, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+	{id: 2, x: 3550, y: 1610, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+	{id: 2, x: 3550, y: 1660, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+	{id: 2, x: 3550, y: 1710, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+
+	{id: 3, x: 5000, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
+	{id: 3, x: 5100, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
+	{id: 3, x: 5200, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
+	{id: 3, x: 5300, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
+	{id: 3, x: 5400, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false }
 ];
 
 
