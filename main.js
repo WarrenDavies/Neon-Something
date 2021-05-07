@@ -36,8 +36,6 @@ console.log("start");
 // code
 	// make functions smaller
 	// Make variables more local
-// vehicles
-	// super speed when reverse and get out
 
 //buildings
 	// get the camera out of the drawing functions - for the buildings
@@ -54,26 +52,7 @@ console.log("start");
 /// ---- DOORS can be seen through walls -- see building 4
 /// 
 /// darkess isn't working
-// 
-// COLLISION
-// collission with left door not working on larger doors
 
-// car physics 
-// then collision detection
-
-// animation for getting into cars, should enter car by the door?
-
-// get better graphics - make it look more 80s.
-
-// collect other cars with a tow truck
-
-// the fucntion that defintes the building line coordinates takes camera position into account. Therefore every function that uses these variables has to adjust for camera position even when not rendering. eg., when detecting bullet collisions. So need to change so that these variables are flat x and y coordinates, and then change all functions that use these variables to remove the - cameraX etc.
-
-// Need to make a system where the connections are added automatically by drawing lines to other ones and seeing if there are any collisions with obstacles. This needs to happen before the map loads, which will increase load time, OR have some kind of map editor that works this out and hard codes it.
-
-// Need to make a map editor
-
-// set up canvas and attach functions to event listeners. These functions are in input.js.
 canvas = document.getElementById("canvas");
 canvas.onselectstart = function () { return false; }
 c = canvas.getContext("2d");
