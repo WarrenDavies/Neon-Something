@@ -790,9 +790,9 @@ function updateMouseCoordinates() {
 }
 
  // clear canvas function
-  function clear(c) {
+function clear(c) {
   c.clearRect(0, 0, WIDTH, HEIGHT);
-	}
+}
 
 function clearCanvas() {
 	// clear the canvas and draw the default green background again

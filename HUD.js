@@ -365,22 +365,24 @@ function debugHUD(){
 			c.fillText("stoodStilTimer: " +
 			debugTarget.stoodStillTimer, 100, 525);
 			
-			c.fillText("onTile.x: " +
-			debugTarget.onTile.x, 100, 550);
-			c.fillText("onTile.y: " +
-			debugTarget.onTile.y, 100, 575);
+			// c.fillText("onTile.x: " +
+			// debugTarget.onTile.x, 100, 550);
+			// c.fillText("onTile.y: " +
+			// debugTarget.onTile.y, 100, 575);
 			c.fillText("inBuilding: " +
 			debugTarget.inBuilding, 100, 600);
 
 			let nearWallsString = "";
 			//console.log(map[debugTarget.onTile.y][debugTarget.onTile.x]);
-			map[debugTarget.onTile.y][debugTarget.onTile.x].nearWalls.forEach((i, j) => {
-				if (j > 0) {
-					nearWallsString += " / ";	
-				}
-				nearWallsString += i.building + ", " + i.wall;
-			})
+			// map[debugTarget.onTile.y][debugTarget.onTile.x].nearWalls.forEach((i, j) => {
+			// 	if (j > 0) {
+			// 		nearWallsString += " / ";	
+			// 	}
+			// 	nearWallsString += i.building + ", " + i.wall;
+			// })
 			c.fillText("Near Walls: " + nearWallsString, 100, 625);
+			c.fillText("way point history: " + debugTarget.wayPointsHistory.length, 100, 650);
+
 
 
 			c.save();
@@ -422,24 +424,41 @@ function debugHUD(){
 			c.fillStyle = "white";
 			c.fillText("Current tile:", 900, 75);
 			c.font = 'bold 14pt Calibri';
-			c.fillText("Location: x = " + Player1.x + " (" + Player1.onTile.x + "), y = " + Player1.y + " (" + Player1.onTile.y + ")", 900, 125);
-			c.fillText("Building: " + map[Player1.onTile.y][Player1.onTile.x].building, 900, 150);
-			c.fillText("Speed modifier: " + map[Player1.onTile.y][Player1.onTile.x].speedModifier, 900, 225);
+			// c.fillText("Location: x = " + Player1.x + " (" + Player1.onTile.x + "), y = " + Player1.y + " (" + Player1.onTile.y + ")", 900, 125);
+			// c.fillText("Building: " + map[Player1.onTile.y][Player1.onTile.x].building, 900, 150);
+			// c.fillText("Speed modifier: " + map[Player1.onTile.y][Player1.onTile.x].speedModifier, 900, 225);
 			c.fillText("Speed: " + Player1.speed, 900, 250);
 			let nearWallsString = "";
-			map[Player1.onTile.y][Player1.onTile.x].nearWalls.forEach((i, j) => {
-				if (j > 0) {
-					nearWallsString += " / ";	
-				}
-				nearWallsString += i.building + ", " + i.wall;
-			})
+			// map[Player1.onTile.y][Player1.onTile.x].nearWalls.forEach((i, j) => {
+			// 	if (j > 0) {
+			// 		nearWallsString += " / ";	
+			// 	}
+			// 	nearWallsString += i.building + ", " + i.wall;
+			// })
 			
 			c.fillText("Near Walls: " + nearWallsString, 900, 175);
-			c.fillText("Near Walls Length: " + map[Player1.onTile.y][Player1.onTile.x].nearWalls.length, 900, 200);
+			// c.fillText("Near Walls Length: " + map[Player1.onTile.y][Player1.onTile.x].nearWalls.length, 900, 200);
 			// intersection
 			c.font = 'bold 14pt Calibri';
 			c.strokeStyle = "white";
 			//c.fillText("x: " + lineIntersectionForDebug[0], 200, 45);
 			//c.fillText("y: " + lineIntersectionForDebug[1], 300, 45);
+			if (memi % 10 == 0) {
+				memUse = window.performance.memory
+			}
+			memi++
+			// hovers around 30-50, occasional spikes to 70-80, even 100
+			
+			c.fillText("totalJSHeapSize: " + memUse.dtotalJSHeapSize, 900, 300);
+			c.fillText("usedJSHeapSize: " + memUse.usedJSHeapSize, 900, 325);
+			c.fillText("jsHeapSizeLimit: " + memUse.jsHeapSizeLimit, 900, 350);
+			
+			// {
+			// 	totalJSHeapSize: 29400000,
+			// 	usedJSHeapSize: 15200000,
+			// 	jsHeapSizeLimit: 1530000000
+			//   }
+
+
 		
 }

@@ -262,8 +262,7 @@ var weaponsBar = [
 	{fill: "blue", border: "#4747FF", x: 520, y: 590},
 	{fill: "purple", border: "#932693", x: 560, y: 590},
 	]
-
-
+let memi = 0
 
 // Player coords and initial location
  function Player () {
@@ -326,6 +325,7 @@ var nearDoor = false;
 
 
 
+
 var rightDoorPosition = 125;
 var leftDoorPosition = 125;
 var mouseDown = false;
@@ -333,7 +333,7 @@ var plasmaCharge = 0;
 var rocketReload = 0;
 var vehiclesOnScreen = [];
 var theExplosions = [];
-
+let memUse = window.performance.memory
 
 
 
@@ -991,117 +991,117 @@ theBuildings[11] = {
 };
 
 
-theBuildings[100] = {
-	name: "topBounds",
-	upperLeftX: 0,
-	upperLeftY: 0,
-	lowerRightX: map[0].length * 50 - 1,
-	lowerRightY: 49,
-	building: 100,
-	height: 1.5,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: 0,
-	lowerRightTile: map[0].length,
-	floor: indoorFloorImage,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
+// theBuildings[100] = {
+// 	name: "topBounds",
+// 	upperLeftX: 0,
+// 	upperLeftY: 0,
+// 	lowerRightX: map[0].length * 50 - 1,
+// 	lowerRightY: 49,
+// 	building: 100,
+// 	height: 1.5,
+// 	wallColor: "#040311",
+// 	roofColor: "#0f0b44",
+// 	type: "rectangular",
+// 	upperLeftTile: 0,
+// 	lowerRightTile: map[0].length,
+// 	floor: indoorFloorImage,
+// 	southDoor: {
+// 		exists: false,
+// 	},
+// 	northDoor: {
+// 		exists: false,
+// 	},
+// 	eastDoor: {
+// 		exists: false,
+// 	},
+// 	westDoor: {
+// 		exists: false,
+// 	},
+// };
 
-theBuildings[101] = {
-	name: "rightBounds",
-	upperLeftX: map[0].length * 50 - 50,
-	upperLeftY: 50,
-	lowerRightX: map[0].length * 50 - 1,
-	lowerRightY: map.length * 50 - 50,
-	building: 101,
-	height: 1.5,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: map[0].length,
-	lowerRightTile: map.length,
-	floor: grassImage,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
+// theBuildings[101] = {
+// 	name: "rightBounds",
+// 	upperLeftX: map[0].length * 50 - 50,
+// 	upperLeftY: 50,
+// 	lowerRightX: map[0].length * 50 - 1,
+// 	lowerRightY: map.length * 50 - 50,
+// 	building: 101,
+// 	height: 1.5,
+// 	wallColor: "#040311",
+// 	roofColor: "#0f0b44",
+// 	type: "rectangular",
+// 	upperLeftTile: map[0].length,
+// 	lowerRightTile: map.length,
+// 	floor: grassImage,
+// 	southDoor: {
+// 		exists: false,
+// 	},
+// 	northDoor: {
+// 		exists: false,
+// 	},
+// 	eastDoor: {
+// 		exists: false,
+// 	},
+// 	westDoor: {
+// 		exists: false,
+// 	},
+// };
 
-theBuildings[102] = {
-	name: "bottomBounds",
-	upperLeftX: 0,
-	upperLeftY: map.length * 50 - 50,
-	lowerRightX: map[0].length * 50 - 1,
-	lowerRightY: map.length * 50 - 1,
-	building: 102,
-	height: 1.5,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: map.length,
-	lowerRightTile: map[0].length,
-	floor: indoorFloorImage,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
+// theBuildings[102] = {
+// 	name: "bottomBounds",
+// 	upperLeftX: 0,
+// 	upperLeftY: map.length * 50 - 50,
+// 	lowerRightX: map[0].length * 50 - 1,
+// 	lowerRightY: map.length * 50 - 1,
+// 	building: 102,
+// 	height: 1.5,
+// 	wallColor: "#040311",
+// 	roofColor: "#0f0b44",
+// 	type: "rectangular",
+// 	upperLeftTile: map.length,
+// 	lowerRightTile: map[0].length,
+// 	floor: indoorFloorImage,
+// 	southDoor: {
+// 		exists: false,
+// 	},
+// 	northDoor: {
+// 		exists: false,
+// 	},
+// 	eastDoor: {
+// 		exists: false,
+// 	},
+// 	westDoor: {
+// 		exists: false,
+// 	},
+// };
 
-theBuildings[103] = {
-	name: "leftBounds",
-	upperLeftX: 0,
-	upperLeftY: 50,
-	lowerRightX: 49,
-	lowerRightY: map.length * 50 - 51,
-	building: 103,
-	height: 1.5,
-	wallColor: "#040311",
-	roofColor: "#0f0b44",
-	type: "rectangular",
-	upperLeftTile: map.length,
-	lowerRightTile: map[0].length,
-	floor: grassImage,
-	southDoor: {
-		exists: false,
-	},
-	northDoor: {
-		exists: false,
-	},
-	eastDoor: {
-		exists: false,
-	},
-	westDoor: {
-		exists: false,
-	},
-};
+// theBuildings[103] = {
+// 	name: "leftBounds",
+// 	upperLeftX: 0,
+// 	upperLeftY: 50,
+// 	lowerRightX: 49,
+// 	lowerRightY: map.length * 50 - 51,
+// 	building: 103,
+// 	height: 1.5,
+// 	wallColor: "#040311",
+// 	roofColor: "#0f0b44",
+// 	type: "rectangular",
+// 	upperLeftTile: map.length,
+// 	lowerRightTile: map[0].length,
+// 	floor: grassImage,
+// 	southDoor: {
+// 		exists: false,
+// 	},
+// 	northDoor: {
+// 		exists: false,
+// 	},
+// 	eastDoor: {
+// 		exists: false,
+// 	},
+// 	westDoor: {
+// 		exists: false,
+// 	},
+// };
 
 
 theWeaponIcons = [

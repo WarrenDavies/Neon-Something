@@ -926,3 +926,13 @@ function checkBulletZombieCollision(i, j) {
 function checkWeaponIconCollision() {
 
 }
+
+function definitelyOnMap(i) {
+	if (i.x > 20 && 
+		i.x < (map[0].length * 50) - 20 &&
+		i.y > 20 &&
+		i.y < (map.length * 50) - 20) {
+		
+		return true;
+	}
+}
