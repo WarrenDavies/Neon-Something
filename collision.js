@@ -906,12 +906,13 @@ function checkBulletZombieCollision(i, j) {
 		if (hit) {
 			if (collisionDetected === false) {
 				k.health -= i.power;
+				Player1.points += 10;
 				collisionDetected = true;
 				if (k.health <= 0) {
 					theSplats.push({x: k.x - (k.w / 2), y: k.y - (k.h / 2), w: k.w, h: k.h });
 					theZombies.splice(l, 1);
 					Player1.kills += 1;
-					Player1.points += 10;
+					Player1.points += 100;
 				}
 			}
 		}

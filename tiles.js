@@ -799,8 +799,8 @@ function clearCanvas() {
 	clear(c);
 	c.beginPath();
 	//c.fillStyle = "rgb(45,133,22)";
-	c.fillStyle = "green";
-	c.rect(0,0,800,600);
+	c.fillStyle = "darkblue";
+	c.rect(0,0,cameraW,cameraH);
 	c.fill();
 	c.closePath();
 }
@@ -835,7 +835,7 @@ function updateCamera() {
 }
 
 function drawMap() {
-
+	
 	//make this only happen on resize
 	let canvasElem = document.getElementById('canvas');
 	canvasElem.width = window.innerWidth;
@@ -844,7 +844,7 @@ function drawMap() {
 	cameraH = canvasElem.height;
 	let screenWidthInTiles = Math.ceil(cameraW / tileSize);
 	let screenHeightInTiles = Math.ceil(cameraH / tileSize);
-	
+	clearCanvas();
 	var tileCount = 0
 	c.beginPath();
 	for (j = Math.floor((cameraY + (cameraH / 2)) / 50) - Math.ceil(screenHeightInTiles / 2) - 1; j < onYTile + Math.ceil(screenHeightInTiles / 2) + 1; j++ ) {
@@ -857,9 +857,9 @@ function drawMap() {
 				
 				// with the -1 offsets for tesselation
 				
-				c.save();
-				c.translate(l * tileSize - cameraX - 1, j * tileSize - cameraY - 1)
-				c.drawImage( map[j][l].backgroundImage, 0, 0, tileSize + 1, tileSize + 1);
+					c.save();
+					c.translate(l * tileSize - cameraX - 1, j * tileSize - cameraY - 1)
+					c.drawImage( map[j][l].backgroundImage, 0, 0, tileSize + 1, tileSize + 1);
 				
 				// the below writes the building no on the floor of the building
 				//if (map[j][l].building) {
@@ -867,7 +867,7 @@ function drawMap() {
 				//	c.fillText(map[j][l].building, 20,30);
 					
 				//}
-				c.restore();
+					c.restore();
 				
 				//console.log("after = " + cameraX);
 				

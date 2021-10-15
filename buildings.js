@@ -354,18 +354,18 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		);
 
 		// getDistanceFromDoor(Player1, buildingNo, "northDoor", upperRightX, -theBuildings[buildingNo].northDoor.doorwayDistanceFromRightToMiddle, upperRightY, 0);
-		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100) {
+		if (theBuildings[buildingNo].northDoor.distanceFromDoor < 150) {
 			Player1.nearDoor = theBuildings[buildingNo].northDoor;
 			Player1.nearBuilding = buildingNo;
 			nearDoor = true;
 		}
 //NORTH LEFT DOOR					
 		if (theBuildings[buildingNo].northDoor.locked === false) {
-			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 150 && theBuildings[buildingNo].northDoor.leftDoorPosition > 0) {
 			theBuildings[buildingNo].northDoor.leftDoorPosition -=1;
 			}
 
-			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.leftDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize) {
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 150 && theBuildings[buildingNo].northDoor.leftDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize) {
 			theBuildings[buildingNo].northDoor.leftDoorPosition +=1;
 			}
 			c.fillStyle = 'lightgreen';
@@ -402,11 +402,11 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		
 // NORTH RIGHT DOOR
 		if (theBuildings[buildingNo].northDoor.locked === false) {
-			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 100 && theBuildings[buildingNo].northDoor.rightDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize){
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor < 150 && theBuildings[buildingNo].northDoor.rightDoorPosition < theBuildings[buildingNo].northDoor.leftDoorSize){
 				theBuildings[buildingNo].northDoor.rightDoorPosition +=1;
 			}
 
-			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 100 && theBuildings[buildingNo].northDoor.rightDoorPosition > 0) {
+			if (theBuildings[buildingNo].northDoor.distanceFromDoor > 150 && theBuildings[buildingNo].northDoor.rightDoorPosition > 0) {
 				theBuildings[buildingNo].northDoor.rightDoorPosition -=1;
 			c.fillStyle = 'lightgreen';
 			}
@@ -469,18 +469,18 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			theBuildings[buildingNo].eastDoor.distanceFromDoor = Math.sqrt( (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
 			* (upperRightY + theBuildings[buildingNo].eastDoor.doorwayDistanceFromTopToMiddle - Player1.y) + (upperRightX - Player1.x) * (upperRightX - Player1.x));
 		
-			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100) {
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 150) {
 				Player1.nearDoor = theBuildings[buildingNo].eastDoor;
 				Player1.nearBuilding = buildingNo;
 				nearDoor = true;
 			}
 // EAST TOP DOOR	
 		if (theBuildings[buildingNo].eastDoor.locked === false) {		
-			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.topDoorPosition > 0){
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 150 && theBuildings[buildingNo].eastDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].eastDoor.topDoorPosition -= 1;
 			}
 
-			if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.topDoorPosition < theBuildings[buildingNo].eastDoor.topDoorSize) {
+			if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 150 && theBuildings[buildingNo].eastDoor.topDoorPosition < theBuildings[buildingNo].eastDoor.topDoorSize) {
 				theBuildings[buildingNo].eastDoor.topDoorPosition += 1;
 			}
 			c.fillStyle = 'lightgreen';
@@ -514,10 +514,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 // EAST BOTTOM DOOR
 			if (theBuildings[buildingNo].eastDoor.locked === false) {
-				if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize) {
+				if (theBuildings[buildingNo].eastDoor.distanceFromDoor < 150 && theBuildings[buildingNo].eastDoor.bottomDoorPosition < theBuildings[buildingNo].eastDoor.bottomDoorSize) {
 					theBuildings[buildingNo].eastDoor.bottomDoorPosition +=1;
 				}
-				if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 100 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
+				if (theBuildings[buildingNo].eastDoor.distanceFromDoor > 150 && theBuildings[buildingNo].eastDoor.bottomDoorPosition > 0) {
 					theBuildings[buildingNo].eastDoor.bottomDoorPosition -=1;
 				}
 				c.fillStyle = 'lightgreen';
@@ -583,7 +583,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 			c.beginPath();
 			theBuildings[buildingNo].westDoor.distanceFromDoor = Math.sqrt( (upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle - Player1.y) 
 			* (upperLeftY + theBuildings[buildingNo].westDoor.doorwayDistanceFromTopToMiddle - Player1.y) + (upperLeftX - Player1.x) * (upperLeftX - Player1.x));
-			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100) {
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 150) {
 				Player1.nearDoor = theBuildings[buildingNo].westDoor;
 				Player1.nearBuilding = buildingNo;
 				nearDoor = true;
@@ -591,11 +591,11 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		
 //WEST TOP DOOR		
 		if (theBuildings[buildingNo].westDoor.locked === false) {	
-			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100 && theBuildings[buildingNo].westDoor.topDoorPosition > 0){
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 150 && theBuildings[buildingNo].westDoor.topDoorPosition > 0){
 				theBuildings[buildingNo].westDoor.topDoorPosition -= 1;
 			}
 
-			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 100 && theBuildings[buildingNo].westDoor.topDoorPosition < theBuildings[buildingNo].westDoor.topDoorSize) {
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 150 && theBuildings[buildingNo].westDoor.topDoorPosition < theBuildings[buildingNo].westDoor.topDoorSize) {
 				theBuildings[buildingNo].westDoor.topDoorPosition += 1;
 			}
 				c.fillStyle = 'lightgreen';
@@ -629,11 +629,11 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 // WEST BOTTOM DOOR
 		if (theBuildings[buildingNo].westDoor.locked === false) {
-			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 100 && theBuildings[buildingNo].westDoor.bottomDoorPosition < theBuildings[buildingNo].westDoor.bottomDoorSize){
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor < 150 && theBuildings[buildingNo].westDoor.bottomDoorPosition < theBuildings[buildingNo].westDoor.bottomDoorSize){
 				theBuildings[buildingNo].westDoor.bottomDoorPosition +=1;
 			}
 
-			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 100 && theBuildings[buildingNo].westDoor.bottomDoorPosition > 0) {
+			if (theBuildings[buildingNo].westDoor.distanceFromDoor > 150 && theBuildings[buildingNo].westDoor.bottomDoorPosition > 0) {
 				theBuildings[buildingNo].westDoor.bottomDoorPosition -=1;
 			}
 				c.fillStyle = 'lightgreen';
@@ -699,7 +699,7 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	if (theBuildings[buildingNo].southDoor.exists){
 		c.beginPath();
 		theBuildings[buildingNo].southDoor.distanceFromDoor = Math.sqrt( (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) * (lowerLeftX + theBuildings[buildingNo].southDoor.doorwayDistanceFromLeftToMiddle - Player1.x) + (lowerRightY - Player1.y) * (lowerRightY - Player1.y));
-		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100) {
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 150) {
 			Player1.nearDoor = theBuildings[buildingNo].southDoor;
 			Player1.nearBuilding = buildingNo;
 			nearDoor = true;
@@ -707,10 +707,10 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 // SOUTH LEFT DOOR					
 	if (theBuildings[buildingNo].southDoor.locked === false) {
-		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.leftDoorPosition > 0){
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 150 && theBuildings[buildingNo].southDoor.leftDoorPosition > 0){
 			theBuildings[buildingNo].southDoor.leftDoorPosition -=1;
 		}
-		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.leftDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize) {
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 150 && theBuildings[buildingNo].southDoor.leftDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize) {
 			theBuildings[buildingNo].southDoor.leftDoorPosition +=1;
 		}
 			c.fillStyle = 'lightgreen';
@@ -743,11 +743,11 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 
 // RIGHT DOOR
 	if (theBuildings[buildingNo].southDoor.locked === false) {
-		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 100 && theBuildings[buildingNo].southDoor.rightDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize){
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor < 150 && theBuildings[buildingNo].southDoor.rightDoorPosition < theBuildings[buildingNo].southDoor.leftDoorSize){
 			theBuildings[buildingNo].southDoor.rightDoorPosition +=1;
 		}
 
-		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 100 && theBuildings[buildingNo].southDoor.rightDoorPosition > 0) {
+		if (theBuildings[buildingNo].southDoor.distanceFromDoor > 150 && theBuildings[buildingNo].southDoor.rightDoorPosition > 0) {
 			theBuildings[buildingNo].southDoor.rightDoorPosition -=1;
 		}
 			c.fillStyle = 'lightgreen';
@@ -807,6 +807,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 	if (nearDoor === false) {
 		Player1.nearDoor = false;
 		Player1.nearBuilding = false;
+	} else if (Player1.nearDoor.locked === true && Player1.mot === 0) {
+		messageToPass = {
+			text: "Press F to open door (cost: " + Player1.nearDoor.cost + ")",
+			priority: 1,
+			timeActive: 0,
+			removeAfter: 5
+		}
+		passMessage(messageToPass);
 	}
 
 // draw NEON corners

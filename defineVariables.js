@@ -989,7 +989,16 @@ theBuildings[11] = {
 	neonShadowColor: "rgb(125,249,255)",
 	neonRoof: true,
 };
-
+narratorMessage = {
+	activeMessage: false,
+	message: {
+		text: "",
+		priority: 0,
+		timeActive: 0,
+		removeAfter: 0
+	}
+}
+messageQueue = [];
 
 // theBuildings[100] = {
 // 	name: "topBounds",

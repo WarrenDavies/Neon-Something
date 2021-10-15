@@ -459,6 +459,33 @@ function debugHUD(){
 			// 	jsHeapSizeLimit: 1530000000
 			//   }
 
+}
 
-		
+
+function passMessage(message) {
+	if (!narratorMessage.activeMessage) {
+		narratorMessage.activeMessage = true;
+		narratorMessage.message = message;
+	}
+
+	if (narratorMessage.activeMessage) {
+		if (narratorMessage.message.priority < message.priority) {
+			narratorMessage.message = message
+		}
+	}
+}
+
+function updateMessage() {
+	c.strokeStyle = "white";
+	c.fillText(narratorMessage.message.text, 400, cameraH - 13);
+
+	narratorMessage.message.timeActive++;
+
+	if (narratorMessage.message.timeActive > narratorMessage.message.removeAfter) {
+		narratorMessage.activeMessage = false;
+		narratorMessage.message.text = "";
+		narratorMessage.message.priority = 0;
+		narratorMessage.message.timeActive = 0;
+		narratorMessage.message.removeAfter = 0;
+	} 
 }

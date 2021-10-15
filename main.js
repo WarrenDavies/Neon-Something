@@ -171,6 +171,10 @@ function mainDraw(canvas, message) {
 // slightly confusing name but updateTime refers to updating the time of day, and making the game area darker at night. This can be activated by uncommenting the first line which increments the time of day timer. 
 	// updateTime();
 
+	if (narratorMessage.activeMessage) {
+		updateMessage()
+	}
+
 // check if player is in car with headlights on, and if so, draw them. Also, don't do this if the player is in a building (buildings are always lit up)
 	if (Player1.mot > 0 && vehiclesOnScreen[Player1.mot].headlightsOn === true && Player1.inBuilding === false ) {
 		drawHeadlights();

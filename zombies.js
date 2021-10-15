@@ -36,7 +36,7 @@ function spawnZombie() {
 			var zomHealth = 1;
 			var zomSpeed = 3;
 		} else {
-			var zomHealth = Math.floor(Player1.kills / 100) + 1;
+			var zomHealth = Math.floor(Player1.kills / 30) + 1;
 			var zomSpeed = Math.floor(Player1.kills / 100) + 3;
 		}
 		theZombies.push({
