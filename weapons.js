@@ -39,7 +39,7 @@ function changeWeapon(change) {
 
 function updateWeaponIcons() {
     for (i = theWeaponIcons.length - 1; i >= 0; i--) {
-        if (collidesSpecify(Player1.x,Player1.y, Player1.w, Player1.h, theWeaponIcons[i].x, theWeaponIcons[i].y, theWeaponIcons[i].w, theWeaponIcons[i].h)) {
+        if (collidesSpecify(Player1.x - 5,Player1.y -5, Player1.w + 10, Player1.h + 10, theWeaponIcons[i].x, theWeaponIcons[i].y, theWeaponIcons[i].w, theWeaponIcons[i].h)) {
 
             Player1.onWeaponIcon = i; 
 
