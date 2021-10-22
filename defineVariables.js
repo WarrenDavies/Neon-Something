@@ -266,7 +266,7 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 2200; 
+	 this.x = 800; 
 	 this.y = 750;
 	 this.w = 20;
 	 this.h = 20;
@@ -312,11 +312,16 @@ let memi = 0
 	 this.nearBuilding = false;
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
-	 this.points = 10000;
+	 this.points = 1000;
+	 this.maxPoints = 10000;
 	 this.onTile = {x: 0, y: 0};
 	 this.inBounds = {
 
 	 }
+	 this.fBuffer = 0
+	 this.onWeaponIcon = -1;
+	 this.interactTimer = 0;
+	 this.interactDebounceTime = 50;
 } 
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
@@ -422,7 +427,6 @@ vehiclesOnScreen[1] = {
  vehiclesOnScreen[7] = {
 	x: Player1.x - 300,
 	y: Player1.y - 100,
-	
 	xPrevious: 0,
 	yPrevious: 0,
 	xtarget: 0,
@@ -1114,23 +1118,23 @@ messageQueue = [];
 
 
 theWeaponIcons = [
-	{id: 0, x: 600, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false },
-	{id: 0, x: 2325, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false },
+	{id: 0, x: 600, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
+	{id: 0, x: 2325, y: 850, w: 30, h: 30, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
 
-	{id: 1, x: 1050, y: 2475, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
-	{id: 1, x: 1500, y: 900, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
-	{id: 1, x: 2680, y: 875, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false },
+	{id: 1, x: 1050, y: 2475, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
+	{id: 1, x: 1500, y: 900, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
+	{id: 1, x: 2680, y: 875, w: 30, h: 30, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
 
-	{id: 2, x: 1525, y: 1625, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
-	{id: 2, x: 3550, y: 1610, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
-	{id: 2, x: 3550, y: 1660, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
-	{id: 2, x: 3550, y: 1710, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false },
+	{id: 2, x: 1525, y: 1625, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
+	{id: 2, x: 3550, y: 1610, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
+	{id: 2, x: 3550, y: 1660, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
+	{id: 2, x: 3550, y: 1710, w: 30, h: 30, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 
-	{id: 3, x: 5000, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
-	{id: 3, x: 5100, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
-	{id: 3, x: 5200, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
-	{id: 3, x: 5300, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false },
-	{id: 3, x: 5400, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false }
+	{id: 3, x: 5000, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
+	{id: 3, x: 5100, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
+	{id: 3, x: 5200, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000 },
+	{id: 3, x: 5300, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
+	{id: 3, x: 5400, y: 900, w: 30, h: 30, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
 ];
 
 

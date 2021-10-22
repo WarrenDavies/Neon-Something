@@ -447,8 +447,8 @@ function debugHUD(){
 				memUse = window.performance.memory
 			}
 			memi++
-			// hovers around 30-50, occasional spikes to 70-80, even 100
 			
+			// load browser with --enable-precise-memory-info
 			c.fillText("totalJSHeapSize: " + memUse.dtotalJSHeapSize, 900, 300);
 			c.fillText("usedJSHeapSize: " + memUse.usedJSHeapSize, 900, 325);
 			c.fillText("jsHeapSizeLimit: " + memUse.jsHeapSizeLimit, 900, 350);

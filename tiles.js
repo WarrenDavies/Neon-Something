@@ -780,6 +780,10 @@ function updateTimers() {
 	if (headlightsTimer > 0) {
 		headlightsTimer -= 1;
 	}
+	if (Player1.interactTimer > 0) {
+		Player1.interactTimer -= 1;
+
+	}
 }
 
 function updateMouseCoordinates() {

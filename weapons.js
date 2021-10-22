@@ -38,21 +38,33 @@ function changeWeapon(change) {
 }
 
 function updateWeaponIcons() {
-    theWeaponIcons.forEach((i, j) => {
-        if (i.collected === false) {
-            if(isOnScreen(i) ) {
-                if (collidesSpecify(Player1.x,Player1.y, Player1.w, Player1.h, i.x, i.y, i.w, i.h)) {
-                    if (Player1.weaponsPossessed[i.id].possess === false) {                    
-                        Player1.weaponsPossessed[i.id].possess = true;
-                        Player1.activeWeapon = i.id;
-                    }
-                    i.collected = true;
-                    Player1.weaponsPossessed[i.id].ammo += i.a;
+    for (i = theWeaponIcons.length - 1; i >= 0; i--) {
+        if (collidesSpecify(Player1.x,Player1.y, Player1.w, Player1.h, theWeaponIcons[i].x, theWeaponIcons[i].y, theWeaponIcons[i].w, theWeaponIcons[i].h)) {
 
+            Player1.onWeaponIcon = i; 
+
+            if (Player1.points < theWeaponIcons[i].cost) {
+                messageToPass = {
+                    text: "You can't afford the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")",
+                    priority: 1,
+                    timeActive: 0,
+                    removeAfter: 5
                 }
-            } // is on screen
-        } // collected = false
-    });
+                Player1.onWeaponIcon = -1;
+            } else {
+                messageToPass = {
+                    text: "Press F buy the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")",
+                    priority: 1,
+                    timeActive: 0,
+                    removeAfter: 5
+                }
+            }
+            passMessage(messageToPass);
+            break;
+        } else {
+            Player1.onWeaponIcon = 0;
+        }
+    }
 }
 
 function drawWeaponIcons() {

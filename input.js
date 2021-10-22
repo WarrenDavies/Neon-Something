@@ -212,7 +212,21 @@ function detectKeys(){
 	} 
 
 	if (keys[70]) { // F action button
-		console.log("Pressing F");
+		console.log(Player1.onWeaponIcon + ", " + Player1.interactTimer);
+
+		if (Player1.onWeaponIcon !== -1 && Player1.interactTimer == 0) {
+			console.log("contact: ");
+			Player1.points -= theWeaponIcons[Player1.onWeaponIcon].cost;
+			
+			if (Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].possess === false) {                    
+				Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].possess = true;
+				Player1.activeWeapon = theWeaponIcons[Player1.onWeaponIcon].id;
+			}
+			Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].ammo += theWeaponIcons[Player1.onWeaponIcon].a;
+
+			Player1.interactTimer = Player1.interactDebounceTime;
+		}
+
 		if (Player1.nearDoor != false) {
 			if (Player1.nearDoor.locked === true && Player1.points > Player1.nearDoor.cost) {
 				Player1.nearDoor.locked = false;
@@ -261,7 +275,11 @@ function detectKeys(){
 			Player1.mot = 0;
 		}
 	} // keys 70
-	 
+	
+	if (!keys[70]) {
+		Player1.interactTimer = 0;
+	}
+
 	 if (Player1.speed != 0){
 	 moveEverything();
 	 }
