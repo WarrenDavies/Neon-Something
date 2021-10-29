@@ -52,8 +52,13 @@ function updateWeaponIcons() {
                 }
                 Player1.onWeaponIcon = -1;
             } else {
+                if (Player1.weaponsPossessed[theWeaponIcons[i].id].possess == true) {
+                    message = "Press F buy " + theWeaponIcons[i].name + " ammo (cost: " + theWeaponIcons[i].cost + ")"
+                } else {
+                    message = "Press F buy the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")"
+                }
                 messageToPass = {
-                    text: "Press F buy the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")",
+                    text: message,
                     priority: 1,
                     timeActive: 0,
                     removeAfter: 5
@@ -62,7 +67,7 @@ function updateWeaponIcons() {
             passMessage(messageToPass);
             break;
         } else {
-            Player1.onWeaponIcon = 0;
+            Player1.onWeaponIcon = -1;
         }
     }
 }

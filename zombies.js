@@ -107,25 +107,25 @@ function updateZombies() {
 	theZombies.forEach(function(i, j) {
 // target the player and set direction for movement. Later will make them target civilians too but first thing's first.
 			// draw desires end point of movement
-			c.beginPath();
-			c.save();
-			c.translate(i.x - cameraX, i.y - cameraY);
-			c.translate(-i.x, -i.y);
-			c.strokeStyle = 'red';
-			c.rect((i.x  - (i.w / 2) + (i.speed * i.xVector)), (i.y - (i.h / 2) + (i.speed * i.yVector)), i.w, i.h);
-			c.stroke();
-			c.restore();
-			c.closePath();
+			// c.beginPath();
+			// c.save();
+			// c.translate(i.x - cameraX, i.y - cameraY);
+			// c.translate(-i.x, -i.y);
+			// c.strokeStyle = 'red';
+			// c.rect((i.x  - (i.w / 2) + (i.speed * i.xVector)), (i.y - (i.h / 2) + (i.speed * i.yVector)), i.w, i.h);
+			// c.stroke();
+			// c.restore();
+			// c.closePath();
 
-			c.beginPath();
-			c.save();
-			c.translate(i.x - cameraX, i.y - cameraY);
-			c.translate(-i.x, -i.y);
-			c.strokeStyle = 'black';
-			c.rect(i.x  - (i.w / 2), i.y  - (i.h / 2), i.w , i.h );
-			c.stroke();
-			c.restore();
-			c.closePath();
+			// c.beginPath();
+			// c.save();
+			// c.translate(i.x - cameraX, i.y - cameraY);
+			// c.translate(-i.x, -i.y);
+			// c.strokeStyle = 'black';
+			// c.rect(i.x  - (i.w / 2), i.y  - (i.h / 2), i.w , i.h );
+			// c.stroke();
+			// c.restore();
+			// c.closePath();
 
 		// first let's get the distance to the player
 		i.distanceToPlayer = getDistance(i.x, i.y, Player1.x, Player1.y);
