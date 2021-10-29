@@ -251,7 +251,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = true;
+var debug = false;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
@@ -884,10 +884,10 @@ theBuildings[9] = {
 theBuildings[10] = {
 	name: "home",
 	locked: true,
-	upperLeftX: 4950,
-	upperLeftY: 800,
-	lowerRightX: 5500 - 1,
-	lowerRightY: 1450 - 1,
+	upperLeftX: 350,
+	upperLeftY: 1500,
+	lowerRightX: 950 - 1,
+	lowerRightY: 2000 - 1,
 	building: 10,
 	height: 1.3,
 	wallColor: "#040111",
@@ -943,10 +943,10 @@ theBuildings[10] = {
 theBuildings[11] = {
 	name: "home",
 	locked: true,
-	upperLeftX: 5000,
-	upperLeftY: 2050,
-	lowerRightX: 5500 - 1,
-	lowerRightY: 2500 - 1,
+	upperLeftX: 2900,
+	upperLeftY: 2100,
+	lowerRightX: 3700 - 1,
+	lowerRightY: 2600 - 1,
 	building: 11,
 	height: 1.3,
 	wallColor: "#040311",
@@ -1130,11 +1130,7 @@ theWeaponIcons = [
 	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 	{id: 2, x: 3550, y: 1710, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 
-	{id: 3, x: 5000, y: 900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
-	{id: 3, x: 5100, y: 900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
-	{id: 3, x: 5200, y: 900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000 },
-	{id: 3, x: 5300, y: 900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  },
-	{id: 3, x: 5400, y: 900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
+	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
 ];
 
 
