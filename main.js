@@ -15,7 +15,6 @@ console.log("start");
 	// responsive to screen size changes (is viewport change being looked for every loop?)
 
 // map
-	// keys and points open doors
 	// just head when underwater?
 	// day/night time
 	// weapon/ammo location

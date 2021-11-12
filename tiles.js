@@ -858,6 +858,13 @@ function drawMap() {
 	c.beginPath();
 	for (j = Math.floor((cameraY + (cameraH / 2)) / 50) - Math.ceil(screenHeightInTiles / 2) - 1; j < onYTile + Math.ceil(screenHeightInTiles / 2) + 1; j++ ) {
 		for (l = Math.floor((cameraX + (cameraW / 2)) / 50) - Math.ceil(screenWidthInTiles / 2) - 1; l < onXTile + Math.ceil(screenWidthInTiles / 2) + 2; l++) {
+			// console.log(map[j]);
+			if (j < 0 || l < 0 || j > map.length - 1 || l > map[0].length - 1 ) {
+				c.save();
+				c.translate(l * tileSize - cameraX, j * tileSize - cameraY)
+				c.drawImage( waterImage, 0, 0, tileSize + 1, tileSize + 1);
+				c.restore();
+			}
 			if (j >= 0  && l >= 0 && j < map.length && l < map[j].length) {
 
 				if (map[j][l].backgroundImage) {
