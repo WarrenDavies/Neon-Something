@@ -118,6 +118,32 @@ return  ax < bx + bw &&
 		ay + ah > by;
 }
 
+function stopPlayerWalkingThroughZombies(xStep, yStep) {
+	theZombies.forEach((i, j) => {
+		if (collidesSpecify(
+			Player1.x - (Player1.w / 2),
+			(yStep * 2) + Player1.y - (Player1.h / 2), 
+			Player1.w, 
+			Player1.h, 
+			i.x, 
+			i.y, 
+			i.w, 
+			i.h )) {
+				Player1.yVector = 0;
+		}
+		if (collidesSpecify(
+			Player1.x + (xStep * 2) - (Player1.w / 2),
+			Player1.y - (Player1.h / 2), 
+			Player1.w, 
+			Player1.h, 
+			i.x, 
+			i.y, 
+			i.w, 
+			i.h )) {
+				Player1.xVector = 0;
+		}
+	});
+}
 function checkPlayerCollision(xStep, yStep) {
 //c.fillRect (xStep * 2 + Player1.x - cameraX - (Player1.w / 2) , yStep * 2 + Player1.y - cameraY - (Player1.h / 2)  , Player1.w, Player1.h);
 
@@ -185,6 +211,9 @@ var wallCollisionCounter = 0;
 		}
 	});
 	
+	if (!debug) {
+		stopPlayerWalkingThroughZombies(xStep, yStep)
+	}
 	//if (wallCollisionCounter === 1) {
 		if (wallCollision.left || wallCollision.right) {
 			//Player1.xVector = 0;
