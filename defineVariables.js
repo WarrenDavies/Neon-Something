@@ -266,8 +266,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 400; 
-	 this.y = 850;
+	 this.x = 3400; 
+	 this.y = 2200;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -427,8 +427,8 @@ vehiclesOnScreen[1] = {
  };
  
  vehiclesOnScreen[7] = {
-	x: Player1.x - 300,
-	y: Player1.y - 100,
+	x: 3600,
+	y: 2200,
 	xPrevious: 0,
 	yPrevious: 0,
 	xtarget: 0,
@@ -444,7 +444,7 @@ vehiclesOnScreen[1] = {
 	reverseAcceleration: 0.005,
 	reverseTopSpeed: -2,
 	radius: 70,
-	angle: -1.7,
+	angle: 0,
 	angleTarget: 1.8,
 	speed: 0,
 	weight: 20,
@@ -632,7 +632,7 @@ theBuildings[4] = {
 	southDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 500,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 100,
 		doorwayDistanceFromLeftToMiddle: 125,
@@ -868,7 +868,7 @@ theBuildings[9] = {
 	northDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 10,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 200,
@@ -935,7 +935,7 @@ theBuildings[10] = {
 	westDoor: {
 		exists: true,	
 		locked: true,
-		cost: 100,
+		cost: 3000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromTop: 250,
 		doorwayDistanceFromTopToMiddle: 300,
@@ -1148,9 +1148,9 @@ theWeaponIcons = [
 	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
 	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
 
-	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
+	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 300, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 	
-	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
+	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 150, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
 ];
 
 
