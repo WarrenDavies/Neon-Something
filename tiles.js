@@ -877,12 +877,14 @@ function drawMap() {
 					c.drawImage( map[j][l].backgroundImage, 0, 0, tileSize + 1, tileSize + 1);
 				
 				// the below writes the building no on the floor of the building
-				//if (map[j][l].building) {
-				//	c.font = 'bold 18pt Calibri';
-				//	c.fillText(map[j][l].building, 20,30);
-					
-				//}
-					c.restore();
+				if (debug) {
+					if (map[j][l].building) {
+						c.font = 'bold 18pt Calibri';
+						c.fillText(map[j][l].building, 20,30);
+						
+					}
+				}
+				c.restore();
 				
 				//console.log("after = " + cameraX);
 				

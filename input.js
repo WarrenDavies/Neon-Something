@@ -228,7 +228,7 @@ function detectKeys(){
 		}
 
 		if (Player1.nearDoor != false) {
-			if (Player1.nearDoor.locked === true && Player1.points > Player1.nearDoor.cost) {
+			if (Player1.nearDoor.locked === true && Player1.points >= Player1.nearDoor.cost) {
 				Player1.nearDoor.locked = false;
 				Player1.points -= Player1.nearDoor.cost;
 				if (theBuildings[Player1.nearBuilding].southDoor.exists === true) {

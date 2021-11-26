@@ -266,8 +266,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 800; 
-	 this.y = 750;
+	 this.x = 400; 
+	 this.y = 850;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -312,7 +312,7 @@ let memi = 0
 	 this.nearBuilding = false;
 	 this.ammo = [1000, 1500, 2000, 50, 30]
 	 this.kills = 0;
-	 this.points = 1000;
+	 this.points = 100;
 	 this.maxPoints = 10000;
 	 this.onTile = {x: 0, y: 0};
 	 this.inBounds = {
@@ -326,7 +326,9 @@ let memi = 0
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
 var nearDoor = false;
-
+if (debug) {
+	Player1.points = 99999
+}
 
 
 
@@ -652,7 +654,28 @@ theBuildings[4] = {
 		rightDoorColor: "yellow",
 	},
 	northDoor: {
-		exists: false,
+		exists: true,
+		locked: true,
+		cost: 100,
+		distanceFromDoor: 0,
+		doorwayDistanceFromLeft: 100,
+		doorwayDistanceFromLeftToMiddle: 125,
+		leftDoorSize: 25,
+	
+		leftDoorPosition: 25,
+		leftDoorTopLeftX: 0,
+		leftDoorTopLeftY: 0,
+		leftDoorTopRightX: 0,
+		leftDoorTopRightY: 0,
+	
+		rightDoorPosition: 0,
+		rightDoorTopLeftX: 0,
+		rightDoorTopLeftY: 0,
+		rightDoorTopRightX: 0,
+		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	eastDoor: {
 		exists: false,
@@ -674,7 +697,7 @@ theBuildings[6] = {
 	lowerRightX: 2400 - 1,
 	lowerRightY: 950 - 1,
 	building: 6,
-	height: 1.3,
+	height: 1.14,
 	wallColor: "#040311",
 	roofColor: "#0f0b44",
 	type: "rectangular",
@@ -682,7 +705,28 @@ theBuildings[6] = {
 	lowerRightTile: 16,
 	floor: indoorFloorImage,
 	southDoor: {
-		exists: false,
+		exists: true,
+		locked: true,
+		cost: 100,
+		distanceFromDoor: 0,
+		doorwayDistanceFromLeft: 100,
+		doorwayDistanceFromLeftToMiddle: 125,
+		leftDoorSize: 25,
+	
+		leftDoorPosition: 25,
+		leftDoorTopLeftX: 0,
+		leftDoorTopLeftY: 0,
+		leftDoorTopRightX: 0,
+		leftDoorTopRightY: 0,
+	
+		rightDoorPosition: 0,
+		rightDoorTopLeftX: 0,
+		rightDoorTopLeftY: 0,
+		rightDoorTopRightX: 0,
+		rightDoorTopRightY: 0,
+		
+		leftDoorColor: "yellow",
+		rightDoorColor: "yellow",
 	},
 	northDoor: {
 		exists: false,
@@ -846,28 +890,7 @@ theBuildings[9] = {
 		rightDoorColor: "yellow",
 	},
 	southDoor: {
-		exists: true,
-		locked: true,
-		cost: 100,
-		distanceFromDoor: 0,
-		doorwayDistanceFromLeft: 1900,
-		doorwayDistanceFromLeftToMiddle: 1950,
-		leftDoorSize: 50,
-	
-		leftDoorPosition: 50,
-		leftDoorTopLeftX: 0,
-		leftDoorTopLeftY: 0,
-		leftDoorTopRightX: 0,
-		leftDoorTopRightY: 0,
-	
-		rightDoorPosition: 0,
-		rightDoorTopLeftX: 0,
-		rightDoorTopLeftY: 0,
-		rightDoorTopRightX: 0,
-		rightDoorTopRightY: 0,
-		
-		leftDoorColor: "yellow",
-		rightDoorColor: "yellow",
+		exists: false,
 	},
 	eastDoor: {
 		exists: false,
@@ -958,7 +981,7 @@ theBuildings[11] = {
 	southDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 10000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 250,
@@ -1125,11 +1148,8 @@ theWeaponIcons = [
 	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
 	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
 
-	{id: 2, x: 1525, y: 1625, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
-	{id: 2, x: 3550, y: 1610, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
-	{id: 2, x: 3550, y: 1710, w: 40, h: 40, a: 30, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
-
+	
 	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 15, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
 ];
 
