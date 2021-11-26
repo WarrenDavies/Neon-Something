@@ -251,7 +251,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = true;
+var debug = false;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
@@ -266,8 +266,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 3400; 
-	 this.y = 2200;
+	 this.x = 400; 
+	 this.y = 875;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -1144,9 +1144,9 @@ theWeaponIcons = [
 	{id: 0, x: 600, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
 	{id: 0, x: 2325, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
 
-	{id: 1, x: 1050, y: 2475, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
-	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
-	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2000, color: '#fffb00', collected: false, name: "Machine Gun", cost: 3000 },
+	{id: 1, x: 1050, y: 2475, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
+	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
+	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
 
 	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 300, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
 	
