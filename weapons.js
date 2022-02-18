@@ -46,20 +46,20 @@ function updateWeaponIcons() {
             if (Player1.points < theWeaponIcons[i].cost) {
                 messageToPass = {
                     text: "You can't afford the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")",
-                    priority: 1,
+                    priority: 2,
                     timeActive: 0,
                     removeAfter: 5
                 }
                 Player1.onWeaponIcon = -1;
             } else {
                 if (Player1.weaponsPossessed[theWeaponIcons[i].id].possess == true) {
-                    message = "Press F buy " + theWeaponIcons[i].name + " ammo (cost: " + theWeaponIcons[i].cost + ")"
+                    message = "Press F to buy " + theWeaponIcons[i].name + " ammo (cost: " + theWeaponIcons[i].cost + ")"
                 } else {
-                    message = "Press F buy the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")"
+                    message = "Press F to buy the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")"
                 }
                 messageToPass = {
                     text: message,
-                    priority: 1,
+                    priority: 2,
                     timeActive: 0,
                     removeAfter: 5
                 }
@@ -74,6 +74,56 @@ function updateWeaponIcons() {
 
 function drawWeaponIcons() {
     theWeaponIcons.forEach((i, j) => {
+        if(i.collected === false) {
+            if(isOnScreen(i) ) {
+                c.beginPath();
+                c.save();
+                c.translate(i.x - cameraX, i.y - cameraY);
+                //c.translate(-i.x, -i.y);
+                c.fillStyle = i.color;
+                c.fillRect(0, 0, i.w, i.h);
+                c.restore();
+                c.closePath();
+            }
+        }
+    });
+}
+
+
+function updatePerks() {
+    for (i = thePerks.length - 1; i >= 0; i--) {
+
+        if (collidesSpecify(Player1.x - 5,Player1.y -5, Player1.w + 10, Player1.h + 10, thePerks[i].x, thePerks[i].y, thePerks[i].w, thePerks[i].h)) {
+
+            Player1.onPerkIcon = i; 
+
+            if (Player1.points < thePerks[i].cost) {
+                messageToPass = {
+                    text: "You can't afford the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")",
+                    priority: 2,
+                    timeActive: 0,
+                    removeAfter: 5
+                }
+                Player1.onPerkIcon = -1;
+            } else {
+                message = "Press F to buy the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")"
+            }
+            messageToPass = {
+                text: message,
+                priority: 2,
+                timeActive: 0,
+                removeAfter: 5
+            }
+            passMessage(messageToPass);
+            break;
+        } else {
+            Player1.onPerkIcon = -1;
+        }
+    }
+}
+
+function drawPerks() {
+    thePerks.forEach((i, j) => {
         if(i.collected === false) {
             if(isOnScreen(i) ) {
                 c.beginPath();

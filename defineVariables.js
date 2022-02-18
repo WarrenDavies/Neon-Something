@@ -251,7 +251,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = false;
+var debug = true;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
@@ -320,6 +320,7 @@ let memi = 0
 	 }
 	 this.fBuffer = 0
 	 this.onWeaponIcon = -1;
+	 this.onPerkIcon = -1;
 	 this.interactTimer = 0;
 	 this.interactDebounceTime = 50;
 } 
@@ -1141,19 +1142,20 @@ messageQueue = [];
 
 
 theWeaponIcons = [
-	{id: 0, x: 600, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
-	{id: 0, x: 2325, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100 },
+	{id: 0, x: 600, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100, firstPurchaseMessage:'You just bought a pistol. Short range but does the job. You can buy ammo from here too.' },
+	{id: 0, x: 2325, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100, firstPurchaseMessage:'You just bought a pistol. Short range but does the job. You can buy ammo from here too.' },
 
-	{id: 1, x: 1050, y: 2475, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
-	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
-	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000 },
+	{id: 1, x: 1050, y: 2475, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000, firstPurchaseMessage:'A machine gun! Rapid fire zombie killing machine.' },
+	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000, firstPurchaseMessage:'Ooooh you\'re gonna have some fun with this!.' },
 
-	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 300, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000 },
+	{id: 2, x: 3550, y: 1660, w: 40, h: 40, a: 300, color: '#05e2ff', collected: false, name: "Plasma Gun", cost: 8000, firstPurchaseMessage:'Plasma gun. Basically the BFG of this game. Line \'em up and take \'em down!' },
 	
-	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 150, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000  }
+	{id: 3, x: 850, y: 1900, w: 40, h: 40, a: 150, color: '#ff00ee', collected: false, name: "Rocket Launcher", cost: 15000, firstPurchaseMessage:'Rocket Launcher purchased! No splash damage in this game so have at it!'  }
 ];
 
-
+thePerks = [
+	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2500, color: 'blue', collected: false, name: "Health Boost", cost: 2000 },
+];
 
 theBuildings.forEach(function(i, j) {
 	if (i.northDoor) {

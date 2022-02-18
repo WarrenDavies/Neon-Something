@@ -144,6 +144,8 @@ function mainDraw(canvas, message) {
 	updateWeaponIcons();
 	drawWeaponIcons();
 
+	updatePerks();
+	drawPerks();
 
 	// Civilians not really needed for zombie mode
 	// updateCivilians();

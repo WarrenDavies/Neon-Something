@@ -221,8 +221,44 @@ function detectKeys(){
 			if (Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].possess === false) {                    
 				Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].possess = true;
 				Player1.activeWeapon = theWeaponIcons[Player1.onWeaponIcon].id;
+				messageToPass = {
+					text: theWeaponIcons[Player1.onWeaponIcon].firstPurchaseMessage,
+					priority: 3,
+					timeActive: 0,
+					removeAfter: 200
+				}
+				passMessage(messageToPass);
 			}
 			Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].ammo += theWeaponIcons[Player1.onWeaponIcon].a;
+
+			Player1.interactTimer = Player1.interactDebounceTime;
+		}
+
+		if (Player1.onPerkIcon !== -1 && Player1.interactTimer == 0) {
+			console.log("contact: ");
+			
+			
+			if (thePerks[Player1.onPerkIcon].id === 1) {   
+				
+				
+				if (Player1.health === Player1.maxHealth) {
+					console.log("here");
+					passMessage({
+						text: "Don't waste your cash, you're already at full health my friend!",
+						priority: 3,
+						timeActive: 0,
+						removeAfter: 100
+					});
+				} else {
+					Player1.points -= thePerks[Player1.onPerkIcon].cost;
+					passMessage({
+						text: "You are back to full health. Yay!",
+						priority: 3,
+						timeActive: 0,
+						removeAfter: 100
+					});
+				}	
+			}
 
 			Player1.interactTimer = Player1.interactDebounceTime;
 		}
