@@ -70,6 +70,8 @@ function drawHUD() {
 				c.fillStyle = 'red';
 			}
 			c.fillText("Race Time: " + raceDisplay, 10, 75);
+			c.fillText("X: " + Player1.x, 10, 125);
+			c.fillText("Y: " + Player1.y, 10, 150);
 			c.fillStyle = 'white';
 			if (race.bestRaceTime > 0) {
 				c.fillText("Best Time: " + race.bestRaceTime, 10, 100);
@@ -100,11 +102,17 @@ function drawHUD() {
 	
 	// Points
 	let pointsTitleGap = 73;
-	let timerWidth = 80;
+	let timerWidth = 90;
 	let timerOffset = staminaOffset + sectionOffset + timerWidth;
 	
 	c.fillText("Points:", timerOffset, topHUDYTextStartPoint);	
 	c.fillText(Player1.points, timerOffset + pointsTitleGap, topHUDYTextStartPoint);	
+
+	let killsTitleGap = 65;
+	let killsOffset = timerOffset + timerWidth + killsTitleGap;
+	
+	c.fillText("Kills:", killsOffset, topHUDYTextStartPoint);	
+	c.fillText(Player1.kills, killsOffset + killsTitleGap, topHUDYTextStartPoint);
 
 	
 

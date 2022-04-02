@@ -100,114 +100,79 @@ var raceCheckPoints =
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 1500, y: 1900, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 600, y: 2700, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 4000, y: 2100, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2400, y: 2000, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 4800, y: 2100, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2800, y: 2700, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 4800, y: 2600, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 3800, y: 2700, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5100, y: 2600, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 3900, y: 2000, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5100, y: 2100, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 3800, y: 800, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5100, y: 2600, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2900, y: 700, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5600, y: 2600, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2800, y: 1100, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5600, y: 1500, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2525, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 5600, y: 700, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 2000, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 3600, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 900, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 2900, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
+{x: 500, y: 600, w: 50, h: 50, colour: "yellow", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	} },
-{x: 2500, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
-{x: 2050, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
-{x: 2050, y: 600, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
-{x: 1600, y: 600, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
-{x: 1600, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
-{x: 1150, y: 900, w: 50, h: 50, colour: "yellow", lines: { 
-	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	bottom: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	left: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
-	} },
+
 {x: 200, y: 800, w: 50, h: 50, colour: "red", lines: { 
 	top: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
 	right: {p1x: 0, p1y: 0, p2x: 0, p2y: 0},
@@ -266,8 +231,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 1700; 
-	 this.y = 875;
+	 this.x = 700; 
+	 this.y = 500;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -334,7 +299,7 @@ Player1.onTile = returnTile(Player1);
 var nearDoor = false;
 if (debug) {
 	Player1.points = 99999;
-	Player1.topSpeed = 5;
+	Player1.topSpeed = 8;
 }
 
 
@@ -434,8 +399,8 @@ vehiclesOnScreen[1] = {
  };
  
  vehiclesOnScreen[7] = {
-	x: 3600,
-	y: 2200,
+	x: Player1.x - 100,
+	y: Player1.y - 100,
 	xPrevious: 0,
 	yPrevious: 0,
 	xtarget: 0,
