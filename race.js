@@ -1,18 +1,44 @@
 function updateRace() {
 	////race
+
+	if (
+		Player1.mot == 0 
+		& 
+		collidesSpecify (
+			Player1.x,
+			Player1.y,
+			Player1.w,
+			Player1.h,
+			raceCheckPoints[0].x,
+			raceCheckPoints[0].y,
+			raceCheckPoints[0].w,
+			raceCheckPoints[0].h
+	)) {
+		passMessage({
+			text: "You need to be in a vehicle to start the race. Wonder where one could be...",
+			priority: 3,
+			timeActive: 0,
+			removeAfter: 300
+		});
+	}
+
 	if (race.completeTimer < 0.1) {
 	c.fillStyle = raceCheckPoints[race.currentCheckPoint].colour;
 	c.beginPath();
 	c.save();
 	c.fillRect(
-	raceCheckPoints[race.currentCheckPoint].x - cameraX, 
-	raceCheckPoints[race.currentCheckPoint].y - cameraY, 
-	raceCheckPoints[race.currentCheckPoint].w, 
-	raceCheckPoints[race.currentCheckPoint].h);
+		raceCheckPoints[race.currentCheckPoint].x - cameraX, 
+		raceCheckPoints[race.currentCheckPoint].y - cameraY, 
+		raceCheckPoints[race.currentCheckPoint].w, 
+		raceCheckPoints[race.currentCheckPoint].h
+	);
 	c.fill();
 	
 	race.collidesCheckPoint = false;
 	if (race.distaceToCheckPoint < 200) {
+
+		
+
 		for (var vehicleLine in vehiclesOnScreen[Player1.mot].lines) {
 			for (var checkPointLine in raceCheckPoints[race.currentCheckPoint].lines) {			
 				if (testLines(
