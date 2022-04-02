@@ -94,7 +94,7 @@ function updateRace() {
 		
 		race.distaceToCheckPoint = Math.sqrt(Math.pow(race.deltaX, 2) + Math.pow(race.deltaY, 2) )
 		
-		console.log (race.distaceToCheckPoint);
+		// console.log (race.distaceToCheckPoint);
 		
 		if (race.distaceToCheckPoint < 150) {
 			race.indicatorAdjustor = 150 - race.distaceToCheckPoint;

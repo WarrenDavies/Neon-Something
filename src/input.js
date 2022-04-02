@@ -91,7 +91,7 @@ function detectKeys(){
 			}
 			if (vehiclesOnScreen[Player1.mot].speed <= 0) {
 				vehiclesOnScreen[Player1.mot].speed -= vehiclesOnScreen[Player1.mot].reverseAcceleration;
-				console.log("Reversing");
+				// console.log("Reversing");
 			}
 			if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
 				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
@@ -103,8 +103,8 @@ function detectKeys(){
 			vehiclesOnScreen[Player1.mot].reversing = false;
 			if (vehiclesOnScreen[Player1.mot].speed < vehiclesOnScreen[Player1.mot].reverseTopSpeed) {
 				vehiclesOnScreen[Player1.mot].speed = vehiclesOnScreen[Player1.mot].reverseTopSpeed;
-				console.log (vehiclesOnScreen[Player1.mot].speed);
-				console.log("Should be clipping speed");
+				// console.log (vehiclesOnScreen[Player1.mot].speed);
+				// console.log("Should be clipping speed");
 			}
 		}
 		 
@@ -148,7 +148,7 @@ function detectKeys(){
 		if (!keys[83] && !keys[87] && !keys[70]) {
 			vehiclesOnScreen[Player1.mot].reversing = false;
 			vehiclesOnScreen[Player1.mot].accelerating = false;
-			console.log("here");
+			// console.log("here");
 			if (Player1.mot > 0) {
 				if (Player1.speed > 0.1) {
 					Player1.speed -= vehiclesOnScreen[Player1.mot].weight;
@@ -230,10 +230,10 @@ function detectKeys(){
 	} 
 
 	if (keys[70]) { // F action button
-		console.log(Player1.onWeaponIcon + ", " + Player1.interactTimer);
+		// console.log(Player1.onWeaponIcon + ", " + Player1.interactTimer);
 
 		if (Player1.onWeaponIcon !== -1 && Player1.interactTimer == 0) {
-			console.log("contact: ");
+			// console.log("contact: ");
 			Player1.points -= theWeaponIcons[Player1.onWeaponIcon].cost;
 			
 			if (Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].possess === false) {                    
@@ -253,14 +253,12 @@ function detectKeys(){
 		}
 
 		if (Player1.onPerkIcon !== -1 && Player1.interactTimer == 0) {
-			console.log("contact: ");
+			// console.log("contact: ");
 			
 			
 			if (thePerks[Player1.onPerkIcon].id === 1) {   
-				
-				
 				if (Player1.health === Player1.maxHealth) {
-					console.log("here");
+					// console.log("here");
 					passMessage({
 						text: "Don't waste your cash, you're already at full health my friend!",
 						priority: 4,
@@ -276,6 +274,7 @@ function detectKeys(){
 						timeActive: 0,
 						removeAfter: 100
 					});
+					Player1.health = Player1.maxHealth;
 				}	
 			}
 

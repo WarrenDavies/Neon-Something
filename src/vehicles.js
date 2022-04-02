@@ -447,7 +447,9 @@ function checkThisVehicleCollision(j) {
 								vehiclesOnScreen[j].y = vehiclesOnScreen[j].yPrevious;
 								calculateVehicleLines(j);
 								vehiclesOnScreen[j].speed = 0;
-								console.log("vehicle-wall collision! Vehicle Line: " + vehicleLine + ", Building: " + k + ", buildingLine: " + wallLine);
+								
+								// console.log("vehicle-wall collision! Vehicle Line: " + vehicleLine + ", Building: " + k + ", buildingLine: " + wallLine);
+
 								vehiclesOnScreen[j].collision = true;
 								checkCollision = true;
 							} else {
@@ -455,7 +457,9 @@ function checkThisVehicleCollision(j) {
 								vehiclesOnScreen[j].collision = false;
 							}
 							loopChecker++;
-							if (loopChecker === 10) {console.log("Stuck in loop");}
+							if (loopChecker === 10) {
+								// console.log("Stuck in loop");
+							}
 						} // if this wall line exists
 						
 						checkCollision = false;
@@ -470,7 +474,7 @@ function checkThisVehicleCollision(j) {
 							theBuildings[k].walls[wallLine].p1y, 
 							theBuildings[k].walls[wallLine].p2x, 
 							theBuildings[k].walls[wallLine].p2y)) {
-								console.log("Stuck on " + wallLine);
+								// console.log("Stuck on " + wallLine);
 								//console.log(vehiclesOnScreen[j].x + ", " + vehiclesOnScreen[j].y);
 								
 								var adjusterX = 0;
@@ -748,13 +752,13 @@ function drawHeadlights() {
 	
 
 do {
-	console.log("jjj = " + jjj);
+	// console.log("jjj = " + jjj);
 	checkWithinHeadlights.splice(0); 
 	checkLeftLine.splice(0); 
 	connectToTopLine.splice(0);
 	intersectionsDone.splice(0);
 	
-	console.log("buildingsPassed " + buildingsPassed[buildingsPassed.length - 1]);
+	// console.log("buildingsPassed " + buildingsPassed[buildingsPassed.length - 1]);
 
 	
 	clearPathToTargetLine = true;
@@ -852,7 +856,7 @@ do {
 	
 	// now check which point on the line is within the headlight polygon
 	checkWithinHeadlights.splice(0);
-	console.log("checking if inside headlights area");
+	// console.log("checking if inside headlights area");
 	
 	for (var line in linesOfHeadlights) {
 		if (linesOfHeadlights.hasOwnProperty(line)) {
@@ -910,7 +914,7 @@ do {
 		)
 	) { // It's inside, need to move along roof"
 	
-	console.log("Need to move along the roof to the next corner");	
+	// console.log("Need to move along the roof to the next corner");	
 	moveAlongRoof = true;
 	// find which line it is
 	
@@ -962,7 +966,7 @@ do {
 	
 		//extendLine = true;
 		
-		console.log("extending line");
+		// console.log("extending line");
 		// it's always checking upper left corner. Need to figure out which corner you're on and extend line from there.
 		lineToExtend  = { 
 					p1x: theBuildings[closestLine.building].upperLeftX - Player1.x + cameraX, 
@@ -1005,7 +1009,7 @@ do {
 			"leftLineTest") ) {
 				c.lineTo(checkLeftLine[0][0], checkLeftLine[0][1]);
 				alreadyReachedLeftLine = true;
-				console.log("HEeeeeeRE   left");
+				// console.log("HEeeeeeRE   left");
 		}  
 	
 	checkTopLine.splice(0);
@@ -1021,7 +1025,7 @@ do {
 		targetLine.p2y,
 		"topLine") ) {
 				c.lineTo(checkTopLine[0][0], checkTopLine[0][1]);
-				console.log("HEeeeeeRE   top");
+				// console.log("HEeeeeeRE   top");
 				reachedTargetLine = true;					
 			}
 		
@@ -1090,11 +1094,13 @@ do {
 		);
 		
 	reachedTargetLine = true;
-	console.log("Get to this bit");
+	// console.log("Get to this bit");
 	}
 	jjj += 1;
 	
-	if (jjj === 5){console.log("STUCK IN LOOP"); breakLoop = true;}
+	if (jjj === 5){
+		// console.log("STUCK IN LOOP"); breakLoop = true;
+	}
 	
 	} while (alreadyReachedLeftLine === false && reachedTargetLine === false && breakLoop === false && completedHeadlights === false);
 	
@@ -1120,7 +1126,7 @@ do {
 				c.lineTo(connectToTopLine[0][0], connectToTopLine[0][1] );
 				
 				//c.fillRect(connectToTopLine[0][0], connectToTopLine[0][1],15,15);
-				console.log("got yo this drawing bit");
+				// console.log("got yo this drawing bit");
 			} 
 		if (checkTopLine[0]){
 			//console.log("check top line drawing");
@@ -1129,7 +1135,7 @@ do {
 			
 		} else {
 			c.lineTo( linesOfHeadlights.right.p2x, linesOfHeadlights.right.p2y );
-			console.log("did not reach target line");
+			// console.log("did not reach target line");
 		}
 		
 		
