@@ -138,6 +138,8 @@ passMessage({
 	removeAfter: 500
 });
 
+document.getElementById("canvas").focus();
+
  // drawing function / game loop
 function mainDraw(canvas, message) {
 	 
