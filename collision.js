@@ -152,6 +152,24 @@ function checkPlayerCollision(xStep, yStep) {
 //Player1.y - cameraY - (Player1.h / 2) + yStep , 
 //Player1.w, Player1.h);
 
+// boundary detection
+
+if ( 
+	( (yStep * 3) + Player1.y - (Player1.h / 2)  < 300) 
+	||
+	( (yStep * 4) + Player1.y - (Player1.h / 2)  > 3100) ){
+
+	Player1.yVector = 0;
+}
+
+if ( 
+	( (xStep * 3) + Player1.x - (Player1.w / 2)  < 0) 
+	||
+	( (xStep * 3) + Player1.x - (Player1.w / 2)  > map[0].length * 50) ){
+
+	Player1.xVector = 0;
+}
+
 var wallCollision = {};
 wallCollision.top = false;
 wallCollision.left = false;
