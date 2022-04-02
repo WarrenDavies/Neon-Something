@@ -33,9 +33,7 @@ if (Player1.mot === 0) {
 		// ) {
 		// 	Player1.y += Player1.yVector * Player1.speed;
 		// }
-		
-		if (debug) {Player1.speed = 8;}
-
+	
 		Player1.x += Player1.xVector * Player1.speed;
 		Player1.y += Player1.yVector * Player1.speed;
 		Player1.onTile = returnTile(Player1);

@@ -184,10 +184,10 @@ function detectKeys(){
 			if (definitelyOnMap(Player1)) {
 				switch (map[Player1.onTile.y][Player1.onTile.x].type) {
 					case "sand":
-						Player1.speed = 3;
+						Player1.speed = Player1.speed / 1.1 ;
 						break;
 					case "water":
-						Player1.speed = 1;
+						Player1.speed = Player1.speed / 1.5;
 						break;
 				}
 			}
@@ -251,6 +251,7 @@ function detectKeys(){
 					});
 				} else {
 					Player1.points -= thePerks[Player1.onPerkIcon].cost;
+					thePerks[Player1.onPerkIcon].purchases += 1;
 					passMessage({
 						text: "You are back to full health. Yay!",
 						priority: 3,
@@ -260,7 +261,52 @@ function detectKeys(){
 				}	
 			}
 
-			Player1.interactTimer = Player1.interactDebounceTime;
+			if (thePerks[Player1.onPerkIcon].id === 2) {   
+				
+				
+				if (Player1.topSpeed == 8) {
+					passMessage({
+						text: "You're already a speed demon. You can't go any faster.",
+						priority: 1,
+						timeActive: 0,
+						removeAfter: 100
+					});
+				} else {
+					Player1.points -= thePerks[Player1.onPerkIcon].cost;
+					Player1.topSpeed += 1;
+
+					thePerks[Player1.onPerkIcon].purchases += 1;
+					
+					switch(thePerks[Player1.onPerkIcon].purchases) {
+						case 1:
+							messageToPass = 'You feel like a virile fox.';
+							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
+							priority = 3;
+							break;
+						case 2:
+							messageToPass = 'You feel the need... the need for speed!';
+							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
+							priority = 4;
+							break;
+						case 3:
+							messageToPass = 'You are now a full-fledged speed demon.';
+							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
+							thePerks[Player1.onPerkIcon].collected = true;
+							priority = 5;
+							break;
+					}
+
+					passMessage({
+						text: messageToPass,
+						priority: priority,
+						timeActive: 0,
+						removeAfter: 100
+					});
+				}	
+			}
+
+
+			Player1.interactTimer = 150;
 		}
 
 		if (Player1.nearDoor != false) {

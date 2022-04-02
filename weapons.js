@@ -93,33 +93,36 @@ function drawWeaponIcons() {
 function updatePerks() {
     for (i = thePerks.length - 1; i >= 0; i--) {
 
-        if (collidesSpecify(Player1.x - 5,Player1.y -5, Player1.w + 10, Player1.h + 10, thePerks[i].x, thePerks[i].y, thePerks[i].w, thePerks[i].h)) {
+        if (thePerks[i].collected == false) {
 
-            Player1.onPerkIcon = i; 
+            if (collidesSpecify(Player1.x - 5,Player1.y -5, Player1.w + 10, Player1.h + 10, thePerks[i].x, thePerks[i].y, thePerks[i].w, thePerks[i].h)) {
 
-            if (Player1.points < thePerks[i].cost) {
+                Player1.onPerkIcon = i; 
+
+                if (Player1.points < thePerks[i].cost) {
+                    messageToPass = {
+                        text: "You can't afford the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")",
+                        priority: 2,
+                        timeActive: 0,
+                        removeAfter: 5
+                    }
+                    Player1.onPerkIcon = -1;
+                } else {
+                    message = "Press F to buy the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")"
+                }
                 messageToPass = {
-                    text: "You can't afford the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")",
+                    text: message,
                     priority: 2,
                     timeActive: 0,
                     removeAfter: 5
                 }
-                Player1.onPerkIcon = -1;
+                passMessage(messageToPass);
+                break;
             } else {
-                message = "Press F to buy the " + thePerks[i].name + " (cost: " + thePerks[i].cost + ")"
-            }
-            messageToPass = {
-                text: message,
-                priority: 2,
-                timeActive: 0,
-                removeAfter: 5
-            }
-            passMessage(messageToPass);
-            break;
-        } else {
-            Player1.onPerkIcon = -1;
-        }
-    }
+                Player1.onPerkIcon = -1;
+            } // if collides
+        } // if collected
+    } //  for the perks
 }
 
 function drawPerks() {

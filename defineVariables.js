@@ -266,7 +266,7 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 400; 
+	 this.x = 1700; 
 	 this.y = 875;
 	 this.w = 20;
 	 this.h = 20;
@@ -287,7 +287,7 @@ let memi = 0
 	 this.fill = '#000000';
 	 this.xdirection = 1;
 	 this.ydirection = 0;
-	 this.acceleration = 0.3;
+	 this.acceleration = 0.4;
 	 this.radius = 0;
 	 this.angle = 1.7;
 	 this.mot = 0;
@@ -328,7 +328,8 @@ var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
 var nearDoor = false;
 if (debug) {
-	Player1.points = 99999
+	Player1.points = 99999;
+	Player1.topSpeed = 5;
 }
 
 
@@ -1143,7 +1144,7 @@ messageQueue = [];
 
 theWeaponIcons = [
 	{id: 0, x: 600, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100, firstPurchaseMessage:'You just bought a pistol. Short range but does the job. You can buy ammo from here too.' },
-	{id: 0, x: 2325, y: 850, w: 40, h: 40, a: 100, color: 'red', collected: false, name: "Pistol", cost: 100, firstPurchaseMessage:'You just bought a pistol. Short range but does the job. You can buy ammo from here too.' },
+
 
 	{id: 1, x: 1050, y: 2475, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000, firstPurchaseMessage:'A machine gun! Rapid fire zombie killing machine.' },
 	{id: 1, x: 2680, y: 875, w: 40, h: 40, a: 2500, color: '#fffb00', collected: false, name: "Machine Gun", cost: 2000, firstPurchaseMessage:'Ooooh you\'re gonna have some fun with this!.' },
@@ -1154,7 +1155,9 @@ theWeaponIcons = [
 ];
 
 thePerks = [
-	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2500, color: 'blue', collected: false, name: "Health Boost", cost: 2000 },
+	{id: 1, x: 1500, y: 900, w: 40, h: 40, a: 2500, color: 'blue', collected: false, name: "Health Boost", cost: 2000, purchases: 0 },
+
+	{id: 2, x: 2325, y: 850, w: 40, h: 40, a: 100, color: 'orange', collected: false, name: "Speed Boost", cost: 2000, purchases: 0},
 ];
 
 theBuildings.forEach(function(i, j) {
