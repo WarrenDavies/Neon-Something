@@ -323,6 +323,11 @@ let memi = 0
 	 this.onPerkIcon = -1;
 	 this.interactTimer = 0;
 	 this.interactDebounceTime = 50;
+	 this.walkedOn = {
+		sand: false,
+		water: false,
+		grass: false, 
+	 }
 } 
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
@@ -1055,6 +1060,8 @@ theBuildings[100] = {
 	westDoor: {
 		exists: false,
 	},
+	seenBefore: false,
+	message: "Why are there giant walls around this tiny island? No one knows."
 };
 
 theBuildings[101] = {
@@ -1139,6 +1146,8 @@ theBuildings[103] = {
 	westDoor: {
 		exists: false,
 	},
+	seenBefore: false,
+	message: "Such a big wall to contain little 'ol you. You should be honoured."
 };
 
 

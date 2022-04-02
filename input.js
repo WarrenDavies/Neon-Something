@@ -185,9 +185,27 @@ function detectKeys(){
 				switch (map[Player1.onTile.y][Player1.onTile.x].type) {
 					case "sand":
 						Player1.speed = Player1.speed / 1.1 ;
+						if (!Player1.walkedOn['sand']) {
+							passMessage({
+								text: "Try to avoid walking on sand. It'll slow you down.",
+								priority: 3,
+								timeActive: 0,
+								removeAfter: 300
+							});
+							Player1.walkedOn['sand'] = true;
+						}
 						break;
 					case "water":
 						Player1.speed = Player1.speed / 1.5;
+						if (!Player1.walkedOn['water']) {
+							passMessage({
+								text: "The water's deep, but you can wade through it... very slowly.",
+								priority: 4,
+								timeActive: 0,
+								removeAfter: 300
+							});
+							Player1.walkedOn['water'] = true;
+						}
 						break;
 				}
 			}

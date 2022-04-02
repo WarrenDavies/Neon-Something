@@ -4,6 +4,18 @@ function drawBuildings() {
 	for (j = buildingsOnScreen.length - 1; j 
 	> -1; j--) {
 		var i = buildingsOnScreen[j];
+
+		if (theBuildings[i].seenBefore == false) {
+			
+			passMessage({
+				text: theBuildings[i].message,
+				priority: 2,
+				timeActive: 0,
+				removeAfter: 300
+			});
+			theBuildings[i].seenBefore = true;
+		}
+
 		//console.log("i " + i);
 		if (theBuildings[i].type === "rectangular") {
 		//if (i.type === "rectangular") {
