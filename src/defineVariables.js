@@ -1116,7 +1116,7 @@ theBuildings[103] = {
 	westDoor: {
 		exists: false,
 	},
-	seenBefore: false,
+	seenBefore: true,
 	message: "Such a big wall to contain little 'ol you. You should be honoured."
 };
 
