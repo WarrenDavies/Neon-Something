@@ -188,7 +188,7 @@ function detectKeys(){
 						if (!Player1.walkedOn['sand']) {
 							passMessage({
 								text: "Try to avoid walking on sand. It'll slow you down.",
-								priority: 3,
+								priority: 1,
 								timeActive: 0,
 								removeAfter: 300
 							});
@@ -200,7 +200,7 @@ function detectKeys(){
 						if (!Player1.walkedOn['water']) {
 							passMessage({
 								text: "The water's deep, but you can wade through it... very slowly.",
-								priority: 4,
+								priority: 1,
 								timeActive: 0,
 								removeAfter: 300
 							});
@@ -241,7 +241,7 @@ function detectKeys(){
 				Player1.activeWeapon = theWeaponIcons[Player1.onWeaponIcon].id;
 				messageToPass = {
 					text: theWeaponIcons[Player1.onWeaponIcon].firstPurchaseMessage,
-					priority: 3,
+					priority: 4,
 					timeActive: 0,
 					removeAfter: 200
 				}
@@ -263,7 +263,7 @@ function detectKeys(){
 					console.log("here");
 					passMessage({
 						text: "Don't waste your cash, you're already at full health my friend!",
-						priority: 3,
+						priority: 4,
 						timeActive: 0,
 						removeAfter: 100
 					});
@@ -272,7 +272,7 @@ function detectKeys(){
 					thePerks[Player1.onPerkIcon].purchases += 1;
 					passMessage({
 						text: "You are back to full health. Yay!",
-						priority: 3,
+						priority: 4,
 						timeActive: 0,
 						removeAfter: 100
 					});
@@ -285,7 +285,7 @@ function detectKeys(){
 				if (Player1.topSpeed == 8) {
 					passMessage({
 						text: "You're already a speed demon. You can't go any faster.",
-						priority: 1,
+						priority: 4,
 						timeActive: 0,
 						removeAfter: 100
 					});
@@ -299,18 +299,18 @@ function detectKeys(){
 						case 1:
 							messageToPass = 'You feel like a virile fox.';
 							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
-							priority = 3;
+							priority = 4;
 							break;
 						case 2:
 							messageToPass = 'You feel the need... the need for speed!';
 							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
-							priority = 4;
+							priority = 5;
 							break;
 						case 3:
 							messageToPass = 'You are now a full-fledged speed demon.';
 							thePerks[Player1.onPerkIcon].cost = thePerks[Player1.onPerkIcon].cost * 4;
 							thePerks[Player1.onPerkIcon].collected = true;
-							priority = 5;
+							priority = 6;
 							break;
 					}
 

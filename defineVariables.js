@@ -216,7 +216,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = true;
+var debug = false;
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
@@ -231,8 +231,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 700; 
-	 this.y = 500;
+	 this.x = 800; 
+	 this.y = 1200;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -399,8 +399,10 @@ vehiclesOnScreen[1] = {
  };
  
  vehiclesOnScreen[7] = {
-	x: Player1.x - 100,
-	y: Player1.y - 100,
+	// x: Player1.x - 100,
+	// y: Player1.y - 100,
+	x: 3500,
+	y: 2500,
 	xPrevious: 0,
 	yPrevious: 0,
 	xtarget: 0,
@@ -679,7 +681,7 @@ theBuildings[6] = {
 	southDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 1000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 100,
 		doorwayDistanceFromLeftToMiddle: 125,
@@ -706,7 +708,7 @@ theBuildings[6] = {
 	westDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 1000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromTop: 50,
 		doorwayDistanceFromTopToMiddle: 75,
@@ -761,7 +763,7 @@ theBuildings[7] = {
 	eastDoor: {
 		exists: true,
 		locked: true,
-		cost: 100,
+		cost: 1000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromTop: 50,
 		doorwayDistanceFromTopToMiddle: 75,
@@ -840,7 +842,7 @@ theBuildings[9] = {
 	northDoor: {
 		exists: true,
 		locked: true,
-		cost: 10,
+		cost: 1000,
 		distanceFromDoor: 0,
 		doorwayDistanceFromLeft: 150,
 		doorwayDistanceFromLeftToMiddle: 200,

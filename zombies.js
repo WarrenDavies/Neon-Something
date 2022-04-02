@@ -156,6 +156,10 @@ function updateZombies() {
 					if (Math.ceil(i.attackTimer) === 8 ) {
 						Player1.health -= 5;
 					}
+					if (Player1.health <= 0) {
+						theSplats.push({
+							x: Player1.x - (Player1.w / 2), y: Player1.y - (Player1.h / 2), w: Player1.w, h: Player1.h });
+					}
 					i.canWalkX = false;
 					i.canWalkY = false;
 				} 
@@ -377,9 +381,9 @@ function updateZombies() {
 					i.inBuilding = map[i.onTile.y][i.onTile.x].building;
 				}
 				catch (e) {
-					console.log("zombie draw error");
-					console.log("i.x: " + i.x + " i.y: " + i.y );
-					console.log(i.onTile.x + " " + i.onTile.y);
+					// console.log("zombie draw error");
+					// console.log("i.x: " + i.x + " i.y: " + i.y );
+					// console.log(i.onTile.x + " " + i.onTile.y);
 				}
 			}
 		} else {
@@ -440,7 +444,7 @@ function updateZombies() {
 							i.y -= 1; 
 						} else {
 							i.y += 1;
-							console.log("shove");
+							// console.log("shove");
 						}
 					}
 				}

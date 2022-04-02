@@ -823,14 +823,14 @@ function drawRectangularBuilding(upperLeftX, upperLeftY, lowerRightX, lowerRight
 		if (Player1.points < Player1.nearDoor.cost) {
 			messageToPass = {
 				text: "You can't afford to open this door (cost: " + Player1.nearDoor.cost + ")",
-				priority: 1,
+				priority: 3,
 				timeActive: 0,
 				removeAfter: 5
 			}
 		} else {
 			messageToPass = {
 				text: "Press F to open door (cost: " + Player1.nearDoor.cost + ")",
-				priority: 1,
+				priority: 2,
 				timeActive: 0,
 				removeAfter: 5
 			}

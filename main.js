@@ -112,8 +112,36 @@ if (!keys[37] && !keys[39] && !keys[38] && !keys[40] ) {
   /////////////////////////////////////////////////////////
  
 
+firstMessageSelector = Math.floor(Math.random() * 5)
+switch(firstMessageSelector) {
+	case 0:
+		firstMessage = "Welcome to zombie island. Wonder what's in that house with the green neon?"
+		break;
+	case 1:
+		firstMessage = "You know how this works. Better find a gun to start with..."
+		break;
+	case 2:
+		firstMessage = "The neveeerr enndiiing zooooommmbiiiieeee...."
+		break;
+	case 3:
+		firstMessage = "Are these the undead kind or the virus kind?"
+		break;
+	case 4:
+		firstMessage = "OK, let's do it. Find a gun and get shootin'!"
+		break;
+}
+
+passMessage({
+	text: firstMessage,
+	priority: 2,
+	timeActive: 0,
+	removeAfter: 500
+});
+
  // drawing function / game loop
 function mainDraw(canvas, message) {
+	 
+
 // Start with a clean slate
 	clearCanvas();
 	
@@ -133,8 +161,11 @@ function mainDraw(canvas, message) {
 	//checkVehicleCollision();
 	drawVehicles(); 
 
-	updatePlayer();   
-	drawPlayer(); 
+	if (Player1.health > 0) {
+		updatePlayer();   
+		drawPlayer();
+	} 
+	 
 
 	updateWeapons();
 	updateBullets();
@@ -187,6 +218,12 @@ function mainDraw(canvas, message) {
 
 	updateCamera();
 
+	if (Player1.health <= 0) {
+		c.font = 'bold 26pt Calibri'
+		c.fillStyle = 'white'
+		c.fillText("You died!", 100, 100);
+		c.fillText("Refresh page to play again", 100, 200);
+	}
 	// let wp = 0;
 	// theZombies.forEach( (i, j) => {
 	// 	wp += i.wayPoints.length;

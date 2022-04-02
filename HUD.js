@@ -478,8 +478,7 @@ function passMessage(message) {
 
 	if (narratorMessage.activeMessage) {
 		
-		if (narratorMessage.message.priority < message.priority) {
-			console.log("should be showing");
+		if (narratorMessage.message.priority <= message.priority) {
 			narratorMessage.message = message
 		}
 	}
