@@ -115,7 +115,7 @@ if (!keys[37] && !keys[39] && !keys[38] && !keys[40] ) {
 firstMessageSelector = Math.floor(Math.random() * 5)
 switch(firstMessageSelector) {
 	case 0:
-		firstMessage = "Welcome to zombie island. Wonder what's in that house with the green neon?"
+		firstMessage = "Kill zombies, get points, spend points."
 		break;
 	case 1:
 		firstMessage = "You know how this works. Better find a gun to start with..."

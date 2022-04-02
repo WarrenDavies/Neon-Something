@@ -7,6 +7,8 @@ var mousePos;
 var keys = [];
 var backradius = 0;
 
+var debug = false;
+
 var xtarget, ytarget = 0;
 var distanceKeeper = 1000000;
 var distanceHolder = 0;
@@ -216,7 +218,7 @@ var race = {
 	collidesCheckPoint: false,
 }
 var theBullets = [];
-var debug = true;
+
 var showWayPoints = false;
 var showPlayer = false;
 var weaponChangeTimer = 0;
@@ -231,8 +233,8 @@ let memi = 0
 
 // Player coords and initial location
  function Player () {
-	 this.x = 800; 
-	 this.y = 1200;
+	 this.x = 450; 
+	 this.y = 850;
 	 this.w = 20;
 	 this.h = 20;
 	 this.deltaX = 0;
@@ -297,6 +299,7 @@ let memi = 0
 var Player1 = new Player();
 Player1.onTile = returnTile(Player1);
 var nearDoor = false;
+
 if (debug) {
 	Player1.points = 99999;
 	// Player1.topSpeed = 8;
