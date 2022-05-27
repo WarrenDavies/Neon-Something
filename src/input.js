@@ -246,6 +246,7 @@ function detectKeys(){
 					removeAfter: 200
 				}
 				passMessage(messageToPass);
+				
 			}
 			Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].ammo += theWeaponIcons[Player1.onWeaponIcon].a;
 

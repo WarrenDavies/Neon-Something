@@ -40,12 +40,11 @@ function changeWeapon(change) {
 function updateWeaponIcons() {
     for (i = theWeaponIcons.length - 1; i >= 0; i--) {
         if (collidesSpecify(Player1.x - 5,Player1.y -5, Player1.w + 10, Player1.h + 10, theWeaponIcons[i].x, theWeaponIcons[i].y, theWeaponIcons[i].w, theWeaponIcons[i].h)) {
-
+           
             Player1.onWeaponIcon = i; 
             // console.log(Player1.onWeaponIcon)
 
             if (Player1.points < theWeaponIcons[i].cost) {
-                
                 message = "You can't afford the " + theWeaponIcons[i].name + " (cost: " + theWeaponIcons[i].cost + ")";
                 Player1.onWeaponIcon = -1;
 
@@ -62,6 +61,12 @@ function updateWeaponIcons() {
                     timeActive: 0,
                     removeAfter: 5
                 }
+            }
+            messageToPass = {
+                text: message,
+                priority: 2,
+                timeActive: 0,
+                removeAfter: 5
             }
             passMessage(messageToPass);
             break;
