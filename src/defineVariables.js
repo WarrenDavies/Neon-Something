@@ -302,6 +302,8 @@ var nearDoor = false;
 
 if (debug) {
 	Player1.points = 99999;
+	Player1.x = 3500;
+	Player1.y = 1660;
 	// Player1.topSpeed = 8;
 }
 

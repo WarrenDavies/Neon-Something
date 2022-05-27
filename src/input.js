@@ -246,7 +246,77 @@ function detectKeys(){
 					removeAfter: 200
 				}
 				passMessage(messageToPass);
-				
+				if (theWeaponIcons[Player1.onWeaponIcon].id == 2) {
+					// theZombies.push
+					for (let i = 0; i < 3; i++) {
+						for (let j = 0; j < 50; j++) {
+							let zomY = 1630 + (i * 50);
+							let zomX = 3000 - (j * 30);
+							let zomID = theZombies.length;
+							
+							theZombies.push({
+								ID: zomID,
+								x: zomX,
+								y: zomY,
+								xPrevious: zomX,
+								yPrevious: 1660,
+								w: 20,
+								h: 20,
+								xTarget: 0,
+								yTarget: 0,
+								speed: 2,
+								health: 1,
+								xdirection: 1,
+								ydirection: 0,
+								acceleration: 1,
+								radius: 0,
+								targetAngle: 0,
+								angle: 0,
+								closestVehicle: 0,
+								collideDistance: 80,
+								walkTimer: 0,
+								attackTimer: 0,
+								walking: true,
+								standImage: zombieStand,
+								walkAnimations: ["", zombieWalk1, zombieWalk2, zombieWalk3, zombieWalk4, zombieWalk5, zombieWalk6, zombieWalk7, zombieWalk8, zombieWalk9, zombieWalk10, zombieWalk11, zombieWalk12, zombieWalk13, zombieWalk14, zombieWalk15, zombieWalk16],
+								attackAnimations: ["", zombieAttack1, zombieAttack2, zombieAttack3, zombieAttack4, zombieAttack5, zombieAttack6, zombieAttack7, zombieAttack8],
+								targetWayPoint: 0,
+								targetAngle: 0,
+								currentWayPoint: 0,
+								facingBackwards: false,
+								xVector: 0,
+								yVector: 0,
+								collisionCourse: false,
+								canWalkX: true,
+								canWalkY: true,
+								wayPoints: [],
+								wayPointsHistory: [],
+								wayPointGrace: 0,
+								collidesWithType: "No Collision",
+								collidesWithWall: "No Collision",
+								collidesWithWalls: [],
+								zombieBlock: false,
+								verticalBuildingCollision: false,
+								horizontalBuildingCollision: false,
+								stuck: false,
+								collidesWithID: -1,
+								currentStatus: "spawned",
+								type: "zombie",
+								wayPointsReached: 0,
+								canSeePlayer: false,
+								stoodStillTimer: 0,
+								byOrderOf: -1,
+								stepDistance: 8,
+								redirectedCount: 0,
+								lineStuckOn: "",
+								canMOve: "",
+								onTile: {x: 0, y: 0},
+								inBuilding: false,
+								distanceToPlayer: 0,
+							});
+						}
+					}
+				}
 			}
 			Player1.weaponsPossessed[theWeaponIcons[Player1.onWeaponIcon].id].ammo += theWeaponIcons[Player1.onWeaponIcon].a;
 
